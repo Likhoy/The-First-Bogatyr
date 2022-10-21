@@ -9,6 +9,7 @@ using UnityEngine;
 [RequireComponent(typeof(MovementByVelocity))]
 [RequireComponent(typeof(IdleEvent))]
 [RequireComponent(typeof(Idle))]
+[RequireComponent(typeof(ItemUsedEvent))]
 [RequireComponent(typeof(DialogStartedEvent))]
 [RequireComponent(typeof(DialogProceededEvent))]
 [RequireComponent(typeof(PlayerController))]
@@ -22,6 +23,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public DestroyedEvent destroyedEvent;
     [HideInInspector] public MovementByVelocityEvent movementByVelocityEvent;
     [HideInInspector] public IdleEvent idleEvent;
+    [HideInInspector] public ItemUsedEvent itemUsedEvent;
     [HideInInspector] public DialogStartedEvent dialogStartedEvent;
     [HideInInspector] public DialogProceededEvent dialogProceededEvent;
     [HideInInspector] public PlayerController playerControl;
@@ -34,6 +36,7 @@ public class Player : MonoBehaviour
         destroyedEvent = GetComponent<DestroyedEvent>();
         movementByVelocityEvent = GetComponent<MovementByVelocityEvent>();
         idleEvent = GetComponent<IdleEvent>();
+        itemUsedEvent = GetComponent<ItemUsedEvent>();
         dialogStartedEvent = GetComponent<DialogStartedEvent>();
         dialogProceededEvent = GetComponent<DialogProceededEvent>();
         playerControl = GetComponent<PlayerController>();
