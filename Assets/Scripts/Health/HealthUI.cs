@@ -33,6 +33,5 @@ public class HealthUI : MonoBehaviour
     private void SetHealthUI(HealthEventArgs healthEventArgs)
     {
         textMeshPro.text = "Health: " + healthEventArgs.healthAmount.ToString();
-        Debug.Log("we are inside");
     }
 }
