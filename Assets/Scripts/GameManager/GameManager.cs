@@ -28,6 +28,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         // Instantiate player
         InstantiatePlayer();
 
+        // Spawn enemies (maybe this will be moved in enemy controller class)
+        EnemySpawner.Instance.SpawnEnemies();
     }
 
     /// <summary>
