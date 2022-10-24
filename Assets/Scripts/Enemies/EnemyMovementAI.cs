@@ -131,19 +131,17 @@ public class EnemyMovementAI : MonoBehaviour
     /// </summary>
     private void CreatePath()
     {
-        
-
-        Grid grid = SceneInfo.grid;
+        Grid grid = SceneInfo.Grid;
 
         // Get players position on the grid
-        //Vector3Int playerGridPosition = GetNearestNonObstaclePlayerPosition(currentRoom);
+        Vector3Int playerGridPosition = GetNearestNonObstaclePlayerPosition();
 
 
         // Get enemy position on the grid
         Vector3Int enemyGridPosition = grid.WorldToCell(transform.position);
 
         // Build a path for the enemy to move on
-        //movementSteps = AStar.BuildPath(currentRoom, enemyGridPosition, playerGridPosition);
+        movementSteps = AStar.BuildPath(enemyGridPosition, playerGridPosition);
 
         // Take off first step on path - this is the grid square the enemy is already on
         if (movementSteps != null)
@@ -168,15 +166,16 @@ public class EnemyMovementAI : MonoBehaviour
     /// <summary>
     /// Get the nearest position to the player that isn't on an obstacle
     /// </summary>
-    /*private Vector3Int GetNearestNonObstaclePlayerPosition(Room currentRoom)
+    private Vector3Int GetNearestNonObstaclePlayerPosition()
     {
         Vector3 playerPosition = GameManager.Instance.GetPlayer().GetPlayerPosition();
 
-        Vector3Int playerCellPosition = currentRoom.instantiatedRoom.grid.WorldToCell(playerPosition);
+        Vector3Int playerCellPosition = SceneInfo.Grid.WorldToCell(playerPosition);
 
-        Vector2Int adjustedPlayerCellPositon = new Vector2Int(playerCellPosition.x - currentRoom.templateLowerBounds.x, playerCellPosition.y - currentRoom.templateLowerBounds.y);
+        Vector2Int adjustedPlayerCellPositon = new Vector2Int(playerCellPosition.x, playerCellPosition.y); // was adjusted to room template lower bounds
 
-        int obstacle = Mathf.Min(currentRoom.instantiatedRoom.aStarMovementPenalty[adjustedPlayerCellPositon.x, adjustedPlayerCellPositon.y], currentRoom.instantiatedRoom.aStarItemObstacles[adjustedPlayerCellPositon.x, adjustedPlayerCellPositon.y]);
+        //int obstacle = Mathf.Min(SceneInfo.aStarMovementPenalty[adjustedPlayerCellPositon.x, adjustedPlayerCellPositon.y], currentRoom.instantiatedRoom.aStarItemObstacles[adjustedPlayerCellPositon.x, adjustedPlayerCellPositon.y]);
+        int obstacle = SceneInfo.aStarMovementPenalty[adjustedPlayerCellPositon.x, adjustedPlayerCellPositon.y];
 
         // if the player isn't on a cell square marked as an obstacle then return that position
         if (obstacle != 0)
@@ -211,7 +210,8 @@ public class EnemyMovementAI : MonoBehaviour
                 // See if there is an obstacle in the selected surrounding position
                 try
                 {
-                    obstacle = Mathf.Min(currentRoom.instantiatedRoom.aStarMovementPenalty[adjustedPlayerCellPositon.x + surroundingPositionList[index].x, adjustedPlayerCellPositon.y + surroundingPositionList[index].y], currentRoom.instantiatedRoom.aStarItemObstacles[adjustedPlayerCellPositon.x + surroundingPositionList[index].x, adjustedPlayerCellPositon.y + surroundingPositionList[index].y]);
+                    //obstacle = Mathf.Min(currentRoom.instantiatedRoom.aStarMovementPenalty[adjustedPlayerCellPositon.x + surroundingPositionList[index].x, adjustedPlayerCellPositon.y + surroundingPositionList[index].y], currentRoom.instantiatedRoom.aStarItemObstacles[adjustedPlayerCellPositon.x + surroundingPositionList[index].x, adjustedPlayerCellPositon.y + surroundingPositionList[index].y]);
+                    obstacle = SceneInfo.aStarMovementPenalty[adjustedPlayerCellPositon.x + surroundingPositionList[index].x, adjustedPlayerCellPositon.y + surroundingPositionList[index].y];
 
                     // If no obstacle return the cell position to navigate to
                     if (obstacle != 0)
@@ -232,10 +232,10 @@ public class EnemyMovementAI : MonoBehaviour
 
 
             // If no non-obstacle cells found surrounding the player - send the enemy in the direction of an enemy spawn position
-            return (Vector3Int)currentRoom.spawnPositionArray[Random.Range(0, currentRoom.spawnPositionArray.Length)];
-
+            //return (Vector3Int)currentRoom.spawnPositionArray[Random.Range(0, currentRoom.spawnPositionArray.Length)];
+            return Vector3Int.zero; // for testing
         }
-    }*/
+    }
 
 
     #region Validation
