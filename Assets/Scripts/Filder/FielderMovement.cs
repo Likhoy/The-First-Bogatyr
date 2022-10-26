@@ -26,7 +26,6 @@ public class FielderMovement : MonoBehaviour
         SetRandomTargetPoint();
     }
 
-
     void Update()
     {
         transform.position = Vector2.MoveTowards(transform.position, randomPosition, moveSpeed * Time.deltaTime);
@@ -34,9 +33,9 @@ public class FielderMovement : MonoBehaviour
         {
             _stopTimer = true;
             Invoke(nameof(SetRandomTargetPoint), 3);
+
         }
     }
-
 
     private void SetRandomTargetPoint()
     {
