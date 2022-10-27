@@ -27,10 +27,18 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
         // Instantiate player
         InstantiatePlayer();
+    }
 
-        // Spawn enemies (maybe this will be moved in enemy controller class)
+    private void Start()
+    {
+        // Spawn enemies (maybe this will be placed in enemy controller class)
         EnemySpawner.Instance.SpawnEnemies();
     }
+
+    /*private void Update()
+    {
+        
+    }*/
 
     /// <summary>
     /// Create player in scene at position

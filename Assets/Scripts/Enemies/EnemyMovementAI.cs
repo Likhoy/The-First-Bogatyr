@@ -131,11 +131,10 @@ public class EnemyMovementAI : MonoBehaviour
     /// </summary>
     private void CreatePath()
     {
-        Grid grid = SceneInfo.Grid;
+        Grid grid = LocationInfo.Grid;
 
         // Get players position on the grid
         Vector3Int playerGridPosition = GetNearestNonObstaclePlayerPosition();
-
 
         // Get enemy position on the grid
         Vector3Int enemyGridPosition = grid.WorldToCell(transform.position);
@@ -170,12 +169,15 @@ public class EnemyMovementAI : MonoBehaviour
     {
         Vector3 playerPosition = GameManager.Instance.GetPlayer().GetPlayerPosition();
 
-        Vector3Int playerCellPosition = SceneInfo.Grid.WorldToCell(playerPosition);
+        Vector3Int playerCellPosition = LocationInfo.Grid.WorldToCell(playerPosition);
 
-        Vector2Int adjustedPlayerCellPositon = new Vector2Int(playerCellPosition.x, playerCellPosition.y); // was adjusted to room template lower bounds
+        Vector2Int adjustedPlayerCellPositon = new Vector2Int(playerCellPosition.x + LocationInfo.locationUpperBounds.x, playerCellPosition.y + LocationInfo.locationUpperBounds.y);
+
+        /*Debug.Log(adjustedPlayerCellPositon.x);
+        Debug.Log(adjustedPlayerCellPositon.y);*/
 
         //int obstacle = Mathf.Min(SceneInfo.aStarMovementPenalty[adjustedPlayerCellPositon.x, adjustedPlayerCellPositon.y], currentRoom.instantiatedRoom.aStarItemObstacles[adjustedPlayerCellPositon.x, adjustedPlayerCellPositon.y]);
-        int obstacle = SceneInfo.aStarMovementPenalty[adjustedPlayerCellPositon.x, adjustedPlayerCellPositon.y];
+        int obstacle = LocationInfo.AStarMovementPenalty[adjustedPlayerCellPositon.x, adjustedPlayerCellPositon.y];
 
         // if the player isn't on a cell square marked as an obstacle then return that position
         if (obstacle != 0)
@@ -211,7 +213,7 @@ public class EnemyMovementAI : MonoBehaviour
                 try
                 {
                     //obstacle = Mathf.Min(currentRoom.instantiatedRoom.aStarMovementPenalty[adjustedPlayerCellPositon.x + surroundingPositionList[index].x, adjustedPlayerCellPositon.y + surroundingPositionList[index].y], currentRoom.instantiatedRoom.aStarItemObstacles[adjustedPlayerCellPositon.x + surroundingPositionList[index].x, adjustedPlayerCellPositon.y + surroundingPositionList[index].y]);
-                    obstacle = SceneInfo.aStarMovementPenalty[adjustedPlayerCellPositon.x + surroundingPositionList[index].x, adjustedPlayerCellPositon.y + surroundingPositionList[index].y];
+                    obstacle = LocationInfo.AStarMovementPenalty[adjustedPlayerCellPositon.x + surroundingPositionList[index].x, adjustedPlayerCellPositon.y + surroundingPositionList[index].y];
 
                     // If no obstacle return the cell position to navigate to
                     if (obstacle != 0)
