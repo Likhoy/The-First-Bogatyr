@@ -37,7 +37,7 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
     /// </summary>
     private IEnumerator SpawnEnemiesRoutine()
     {
-        Grid grid = SceneInfo.Grid;
+        Grid grid = LocationInfo.Grid;
 
         // Check we have somewhere to spawn the enemies
         if (true)//SceneInfo.spawnPositionArray.Length > 0)
@@ -49,7 +49,7 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
                 Vector3Int cellPosition = new Vector3Int(10, 10, 0); //(Vector3Int)SceneInfo.spawnPositionArray[necesary_index];
 
                 // Create Enemy - Get next enemy type to spawn 
-                CreateEnemy(enemyDetails, grid.CellToWorld(cellPosition));
+                CreateEnemy(enemyDetails, grid.CellToWorld(cellPosition)); // necessary enemy details
 
                 yield return null; // new WaitForSeconds(GetEnemySpawnInterval());
             }

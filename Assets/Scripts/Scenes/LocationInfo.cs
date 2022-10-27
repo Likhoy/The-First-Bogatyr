@@ -1,11 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public static class SceneInfo
+public static class LocationInfo
 {
     private static Grid grid;
+
+    // use this 2d array to store movement penalties from the tilemaps to be used in AStar pathfinding
+    private static int[,] aStarMovementPenalty = new int[0, 0];
+    // use to store position of moveable items that are obstacles
+    private static int[,] aStarItemObstacles = new int[0, 0];
+
+    public static Vector2Int locationLowerBounds = new Vector2Int(-200, -200);
+    public static Vector2Int locationUpperBounds = new Vector2Int(200, 200);
 
     public static Grid Grid
     {
@@ -17,13 +26,26 @@ public static class SceneInfo
         }
     }
 
-    public static int[,] aStarMovementPenalty;  // use this 2d array to store movement penalties from the tilemaps to be used in AStar pathfinding
-    public static int[,] aStarItemObstacles; // use to store position of moveable items that are obstacles
+    public static int[,] AStarMovementPenalty
+    {
+        get 
+        { 
+            if (aStarMovementPenalty.Length == 0)
+                AddObstacles();
+            return aStarMovementPenalty;
+        }
+    } 
+    public static int[,] AStarItemObstacles
+    {
+        get; set;
+    }
+
+
 
     /// <summary>
     /// Update obstacles used by AStar pathfinmding.
     /// </summary>
-    private static void AddObstaclesAndPreferredPaths()
+    private static void AddObstacles()
     {
         // this array will be populated with wall obstacles 
         aStarMovementPenalty = new int[Settings.defaultGridNodesHeightForPathBuilding, Settings.defaultGridNodesWidthForPathBuilding];

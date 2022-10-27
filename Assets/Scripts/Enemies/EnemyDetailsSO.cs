@@ -23,14 +23,14 @@ public class EnemyDetailsSO : ScriptableObject
     #endregion
     public float chaseDistance = 50f;
 
-    #region Header ENEMY MATERIAL
+    /*#region Header ENEMY MATERIAL
     [Space(10)]
     [Header("ENEMY MATERIAL")]
     #endregion
     #region Tooltip
     [Tooltip("This is the standard lit shader material for the enemy (used after the enemy materializes")]
     #endregion
-    public Material enemyStandardMaterial;
+    public Material enemyStandardMaterial;*/
 
     /*#region Header ENEMY MATERIALIZE SETTINGS
     [Space(10)]
@@ -110,7 +110,7 @@ public class EnemyDetailsSO : ScriptableObject
         HelperUtilities.ValidateCheckEmptyString(this, nameof(enemyName), enemyName);
         HelperUtilities.ValidateCheckNullValue(this, nameof(enemyPrefab), enemyPrefab);
         HelperUtilities.ValidateCheckPositiveValue(this, nameof(chaseDistance), chaseDistance, false);
-        HelperUtilities.ValidateCheckNullValue(this, nameof(enemyStandardMaterial), enemyStandardMaterial);
+        //HelperUtilities.ValidateCheckNullValue(this, nameof(enemyStandardMaterial), enemyStandardMaterial);
         //HelperUtilities.ValidateCheckPositiveValue(this, nameof(enemyMaterializeTime), enemyMaterializeTime, true);
         //HelperUtilities.ValidateCheckNullValue(this, nameof(enemyMaterializeShader), enemyMaterializeShader);
         HelperUtilities.ValidateCheckPositiveRange(this, nameof(firingIntervalMin), firingIntervalMin, nameof(firingIntervalMax), firingIntervalMax, false);

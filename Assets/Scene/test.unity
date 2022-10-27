@@ -1522,7 +1522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e618ff4d63a09b4499899e4c6c766314, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyDetails: {fileID: 0}
+  enemyDetails: {fileID: 11400000, guid: 4829fcddfb78ec649ae56ed9bc7ab1b3, type: 2}
 --- !u!4 &667166585
 Transform:
   m_ObjectHideFlags: 0
@@ -3356,8 +3356,29 @@ Transform:
   - {fileID: 1851356739}
   - {fileID: 585905017}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1730925029 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6461650756046700630, guid: c419607579c3f844a871583bfd0cdcdb, type: 3}
+  m_PrefabInstance: {fileID: 2063168625}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1730925043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1730925029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e903cd820d2af54b8c2fbf6364aab68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cinemachineVirtualCamera: {fileID: 331741413}
+  isDialogReady: 1
+  isDialogPlaying: 0
+  optionButtonsAreBeingDisplayed: 0
 --- !u!1 &1851356738
 GameObject:
   m_ObjectHideFlags: 0
@@ -3480,7 +3501,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6461650756046700634, guid: c419607579c3f844a871583bfd0cdcdb, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6461650756046700634, guid: c419607579c3f844a871583bfd0cdcdb, type: 3}
       propertyPath: m_LocalPosition.x

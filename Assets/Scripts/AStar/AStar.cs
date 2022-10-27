@@ -10,13 +10,22 @@ public static class AStar
     /// </summary>
     public static Stack<Vector3> BuildPath(Vector3Int startGridPosition, Vector3Int endGridPosition)
     {
+        // Adjust positions by lower bounds
+        startGridPosition -= (Vector3Int)LocationInfo.locationLowerBounds;
+        endGridPosition -= (Vector3Int)LocationInfo.locationLowerBounds;
 
         // Create open list and closed hashset
         List<Node> openNodeList = new List<Node>();
         HashSet<Node> closedNodeHashSet = new HashSet<Node>();
 
         // Create gridnodes for path finding
-        GridNodes gridNodes = new GridNodes(Settings.defaultGridNodesWidthForPathBuilding, Settings.defaultGridNodesHeightForPathBuilding);
+        GridNodes gridNodes = new GridNodes(LocationInfo.locationUpperBounds.x - LocationInfo.locationLowerBounds.x + 1, LocationInfo.locationUpperBounds.y - LocationInfo.locationLowerBounds.y + 1);
+
+        /*Debug.Log(startGridPosition.x);
+        Debug.Log(startGridPosition.y);
+
+        Debug.Log(endGridPosition.x);
+        Debug.Log(endGridPosition.y);*/
 
         Node startNode = gridNodes.GetGridNode(startGridPosition.x, startGridPosition.y);
         Node targetNode = gridNodes.GetGridNode(endGridPosition.x, endGridPosition.y);
@@ -77,13 +86,13 @@ public static class AStar
         Node nextNode = targetNode;
 
         // Get mid point of cell
-        Vector3 cellMidPoint = SceneInfo.Grid.cellSize * 0.5f;
+        Vector3 cellMidPoint = LocationInfo.Grid.cellSize * 0.5f;
         cellMidPoint.z = 0f;
 
         while (nextNode != null)
         {
             // Convert grid position to world position
-            Vector3 worldPosition = SceneInfo.Grid.CellToWorld(new Vector3Int(nextNode.gridPosition.x, nextNode.gridPosition.y, 0));
+            Vector3 worldPosition = LocationInfo.Grid.CellToWorld(new Vector3Int(nextNode.gridPosition.x + LocationInfo.locationLowerBounds.x, nextNode.gridPosition.y + LocationInfo.locationLowerBounds.y, 0));
 
             // Set the world position to the middle of the grid cell
             worldPosition += cellMidPoint;
@@ -123,7 +132,7 @@ public static class AStar
                     // Get the movement penalty
                     // Unwalkable paths have a value of 0. Default movement penalty is set in
                     // Settings and applies to other grid squares.
-                    int movementPenaltyForGridSpace = SceneInfo.aStarMovementPenalty[validNeighbourNode.gridPosition.x, validNeighbourNode.gridPosition.y];
+                    int movementPenaltyForGridSpace = LocationInfo.AStarMovementPenalty[validNeighbourNode.gridPosition.x, validNeighbourNode.gridPosition.y];
 
                     newCostToNeighbour = currentNode.gCost + GetDistance(currentNode, validNeighbourNode) + movementPenaltyForGridSpace;
 
@@ -176,7 +185,7 @@ public static class AStar
 
         // check for obstacle at that position
         //int movementPenaltyForGridSpace = instantiatedRoom.aStarMovementPenalty[neighbourNodeXPosition, neighbourNodeYPosition];
-        int movementPenaltyForGridSpace = SceneInfo.aStarMovementPenalty[neighbourNodeXPosition, neighbourNodeYPosition];
+        int movementPenaltyForGridSpace = LocationInfo.AStarMovementPenalty[neighbourNodeXPosition, neighbourNodeYPosition];
 
         // check for moveable obstacle at that position
         //int itemObstacleForGridSpace = instantiatedRoom.aStarItemObstacles[neighbourNodeXPosition, neighbourNodeYPosition];
