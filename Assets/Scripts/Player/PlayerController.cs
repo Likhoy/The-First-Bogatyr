@@ -16,9 +16,6 @@ public class PlayerController : MonoBehaviour
 
     private bool isPlayerMovementDisabled = false;
 
-    [HideInInspector] public bool isDialogPlaying = false; // better place it in game manager class (dialog manager)
-    [HideInInspector] public bool optionButtonsAreBeingDisplayed = false; // better place it in game manager class (dialog manager)
-
     private void Awake()
     {
         // Load components
@@ -104,15 +101,14 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        player.dialogStartedEvent.CallDialogStartedEvent();
-        isDialogPlaying = true;
-        DisablePlayer();
+        if (DialogManager.Instance.isDialogReady)
+            player.dialogStartedEvent.CallDialogStartedEvent(); // maybe better in NPC class
     }
 
     private void DialogInput()
     {
         // check for mouse down event - switch dialog text
-        if (isDialogPlaying && Input.GetMouseButtonDown(0) && !optionButtonsAreBeingDisplayed)
+        if (DialogManager.Instance.isDialogPlaying && Input.GetMouseButtonDown(0) && !DialogManager.Instance.optionButtonsAreBeingDisplayed)
         {
             player.dialogProceededEvent.CallDialogProceedEvent();
         }
