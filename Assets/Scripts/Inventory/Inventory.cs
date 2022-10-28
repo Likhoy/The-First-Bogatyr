@@ -7,7 +7,7 @@ public class Inventory : MonoBehaviour
     [SerializeField]
     InventorySlot[] slots;
 
-    void ChooseSlot()
+    void AddItem(IItem item)
     {
 
     }

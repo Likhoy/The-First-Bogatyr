@@ -4,5 +4,7 @@ using UnityEngine;
 
 public class InventorySlot : MonoBehaviour
 {
-    
+    int id;
+    Sprite sprite;
+    int count;
 }
