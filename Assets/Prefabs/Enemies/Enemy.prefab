@@ -18,10 +18,9 @@ GameObject:
   - component: {fileID: 6381877461751290870}
   - component: {fileID: 1488601153562806237}
   - component: {fileID: 3030761077695155416}
-  - component: {fileID: 5115395332994618033}
   - component: {fileID: 8728984708709163566}
   - component: {fileID: 5776993828723887329}
-  - component: {fileID: -1858047842954552831}
+  - component: {fileID: 944632650330016525}
   - component: {fileID: -4535156170737120037}
   - component: {fileID: -7372112467778457580}
   - component: {fileID: 5592646621270956941}
@@ -165,17 +164,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbf335ddbf373114791401ad4fdfdeeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!210 &5115395332994618033
-SortingGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1767373786716691614}
-  m_Enabled: 1
-  m_SortingLayerID: -60221129
-  m_SortingLayer: 1
-  m_SortingOrder: 0
 --- !u!212 &8728984708709163566
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -248,8 +236,8 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!58 &-1858047842954552831
-CircleCollider2D:
+--- !u!61 &944632650330016525
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -261,9 +249,19 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.13249087, y: 0.66435975}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 4, y: 4}
+    newSize: {x: 2.56, y: 2.56}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Size: {x: 1.350183, y: 1.0878271}
+  m_EdgeRadius: 0
 --- !u!60 &-4535156170737120037
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -274,14 +272,14 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.56, y: 2.56}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 4, y: 4}
     newSize: {x: 2.56, y: 2.56}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -289,11 +287,24 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0, y: 1}
-      - {x: -0.95105654, y: 0.30901697}
-      - {x: -0.5877852, y: -0.80901706}
-      - {x: 0.58778536, y: -0.80901694}
-      - {x: 0.9510565, y: 0.30901712}
+    - - {x: 0.14270619, y: 0.05716595}
+      - {x: 0.4074192, y: 0.03838262}
+      - {x: 0.2769932, y: 0.8312461}
+      - {x: 0.460959, y: 0.91204715}
+      - {x: 0.46226427, y: 2.0467978}
+      - {x: 0.18387878, y: 2.3275046}
+      - {x: 0.3310195, y: 2.790131}
+      - {x: 0.32334483, y: 3.265549}
+      - {x: -0.079388306, y: 3.561994}
+      - {x: -0.52474487, y: 3.458444}
+      - {x: -0.47689635, y: 2.6677606}
+      - {x: -0.26424164, y: 2.347521}
+      - {x: -0.7345964, y: 2.0362637}
+      - {x: -0.69673944, y: 0.9026626}
+      - {x: -0.370732, y: 0.68719536}
+      - {x: -0.42151588, y: 0.016989112}
+      - {x: -0.21307324, y: 0.020683855}
+      - {x: 0.0018399805, y: 0.9524103}
 --- !u!114 &-7372112467778457580
 MonoBehaviour:
   m_ObjectHideFlags: 0
