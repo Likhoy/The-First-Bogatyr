@@ -7,6 +7,7 @@ TagManager:
   - WaterTiles
   - GroundTiles
   - SolidTiles
+  - NPC
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - Water
   - UI
   - Camera 1
-  - 
+  - Enemy
   - 
   - 
   - 
@@ -43,4 +44,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Instances
+    uniqueID: 4234746167
     locked: 0
