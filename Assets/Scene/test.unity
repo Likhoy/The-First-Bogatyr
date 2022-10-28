@@ -454,7 +454,7 @@ TilemapRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0.5, y: 0.5, z: 0}
+  m_ChunkCullingBounds: {x: 3.5, y: 3.5, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
@@ -914,7 +914,7 @@ TilemapRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0.5, y: 0.5, z: 0}
+  m_ChunkCullingBounds: {x: 3.5, y: 3.5, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
@@ -1864,7 +1864,7 @@ Transform:
   - {fileID: 259665029}
   - {fileID: 1375919459}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &941434210
 GameObject:
@@ -2828,7 +2828,7 @@ TilemapRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0.5, y: 0.5, z: 0}
+  m_ChunkCullingBounds: {x: 3.5, y: 3.5, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
@@ -3489,27 +3489,39 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1291679055034162388, guid: c419607579c3f844a871583bfd0cdcdb, type: 3}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6461650756046700630, guid: c419607579c3f844a871583bfd0cdcdb, type: 3}
       propertyPath: m_Name
       value: TestNPC
       objectReference: {fileID: 0}
+    - target: {fileID: 6461650756046700630, guid: c419607579c3f844a871583bfd0cdcdb, type: 3}
+      propertyPath: m_TagString
+      value: NPC
+      objectReference: {fileID: 0}
     - target: {fileID: 6461650756046700633, guid: c419607579c3f844a871583bfd0cdcdb, type: 3}
       propertyPath: m_Mass
-      value: 3.1415927
+      value: 1000000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6461650756046700633, guid: c419607579c3f844a871583bfd0cdcdb, type: 3}
+      propertyPath: m_UseAutoMass
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6461650756046700633, guid: c419607579c3f844a871583bfd0cdcdb, type: 3}
+      propertyPath: m_GravityScale
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6461650756046700634, guid: c419607579c3f844a871583bfd0cdcdb, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6461650756046700634, guid: c419607579c3f844a871583bfd0cdcdb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.83
+      value: 4.53
       objectReference: {fileID: 0}
     - target: {fileID: 6461650756046700634, guid: c419607579c3f844a871583bfd0cdcdb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.78
+      value: 4.33
       objectReference: {fileID: 0}
     - target: {fileID: 6461650756046700634, guid: c419607579c3f844a871583bfd0cdcdb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3545,7 +3557,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6461650756046700635, guid: c419607579c3f844a871583bfd0cdcdb, type: 3}
       propertyPath: m_SortingOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6461650756046700632, guid: c419607579c3f844a871583bfd0cdcdb, type: 3}
@@ -3553,6 +3565,16 @@ PrefabInstance:
     - {fileID: -6228772858118323849, guid: c419607579c3f844a871583bfd0cdcdb, type: 3}
     - {fileID: 7202934883250967376, guid: c419607579c3f844a871583bfd0cdcdb, type: 3}
     - {fileID: 407539555192285334, guid: c419607579c3f844a871583bfd0cdcdb, type: 3}
+    - {fileID: 2376470357354401345, guid: c419607579c3f844a871583bfd0cdcdb, type: 3}
+    - {fileID: 5064786101908609278, guid: c419607579c3f844a871583bfd0cdcdb, type: 3}
+    - {fileID: 903016447245790926, guid: c419607579c3f844a871583bfd0cdcdb, type: 3}
+    - {fileID: 7058569525465512800, guid: c419607579c3f844a871583bfd0cdcdb, type: 3}
+    - {fileID: 2990024150162726066, guid: c419607579c3f844a871583bfd0cdcdb, type: 3}
+    - {fileID: 393971044450647451, guid: c419607579c3f844a871583bfd0cdcdb, type: 3}
+    - {fileID: 6004049457526313521, guid: c419607579c3f844a871583bfd0cdcdb, type: 3}
+    - {fileID: 4978338112912550753, guid: c419607579c3f844a871583bfd0cdcdb, type: 3}
+    - {fileID: 3688367546688098190, guid: c419607579c3f844a871583bfd0cdcdb, type: 3}
+    - {fileID: 6461650756046700633, guid: c419607579c3f844a871583bfd0cdcdb, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c419607579c3f844a871583bfd0cdcdb, type: 3}
 --- !u!1 &2078507691
 GameObject:

@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     {
         
         DialogInput();
-        
+
         /*// Movement input
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");*/
@@ -101,7 +101,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (DialogManager.Instance.isDialogReady)
+        if (collision.tag == "NPC" && DialogManager.Instance.isDialogReady)
             player.dialogStartedEvent.CallDialogStartedEvent(); // maybe better in NPC class
     }
 

@@ -12,11 +12,10 @@ using UnityEngine.Rendering;
 [RequireComponent(typeof(MovementToPosition))]
 [RequireComponent(typeof(IdleEvent))]
 [RequireComponent(typeof(Idle))]
-[RequireComponent(typeof(SortingGroup))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(CircleCollider2D))]
+[RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(PolygonCollider2D))]
 #endregion REQUIRE COMPONENTS
 
@@ -34,7 +33,7 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public MovementToPositionEvent movementToPositionEvent;
     [HideInInspector] public IdleEvent idleEvent;
     // private MaterializeEffect materializeEffect;
-    private CircleCollider2D circleCollider2D;
+    private BoxCollider2D boxCollider2D;
     private PolygonCollider2D polygonCollider2D;
     [HideInInspector] public SpriteRenderer[] spriteRendererArray;
     [HideInInspector] public Animator animator;
@@ -52,7 +51,7 @@ public class Enemy : MonoBehaviour
         movementToPositionEvent = GetComponent<MovementToPositionEvent>();
         idleEvent = GetComponent<IdleEvent>();
         // materializeEffect = GetComponent<MaterializeEffect>();
-        circleCollider2D = GetComponent<CircleCollider2D>();
+        boxCollider2D = GetComponent<BoxCollider2D>();
         polygonCollider2D = GetComponent<PolygonCollider2D>();
         spriteRendererArray = GetComponentsInChildren<SpriteRenderer>();
         animator = GetComponent<Animator>();
@@ -177,7 +176,7 @@ public class Enemy : MonoBehaviour
     private void EnemyEnable(bool isEnabled)
     {
         // Enable/Disable colliders
-        circleCollider2D.enabled = isEnabled;
+        boxCollider2D.enabled = isEnabled;
         polygonCollider2D.enabled = isEnabled;
 
         // Enable/Disable movement AI

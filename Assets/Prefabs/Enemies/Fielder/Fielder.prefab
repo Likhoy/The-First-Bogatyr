@@ -7,6 +7,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -4535156170737120037, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4535156170737120037, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1858047842954552831, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
+      propertyPath: m_Radius
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: -1858047842954552831, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1858047842954552831, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 1767373786716691614, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
       propertyPath: m_Name
       value: Fielder
