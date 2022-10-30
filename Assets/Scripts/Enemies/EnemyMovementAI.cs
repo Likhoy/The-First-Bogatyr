@@ -19,7 +19,7 @@ public class EnemyMovementAI : MonoBehaviour
     private float currentEnemyPathRebuildCooldown;
     private WaitForFixedUpdate waitForFixedUpdate;
     [HideInInspector] public float moveSpeed;
-    private bool chasePlayer = false;
+    //private bool chasePlayer = false;
     [HideInInspector] public int updateFrameNumber = 1; // default value.  This is set by the enemy spawner.
     private List<Vector2Int> surroundingPositionList = new List<Vector2Int>();
 
@@ -46,24 +46,39 @@ public class EnemyMovementAI : MonoBehaviour
         MoveEnemy();
     }
 
+    /// <summary>
+    /// Handle enemy movement, while enemy is alive
+    /// </summary>
+    private void MoveEnemy()
+    {
+        // Check distance to player to see if enemy should start chasing
+        if (Vector3.Distance(transform.position, GameManager.Instance.GetPlayer().GetPlayerPosition()) < enemy.enemyDetails.chaseDistance)
+        {
+            // Check if player is in sight area 
+            // if (EnemyVisionAI.PlayerIsInSightArea())
+            ChasePlayer();
+        }
+        else
+        {
+            PatrolTheArea();
+        }
+    }
+
+    /// <summary>
+    /// Patrol specific area to find their player - if enemy is outside this area and it isn't chasing the player return to area
+    /// </summary>
+    private void PatrolTheArea()
+    {
+        
+    }
 
     /// <summary>
     /// Use AStar pathfinding to build a path to the player - and then move the enemy to each grid location on the path
     /// </summary>
-    private void MoveEnemy()
+    private void ChasePlayer()
     {
         // Movement cooldown timer
         currentEnemyPathRebuildCooldown -= Time.deltaTime;
-
-        // Check distance to player to see if enemy should start chasing
-        if (!chasePlayer && Vector3.Distance(transform.position, GameManager.Instance.GetPlayer().GetPlayerPosition()) < enemy.enemyDetails.chaseDistance)
-        {
-            chasePlayer = true;
-        }
-
-        // If not close enough to chase player then return
-        if (!chasePlayer)
-            return;
 
         // Only process A Star path rebuild on certain frames to spread the load between enemies
         if (Time.frameCount % Settings.targetFrameRateToSpreadPathfindingOver != updateFrameNumber) return;
