@@ -32,6 +32,8 @@ public class EnemyMovementAI : MonoBehaviour
     private Vector2 _maxPosition;
     private bool _stopTimer = false;
 
+    private bool isSetTargetPoint = false;
+
     private void Awake()
     {
         // Load components
@@ -78,9 +80,11 @@ public class EnemyMovementAI : MonoBehaviour
     /// </summary>
     private void PatrolTheArea()
     {
-        enemy.movementToPositionEvent.CallMovementToPositionEvent(randomPosition ,transform.position, moveSpeed, (randomPosition - transform.position).normalized);
+        if (isSetTargetPoint)
+            enemy.movementToPositionEvent.CallMovementToPositionEvent(randomPosition, transform.position, moveSpeed, (randomPosition - transform.position).normalized);
         if (Vector2.Distance(transform.position, randomPosition) < 0.5f && !_stopTimer)
         {
+            isSetTargetPoint = false;
             _stopTimer = true;
             Invoke(nameof(SetRandomTargetPoint), 3);
         }
@@ -94,8 +98,10 @@ public class EnemyMovementAI : MonoBehaviour
         if(Vector2.Distance(transform.position, randomPosition) < 3)
         {
             SetRandomTargetPoint();
+            isSetTargetPoint = true;
             return;
         }
+        isSetTargetPoint = true;
         _stopTimer = false;
     }
 
