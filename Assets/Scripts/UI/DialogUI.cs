@@ -82,7 +82,7 @@ public class DialogUI : MonoBehaviour
         {
             button.gameObject.SetActive(false);
         }
-        player.playerControl.optionButtonsAreBeingDisplayed = false;
+        DialogManager.Instance.optionButtonsAreBeingDisplayed = false;
     }
 
     private void DisplayFirstStatementOptions()
@@ -147,8 +147,7 @@ public class DialogUI : MonoBehaviour
 
     private void StopDialog()
     {
-        player.playerControl.isDialogPlaying = false;
-        player.playerControl.EnablePlayer();
+        DialogManager.Instance.StopDialogStage();
         spaceAnimator.SetBool(Settings.spaceOpen, false);
         dialogText.text = "";
         currentNodes = null;
@@ -159,7 +158,7 @@ public class DialogUI : MonoBehaviour
         if (statementOptions.Count > 4)
             Debug.Log("More then 4 statement options can't be processed");
 
-        player.playerControl.optionButtonsAreBeingDisplayed = true;
+        DialogManager.Instance.optionButtonsAreBeingDisplayed = true;
         dialogText.text = "";
 
         int i = 0;
