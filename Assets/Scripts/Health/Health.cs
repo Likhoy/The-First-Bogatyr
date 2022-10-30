@@ -176,11 +176,30 @@ public class Health : MonoBehaviour
     /// <summary>
     /// Increase health by specified percent
     /// </summary>
-    public void AddHealth(int healthPercent)
+    public void AddHealth(float healthPercent)
     {
         int healthIncrease = Mathf.RoundToInt((startingHealth * healthPercent) / 100f);
 
         int totalHealth = currentHealth + healthIncrease;
+
+        if (totalHealth > startingHealth)
+        {
+            currentHealth = startingHealth;
+        }
+        else
+        {
+            currentHealth = totalHealth;
+        }
+
+        CallHealthEvent(0);
+    }
+
+    /// <summary>
+    /// Increase health by specified value
+    /// </summary>
+    public void AddHealth(int healthBoost)
+    {
+        int totalHealth = currentHealth + healthBoost;
 
         if (totalHealth > startingHealth)
         {
