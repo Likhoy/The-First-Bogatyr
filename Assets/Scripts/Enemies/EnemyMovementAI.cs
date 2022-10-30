@@ -19,7 +19,7 @@ public class EnemyMovementAI : MonoBehaviour
     private float currentEnemyPathRebuildCooldown;
     private WaitForFixedUpdate waitForFixedUpdate;
     [HideInInspector] public float moveSpeed;
-    //private bool chasePlayer = false;
+    private bool chasePlayer = false;
     [HideInInspector] public int updateFrameNumber = 1; // default value.  This is set by the enemy spawner.
     private List<Vector2Int> surroundingPositionList = new List<Vector2Int>();
 
@@ -27,6 +27,7 @@ public class EnemyMovementAI : MonoBehaviour
     private Vector2 _minPosition;
 
     private Vector3 randomPosition;
+    private Vector2 tempPosition;
 
     [SerializeField] 
     private Vector2 _maxPosition;
@@ -49,6 +50,7 @@ public class EnemyMovementAI : MonoBehaviour
 
         // Reset player reference position
         playerReferencePosition = GameManager.Instance.GetPlayer().GetPlayerPosition();
+        
         SetRandomTargetPoint();
     }
 
@@ -68,9 +70,17 @@ public class EnemyMovementAI : MonoBehaviour
             // Check if player is in sight area 
             // if (EnemyVisionAI.PlayerIsInSightArea())
             ChasePlayer();
+            if (!chasePlayer)
+                chasePlayer = true;
         }
         else
         {
+            if (chasePlayer)
+            {
+                randomPosition = new Vector3(_maxPosition.x - _minPosition.x, _maxPosition.y - _minPosition.y, 0);
+                StopCoroutine(moveEnemyRoutine);
+                chasePlayer = false;
+            }
             PatrolTheArea();
         }
     }
@@ -82,10 +92,9 @@ public class EnemyMovementAI : MonoBehaviour
     {
         if (isSetTargetPoint)
             enemy.movementToPositionEvent.CallMovementToPositionEvent(randomPosition, transform.position, moveSpeed, (randomPosition - transform.position).normalized);
-        if (Vector2.Distance(transform.position, randomPosition) < 0.5f && !_stopTimer)
+        if (isSetTargetPoint && Vector2.Distance(transform.position, randomPosition) < 0.2f)
         {
             isSetTargetPoint = false;
-            _stopTimer = true;
             Invoke(nameof(SetRandomTargetPoint), 3);
         }
     }
@@ -93,16 +102,12 @@ public class EnemyMovementAI : MonoBehaviour
 
     private void SetRandomTargetPoint()
     {
-        randomPosition = new Vector3(Random.Range(_minPosition.x, _maxPosition.x),
-        Random.Range(_minPosition.y, _maxPosition.y), 0);//рандомный выбор позиции
-        if(Vector2.Distance(transform.position, randomPosition) < 3)
+        randomPosition = new Vector3(Random.Range(_minPosition.x, _maxPosition.x), Random.Range(_minPosition.y, _maxPosition.y), 0); // рандомный выбор позиции
+        while (Vector2.Distance(transform.position, randomPosition) < 3f)
         {
-            SetRandomTargetPoint();
-            isSetTargetPoint = true;
-            return;
+            randomPosition = new Vector3(Random.Range(_minPosition.x, _maxPosition.x), Random.Range(_minPosition.y, _maxPosition.y), 0); // рандомный выбор позиции
         }
         isSetTargetPoint = true;
-        _stopTimer = false;
     }
 
     /// <summary>
