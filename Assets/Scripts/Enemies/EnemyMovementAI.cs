@@ -23,6 +23,15 @@ public class EnemyMovementAI : MonoBehaviour
     [HideInInspector] public int updateFrameNumber = 1; // default value.  This is set by the enemy spawner.
     private List<Vector2Int> surroundingPositionList = new List<Vector2Int>();
 
+    [SerializeField] 
+    private Vector2 _minPosition;
+
+    private Vector3 randomPosition;
+
+    [SerializeField] 
+    private Vector2 _maxPosition;
+    private bool _stopTimer = false;
+
     private void Awake()
     {
         // Load components
@@ -38,7 +47,7 @@ public class EnemyMovementAI : MonoBehaviour
 
         // Reset player reference position
         playerReferencePosition = GameManager.Instance.GetPlayer().GetPlayerPosition();
-
+        SetRandomTargetPoint();
     }
 
     private void Update()
@@ -69,7 +78,25 @@ public class EnemyMovementAI : MonoBehaviour
     /// </summary>
     private void PatrolTheArea()
     {
-        
+        enemy.movementToPositionEvent.CallMovementToPositionEvent(randomPosition ,transform.position, moveSpeed, (randomPosition - transform.position).normalized);
+        if (Vector2.Distance(transform.position, randomPosition) < 0.5f && !_stopTimer)
+        {
+            _stopTimer = true;
+            Invoke(nameof(SetRandomTargetPoint), 3);
+        }
+    }
+
+
+    private void SetRandomTargetPoint()
+    {
+        randomPosition = new Vector3(Random.Range(_minPosition.x, _maxPosition.x),
+        Random.Range(_minPosition.y, _maxPosition.y), 0);//рандомный выбор позиции
+        if(Vector2.Distance(transform.position, randomPosition) < 3)
+        {
+            SetRandomTargetPoint();
+            return;
+        }
+        _stopTimer = false;
     }
 
     /// <summary>
