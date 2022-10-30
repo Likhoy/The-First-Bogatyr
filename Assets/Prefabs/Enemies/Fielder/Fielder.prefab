@@ -76,6 +76,22 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5592646621270956941, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
+      propertyPath: _maxPosition.x
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5592646621270956941, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
+      propertyPath: _maxPosition.y
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5592646621270956941, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
+      propertyPath: _minPosition.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5592646621270956941, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
+      propertyPath: _minPosition.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5592646621270956941, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
       propertyPath: movementDetails
       value: 
       objectReference: {fileID: 11400000, guid: af7a2bcc060b2b341b5c02a8192a525a, type: 2}
