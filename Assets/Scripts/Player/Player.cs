@@ -3,6 +3,7 @@ using UnityEngine;
 #region REQUIRE COMPONENTS
 [RequireComponent(typeof(HealthEvent))]
 [RequireComponent(typeof(Health))]
+[RequireComponent(typeof(ReceiveContactDamage))]
 [RequireComponent(typeof(DestroyedEvent))]
 [RequireComponent(typeof(Destroyed))]
 [RequireComponent(typeof(MovementByVelocityEvent))]
@@ -13,6 +14,7 @@ using UnityEngine;
 [RequireComponent(typeof(DialogStartedEvent))]
 [RequireComponent(typeof(DialogProceededEvent))]
 [RequireComponent(typeof(PlayerController))]
+[RequireComponent(typeof(SpriteRenderer))]
 #endregion REQUIRE COMPONENTS
 
 public class Player : MonoBehaviour
@@ -27,6 +29,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public DialogStartedEvent dialogStartedEvent;
     [HideInInspector] public DialogProceededEvent dialogProceededEvent;
     [HideInInspector] public PlayerController playerControl;
+    [HideInInspector] public SpriteRenderer spriteRenderer;
 
     private void Awake()
     {
@@ -40,6 +43,7 @@ public class Player : MonoBehaviour
         dialogStartedEvent = GetComponent<DialogStartedEvent>();
         dialogProceededEvent = GetComponent<DialogProceededEvent>();
         playerControl = GetComponent<PlayerController>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     /// <summary>

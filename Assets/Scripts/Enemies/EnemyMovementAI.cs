@@ -25,15 +25,11 @@ public class EnemyMovementAI : MonoBehaviour
 
     [SerializeField] 
     private Vector2 _minPosition;
-
-    private Vector3 randomPosition;
-    private Vector2 tempPosition;
-
-    [SerializeField] 
+    [SerializeField]
     private Vector2 _maxPosition;
-    private bool _stopTimer = false;
 
-    private bool isSetTargetPoint = false;
+    private Vector3 randomPosition; // for choosing patroling path
+    private bool isSetTargetPoint = false; // patroling path has been chosen
 
     private void Awake()
     {
@@ -78,7 +74,8 @@ public class EnemyMovementAI : MonoBehaviour
             if (chasePlayer)
             {
                 randomPosition = new Vector3(_maxPosition.x - _minPosition.x, _maxPosition.y - _minPosition.y, 0);
-                StopCoroutine(moveEnemyRoutine);
+                if (moveEnemyRoutine != null)
+                    StopCoroutine(moveEnemyRoutine);
                 chasePlayer = false;
             }
             PatrolTheArea();
