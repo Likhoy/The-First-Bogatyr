@@ -88,13 +88,13 @@ public class EnemyDetailsSO : ScriptableObject
     #endregion
     public EnemyHealthDetails[] enemyHealthDetailsArray;*/
     #region Tooltip
-    [Tooltip("Select if has immunity period immediately after being hit.  If so specify the immunity time in seconds in the other field")]
+    [Tooltip("Select if has some effect period immediately after being hit.  If so specify the effect time in seconds in the other field")]
     #endregion
-    public bool isImmuneAfterHit = false;
+    public bool hasHitEffect = false;
     #region Tooltip
-    [Tooltip("Immunity time in seconds after being hit")]
+    [Tooltip("Hit effect time in seconds after being hit")]
     #endregion
-    public float hitImmunityTime;
+    public float hitEffectTime;
     #region Tooltip
     [Tooltip("Select to display a health bar for the enemy")]
     #endregion
@@ -116,9 +116,9 @@ public class EnemyDetailsSO : ScriptableObject
         HelperUtilities.ValidateCheckPositiveRange(this, nameof(firingIntervalMin), firingIntervalMin, nameof(firingIntervalMax), firingIntervalMax, false);
         HelperUtilities.ValidateCheckPositiveRange(this, nameof(firingDurationMin), firingDurationMin, nameof(firingDurationMax), firingDurationMax, false);
         // HelperUtilities.ValidateCheckEnumerableValues(this, nameof(enemyHealthDetailsArray), enemyHealthDetailsArray);
-        if (isImmuneAfterHit)
+        if (hasHitEffect)
         {
-            HelperUtilities.ValidateCheckPositiveValue(this, nameof(hitImmunityTime), hitImmunityTime, false);
+            HelperUtilities.ValidateCheckPositiveValue(this, nameof(hitEffectTime), hitEffectTime, false);
         }
     }
 
