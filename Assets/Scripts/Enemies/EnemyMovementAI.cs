@@ -23,6 +23,14 @@ public class EnemyMovementAI : MonoBehaviour
     [HideInInspector] public int updateFrameNumber = 1; // default value.  This is set by the enemy spawner.
     private List<Vector2Int> surroundingPositionList = new List<Vector2Int>();
 
+    [SerializeField] 
+    private Vector2 _minPosition;
+    [SerializeField]
+    private Vector2 _maxPosition;
+
+    private Vector3 randomPosition; // for choosing patroling path
+    private bool isSetTargetPoint = false; // patroling path has been chosen
+
     private void Awake()
     {
         // Load components
@@ -38,7 +46,8 @@ public class EnemyMovementAI : MonoBehaviour
 
         // Reset player reference position
         playerReferencePosition = GameManager.Instance.GetPlayer().GetPlayerPosition();
-
+        
+        SetRandomTargetPoint();
     }
 
     private void Update()
@@ -46,24 +55,65 @@ public class EnemyMovementAI : MonoBehaviour
         MoveEnemy();
     }
 
+    /// <summary>
+    /// Handle enemy movement, while enemy is alive
+    /// </summary>
+    private void MoveEnemy()
+    {
+        // Check distance to player to see if enemy should start chasing
+        if (Vector3.Distance(transform.position, GameManager.Instance.GetPlayer().GetPlayerPosition()) < enemy.enemyDetails.chaseDistance)
+        {
+            // Check if player is in sight area 
+            // if (EnemyVisionAI.PlayerIsInSightArea())
+            ChasePlayer();
+            if (!chasePlayer)
+                chasePlayer = true;
+        }
+        else
+        {
+            if (chasePlayer)
+            {
+                randomPosition = new Vector3(_maxPosition.x - _minPosition.x, _maxPosition.y - _minPosition.y, 0);
+                if (moveEnemyRoutine != null)
+                    StopCoroutine(moveEnemyRoutine);
+                chasePlayer = false;
+            }
+            PatrolTheArea();
+        }
+    }
+
+    /// <summary>
+    /// Patrol specific area to find their player - if enemy is outside this area and it isn't chasing the player return to area
+    /// </summary>
+    private void PatrolTheArea()
+    {
+        if (isSetTargetPoint)
+            enemy.movementToPositionEvent.CallMovementToPositionEvent(randomPosition, transform.position, moveSpeed, (randomPosition - transform.position).normalized);
+        if (isSetTargetPoint && Vector2.Distance(transform.position, randomPosition) < 0.2f)
+        {
+            isSetTargetPoint = false;
+            Invoke(nameof(SetRandomTargetPoint), 3);
+        }
+    }
+
+
+    private void SetRandomTargetPoint()
+    {
+        randomPosition = new Vector3(Random.Range(_minPosition.x, _maxPosition.x), Random.Range(_minPosition.y, _maxPosition.y), 0); // рандомный выбор позиции
+        while (Vector2.Distance(transform.position, randomPosition) < 3f)
+        {
+            randomPosition = new Vector3(Random.Range(_minPosition.x, _maxPosition.x), Random.Range(_minPosition.y, _maxPosition.y), 0); // рандомный выбор позиции
+        }
+        isSetTargetPoint = true;
+    }
 
     /// <summary>
     /// Use AStar pathfinding to build a path to the player - and then move the enemy to each grid location on the path
     /// </summary>
-    private void MoveEnemy()
+    private void ChasePlayer()
     {
         // Movement cooldown timer
         currentEnemyPathRebuildCooldown -= Time.deltaTime;
-
-        // Check distance to player to see if enemy should start chasing
-        if (!chasePlayer && Vector3.Distance(transform.position, GameManager.Instance.GetPlayer().GetPlayerPosition()) < enemy.enemyDetails.chaseDistance)
-        {
-            chasePlayer = true;
-        }
-
-        // If not close enough to chase player then return
-        if (!chasePlayer)
-            return;
 
         // Only process A Star path rebuild on certain frames to spread the load between enemies
         if (Time.frameCount % Settings.targetFrameRateToSpreadPathfindingOver != updateFrameNumber) return;
