@@ -17,15 +17,15 @@ public class Health : MonoBehaviour
     private int currentHealth;
     private HealthEvent healthEvent;
     private Player player;
-    private Coroutine immunityCoroutine;
-    private bool isImmuneAfterHit = false;
-    private float immunityTime = 0f;
+    private Coroutine effectCoroutine;
+    private bool hasHitEffect = false;
+    private float effectTime = 0f;
     private SpriteRenderer spriteRenderer = null;
-    private const float spriteFlashInterval = 0.2f;
+    private const float spriteFlashInterval = 0.33f;
     private WaitForSeconds WaitForSecondsSpriteFlashInterval = new WaitForSeconds(spriteFlashInterval);
 
     [HideInInspector] public bool isDamageable = true;
-    // [HideInInspector] public Enemy enemy;
+    [HideInInspector] public Enemy enemy;
 
     private void Awake()
     {
@@ -40,28 +40,28 @@ public class Health : MonoBehaviour
 
         // Attempt to load enemy / player components
         player = GetComponent<Player>();
-        // enemy = GetComponent<Enemy>();
+        enemy = GetComponent<Enemy>();
 
 
-        // Get player / enemy hit immunity details
-        /*if (player != null)
+        // Get player / enemy hit effect details
+        if (player != null)
         {
-            if (player.playerDetails.isImmuneAfterHit)
+            if (player.playerDetails.hasHitEffect)
             {
-                isImmuneAfterHit = true;
-                immunityTime = player.playerDetails.hitImmunityTime;
+                hasHitEffect = true;
+                effectTime = player.playerDetails.hitEffectTime;
                 spriteRenderer = player.spriteRenderer;
             }
         }
         else if (enemy != null)
         {
-            if (enemy.enemyDetails.isImmuneAfterHit)
+            if (enemy.enemyDetails.hasHitEffect)
             {
-                isImmuneAfterHit = true;
-                immunityTime = enemy.enemyDetails.hitImmunityTime;
+                hasHitEffect = true;
+                effectTime = enemy.enemyDetails.hitEffectTime;
                 spriteRenderer = enemy.spriteRendererArray[0];
             }
-        }*/
+        }
 
         // Enable the health bar if required
         /*if (enemy != null && enemy.enemyDetails.isHealthBarDisplayed == true && healthBar != null)
@@ -89,7 +89,8 @@ public class Health : MonoBehaviour
             currentHealth -= damageAmount;
             CallHealthEvent(damageAmount);
 
-            // PostHitImmunity();
+            if (hasHitEffect)
+                PostHitEffect();
 
             // Set health bar as the percentage of health remaining
             /*if (healthBar != null)
@@ -100,34 +101,36 @@ public class Health : MonoBehaviour
     }
 
     /// <summary>
-    /// Indicate a hit and give some post hit immunity
+    /// Indicate a hit and give some post hit effect
     /// </summary>
-    private void PostHitImmunity()
+    private void PostHitEffect()
     {
         // Check if gameobject is active - if not return
         if (gameObject.activeSelf == false)
             return;
 
-        // If there is post hit immunity then
+        if (effectCoroutine != null)
+            StopCoroutine(effectCoroutine);
+
+        // flash red and give period of immunity
+        effectCoroutine = StartCoroutine(PostHitEffectRoutine(effectTime, spriteRenderer));
+
+        /*// If there is post hit immunity then
         if (isImmuneAfterHit)
         {
-            if (immunityCoroutine != null)
-                StopCoroutine(immunityCoroutine);
-
-            // flash red and give period of immunity
-            immunityCoroutine = StartCoroutine(PostHitImmunityRoutine(immunityTime, spriteRenderer));
-        }
+            
+        }*/
 
     }
 
     /// <summary>
-    /// Coroutine to indicate a hit and give some post hit immunity
+    /// Coroutine to indicate a hit and give some post hit effect
     /// </summary>
-    private IEnumerator PostHitImmunityRoutine(float immunityTime, SpriteRenderer spriteRenderer)
+    private IEnumerator PostHitEffectRoutine(float effectTime, SpriteRenderer spriteRenderer)
     {
-        int iterations = Mathf.RoundToInt(immunityTime / spriteFlashInterval / 2f);
+        int iterations = Mathf.RoundToInt(effectTime / spriteFlashInterval / 2f);
 
-        isDamageable = false;
+        Debug.Log(iterations);
 
         while (iterations > 0)
         {
@@ -144,8 +147,6 @@ public class Health : MonoBehaviour
             yield return null;
 
         }
-
-        isDamageable = true;
 
     }
 
