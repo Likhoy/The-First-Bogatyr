@@ -13,8 +13,12 @@ public class PlayerController : MonoBehaviour
 
     private Player player;
     private float moveSpeed;
-
+    private Coroutine playerDashCoroutine;
+    private WaitForFixedUpdate waitForFixedUpdate;
+    private float playerDashCooldownTimer = 0f;
     private bool isPlayerMovementDisabled = false;
+
+    [HideInInspector] public bool isPlayerDashing = false;
 
     private void Awake()
     {
@@ -24,58 +28,40 @@ public class PlayerController : MonoBehaviour
         moveSpeed = movementDetails.GetMoveSpeed();
     }
 
+    private void Start()
+    {
+        // create waitForFixedUpdate for use in corountine
+        waitForFixedUpdate = new WaitForFixedUpdate();
+    }
+
     void Update()
     {
-        
         DialogInput();
 
-        /*// Movement input
-        horizontal = Input.GetAxisRaw("Horizontal");
-        vertical = Input.GetAxisRaw("Vertical");*/
-    }
-    public void FixedUpdate()
-    {
-        /*if (isDialogPlaying) // optional
-        {
-            
-            return; 
-        }*/
-
         // if player movement disabled then return
-        if (isPlayerMovementDisabled) 
+        if (isPlayerMovementDisabled)
+            return;
+
+        //if Player is dashing then return
+        if (isPlayerDashing)
             return;
 
         // Process the player movement input
-        MovementInput();
+        ProcessMovementInput();
 
-
-        /*//Changing animation
-        if (horizontal < 0)//Left
-            this.facing = 2;
-        if (horizontal > 0)//Right
-            this.facing = 3;
-        if (vertical > 0)//Up
-            this.facing = 0;
-        if (vertical < 0)//Down
-            this.facing = 1;
-        this.AN.SetInteger("state", this.facing);
-        if (horizontal != 0 && vertical != 0) // Check for diagonal movement
-        {
-            // limit movement speed diagonally, so you move at 70% speed
-            horizontal *= moveLimiter;
-            vertical *= moveLimiter;
-        }
-        this.RB.velocity = new Vector2(horizontal * this.moveSpeed * Time.timeScale, vertical * this.moveSpeed * Time.timeScale);*/
+        //player dash cooldown timer
+        PlayerDashCooldownTimer();
     }
 
     /// <summary>
     /// Player movement input
     /// </summary>
-    private void MovementInput()
+    private void ProcessMovementInput()
     {
         // Get movement input
         float horizontalMovement = Input.GetAxisRaw("Horizontal");
         float verticalMovement = Input.GetAxisRaw("Vertical");
+        bool rightMouseButtonDown = Input.GetMouseButtonDown(1);
 
         // Create a direction vector based on the input
         Vector2 direction = new Vector2(horizontalMovement, verticalMovement);
@@ -89,13 +75,80 @@ public class PlayerController : MonoBehaviour
         // If there is movement then move
         if (direction != Vector2.zero)
         {
-            // trigger movement event
-            player.movementByVelocityEvent.CallMovementByVelocityEvent(direction, moveSpeed);
+            if (!rightMouseButtonDown)
+            {
+                // trigger movement event
+                player.movementByVelocityEvent.CallMovementByVelocityEvent(direction, moveSpeed);
+            }
+            // else player dash if not cooling down
+            else if (playerDashCooldownTimer <= 0f)
+            {
+                PlayerDash((Vector3)direction);
+            }
         }
         // else trigger idle event
         else
         {
             player.idleEvent.CallIdleEvent();
+        }
+    }
+
+    /// <summary>
+    /// Player dash
+    /// </summary>
+    private void PlayerDash(Vector3 direction)
+    {
+        playerDashCoroutine = StartCoroutine(PlayerDashRoutine(direction));
+    }
+
+    /// <summary>
+    /// Player dash corountine
+    /// </summary>
+    private IEnumerator PlayerDashRoutine(Vector3 directon)
+    {
+        // minDistance used to decide when to exit coroutine loop
+        float minDistance = 0.2f;
+        isPlayerDashing = true;
+        Vector3 targetPosition = player.transform.position + directon * movementDetails.dashDistance;
+
+        while (Vector3.Distance(player.transform.position, targetPosition) > minDistance)
+        {
+            player.movementToPositionEvent.CallMovementToPositionEvent(targetPosition, player.transform.position, movementDetails.dashSpeed, directon, isPlayerDashing);
+
+            // yield and wait for fixed update
+            yield return waitForFixedUpdate;
+        }
+        isPlayerDashing = false;
+        playerDashCooldownTimer = movementDetails.dashCooldownTime;
+        player.transform.position = targetPosition;
+    }
+
+    private void PlayerDashCooldownTimer()
+    {
+        if (playerDashCooldownTimer >= 0f)
+        {
+            playerDashCooldownTimer -= Time.deltaTime;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        //if collided with something stop player dash coroutine
+        StopPlayerDashRoutine();
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        //if in collided with something stop player dash coroutine
+        StopPlayerDashRoutine();
+    }
+
+    private void StopPlayerDashRoutine()
+    {
+        if (playerDashCoroutine != null)
+        {
+            StopCoroutine(playerDashCoroutine);
+            isPlayerDashing = false;
         }
     }
 
