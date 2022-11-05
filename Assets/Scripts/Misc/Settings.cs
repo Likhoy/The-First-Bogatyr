@@ -9,6 +9,16 @@ public static class Settings
     // Animator parameters - Dialog
     public static int spaceOpen = Animator.StringToHash("spaceOpen");
 
+    // Animator parameters - Player
+    public static int lookUp = Animator.StringToHash("lookUp");
+    public static int lookDown = Animator.StringToHash("lookDown");
+    public static int lookRight = Animator.StringToHash("lookRight");
+    public static int lookLeft = Animator.StringToHash("lookLeft");
+    public static int isIdle = Animator.StringToHash("isIdle");
+    public static int isMoving = Animator.StringToHash("isMoving");
+
+    public static float baseSpeedForPlayerAnimations = 8f;
+
     #endregion ANIMATOR PARAMETERS
 
     #region ASTAR PATHFINDING PARAMETERS
