@@ -60,15 +60,20 @@ public class EnemyMovementAI : MonoBehaviour
     /// </summary>
     private void MoveEnemy()
     {
-        // Check distance to player to see if enemy should start chasing
-        if (Vector3.Distance(transform.position, GameManager.Instance.GetPlayer().GetPlayerPosition()) < enemy.enemyDetails.chaseDistance)
+        // Check distance to player to see if enemy should start attacking
+        if (!chasePlayer && Vector3.Distance(transform.position, GameManager.Instance.GetPlayer().GetPlayerPosition()) < enemy.enemyDetails.aggressionDistance)
         {
             // Check if player is in sight area 
             // if (EnemyVisionAI.PlayerIsInSightArea())
             ChasePlayer();
-            if (!chasePlayer)
-                chasePlayer = true;
+            chasePlayer = true;
         }
+        // Check distance to player to see if enemy should carry on chasing
+        else if (chasePlayer && Vector3.Distance(transform.position, GameManager.Instance.GetPlayer().GetPlayerPosition()) < enemy.enemyDetails.chaseDistance)
+        {
+            ChasePlayer();
+        }
+        // otherwise patrol the area
         else
         {
             if (chasePlayer)

@@ -19,6 +19,11 @@ public class EnemyDetailsSO : ScriptableObject
     public GameObject enemyPrefab;
 
     #region Tooltip
+    [Tooltip("Distance to the player maximum for the enemy to start attacking him")]
+    #endregion
+    public float aggressionDistance = 30f;
+
+    #region Tooltip
     [Tooltip("Distance to the player before enemy starts chasing")]
     #endregion
     public float chaseDistance = 50f;
@@ -109,6 +114,7 @@ public class EnemyDetailsSO : ScriptableObject
     {
         HelperUtilities.ValidateCheckEmptyString(this, nameof(enemyName), enemyName);
         HelperUtilities.ValidateCheckNullValue(this, nameof(enemyPrefab), enemyPrefab);
+        HelperUtilities.ValidateCheckPositiveValue(this, nameof(aggressionDistance), aggressionDistance, false);
         HelperUtilities.ValidateCheckPositiveValue(this, nameof(chaseDistance), chaseDistance, false);
         //HelperUtilities.ValidateCheckNullValue(this, nameof(enemyStandardMaterial), enemyStandardMaterial);
         //HelperUtilities.ValidateCheckPositiveValue(this, nameof(enemyMaterializeTime), enemyMaterializeTime, true);
