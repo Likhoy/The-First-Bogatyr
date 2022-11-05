@@ -4852,7 +4852,6 @@ GameObject:
   m_Component:
   - component: {fileID: 811404852}
   - component: {fileID: 811404851}
-  - component: {fileID: 811404850}
   - component: {fileID: 811404849}
   - component: {fileID: 811404853}
   m_Layer: 3
@@ -4888,27 +4887,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.8828428, y: 1.9399271}
   m_EdgeRadius: 0
---- !u!50 &811404850
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 811404848}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1000000
-  m_LinearDrag: 0
-  m_AngularDrag: 0
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 1
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 0
 --- !u!212 &811404851
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8088,7 +8066,7 @@ Camera:
   far clip plane: 5000
   field of view: 40
   orthographic: 1
-  orthographic size: 3.75
+  orthographic size: 8.4375
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
