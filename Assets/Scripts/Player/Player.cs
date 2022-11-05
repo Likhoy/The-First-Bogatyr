@@ -16,7 +16,9 @@ using UnityEngine;
 [RequireComponent(typeof(DialogStartedEvent))]
 [RequireComponent(typeof(DialogProceededEvent))]
 [RequireComponent(typeof(PlayerController))]
+[RequireComponent(typeof(AnimatePlayer))]
 [RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Animator))]
 #endregion REQUIRE COMPONENTS
 
 public class Player : MonoBehaviour
@@ -33,6 +35,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public DialogProceededEvent dialogProceededEvent;
     [HideInInspector] public PlayerController playerControl;
     [HideInInspector] public SpriteRenderer spriteRenderer;
+    [HideInInspector] public Animator animator;
 
     private void Awake()
     {
@@ -48,6 +51,7 @@ public class Player : MonoBehaviour
         dialogProceededEvent = GetComponent<DialogProceededEvent>();
         playerControl = GetComponent<PlayerController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
 
     /// <summary>
