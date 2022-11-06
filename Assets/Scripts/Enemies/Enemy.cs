@@ -5,6 +5,7 @@ using UnityEngine.Rendering;
 #region REQUIRE COMPONENTS
 [RequireComponent(typeof(HealthEvent))]
 [RequireComponent(typeof(Health))]
+[RequireComponent(typeof(FireWeaponEvent))]
 [RequireComponent(typeof(DestroyedEvent))]
 [RequireComponent(typeof(Destroyed))]
 [RequireComponent(typeof(EnemyMovementAI))]
@@ -26,11 +27,11 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public EnemyDetailsSO enemyDetails;
     private HealthEvent healthEvent;
     private Health health;
-    /*[HideInInspector] public AimWeaponEvent aimWeaponEvent;
+    //[HideInInspector] public AimWeaponEvent aimWeaponEvent;
     [HideInInspector] public FireWeaponEvent fireWeaponEvent;
-    private FireWeapon fireWeapon;
-    private SetActiveWeaponEvent setActiveWeaponEvent;
-    private EnemyMovementAI enemyMovementAI;*/
+    /*private FireWeapon fireWeapon;
+    private SetActiveWeaponEvent setActiveWeaponEvent;*/
+    [HideInInspector] public EnemyMovementAI enemyMovementAI;
     [HideInInspector] public MovementToPositionEvent movementToPositionEvent;
     [HideInInspector] public IdleEvent idleEvent;
     // private MaterializeEffect materializeEffect;
@@ -44,11 +45,11 @@ public class Enemy : MonoBehaviour
         // Load components
         healthEvent = GetComponent<HealthEvent>();
         health = GetComponent<Health>();
-        /*aimWeaponEvent = GetComponent<AimWeaponEvent>();
+        //aimWeaponEvent = GetComponent<AimWeaponEvent>();
         fireWeaponEvent = GetComponent<FireWeaponEvent>();
-        fireWeapon = GetComponent<FireWeapon>();
-        setActiveWeaponEvent = GetComponent<SetActiveWeaponEvent>();
-        enemyMovementAI = GetComponent<EnemyMovementAI>();*/
+        /*fireWeapon = GetComponent<FireWeapon>();
+        setActiveWeaponEvent = GetComponent<SetActiveWeaponEvent>();*/
+        enemyMovementAI = GetComponent<EnemyMovementAI>();
         movementToPositionEvent = GetComponent<MovementToPositionEvent>();
         idleEvent = GetComponent<IdleEvent>();
         // materializeEffect = GetComponent<MaterializeEffect>();

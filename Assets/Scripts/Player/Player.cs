@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 #region REQUIRE COMPONENTS
@@ -36,6 +37,8 @@ public class Player : MonoBehaviour
     [HideInInspector] public PlayerController playerControl;
     [HideInInspector] public SpriteRenderer spriteRenderer;
     [HideInInspector] public Animator animator;
+
+    public List<Weapon> weaponList = new List<Weapon>();
 
     private void Awake()
     {
