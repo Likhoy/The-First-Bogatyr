@@ -154,7 +154,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "NPC" && DialogManager.Instance.isDialogReady)
+        if (collision.tag == Settings.NPCTag && DialogManager.Instance.isDialogReady)
             player.dialogStartedEvent.CallDialogStartedEvent(); // maybe better in NPC class
     }
 
