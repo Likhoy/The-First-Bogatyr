@@ -21,6 +21,12 @@ public static class Settings
 
     #endregion ANIMATOR PARAMETERS
 
+    #region GAMEOBJECT TAGS
+    public const string playerTag = "Player";
+    public const string playerWeapon = "playerWeapon";
+    public const string NPCTag = "NPC";
+    #endregion
+
     #region ASTAR PATHFINDING PARAMETERS
     public const int defaultGridNodesWidthForPathBuilding = 400;
     public const int defaultGridNodesHeightForPathBuilding = 400;

@@ -28,6 +28,11 @@ public class EnemyDetailsSO : ScriptableObject
     #endregion
     public float chaseDistance = 50f;
 
+    #region Tooltip
+    [Tooltip("Distance to the player before enemy starts using melee weapon")]
+    #endregion
+    public float handDistance = 3f;
+
     /*#region Header ENEMY MATERIAL
     [Space(10)]
     [Header("ENEMY MATERIAL")]
@@ -59,10 +64,18 @@ public class EnemyDetailsSO : ScriptableObject
     [Space(10)]
     [Header("ENEMY WEAPON SETTINGS")]
     #endregion
-    /*#region Tooltip
-    [Tooltip("The weapon for the enemy - none if the enemy doesn't have a weapon")]
+
+    #region Tooltip
+    [Tooltip("The melee weapon for the enemy")]
     #endregion
-    public WeaponDetailsSO enemyWeapon;*/
+    public MeleeWeaponDetailsSO enemyMeleeWeapon;
+
+    // TODO
+
+    #region Tooltip
+    [Tooltip("The ranged weapon for the enemy - none if the enemy doesn't have a ranged weapon")]
+    #endregion
+    public RangedWeaponDetailsSO enemyRangedWeapon;
     #region Tooltip
     [Tooltip("The minimum time delay interval in seconds between bursts of enemy shooting.  This value should be greater than 0. A random value will be selected between the minimum value and the maximum value")]
     #endregion
@@ -119,6 +132,7 @@ public class EnemyDetailsSO : ScriptableObject
         //HelperUtilities.ValidateCheckNullValue(this, nameof(enemyStandardMaterial), enemyStandardMaterial);
         //HelperUtilities.ValidateCheckPositiveValue(this, nameof(enemyMaterializeTime), enemyMaterializeTime, true);
         //HelperUtilities.ValidateCheckNullValue(this, nameof(enemyMaterializeShader), enemyMaterializeShader);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(enemyMeleeWeapon), enemyMeleeWeapon);
         HelperUtilities.ValidateCheckPositiveRange(this, nameof(firingIntervalMin), firingIntervalMin, nameof(firingIntervalMax), firingIntervalMax, false);
         HelperUtilities.ValidateCheckPositiveRange(this, nameof(firingDurationMin), firingDurationMin, nameof(firingDurationMax), firingDurationMax, false);
         // HelperUtilities.ValidateCheckEnumerableValues(this, nameof(enemyHealthDetailsArray), enemyHealthDetailsArray);
