@@ -70,7 +70,7 @@ public class EnemyWeaponAI : MonoBehaviour
 
     private void MeleeAttack()
     {
-        throw new System.NotImplementedException();
+        
     }
 
     /// <summary>
