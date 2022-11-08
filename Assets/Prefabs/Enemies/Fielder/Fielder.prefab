@@ -193,6 +193,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2921324509374980115, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3981597268522686200, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
+      propertyPath: layerMask.m_Bits
+      value: 392
+      objectReference: {fileID: 0}
+    - target: {fileID: 3981597268522686200, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
+      propertyPath: weaponShootPosition
+      value: 
+      objectReference: {fileID: 8704154344957601495}
     - target: {fileID: 5592646621270956941, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
       propertyPath: _maxPosition.x
       value: 40
@@ -217,6 +229,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 2c93afb1cbde1c84aaa99f57c69b8543, type: 2}
+    - target: {fileID: 8321381057536379527, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
+      propertyPath: weaponShootPositionTransform
+      value: 
+      objectReference: {fileID: 8704154344957601495}
     - target: {fileID: 8728984708709163566, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
       propertyPath: m_FlipX
       value: 0
@@ -230,5 +246,10 @@ PrefabInstance:
 --- !u!4 &8677506862603195842 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2728140617652107613, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
+  m_PrefabInstance: {fileID: 6751177229919431839}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8704154344957601495 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2700930149906598472, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
   m_PrefabInstance: {fileID: 6751177229919431839}
   m_PrefabAsset: {fileID: 0}

@@ -54,7 +54,8 @@ public class ActiveWeapon : MonoBehaviour
         if (currentWeapon is RangedWeapon rangedWeapon)
         {
             // Set current weapon sprite
-            weaponSpriteRenderer.sprite = rangedWeapon.weaponDetails.weaponSprite;
+            if (weaponSpriteRenderer != null)
+                weaponSpriteRenderer.sprite = rangedWeapon.weaponDetails.weaponSprite;
 
             // Set weapon shoot position
             weaponShootPositionTransform.localPosition = rangedWeapon.weaponDetails.weaponShootPosition;
@@ -109,8 +110,8 @@ public class ActiveWeapon : MonoBehaviour
 #if UNITY_EDITOR
     private void OnValidate()
     {
-        HelperUtilities.ValidateCheckNullValue(this, nameof(weaponSpriteRenderer), weaponSpriteRenderer);
-        HelperUtilities.ValidateCheckNullValue(this, nameof(weaponPolygonCollider2D), weaponPolygonCollider2D);
+        // HelperUtilities.ValidateCheckNullValue(this, nameof(weaponSpriteRenderer), weaponSpriteRenderer);
+        // HelperUtilities.ValidateCheckNullValue(this, nameof(weaponPolygonCollider2D), weaponPolygonCollider2D);
         HelperUtilities.ValidateCheckNullValue(this, nameof(weaponShootPositionTransform), weaponShootPositionTransform);
         // HelperUtilities.ValidateCheckNullValue(this, nameof(weaponEffectPositionTransform), weaponEffectPositionTransform);
     }

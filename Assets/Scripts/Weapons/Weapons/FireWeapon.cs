@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(ActiveWeapon))]
 [RequireComponent(typeof(FireWeaponEvent))]
@@ -118,7 +119,7 @@ public class FireWeapon : MonoBehaviour
         if (!currentWeapon.weaponDetails.hasInfiniteClipCapacity && currentWeapon.weaponClipRemainingAmmo <= 0)
         {
             // trigger a reload weapon event.
-            reloadWeaponEvent.CallReloadWeaponEvent(activeWeapon.GetCurrentWeapon(), 0);
+            reloadWeaponEvent.CallReloadWeaponEvent(currentWeapon, 0);
 
             return false;
         }
@@ -173,6 +174,12 @@ public class FireWeapon : MonoBehaviour
 
             // Get random speed value
             float ammoSpeed = Random.Range(currentAmmo.ammoSpeedMin, currentAmmo.ammoSpeedMax);
+
+            GameObject ammoGameObject = Instantiate(ammoPrefab, activeWeapon.GetShootPosition(), Quaternion.identity);
+
+            Ammo ammo = ammoGameObject.GetComponent<Ammo>();
+
+            ammo.InitialiseAmmo(currentAmmo, aimAngle, weaponAimAngle, ammoSpeed, weaponAimDirectionVector);
 
             // !!!!!!!!!!!!!!!!
             // Get Gameobject with IFireable component

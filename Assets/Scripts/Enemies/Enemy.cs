@@ -8,6 +8,15 @@ using UnityEngine.Rendering;
 [RequireComponent(typeof(FireWeaponEvent))]
 [RequireComponent(typeof(DestroyedEvent))]
 [RequireComponent(typeof(Destroyed))]
+[RequireComponent(typeof(EnemyWeaponAI))]
+[RequireComponent(typeof(FireWeaponEvent))]
+[RequireComponent(typeof(FireWeapon))]
+[RequireComponent(typeof(SetActiveWeaponEvent))]
+[RequireComponent(typeof(ActiveWeapon))]
+[RequireComponent(typeof(WeaponFiredEvent))]
+[RequireComponent(typeof(ReloadWeaponEvent))]
+[RequireComponent(typeof(ReloadWeapon))]
+[RequireComponent(typeof(WeaponReloadedEvent))]
 [RequireComponent(typeof(EnemyMovementAI))]
 [RequireComponent(typeof(MovementToPositionEvent))]
 [RequireComponent(typeof(MovementToPosition))]
@@ -29,8 +38,8 @@ public class Enemy : MonoBehaviour
     private Health health;
     //[HideInInspector] public AimWeaponEvent aimWeaponEvent;
     [HideInInspector] public FireWeaponEvent fireWeaponEvent;
-    /*private FireWeapon fireWeapon;
-    private SetActiveWeaponEvent setActiveWeaponEvent;*/
+    private FireWeapon fireWeapon;
+    private SetActiveWeaponEvent setActiveWeaponEvent;
     [HideInInspector] public EnemyMovementAI enemyMovementAI;
     [HideInInspector] public MovementToPositionEvent movementToPositionEvent;
     [HideInInspector] public IdleEvent idleEvent;
@@ -47,8 +56,8 @@ public class Enemy : MonoBehaviour
         health = GetComponent<Health>();
         //aimWeaponEvent = GetComponent<AimWeaponEvent>();
         fireWeaponEvent = GetComponent<FireWeaponEvent>();
-        /*fireWeapon = GetComponent<FireWeapon>();
-        setActiveWeaponEvent = GetComponent<SetActiveWeaponEvent>();*/
+        fireWeapon = GetComponent<FireWeapon>();
+        setActiveWeaponEvent = GetComponent<SetActiveWeaponEvent>();
         enemyMovementAI = GetComponent<EnemyMovementAI>();
         movementToPositionEvent = GetComponent<MovementToPositionEvent>();
         idleEvent = GetComponent<IdleEvent>();
@@ -144,14 +153,16 @@ public class Enemy : MonoBehaviour
     private void SetEnemyStartingWeapon()
     {
         // Process if enemy has a weapon
-        /*if (enemyDetails.enemyWeapon != null)
+        if (enemyDetails.enemyRangedWeapon != null)
         {
-            Weapon weapon = new Weapon() { weaponDetails = enemyDetails.enemyWeapon, weaponReloadTimer = 0f, weaponClipRemainingAmmo = enemyDetails.enemyWeapon.weaponClipAmmoCapacity, weaponRemainingAmmo = enemyDetails.enemyWeapon.weaponAmmoCapacity, isWeaponReloading = false };
+            RangedWeapon weapon = new RangedWeapon() { weaponDetails = enemyDetails.enemyRangedWeapon, weaponReloadTimer = 0f, weaponClipRemainingAmmo = enemyDetails.enemyRangedWeapon.weaponClipAmmoCapacity, weaponRemainingAmmo = enemyDetails.enemyRangedWeapon.weaponAmmoCapacity, isWeaponReloading = false };
 
             //Set weapon for enemy
             setActiveWeaponEvent.CallSetActiveWeaponEvent(weapon);
 
-        }*/
+        }
+        // TODO 
+        // add melee weapon
     }
 
     /// <summary>
