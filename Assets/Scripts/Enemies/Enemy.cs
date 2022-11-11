@@ -5,13 +5,24 @@ using UnityEngine.Rendering;
 #region REQUIRE COMPONENTS
 [RequireComponent(typeof(HealthEvent))]
 [RequireComponent(typeof(Health))]
+[RequireComponent(typeof(FireWeaponEvent))]
 [RequireComponent(typeof(DestroyedEvent))]
 [RequireComponent(typeof(Destroyed))]
+[RequireComponent(typeof(EnemyWeaponAI))]
+[RequireComponent(typeof(FireWeaponEvent))]
+[RequireComponent(typeof(FireWeapon))]
+[RequireComponent(typeof(SetActiveWeaponEvent))]
+[RequireComponent(typeof(ActiveWeapon))]
+[RequireComponent(typeof(WeaponFiredEvent))]
+[RequireComponent(typeof(ReloadWeaponEvent))]
+[RequireComponent(typeof(ReloadWeapon))]
+[RequireComponent(typeof(WeaponReloadedEvent))]
 [RequireComponent(typeof(EnemyMovementAI))]
 [RequireComponent(typeof(MovementToPositionEvent))]
 [RequireComponent(typeof(MovementToPosition))]
 [RequireComponent(typeof(IdleEvent))]
 [RequireComponent(typeof(Idle))]
+[RequireComponent(typeof(AnimateEnemy))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody2D))]
@@ -25,11 +36,11 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public EnemyDetailsSO enemyDetails;
     private HealthEvent healthEvent;
     private Health health;
-    /*[HideInInspector] public AimWeaponEvent aimWeaponEvent;
+    //[HideInInspector] public AimWeaponEvent aimWeaponEvent;
     [HideInInspector] public FireWeaponEvent fireWeaponEvent;
     private FireWeapon fireWeapon;
     private SetActiveWeaponEvent setActiveWeaponEvent;
-    private EnemyMovementAI enemyMovementAI;*/
+    [HideInInspector] public EnemyMovementAI enemyMovementAI;
     [HideInInspector] public MovementToPositionEvent movementToPositionEvent;
     [HideInInspector] public IdleEvent idleEvent;
     // private MaterializeEffect materializeEffect;
@@ -43,11 +54,11 @@ public class Enemy : MonoBehaviour
         // Load components
         healthEvent = GetComponent<HealthEvent>();
         health = GetComponent<Health>();
-        /*aimWeaponEvent = GetComponent<AimWeaponEvent>();
+        //aimWeaponEvent = GetComponent<AimWeaponEvent>();
         fireWeaponEvent = GetComponent<FireWeaponEvent>();
         fireWeapon = GetComponent<FireWeapon>();
         setActiveWeaponEvent = GetComponent<SetActiveWeaponEvent>();
-        enemyMovementAI = GetComponent<EnemyMovementAI>();*/
+        enemyMovementAI = GetComponent<EnemyMovementAI>();
         movementToPositionEvent = GetComponent<MovementToPositionEvent>();
         idleEvent = GetComponent<IdleEvent>();
         // materializeEffect = GetComponent<MaterializeEffect>();
@@ -142,14 +153,16 @@ public class Enemy : MonoBehaviour
     private void SetEnemyStartingWeapon()
     {
         // Process if enemy has a weapon
-        /*if (enemyDetails.enemyWeapon != null)
+        if (enemyDetails.enemyRangedWeapon != null)
         {
-            Weapon weapon = new Weapon() { weaponDetails = enemyDetails.enemyWeapon, weaponReloadTimer = 0f, weaponClipRemainingAmmo = enemyDetails.enemyWeapon.weaponClipAmmoCapacity, weaponRemainingAmmo = enemyDetails.enemyWeapon.weaponAmmoCapacity, isWeaponReloading = false };
+            RangedWeapon weapon = new RangedWeapon() { weaponDetails = enemyDetails.enemyRangedWeapon, weaponReloadTimer = 0f, weaponClipRemainingAmmo = enemyDetails.enemyRangedWeapon.weaponClipAmmoCapacity, weaponRemainingAmmo = enemyDetails.enemyRangedWeapon.weaponAmmoCapacity, isWeaponReloading = false };
 
             //Set weapon for enemy
             setActiveWeaponEvent.CallSetActiveWeaponEvent(weapon);
 
-        }*/
+        }
+        // TODO 
+        // add melee weapon
     }
 
     /// <summary>
