@@ -17,6 +17,9 @@ public class EnemyWeaponAI : MonoBehaviour
     private float firingIntervalTimer;
     private float firingDurationTimer;
 
+
+    
+
     private void Awake()
     {
         // Load Components
