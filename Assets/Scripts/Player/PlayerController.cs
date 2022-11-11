@@ -20,6 +20,14 @@ public class PlayerController : MonoBehaviour
 
     [HideInInspector] public bool isPlayerDashing = false;
 
+    private float timeBetweenAttack;
+    public float startTimeBetweenAttack;
+    public Transform attackPose;
+    public float attackRange;
+    private LayerMask enemy;
+    public int damageAmount;
+
+
     private void Awake()
     {
         // Load components
@@ -182,5 +190,28 @@ public class PlayerController : MonoBehaviour
     {
         isPlayerMovementDisabled = true;
         player.idleEvent.CallIdleEvent();
+    }
+
+    private void WeaponInput()
+    {
+        if(timeBetweenAttack <= 0)
+        {
+            if(Input.GetKey(KeyCode.Space))
+            {
+               Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPose.position, attackRange, enemy);
+                for (int i = 0; i < enemiesToDamage.Length; i++)
+                {
+                    enemiesToDamage[i].GetComponent<Health>().TakeDamage(damageAmount);
+                } 
+            }
+            
+            
+            timeBetweenAttack = startTimeBetweenAttack;
+        }
+
+        else
+        {
+            timeBetweenAttack -= Time.deltaTime;
+        }
     }
 }
