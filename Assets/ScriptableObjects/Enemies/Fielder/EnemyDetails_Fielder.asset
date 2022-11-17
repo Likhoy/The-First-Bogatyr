@@ -14,12 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Fielder
   enemyPrefab: {fileID: 4987181280448245761, guid: c750791c7b3a68043b16a56c14efa1c6, type: 3}
-  chaseDistance: 10
+  aggressionDistance: 10
+  chaseDistance: 20
+  handDistance: 3
+  enemyMeleeWeapon: {fileID: 0}
+  enemyRangedWeapon: {fileID: 11400000, guid: 4ecff5c377fce9143a769b69282ce67f, type: 2}
   firingIntervalMin: 0.1
   firingIntervalMax: 1
-  firingDurationMin: 1
-  firingDurationMax: 2
+  firingDurationMin: 7
+  firingDurationMax: 10
   firingLineOfSightRequired: 0
-  isImmuneAfterHit: 0
-  hitImmunityTime: 0
+  hasHitEffect: 0
+  hitEffectTime: 0
   isHealthBarDisplayed: 0
