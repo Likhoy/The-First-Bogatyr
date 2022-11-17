@@ -67,49 +67,39 @@ public static class HelperUtilities
     /// <summary>
     /// Get AimDirection enum value from the pased in angleDegrees
     /// </summary>
-    /*public static AimDirection GetAimDirection(float angleDegrees)
+    public static LookDirection GetLookDirection(float angleDegrees)
     {
-        AimDirection aimDirection;
+        LookDirection lookDirection;
 
         // Set player direction
-        //Up Right
-        if (angleDegrees >= 22f && angleDegrees <= 67f)
-        {
-            aimDirection = AimDirection.UpRight;
-        }
         // Up
-        else if (angleDegrees > 67f && angleDegrees <= 112f)
+        if (angleDegrees > 22f && angleDegrees <= 158f)
         {
-            aimDirection = AimDirection.Up;
-        }
-        // Up Left
-        else if (angleDegrees > 112f && angleDegrees <= 158f)
-        {
-            aimDirection = AimDirection.UpLeft;
+            lookDirection = LookDirection.Up;
         }
         // Left
         else if ((angleDegrees <= 180f && angleDegrees > 158f) || (angleDegrees > -180 && angleDegrees <= -135f))
         {
-            aimDirection = AimDirection.Left;
+            lookDirection = LookDirection.Left;
         }
         // Down
         else if ((angleDegrees > -135f && angleDegrees <= -45f))
         {
-            aimDirection = AimDirection.Down;
+            lookDirection = LookDirection.Down;
         }
         // Right
-        else if ((angleDegrees > -45f && angleDegrees <= 0f) || (angleDegrees > 0 && angleDegrees < 22f))
+        else if ((angleDegrees > -45f && angleDegrees <= 0f) || (angleDegrees > 0 && angleDegrees <= 22f))
         {
-            aimDirection = AimDirection.Right;
+            lookDirection = LookDirection.Right;
         }
         else
         {
-            aimDirection = AimDirection.Right;
+            lookDirection = LookDirection.Right;
         }
 
-        return aimDirection;
+        return lookDirection;
 
-    }*/
+    }
 
     /// <summary>
     /// Convert the linear volume scale to decibels
