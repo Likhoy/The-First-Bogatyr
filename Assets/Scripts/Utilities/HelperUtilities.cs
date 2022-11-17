@@ -67,39 +67,49 @@ public static class HelperUtilities
     /// <summary>
     /// Get AimDirection enum value from the pased in angleDegrees
     /// </summary>
-    public static LookDirection GetLookDirection(float angleDegrees)
+    /*public static AimDirection GetAimDirection(float angleDegrees)
     {
-        LookDirection lookDirection;
+        AimDirection aimDirection;
 
         // Set player direction
-        // Up
-        if (angleDegrees > 22f && angleDegrees <= 158f)
+        //Up Right
+        if (angleDegrees >= 22f && angleDegrees <= 67f)
         {
-            lookDirection = LookDirection.Up;
+            aimDirection = AimDirection.UpRight;
+        }
+        // Up
+        else if (angleDegrees > 67f && angleDegrees <= 112f)
+        {
+            aimDirection = AimDirection.Up;
+        }
+        // Up Left
+        else if (angleDegrees > 112f && angleDegrees <= 158f)
+        {
+            aimDirection = AimDirection.UpLeft;
         }
         // Left
         else if ((angleDegrees <= 180f && angleDegrees > 158f) || (angleDegrees > -180 && angleDegrees <= -135f))
         {
-            lookDirection = LookDirection.Left;
+            aimDirection = AimDirection.Left;
         }
         // Down
         else if ((angleDegrees > -135f && angleDegrees <= -45f))
         {
-            lookDirection = LookDirection.Down;
+            aimDirection = AimDirection.Down;
         }
         // Right
-        else if ((angleDegrees > -45f && angleDegrees <= 0f) || (angleDegrees > 0 && angleDegrees <= 22f))
+        else if ((angleDegrees > -45f && angleDegrees <= 0f) || (angleDegrees > 0 && angleDegrees < 22f))
         {
-            lookDirection = LookDirection.Right;
+            aimDirection = AimDirection.Right;
         }
         else
         {
-            lookDirection = LookDirection.Right;
+            aimDirection = AimDirection.Right;
         }
 
-        return lookDirection;
+        return aimDirection;
 
-    }
+    }*/
 
     /// <summary>
     /// Convert the linear volume scale to decibels
