@@ -1,18 +1,16 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 [DisallowMultipleComponent]
 public class HealthUI : MonoBehaviour
 {
     // for testing
-    //private TextMeshProUGUI textMeshPro;
-    public Image healthBar;
+    private TextMeshProUGUI textMeshPro;
 
     private void Awake()
     {
         // Load components
-    //    textMeshPro = GetComponent<TextMeshProUGUI>();
+        textMeshPro = GetComponent<TextMeshProUGUI>();
     }
 
     private void OnEnable()
@@ -34,8 +32,6 @@ public class HealthUI : MonoBehaviour
 
     private void SetHealthUI(HealthEventArgs healthEventArgs)
     {
-     //   textMeshPro.text = "Health: " + healthEventArgs.healthAmount.ToString();
-        healthBar.fillAmount = healthEventArgs.healthAmount / 100f;
-     
+        textMeshPro.text = "Health: " + healthEventArgs.healthAmount.ToString();
     }
 }
