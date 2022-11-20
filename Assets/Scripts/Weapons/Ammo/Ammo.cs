@@ -15,9 +15,12 @@ public class Ammo : MonoBehaviour // IFireable
     private SpriteRenderer spriteRenderer;
     private AmmoDetailsSO ammoDetails;
     private float ammoChargeTimer;
+    private float ammoGettingVisibleTimer;
+    private bool isAmmoVisible = true;
     private bool isAmmoMaterialSet = true;
     private bool overrideAmmoMovement;
     private bool isColliding = false;
+    private GameObject shooter;
 
     private void Awake()
     {
@@ -27,6 +30,17 @@ public class Ammo : MonoBehaviour // IFireable
 
     private void Update()
     {
+        // Handle ammo invisibility
+        if (ammoGettingVisibleTimer > 0f)
+        {
+            ammoGettingVisibleTimer -= Time.deltaTime;
+        }
+        // Enable sprite renderer when outside of char body
+        else if (!isAmmoVisible)
+        {
+            ToggleVisibility(true);
+        }
+
         // Ammo charge effect
         if (ammoChargeTimer > 0f)
         {
@@ -69,6 +83,9 @@ public class Ammo : MonoBehaviour // IFireable
         // If already colliding with something return
         if (isColliding) return;
 
+        // handle shooter hitting themselves
+        if (collision.gameObject == shooter) return;
+        
         // Deal Damage To Collision Object
         DealDamage(collision);
 
@@ -121,14 +138,25 @@ public class Ammo : MonoBehaviour // IFireable
     /// weaponAimDirectionVector. If this ammo is part of a pattern the ammo movement can be
     /// overriden by setting overrideAmmoMovement to true
     /// </summary>
-    public void InitialiseAmmo(AmmoDetailsSO ammoDetails, float aimAngle, float weaponAimAngle, float ammoSpeed, Vector3 weaponAimDirectionVector, bool overrideAmmoMovement = false)
+    public void InitialiseAmmo(AmmoDetailsSO ammoDetails, GameObject shooter, float aimAngle, float weaponAimAngle, float ammoSpeed, Vector3 weaponAimDirectionVector, bool overrideAmmoMovement = false)
     {
         #region Ammo
 
         this.ammoDetails = ammoDetails;
 
+        this.shooter = shooter;
+
         // Initialise isColliding
         isColliding = false;
+
+        if (ammoDetails.ammoInvisibleTime > 0f)
+        {
+            ammoGettingVisibleTimer = ammoDetails.ammoInvisibleTime;
+            // Set ammo invisible while it's inside of charater body
+            ToggleVisibility(false);
+        }
+
+        
 
         // Set fire direction
         SetFireDirection(ammoDetails, aimAngle, weaponAimAngle, weaponAimDirectionVector);
@@ -187,6 +215,13 @@ public class Ammo : MonoBehaviour // IFireable
 
     }
 
+    // toggle visibility of ammo object
+    private void ToggleVisibility(bool isVisible)
+    {
+        spriteRenderer.enabled = isVisible;
+        isAmmoVisible = isVisible;
+    }
+
     /// <summary>
     /// Set ammo fire direction and angle based on the input angle and direction adjusted by the
     /// random spread
@@ -221,11 +256,11 @@ public class Ammo : MonoBehaviour // IFireable
     }
 
     /// <summary>
-    /// Disable the ammo - thus returning it to the object pool
+    /// Destroy the ammo
     /// </summary>
     private void DisableAmmo()
     {
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 
     /// <summary>
