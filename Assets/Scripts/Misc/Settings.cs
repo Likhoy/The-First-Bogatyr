@@ -25,6 +25,7 @@ public static class Settings
     public const string playerTag = "Player";
     public const string playerWeapon = "playerWeapon";
     public const string NPCTag = "NPC";
+    public const string enemyWeaponTag = "enemyWeapon";
     #endregion
 
     #region FIRING CONTROL
