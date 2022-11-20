@@ -30,6 +30,10 @@ public class AmmoDetailsSO : ScriptableObject
     #endregion
     public Material ammoMaterial;
     #region Tooltip
+    [Tooltip("If the ammo is invisible while it's inside of the shooter body then set time in seconds for this")]
+    #endregion
+    public float ammoInvisibleTime = 0.1f;
+    #region Tooltip
     [Tooltip("If the ammo should 'charge' briefly before moving then set the time in seconds that the ammo is held charging after firing before release")]
     #endregion
     public float ammoChargeTime = 0.1f;
@@ -140,7 +144,7 @@ public class AmmoDetailsSO : ScriptableObject
         HelperUtilities.ValidateCheckEmptyString(this, nameof(ammoName), ammoName);
         HelperUtilities.ValidateCheckNullValue(this, nameof(ammoSprite), ammoSprite);
         HelperUtilities.ValidateCheckEnumerableValues(this, nameof(ammoPrefabArray), ammoPrefabArray);
-        HelperUtilities.ValidateCheckNullValue(this, nameof(ammoMaterial), ammoMaterial);
+        // HelperUtilities.ValidateCheckNullValue(this, nameof(ammoMaterial), ammoMaterial);
         if (ammoChargeTime > 0)
             HelperUtilities.ValidateCheckNullValue(this, nameof(ammoChargeMaterial), ammoChargeMaterial);
         HelperUtilities.ValidateCheckPositiveValue(this, nameof(ammoDamage), ammoDamage, false);
