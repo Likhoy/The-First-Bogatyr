@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public static class LocationInfo
 {
@@ -10,11 +6,12 @@ public static class LocationInfo
 
     // use this 2d array to store movement penalties from the tilemaps to be used in AStar pathfinding
     private static int[,] aStarMovementPenalty = new int[0, 0];
+
     // use to store position of moveable items that are obstacles
     private static int[,] aStarItemObstacles = new int[0, 0];
 
-    public static Vector2Int locationLowerBounds = new Vector2Int(-200, -200);
-    public static Vector2Int locationUpperBounds = new Vector2Int(200, 200);
+    public static readonly Vector2Int locationLowerBounds = new Vector2Int(-200, -200);
+    public static readonly Vector2Int locationUpperBounds = new Vector2Int(200, 200);
 
     public static Grid Grid
     {
