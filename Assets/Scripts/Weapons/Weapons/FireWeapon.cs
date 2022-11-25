@@ -175,13 +175,13 @@ public class FireWeapon : MonoBehaviour
             // Get random speed value
             float ammoSpeed = Random.Range(currentAmmo.ammoSpeedMin, currentAmmo.ammoSpeedMax);
 
-            GameObject ammoGameObject = Instantiate(ammoPrefab, activeWeapon.GetShootPosition(), Quaternion.identity);
+            GameObject ammoGameObject = Instantiate(ammoPrefab, activeWeapon.GetShootPosition(), Quaternion.identity, gameObject.transform);
 
             Ammo ammo = ammoGameObject.GetComponent<Ammo>();
 
-            ammo.InitialiseAmmo(currentAmmo, aimAngle, weaponAimAngle, ammoSpeed, weaponAimDirectionVector);
+            ammo.InitialiseAmmo(currentAmmo, gameObject, aimAngle, weaponAimAngle, ammoSpeed, weaponAimDirectionVector);
 
-            // !!!!!!!!!!!!!!!!
+           
             // Get Gameobject with IFireable component
             // IFireable ammo = (IFireable)PoolManager.Instance.ReuseComponent(ammoPrefab, activeWeapon.GetShootPosition(), Quaternion.identity);
 
