@@ -130,8 +130,6 @@ public class Health : MonoBehaviour
     {
         int iterations = Mathf.RoundToInt(effectTime / spriteFlashInterval / 2f);
 
-        Debug.Log(iterations);
-
         while (iterations > 0)
         {
             spriteRenderer.color = Color.red;
