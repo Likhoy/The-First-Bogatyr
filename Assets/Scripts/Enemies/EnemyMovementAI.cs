@@ -94,6 +94,8 @@ public class EnemyMovementAI : MonoBehaviour
     {
         if (isSetTargetPoint)
             enemy.movementToPositionEvent.CallMovementToPositionEvent(randomPosition, transform.position, moveSpeed, (randomPosition - transform.position).normalized);
+        else
+            enemy.idleEvent.CallIdleEvent();
         if (isSetTargetPoint && Vector2.Distance(transform.position, randomPosition) < 0.2f)
         {
             isSetTargetPoint = false;
@@ -170,7 +172,6 @@ public class EnemyMovementAI : MonoBehaviour
                 enemy.movementToPositionEvent.CallMovementToPositionEvent(nextPosition, transform.position, moveSpeed, (nextPosition - transform.position).normalized);
 
                 yield return waitForFixedUpdate;  // moving the enmy using 2D physics so wait until the next fixed update
-
             }
 
             yield return waitForFixedUpdate;
@@ -178,7 +179,6 @@ public class EnemyMovementAI : MonoBehaviour
 
         // End of path steps - trigger the enemy idle event
         enemy.idleEvent.CallIdleEvent();
-
     }
 
     /// <summary>
