@@ -4,8 +4,29 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    [SerializeField]
-    InventorySlot[] slots;
+    [SerializeField] private InventorySlot[] slots;
+    private DialogStartedEvent dialogStartedEvent;
+    private DialogEndedEvent dialogEndedEvent;
+
+    private void Awake()
+    {
+        dialogStartedEvent = GameObject.FindGameObjectWithTag("Player").GetComponent<DialogStartedEvent>();
+        dialogEndedEvent = GameObject.FindGameObjectWithTag("Player").GetComponent<DialogEndedEvent>();
+    }
+
+    private void OnEnable()
+    {
+        // Subscribe to movement to position event
+        dialogStartedEvent.OnStartDialog += HideInventory;
+        dialogEndedEvent.OnEndDialog += ShowInventory;
+    }
+
+    private void OnDisable()
+    {
+        // Unsubscribe from movement to position event
+        dialogStartedEvent.OnStartDialog -= HideInventory;
+        dialogEndedEvent.OnEndDialog -= ShowInventory;
+    }
 
     public void AddItem(Item item)
     {
@@ -24,5 +45,17 @@ public class Inventory : MonoBehaviour
                 return;
             }
         }
+    }
+
+    private void ShowInventory(DialogEndedEvent movementToPositionEvent, DialogEndedEventArgs movementToPositionArgs)
+    {
+        foreach(InventorySlot slot in slots)
+            slot.ShowInventorySlot();
+    }
+
+    private void HideInventory(DialogStartedEvent movementToPositionEvent, DialogStartedEventArgs movementToPositionArgs)
+    {
+        foreach (InventorySlot slot in slots)
+            slot.HideInventorySlot();
     }
 }
