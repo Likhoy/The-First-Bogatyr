@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : MonoBehaviour
+public class Item : MonoBehaviour, IUseable
 {
     public int itemType = 0;
 
@@ -20,11 +20,6 @@ public class Item : MonoBehaviour
     //public int itemMaxCount = 1;
     Sprite sprite;
     public Sprite Sprite { get { return sprite; } }
-
-    /*public void DropItem()
-    {
-        
-    }*/
 
     protected void Start()
     {
