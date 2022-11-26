@@ -11,14 +11,10 @@ public class InventorySlot : MonoBehaviour
     int id;
     public int ID { get { return id; } }
     Item item;
-    [SerializeField]
-    GameObject textObject;
-    [SerializeField]
-    GameObject imageObject;
-    [SerializeField]
-    Image image;
-    [SerializeField]
-    TextMeshProUGUI text;
+    [SerializeField] GameObject textObject;
+    [SerializeField] GameObject imageObject;
+    [SerializeField] Image image;
+    [SerializeField] TextMeshProUGUI text;
     Animator animator;
     int count = 0;
     bool isEmpty;
