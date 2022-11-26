@@ -19,12 +19,14 @@ public class InventorySlot : MonoBehaviour
     Image image;
     [SerializeField]
     TextMeshProUGUI text;
+    Animator animator;
     int count = 0;
     bool isEmpty;
     public bool IsEmpty { get { return isEmpty; } }
 
     private void Start()
     {
+        animator = GetComponent<Animator>();
         text = textObject.GetComponent<TextMeshProUGUI>();
         image = imageObject.GetComponent<Image>();
         SetEmpty();
@@ -57,4 +59,8 @@ public class InventorySlot : MonoBehaviour
         isEmpty = true;
         item = null;
     }
+
+    public void HideInventorySlot() => animator.SetTrigger("HideSlot");
+
+    public void ShowInventorySlot() => animator.SetTrigger("ShowSlot");
 }
