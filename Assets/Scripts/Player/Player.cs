@@ -34,6 +34,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public ItemUsedEvent itemUsedEvent;
     [HideInInspector] public DialogStartedEvent dialogStartedEvent;
     [HideInInspector] public DialogProceededEvent dialogProceededEvent;
+    [HideInInspector] public DialogEndedEvent dialogEndedEvent;
     [HideInInspector] public PlayerController playerControl;
     [HideInInspector] public SpriteRenderer spriteRenderer;
     [HideInInspector] public Animator animator;
@@ -52,6 +53,7 @@ public class Player : MonoBehaviour
         itemUsedEvent = GetComponent<ItemUsedEvent>();
         dialogStartedEvent = GetComponent<DialogStartedEvent>();
         dialogProceededEvent = GetComponent<DialogProceededEvent>();
+        dialogEndedEvent = GetComponent<DialogEndedEvent>();
         playerControl = GetComponent<PlayerController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
