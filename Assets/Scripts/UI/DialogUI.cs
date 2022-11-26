@@ -151,6 +151,7 @@ public class DialogUI : MonoBehaviour
         spaceAnimator.SetBool(Settings.spaceOpen, false);
         dialogText.text = "";
         currentNodes = null;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().dialogEndedEvent.CallDialogEndedEvent();
     }
 
     private void DisplayStatementOptions(List<string> statementOptions)
