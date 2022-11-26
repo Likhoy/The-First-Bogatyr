@@ -8,7 +8,7 @@ public class DialogEndedEvent : MonoBehaviour
 {
     public event Action<DialogEndedEvent, DialogEndedEventArgs> OnEndDialog;
 
-    public void CallDialogStartedEvent()
+    public void CallDialogEndedEvent()
     {
         OnEndDialog?.Invoke(this, new DialogEndedEventArgs());
     }

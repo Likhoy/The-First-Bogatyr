@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 7202934883250967376}
   - component: {fileID: -6228772858118323849}
   - component: {fileID: 407539555192285334}
+  - component: {fileID: 6883479808266083897}
   - component: {fileID: 5064786101908609278}
   - component: {fileID: 2376470357354401345}
   - component: {fileID: 3688367546688098190}
@@ -48,7 +49,7 @@ Transform:
   m_GameObject: {fileID: 6461650756046700630}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -136,7 +137,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 9.954372
+  m_Mass: 4.8776426
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -241,6 +242,7 @@ MonoBehaviour:
   itemUsedEvent: {fileID: 0}
   dialogStartedEvent: {fileID: 0}
   dialogProceededEvent: {fileID: 0}
+  dialogEndedEvent: {fileID: 0}
   playerControl: {fileID: 0}
   spriteRenderer: {fileID: 0}
   animator: {fileID: 0}
@@ -254,6 +256,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88edc66bf67c2e04895ccecef9c03db5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6883479808266083897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6461650756046700630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdf33e1744fbc6845b4cf842a267f642, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &5064786101908609278
