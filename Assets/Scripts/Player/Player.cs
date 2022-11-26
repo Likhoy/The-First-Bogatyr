@@ -34,6 +34,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public ItemUsedEvent itemUsedEvent;
     [HideInInspector] public DialogStartedEvent dialogStartedEvent;
     [HideInInspector] public DialogProceededEvent dialogProceededEvent;
+    //[HideInInspector] public DialogEndedEvent dialogEndedEvent;
     [HideInInspector] public PlayerController playerControl;
     [HideInInspector] public SpriteRenderer spriteRenderer;
     [HideInInspector] public Animator animator;
