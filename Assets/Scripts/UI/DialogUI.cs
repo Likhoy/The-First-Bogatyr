@@ -74,6 +74,7 @@ public class DialogUI : MonoBehaviour
         DisableOptionButtons();
         UpdateDialogSpace();
         DisplayFirstStatementOptions();
+        GameObject.FindGameObjectWithTag("Player");
     }
 
     private void DisableOptionButtons()
