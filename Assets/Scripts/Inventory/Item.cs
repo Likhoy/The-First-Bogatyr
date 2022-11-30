@@ -16,21 +16,29 @@ public class Item : MonoBehaviour, IUseable
     public int itemID;
     public bool isStackable = false;
     public bool isDisposable = false;
+    public bool isTaken;
     //public int itemCount = 0;
     //public int itemMaxCount = 1;
-    Sprite sprite;
-    public Sprite Sprite { get { return sprite; } }
+    [SerializeField] public Sprite sprite;
 
-    protected void Start()
+    virtual protected void Start()
     {
         sprite = GetComponent<SpriteRenderer>().sprite;
+        isTaken = false;
     }
 
-    public void OnMouseDown() => TakeItem();
+    private void OnMouseDown() => TakeItem();
 
     public void TakeItem()
     {
-        GameObject.FindObjectOfType<Inventory>().AddItem(this);
+        //Костыль (исправить)
+        if (!isTaken)
+        {
+            GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
+            GameObject.FindObjectOfType<Inventory>().AddItem(this);
+            isTaken = true;
+            return;
+        }
         GameObject.Destroy(this.gameObject);
     }
 
