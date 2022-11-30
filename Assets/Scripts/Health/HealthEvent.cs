@@ -9,7 +9,6 @@ public class HealthEvent : MonoBehaviour
     public void CallHealthChangedEvent(float healthPercent, int healthAmount, int damageAmount)
     {
         OnHealthChanged?.Invoke(this, new HealthEventArgs() { healthPercent = healthPercent, healthAmount = healthAmount, damageAmount = damageAmount });
-
     }
 }
 
