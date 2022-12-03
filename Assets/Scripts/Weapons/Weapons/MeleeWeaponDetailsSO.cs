@@ -16,6 +16,15 @@ public class MeleeWeaponDetailsSO : ScriptableObject
     #endregion Tooltip
     public Sprite weaponSprite;
 
+    #region Tooltip
+    [Tooltip("Populate with weapon strike animation time")]
+    #endregion Tooltip
+    public float weaponStrikeTime;
+    #region Tooltip
+    [Tooltip("Select weapon cooldown time")]
+    #endregion Tooltip
+    public float weaponCooldownTime;
+
     #region Validation
 #if UNITY_EDITOR
 

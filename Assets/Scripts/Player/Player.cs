@@ -13,6 +13,14 @@ using UnityEngine;
 [RequireComponent(typeof(MovementToPosition))]
 [RequireComponent(typeof(IdleEvent))]
 [RequireComponent(typeof(Idle))]
+[RequireComponent(typeof(FireWeaponEvent))]
+[RequireComponent(typeof(FireWeapon))]
+[RequireComponent(typeof(SetActiveWeaponEvent))]
+[RequireComponent(typeof(ActiveWeapon))]
+[RequireComponent(typeof(WeaponFiredEvent))]
+[RequireComponent(typeof(ReloadWeaponEvent))]
+[RequireComponent(typeof(ReloadWeapon))]
+[RequireComponent(typeof(WeaponReloadedEvent))]
 [RequireComponent(typeof(ItemUsedEvent))]
 [RequireComponent(typeof(DialogStartedEvent))]
 [RequireComponent(typeof(DialogProceededEvent))]
@@ -31,6 +39,12 @@ public class Player : MonoBehaviour
     [HideInInspector] public MovementByVelocityEvent movementByVelocityEvent;
     [HideInInspector] public MovementToPositionEvent movementToPositionEvent;
     [HideInInspector] public IdleEvent idleEvent;
+    [HideInInspector] public FireWeaponEvent fireWeaponEvent;
+    [HideInInspector] public SetActiveWeaponEvent setActiveWeaponEvent;
+    [HideInInspector] public ActiveWeapon activeWeapon;
+    [HideInInspector] public WeaponFiredEvent weaponFiredEvent;
+    [HideInInspector] public ReloadWeaponEvent reloadWeaponEvent;
+    [HideInInspector] public WeaponReloadedEvent weaponReloadedEvent;
     [HideInInspector] public ItemUsedEvent itemUsedEvent;
     [HideInInspector] public DialogStartedEvent dialogStartedEvent;
     [HideInInspector] public DialogProceededEvent dialogProceededEvent;
@@ -50,6 +64,12 @@ public class Player : MonoBehaviour
         movementByVelocityEvent = GetComponent<MovementByVelocityEvent>();
         movementToPositionEvent = GetComponent<MovementToPositionEvent>();
         idleEvent = GetComponent<IdleEvent>();
+        fireWeaponEvent = GetComponent<FireWeaponEvent>();
+        setActiveWeaponEvent = GetComponent<SetActiveWeaponEvent>();
+        activeWeapon = GetComponent<ActiveWeapon>();
+        weaponFiredEvent = GetComponent<WeaponFiredEvent>();
+        reloadWeaponEvent = GetComponent<ReloadWeaponEvent>();
+        weaponReloadedEvent = GetComponent<WeaponReloadedEvent>();
         itemUsedEvent = GetComponent<ItemUsedEvent>();
         dialogStartedEvent = GetComponent<DialogStartedEvent>();
         dialogProceededEvent = GetComponent<DialogProceededEvent>();
