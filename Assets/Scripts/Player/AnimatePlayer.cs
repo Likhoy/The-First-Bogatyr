@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -24,8 +25,8 @@ public class AnimatePlayer : MonoBehaviour
         // Subscribe to idle event
         player.idleEvent.OnIdle += IdleEvent_OnIdle;
 
-        // Subscribe to weapon aim event
-        // player.aimWeaponEvent.OnWeaponAim += AimWeaponEvent_OnWeaponAim;
+        // Subscribe to weapon fired event
+        player.weaponFiredEvent.OnWeaponFired += WeaponFiredEvent_OnWeaponFired;
     }
 
     private void OnDisable()
@@ -39,8 +40,8 @@ public class AnimatePlayer : MonoBehaviour
         // Unsubscribe from idle event
         player.idleEvent.OnIdle -= IdleEvent_OnIdle;
 
-        // Unsubscribe from weapon aim event event
-        // player.aimWeaponEvent.OnWeaponAim -= AimWeaponEvent_OnWeaponAim;
+        // Unsubscribe from weapon fired event
+        player.weaponFiredEvent.OnWeaponFired -= WeaponFiredEvent_OnWeaponFired;
     }
 
     /// <summary>
@@ -48,8 +49,9 @@ public class AnimatePlayer : MonoBehaviour
     /// </summary>
     private void MovementByVelocityEvent_OnMovementByVelocity(MovementByVelocityEvent movementByVelocityEvent, MovementByVelocityArgs movementByVelocityArgs)
     {
-        // InitializeRollAnimationParameters();
+        // InitializeDashAnimationParameters();
         InitializeLookAnimationParameters();
+        InitializeAttackAnimationParameters();
         SetMovementAnimationParameters();
 
         float moveAngle = HelperUtilities.GetAngleFromVector(movementByVelocityArgs.moveDirection);
@@ -63,6 +65,7 @@ public class AnimatePlayer : MonoBehaviour
     private void MovementToPositionEvent_OnMovementToPosition(MovementToPositionEvent movementToPositionEvent, MovementToPositionArgs movementToPositionArgs)
     {
         InitializeLookAnimationParameters();
+        InitializeAttackAnimationParameters();
         SetMovementAnimationParameters();
 
         float moveAngle = HelperUtilities.GetAngleFromVector(movementToPositionArgs.moveDirection);
@@ -76,19 +79,41 @@ public class AnimatePlayer : MonoBehaviour
     /// </summary>
     private void IdleEvent_OnIdle(IdleEvent idleEvent)
     {
-
+        InitializeAttackAnimationParameters();
         SetIdleAnimationParameters();
     }
 
     /// <summary>
-    /// On weapon aim event handler
+    /// On weapon fired event handler
     /// </summary>
-    /*private void AimWeaponEvent_OnWeaponAim(AimWeaponEvent aimWeaponEvent, AimWeaponEventArgs aimWeaponEventArgs)
+    private void WeaponFiredEvent_OnWeaponFired(WeaponFiredEvent weaponFiredEvent, WeaponFiredEventArgs weaponFiredEventArgs)
     {
-        InitializeAimAnimationParameters();
-        InitializeRollAnimationParameters();
-        SetAimWeaponAnimationParameters(aimWeaponEventArgs.aimDirection);
-    }*/
+        InitializeAttackAnimationParameters();
+        PlayWeaponFiredAnimation();
+    }
+
+    private void InitializeAttackAnimationParameters()
+    {
+        player.animator.SetBool(Settings.attackUp, false);
+        player.animator.SetBool(Settings.attackDown, false);
+        player.animator.SetBool(Settings.attackRight, false);
+        player.animator.SetBool(Settings.attackLeft, false);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void PlayWeaponFiredAnimation()
+    {
+        if (player.animator.GetBool(Settings.lookUp))
+            player.animator.SetBool(Settings.attackUp, true);
+        else if (player.animator.GetBool(Settings.lookDown))
+            player.animator.SetBool(Settings.attackDown, true);
+        else if (player.animator.GetBool(Settings.lookRight))
+            player.animator.SetBool(Settings.attackRight, true);
+        else if (player.animator.GetBool(Settings.lookLeft))
+            player.animator.SetBool(Settings.attackLeft, true);
+    }
 
     /// <summary>
     /// Initialise look animation parameters
