@@ -20,7 +20,12 @@ public class PlayerController : MonoBehaviour
 
     [HideInInspector] public bool isPlayerDashing = false;
 
-    private float timeBetweenAttack = 0f;
+    private float timeBetweenAttack;
+    public float startTimeBetweenAttack;
+    public Transform attackPose;
+    public float attackRange;
+    private LayerMask enemy;
+    public int damageAmount;
 
 
     private void Awake()
@@ -45,21 +50,15 @@ public class PlayerController : MonoBehaviour
         if (isPlayerMovementDisabled)
             return;
 
-        // if player is dashing then return
+        //if Player is dashing then return
         if (isPlayerDashing)
             return;
 
         // Process the player movement input
         ProcessMovementInput();
 
-        // Process the player weapon input
-        ProcessWeaponInput();
-
-        // player dash cooldown timer
+        //player dash cooldown timer
         PlayerDashCooldownTimer();
-
-        // player weapon cooldown timer
-        PlayerWeaponCooldownTimer();
     }
 
     /// <summary>
@@ -193,42 +192,26 @@ public class PlayerController : MonoBehaviour
         player.idleEvent.CallIdleEvent();
     }
 
-    private void ProcessWeaponInput()
+    private void WeaponInput()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if(timeBetweenAttack <= 0)
         {
-            if (player.activeWeapon.GetCurrentWeapon() is MeleeWeapon meleeWeapon)
+            if(Input.GetKey(KeyCode.Space))
             {
-                if (timeBetweenAttack <= 0)
+               Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPose.position, attackRange, enemy);
+                for (int i = 0; i < enemiesToDamage.Length; i++)
                 {
-                    // TODO: adjust architecture
-                    player.fireWeaponEvent.CallFireWeaponEvent(false);
-                    isPlayerMovementDisabled = true;
-                    Invoke("DealWithMeleeWeaponStrikedEvent", meleeWeapon.weaponDetails.weaponStrikeTime);
-                }
-
-                timeBetweenAttack = meleeWeapon.weaponDetails.weaponCooldownTime;
+                    enemiesToDamage[i].GetComponent<Health>().TakeDamage(damageAmount);
+                } 
             }
-            else
-            {
-                RangedWeapon rangedWeapon = player.activeWeapon.GetCurrentWeapon() as RangedWeapon;
-            }
-        }
-    }
             
-    
+            
+            timeBetweenAttack = startTimeBetweenAttack;
+        }
 
-    private void PlayerWeaponCooldownTimer()
-    {
-        if (timeBetweenAttack >= 0f)
+        else
         {
             timeBetweenAttack -= Time.deltaTime;
         }
-    }
-
-    private void DealWithMeleeWeaponStrikedEvent()
-    {
-        EnablePlayer();
-        player.weaponFiredEvent.CallWeaponFiredEvent(player.activeWeapon.GetCurrentWeapon());
     }
 }
