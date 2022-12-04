@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6461650756046700635}
   - component: {fileID: 6461650756046700632}
   - component: {fileID: 6461650756046700633}
-  - component: {fileID: 1291679055034162388}
   - component: {fileID: 3736185104454071448}
   - component: {fileID: 6461650756046700637}
   - component: {fileID: 7202934883250967376}
@@ -41,6 +40,7 @@ GameObject:
   - component: {fileID: 4109818985069368341}
   - component: {fileID: 5010006491703101803}
   - component: {fileID: 9043504805649869941}
+  - component: {fileID: 528453136450337804}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -129,10 +129,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementDetails: {fileID: 11400000, guid: ae5b33cca0289b846ac329a4fc989011, type: 2}
   isPlayerDashing: 0
-  startTimeBetweenAttack: 0
-  attackPose: {fileID: 0}
-  attackRange: 0
-  damageAmount: 0
 --- !u!50 &6461650756046700633
 Rigidbody2D:
   serializedVersion: 4
@@ -145,7 +141,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 1.4942664
+  m_Mass: 4.8776426
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -154,22 +150,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!58 &1291679055034162388
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6461650756046700630}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.0894627}
-  serializedVersion: 2
-  m_Radius: 2.0473728
 --- !u!61 &3736185104454071448
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -253,10 +233,10 @@ MonoBehaviour:
   weaponFiredEvent: {fileID: 0}
   reloadWeaponEvent: {fileID: 0}
   weaponReloadedEvent: {fileID: 0}
-  itemUsedEvent: {fileID: 0}
   dialogStartedEvent: {fileID: 0}
   dialogProceededEvent: {fileID: 0}
   dialogEndedEvent: {fileID: 0}
+  itemUsedEvent: {fileID: 0}
   playerControl: {fileID: 0}
   spriteRenderer: {fileID: 0}
   animator: {fileID: 0}
@@ -450,7 +430,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6461650756046700630}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -683,3 +663,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6335e51d51937648810b300f6dd4cda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!58 &528453136450337804
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6461650756046700630}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 2.3474078}
+  serializedVersion: 2
+  m_Radius: 0.26779038
