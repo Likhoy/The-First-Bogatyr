@@ -26,7 +26,7 @@ public class Item : MonoBehaviour
         
     }*/
 
-    protected void Start()
+    virtual protected void Start()
     {
         sprite = GetComponent<SpriteRenderer>().sprite;
     }
