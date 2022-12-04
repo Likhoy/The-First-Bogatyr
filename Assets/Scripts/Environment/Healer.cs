@@ -57,7 +57,7 @@ public class Healer : MonoBehaviour, IUseable
 
     public void UseItem()
     {
-        // AnimateDrinking(); 
+        // AnimateDrinking();
         healingTimer = healingDuration;
         StopAllCoroutines();
         StartCoroutine(HealerEffectRoutine());
