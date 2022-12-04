@@ -62,10 +62,7 @@ public class ActiveWeapon : MonoBehaviour
         }
         else if (currentWeapon is MeleeWeapon meleeWeapon)
         {
-            // Set current weapon sprite
-            if (weaponSpriteRenderer != null)
-                weaponSpriteRenderer.sprite = meleeWeapon.weaponDetails.weaponSprite;
-            // ...
+            // TODO
         }
         
 

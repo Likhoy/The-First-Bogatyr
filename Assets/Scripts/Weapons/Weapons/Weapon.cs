@@ -1,11 +1,11 @@
-public abstract class Weapon
+public class Weapon
 {
     public int weaponListPosition;
 }
 
 public class MeleeWeapon : Weapon
 {
-    public MeleeWeaponDetailsSO weaponDetails;
+    MeleeWeaponDetailsSO weaponDetails;
 }
 
 public class RangedWeapon : Weapon
