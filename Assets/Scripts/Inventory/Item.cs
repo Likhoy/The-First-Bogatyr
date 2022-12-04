@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : MonoBehaviour, IUseable
+public class Item : MonoBehaviour
 {
     public int itemType = 0;
 
@@ -16,29 +16,26 @@ public class Item : MonoBehaviour, IUseable
     public int itemID;
     public bool isStackable = false;
     public bool isDisposable = false;
-    public bool isTaken;
     //public int itemCount = 0;
     //public int itemMaxCount = 1;
-    [SerializeField] public Sprite sprite;
+    Sprite sprite;
+    public Sprite Sprite { get { return sprite; } }
+
+    /*public void DropItem()
+    {
+        
+    }*/
 
     virtual protected void Start()
     {
         sprite = GetComponent<SpriteRenderer>().sprite;
-        isTaken = false;
     }
 
-    private void OnMouseDown() => TakeItem();
+    public void OnMouseDown() => TakeItem();
 
     public void TakeItem()
     {
-        //Костыль (исправить)
-        if (!isTaken)
-        {
-            GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
-            GameObject.FindObjectOfType<Inventory>().AddItem(this);
-            isTaken = true;
-            return;
-        }
+        GameObject.FindObjectOfType<Inventory>().AddItem(this);
         GameObject.Destroy(this.gameObject);
     }
 
