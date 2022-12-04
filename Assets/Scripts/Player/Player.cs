@@ -21,9 +21,10 @@ using UnityEngine;
 [RequireComponent(typeof(ReloadWeaponEvent))]
 [RequireComponent(typeof(ReloadWeapon))]
 [RequireComponent(typeof(WeaponReloadedEvent))]
-[RequireComponent(typeof(ItemUsedEvent))]
 [RequireComponent(typeof(DialogStartedEvent))]
 [RequireComponent(typeof(DialogProceededEvent))]
+[RequireComponent(typeof(DialogEndedEvent))]
+[RequireComponent(typeof(ItemUsedEvent))]
 [RequireComponent(typeof(PlayerController))]
 [RequireComponent(typeof(AnimatePlayer))]
 [RequireComponent(typeof(SpriteRenderer))]
@@ -45,10 +46,10 @@ public class Player : MonoBehaviour
     [HideInInspector] public WeaponFiredEvent weaponFiredEvent;
     [HideInInspector] public ReloadWeaponEvent reloadWeaponEvent;
     [HideInInspector] public WeaponReloadedEvent weaponReloadedEvent;
-    [HideInInspector] public ItemUsedEvent itemUsedEvent;
     [HideInInspector] public DialogStartedEvent dialogStartedEvent;
     [HideInInspector] public DialogProceededEvent dialogProceededEvent;
     [HideInInspector] public DialogEndedEvent dialogEndedEvent;
+    [HideInInspector] public ItemUsedEvent itemUsedEvent;
     [HideInInspector] public PlayerController playerControl;
     [HideInInspector] public SpriteRenderer spriteRenderer;
     [HideInInspector] public Animator animator;
@@ -70,10 +71,10 @@ public class Player : MonoBehaviour
         weaponFiredEvent = GetComponent<WeaponFiredEvent>();
         reloadWeaponEvent = GetComponent<ReloadWeaponEvent>();
         weaponReloadedEvent = GetComponent<WeaponReloadedEvent>();
-        itemUsedEvent = GetComponent<ItemUsedEvent>();
         dialogStartedEvent = GetComponent<DialogStartedEvent>();
         dialogProceededEvent = GetComponent<DialogProceededEvent>();
         dialogEndedEvent = GetComponent<DialogEndedEvent>();
+        itemUsedEvent = GetComponent<ItemUsedEvent>();
         playerControl = GetComponent<PlayerController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
