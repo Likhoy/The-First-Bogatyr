@@ -57,6 +57,9 @@ public class PlayerController : MonoBehaviour
 
         // player dash cooldown timer
         PlayerDashCooldownTimer();
+
+        // player weapon cooldown timer
+        PlayerWeaponCooldownTimer();
     }
 
     /// <summary>
@@ -192,29 +195,40 @@ public class PlayerController : MonoBehaviour
 
     private void ProcessWeaponInput()
     {
-        if (player.activeWeapon.GetCurrentWeapon() is MeleeWeapon meleeWeapon)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (timeBetweenAttack <= 0)
+            if (player.activeWeapon.GetCurrentWeapon() is MeleeWeapon meleeWeapon)
             {
-                if (Input.GetKey(KeyCode.Space))
+                if (timeBetweenAttack <= 0)
                 {
                     // TODO: adjust architecture
-                    player.weaponFiredEvent.CallWeaponFiredEvent(meleeWeapon);
+                    player.fireWeaponEvent.CallFireWeaponEvent(false);
                     isPlayerMovementDisabled = true;
-                    Invoke("EnablePlayer", meleeWeapon.weaponDetails.weaponStrikeTime);
+                    Invoke("DealWithMeleeWeaponStrikedEvent", meleeWeapon.weaponDetails.weaponStrikeTime);
                 }
 
                 timeBetweenAttack = meleeWeapon.weaponDetails.weaponCooldownTime;
             }
-
             else
             {
-                timeBetweenAttack -= Time.deltaTime;
+                RangedWeapon rangedWeapon = player.activeWeapon.GetCurrentWeapon() as RangedWeapon;
             }
         }
-        else
+    }
+            
+    
+
+    private void PlayerWeaponCooldownTimer()
+    {
+        if (timeBetweenAttack >= 0f)
         {
-            RangedWeapon rangedWeapon = player.activeWeapon.GetCurrentWeapon() as RangedWeapon;
+            timeBetweenAttack -= Time.deltaTime;
         }
+    }
+
+    private void DealWithMeleeWeaponStrikedEvent()
+    {
+        EnablePlayer();
+        player.weaponFiredEvent.CallWeaponFiredEvent(player.activeWeapon.GetCurrentWeapon());
     }
 }

@@ -12,6 +12,15 @@ public class PlayerDetailsSO : ScriptableObject
     #endregion
     public GameObject playerPrefab;
 
+    #region Header WEAPON
+    [Space(10)]
+    [Header("WEAPON")]
+    #endregion
+    #region Tooltip
+    [Tooltip("Player  initial starting weapon (ranged weapon is not implied here)")]
+    #endregion
+    public MeleeWeaponDetailsSO startingWeapon;
+
     #region Header HEALTH
     [Space(10)]
     [Header("HEALTH")]

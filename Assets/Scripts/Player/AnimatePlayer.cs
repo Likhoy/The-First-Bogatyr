@@ -25,6 +25,14 @@ public class AnimatePlayer : MonoBehaviour
         // Subscribe to idle event
         player.idleEvent.OnIdle += IdleEvent_OnIdle;
 
+        // Subscribe to set active weapon event
+        player.setActiveWeaponEvent.OnSetActiveWeapon += SetActiveWeaponEvent_OnSetActiveWeapon;
+
+        // TODO: add setting weapon inactive reaction
+
+        // Subscribe to fire weapon event
+        player.fireWeaponEvent.OnFireWeapon += FireWeaponEvent_OnFireWeapon;
+
         // Subscribe to weapon fired event
         player.weaponFiredEvent.OnWeaponFired += WeaponFiredEvent_OnWeaponFired;
     }
@@ -40,6 +48,12 @@ public class AnimatePlayer : MonoBehaviour
         // Unsubscribe from idle event
         player.idleEvent.OnIdle -= IdleEvent_OnIdle;
 
+        // Unsubscribe from set active weapon event
+        player.setActiveWeaponEvent.OnSetActiveWeapon -= SetActiveWeaponEvent_OnSetActiveWeapon;
+
+        // Unsubscribe from fire weapon event
+        player.fireWeaponEvent.OnFireWeapon -= FireWeaponEvent_OnFireWeapon;
+
         // Unsubscribe from weapon fired event
         player.weaponFiredEvent.OnWeaponFired -= WeaponFiredEvent_OnWeaponFired;
     }
@@ -51,7 +65,6 @@ public class AnimatePlayer : MonoBehaviour
     {
         // InitializeDashAnimationParameters();
         InitializeLookAnimationParameters();
-        InitializeAttackAnimationParameters();
         SetMovementAnimationParameters();
 
         float moveAngle = HelperUtilities.GetAngleFromVector(movementByVelocityArgs.moveDirection);
@@ -65,7 +78,6 @@ public class AnimatePlayer : MonoBehaviour
     private void MovementToPositionEvent_OnMovementToPosition(MovementToPositionEvent movementToPositionEvent, MovementToPositionArgs movementToPositionArgs)
     {
         InitializeLookAnimationParameters();
-        InitializeAttackAnimationParameters();
         SetMovementAnimationParameters();
 
         float moveAngle = HelperUtilities.GetAngleFromVector(movementToPositionArgs.moveDirection);
@@ -79,8 +91,23 @@ public class AnimatePlayer : MonoBehaviour
     /// </summary>
     private void IdleEvent_OnIdle(IdleEvent idleEvent)
     {
-        InitializeAttackAnimationParameters();
         SetIdleAnimationParameters();
+    }
+
+    /// <summary>
+    /// On set active weapon event handler
+    /// </summary>
+    private void SetActiveWeaponEvent_OnSetActiveWeapon(SetActiveWeaponEvent setActiveWeaponEvent, SetActiveWeaponEventArgs setActiveWeaponEventArgs)
+    {
+        SetHoldingWeaponAnimationParameters();
+    }
+
+    /// <summary>
+    /// On fire weapon event handler
+    /// </summary>
+    private void FireWeaponEvent_OnFireWeapon(FireWeaponEvent fireWeaponEvent, FireWeaponEventArgs fireWeaponEventArgs)
+    {
+        PlayWeaponFireAnimation();
     }
 
     /// <summary>
@@ -89,7 +116,14 @@ public class AnimatePlayer : MonoBehaviour
     private void WeaponFiredEvent_OnWeaponFired(WeaponFiredEvent weaponFiredEvent, WeaponFiredEventArgs weaponFiredEventArgs)
     {
         InitializeAttackAnimationParameters();
-        PlayWeaponFiredAnimation();
+    }
+
+    /// <summary>
+    /// Set holding weapon animation parameters (player now is holding a weapon)
+    /// </summary>
+    private void SetHoldingWeaponAnimationParameters()
+    {
+        player.animator.SetBool(Settings.holdsWeapon, true);
     }
 
     private void InitializeAttackAnimationParameters()
@@ -101,9 +135,9 @@ public class AnimatePlayer : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Plays weapon fire animation
     /// </summary>
-    private void PlayWeaponFiredAnimation()
+    private void PlayWeaponFireAnimation()
     {
         if (player.animator.GetBool(Settings.lookUp))
             player.animator.SetBool(Settings.attackUp, true);
@@ -126,7 +160,7 @@ public class AnimatePlayer : MonoBehaviour
         player.animator.SetBool(Settings.lookDown, false);
     }
 
-    /*private void InitializeRollAnimationParameters()
+    /*private void InitializeDashAnimationParameters()
     {
         player.animator.SetBool(Settings.rollDown, false);
         player.animator.SetBool(Settings.rollRight, false);
