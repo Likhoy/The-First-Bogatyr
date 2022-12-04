@@ -24,4 +24,16 @@ public class GameResources : MonoBehaviour
     [Tooltip("Player details list - populate the list with the playerdetails scriptable objects")]
     #endregion Tooltip
     public List<PlayerDetailsSO> playerDetailsList;
+
+    //Добавить инвентарь
+    /*
+     #region Header PLAYER
+    [Space(10)]
+    [Header("PLAYER")]
+    #endregion Header PLAYER
+    #region Tooltip
+    [Tooltip("Player details list - populate the list with the playerdetails scriptable objects")]
+    #endregion Tooltip
+    public List<PlayerDetailsSO> playerDetailsList;
+     */
 }

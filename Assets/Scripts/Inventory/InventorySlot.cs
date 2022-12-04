@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
 using System;
+using UnityEngine.UIElements;
 
 public class InventorySlot : MonoBehaviour
 {
@@ -13,19 +14,49 @@ public class InventorySlot : MonoBehaviour
     Item item;
     [SerializeField] GameObject textObject;
     [SerializeField] GameObject imageObject;
-    [SerializeField] Image image;
+    [SerializeField] UnityEngine.UI.Image image;
     [SerializeField] TextMeshProUGUI text;
     Animator animator;
     int count = 0;
     bool isEmpty;
     public bool IsEmpty { get { return isEmpty; } }
 
+    //Костыль (исправить)
+
     private void Start()
     {
+        id = -1;
         animator = GetComponent<Animator>();
         text = textObject.GetComponent<TextMeshProUGUI>();
-        image = imageObject.GetComponent<Image>();
+        image = imageObject.GetComponent<UnityEngine.UI.Image>();
         SetEmpty();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            if (!isEmpty)
+            {
+                Debug.Log("1 pressed: UseItem()");
+                UseItem();
+            }
+    }
+
+    private void OnMouseDown()
+    {
+        //Debug.Log("Slot: OnMouseDown()");
+        if (!isEmpty)
+            UseItem();
+    }
+
+    private void UseItem()
+    {
+        //Debug.Log("UseItem()");
+        item.UseItem();
+        count--;
+        text.text = count.ToString();
+        if (count == 0)
+            SetEmpty();
     }
 
     public void DropItem()
@@ -37,14 +68,22 @@ public class InventorySlot : MonoBehaviour
     public void AddNewItem(Item item)
     {
         count = 1;
+        isEmpty = false;
         id = item.itemID;
-        image.sprite = item.Sprite;
-        text.text = Convert.ToString(count);
         textObject.SetActive(true);
         imageObject.SetActive(true);
+        image.sprite = item.sprite;
+        text.text = Convert.ToString(count);
+        //Костыль (исправить)
+        item.isTaken = true;
+        this.item = item;
     }
 
-    public void IncCount() => count++;
+    public void IncCount()
+    {
+        count++;
+        text.text = count.ToString();
+    }
 
     private void SetEmpty()
     {
