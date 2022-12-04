@@ -20,6 +20,7 @@ public static class Settings
     public static int attackLeft = Animator.StringToHash("attackLeft");
     public static int isIdle = Animator.StringToHash("isIdle");
     public static int isMoving = Animator.StringToHash("isMoving");
+    public static int holdsWeapon = Animator.StringToHash("holdsWeapon");
 
     public static float baseSpeedForPlayerAnimations = 8f;
 
