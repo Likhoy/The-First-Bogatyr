@@ -20,12 +20,7 @@ public class PlayerController : MonoBehaviour
 
     [HideInInspector] public bool isPlayerDashing = false;
 
-    private float timeBetweenAttack;
-    public float startTimeBetweenAttack;
-    public Transform attackPose;
-    public float attackRange;
-    private LayerMask enemy;
-    public int damageAmount;
+    private float timeBetweenAttack = 0f;
 
 
     private void Awake()
@@ -50,15 +45,21 @@ public class PlayerController : MonoBehaviour
         if (isPlayerMovementDisabled)
             return;
 
-        //if Player is dashing then return
+        // if player is dashing then return
         if (isPlayerDashing)
             return;
 
         // Process the player movement input
         ProcessMovementInput();
 
-        //player dash cooldown timer
+        // Process the player weapon input
+        ProcessWeaponInput();
+
+        // player dash cooldown timer
         PlayerDashCooldownTimer();
+
+        // player weapon cooldown timer
+        PlayerWeaponCooldownTimer();
     }
 
     /// <summary>
@@ -192,26 +193,42 @@ public class PlayerController : MonoBehaviour
         player.idleEvent.CallIdleEvent();
     }
 
-    private void WeaponInput()
+    private void ProcessWeaponInput()
     {
-        if(timeBetweenAttack <= 0)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            if(Input.GetKey(KeyCode.Space))
+            if (player.activeWeapon.GetCurrentWeapon() is MeleeWeapon meleeWeapon)
             {
-               Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPose.position, attackRange, enemy);
-                for (int i = 0; i < enemiesToDamage.Length; i++)
+                if (timeBetweenAttack <= 0)
                 {
-                    enemiesToDamage[i].GetComponent<Health>().TakeDamage(damageAmount);
-                } 
-            }
-            
-            
-            timeBetweenAttack = startTimeBetweenAttack;
-        }
+                    // TODO: adjust architecture
+                    player.fireWeaponEvent.CallFireWeaponEvent(false);
+                    isPlayerMovementDisabled = true;
+                    Invoke("DealWithMeleeWeaponStrikedEvent", meleeWeapon.weaponDetails.weaponStrikeTime);
+                }
 
-        else
+                timeBetweenAttack = meleeWeapon.weaponDetails.weaponCooldownTime;
+            }
+            else
+            {
+                RangedWeapon rangedWeapon = player.activeWeapon.GetCurrentWeapon() as RangedWeapon;
+            }
+        }
+    }
+            
+    
+
+    private void PlayerWeaponCooldownTimer()
+    {
+        if (timeBetweenAttack >= 0f)
         {
             timeBetweenAttack -= Time.deltaTime;
         }
+    }
+
+    private void DealWithMeleeWeaponStrikedEvent()
+    {
+        EnablePlayer();
+        player.weaponFiredEvent.CallWeaponFiredEvent(player.activeWeapon.GetCurrentWeapon());
     }
 }

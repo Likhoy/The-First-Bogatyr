@@ -15,7 +15,7 @@ public class HolyWater : Item
     {
         base.Start();
         player = GameManager.Instance.GetPlayer();
-        healthBoostPerSecond = 4;
+        healthBoostPerSecond = 2;
         healingDuration = 5;
     }
 
