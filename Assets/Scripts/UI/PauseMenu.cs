@@ -9,10 +9,12 @@ public class PauseMenu : MonoBehaviour
 
     public GameObject pauseMenuUI;
     private GameObject inventory;
+    private GameObject HealthBar;
 
     private void Start()
     {
         inventory = GameObject.Find("Inventory");
+        HealthBar = GameObject.FindGameObjectWithTag("HealthBar");
     }
 
     void Update()
@@ -37,6 +39,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         GameIsPaused = false;
         inventory.SetActive(true);
+        HealthBar.SetActive(true);
     }
 
     void Pause()
@@ -45,6 +48,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 0f;
         GameIsPaused = true;
         inventory.SetActive(false);
+        HealthBar.SetActive(false);
     }
 
     public void LoadMenu()
