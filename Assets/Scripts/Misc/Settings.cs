@@ -14,13 +14,8 @@ public static class Settings
     public static int lookDown = Animator.StringToHash("lookDown");
     public static int lookRight = Animator.StringToHash("lookRight");
     public static int lookLeft = Animator.StringToHash("lookLeft");
-    public static int attackUp = Animator.StringToHash("attackUp");
-    public static int attackDown = Animator.StringToHash("attackDown");
-    public static int attackRight = Animator.StringToHash("attackRight");
-    public static int attackLeft = Animator.StringToHash("attackLeft");
     public static int isIdle = Animator.StringToHash("isIdle");
     public static int isMoving = Animator.StringToHash("isMoving");
-    public static int holdsWeapon = Animator.StringToHash("holdsWeapon");
 
     public static float baseSpeedForPlayerAnimations = 8f;
 
