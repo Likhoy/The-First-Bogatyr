@@ -17,6 +17,11 @@ public class MeleeWeaponDetailsSO : ScriptableObject
     public Sprite weaponSprite;
 
     #region Tooltip
+    [Tooltip("Populate with a damage amount per hit for a weapon")]
+    #endregion Tooltip
+    public int weaponDamage;
+
+    #region Tooltip
     [Tooltip("Populate with weapon strike animation time")]
     #endregion Tooltip
     public float weaponStrikeTime;
