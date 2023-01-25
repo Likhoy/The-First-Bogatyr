@@ -21,10 +21,9 @@ using UnityEngine;
 [RequireComponent(typeof(ReloadWeaponEvent))]
 [RequireComponent(typeof(ReloadWeapon))]
 [RequireComponent(typeof(WeaponReloadedEvent))]
+[RequireComponent(typeof(ItemUsedEvent))]
 [RequireComponent(typeof(DialogStartedEvent))]
 [RequireComponent(typeof(DialogProceededEvent))]
-[RequireComponent(typeof(DialogEndedEvent))]
-[RequireComponent(typeof(ItemUsedEvent))]
 [RequireComponent(typeof(PlayerController))]
 [RequireComponent(typeof(AnimatePlayer))]
 [RequireComponent(typeof(SpriteRenderer))]
@@ -46,10 +45,10 @@ public class Player : MonoBehaviour
     [HideInInspector] public WeaponFiredEvent weaponFiredEvent;
     [HideInInspector] public ReloadWeaponEvent reloadWeaponEvent;
     [HideInInspector] public WeaponReloadedEvent weaponReloadedEvent;
+    [HideInInspector] public ItemUsedEvent itemUsedEvent;
     [HideInInspector] public DialogStartedEvent dialogStartedEvent;
     [HideInInspector] public DialogProceededEvent dialogProceededEvent;
     [HideInInspector] public DialogEndedEvent dialogEndedEvent;
-    [HideInInspector] public ItemUsedEvent itemUsedEvent;
     [HideInInspector] public PlayerController playerControl;
     [HideInInspector] public SpriteRenderer spriteRenderer;
     [HideInInspector] public Animator animator;
@@ -71,10 +70,10 @@ public class Player : MonoBehaviour
         weaponFiredEvent = GetComponent<WeaponFiredEvent>();
         reloadWeaponEvent = GetComponent<ReloadWeaponEvent>();
         weaponReloadedEvent = GetComponent<WeaponReloadedEvent>();
+        itemUsedEvent = GetComponent<ItemUsedEvent>();
         dialogStartedEvent = GetComponent<DialogStartedEvent>();
         dialogProceededEvent = GetComponent<DialogProceededEvent>();
         dialogEndedEvent = GetComponent<DialogEndedEvent>();
-        itemUsedEvent = GetComponent<ItemUsedEvent>();
         playerControl = GetComponent<PlayerController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
@@ -87,8 +86,8 @@ public class Player : MonoBehaviour
     {
         this.playerDetails = playerDetails;
 
-        //Create player starting weapons
-        // CreatePlayerStartingWeapons();
+        // Create player starting weapons
+        CreatePlayerStartingWeapon();
 
         // Set player starting health
         SetPlayerHealth();
@@ -119,6 +118,38 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
+    /// Set the player starting weapon
+    /// </summary>
+    private void CreatePlayerStartingWeapon()
+    {
+        // Clear list
+        weaponList.Clear();
+
+        // Add weapon to player
+        AddWeaponToPlayer(playerDetails.startingWeapon);
+    }
+
+    /// <summary>
+    /// Add a weapon to the player weapon dictionary !!! needs to refactored, because ranged weapon is not supported here
+    /// </summary>
+    public Weapon AddWeaponToPlayer(MeleeWeaponDetailsSO weaponDetails)
+    {
+        MeleeWeapon weapon = new MeleeWeapon() { weaponDetails = weaponDetails };
+
+        // Add the weapon to the list
+        weaponList.Add(weapon);
+
+        // Set weapon position in list
+        weapon.weaponListPosition = weaponList.Count;
+
+        // Set the added weapon as active
+        setActiveWeaponEvent.CallSetActiveWeaponEvent(weapon);
+
+        return weapon;
+
+    }
+
+    /// <summary>
     /// Returns the player position
     /// </summary>
     public Vector3 GetPlayerPosition()
@@ -134,4 +165,3 @@ public class Player : MonoBehaviour
         health.SetStartingHealth(playerDetails.playerHealthAmount);
     }
 }
-
