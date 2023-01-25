@@ -359,9 +359,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717c66a6c5eb65a4ba7c8231b49523fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponSpriteRenderer: {fileID: 0}
+  weaponSpriteRenderer: {fileID: 8355200929324520382}
   weaponPolygonCollider2D: {fileID: 0}
-  weaponShootPositionTransform: {fileID: 0}
+  weaponShootPositionTransform: {fileID: 2700930149906598472}
 --- !u!114 &3981597268522686200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -448,7 +448,7 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
