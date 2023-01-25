@@ -5,14 +5,11 @@ using UnityEngine.UI;
 [DisallowMultipleComponent]
 public class HealthUI : MonoBehaviour
 {
-    // for testing
-    //private TextMeshProUGUI textMeshPro;
     public Image healthBar;
 
     private void Awake()
     {
-        // Load components
-      //  textMeshPro = GetComponent<TextMeshProUGUI>();
+        
     }
 
     private void OnEnable()
@@ -30,11 +27,8 @@ public class HealthUI : MonoBehaviour
         SetHealthUI(healthEventArgs);
     }
 
-
-
     private void SetHealthUI(HealthEventArgs healthEventArgs)
     {
-        //textMeshPro.text = "Health: " + healthEventArgs.healthAmount.ToString();
         healthBar.fillAmount = healthEventArgs.healthAmount / 100f;
     }
 }
