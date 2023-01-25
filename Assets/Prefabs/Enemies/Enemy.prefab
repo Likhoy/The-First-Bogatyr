@@ -34,6 +34,7 @@ GameObject:
   - component: {fileID: 7806689024229660459}
   - component: {fileID: 4177712313185446344}
   - component: {fileID: 7932139898352477546}
+  - component: {fileID: 5557371132118945120}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
@@ -215,7 +216,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -60221129
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 9790ff25bf2ef2a41a5769a2cc65fcbe, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -674,6 +675,19 @@ PolygonCollider2D:
       - {x: -0.7, y: -1.1999999}
       - {x: -0.69, y: -1.23}
       - {x: -0.68, y: -1.22}
+--- !u!114 &5557371132118945120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1767373786716691614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67d31f8f833cbd340ad90725ae30df46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contactDamageAmount: 0
 --- !u!1 &4752275437848715928
 GameObject:
   m_ObjectHideFlags: 0
@@ -745,7 +759,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -60221129
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 2
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

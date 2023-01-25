@@ -142,6 +142,9 @@ public class Player : MonoBehaviour
         // Set weapon position in list
         weapon.weaponListPosition = weaponList.Count;
 
+        // Store weapon damage per shot
+        weapon.weaponDamagePerShot = weaponDetails.weaponDamage;
+
         // Set the added weapon as active
         setActiveWeaponEvent.CallSetActiveWeaponEvent(weapon);
 

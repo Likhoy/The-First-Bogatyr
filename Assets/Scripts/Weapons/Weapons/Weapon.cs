@@ -1,6 +1,7 @@
 public class Weapon
 {
     public int weaponListPosition;
+    public int weaponDamagePerShot;
 }
 
 public class MeleeWeapon : Weapon
