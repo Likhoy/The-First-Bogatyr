@@ -87,8 +87,8 @@ public class Player : MonoBehaviour
     {
         this.playerDetails = playerDetails;
 
-        // Create player starting weapons
-        CreatePlayerStartingWeapon();
+        //Create player starting weapons
+        // CreatePlayerStartingWeapons();
 
         // Set player starting health
         SetPlayerHealth();
@@ -116,38 +116,6 @@ public class Player : MonoBehaviour
         {
             destroyedEvent.CallDestroyedEvent(true, 0);
         }
-    }
-
-    /// <summary>
-    /// Set the player starting weapon
-    /// </summary>
-    private void CreatePlayerStartingWeapon()
-    {
-        // Clear list
-        weaponList.Clear();
-
-        // Add weapon to player
-        AddWeaponToPlayer(playerDetails.startingWeapon);
-    }
-
-    /// <summary>
-    /// Add a weapon to the player weapon dictionary !!! needs to refactored, because ranged weapon is not supported here
-    /// </summary>
-    public Weapon AddWeaponToPlayer(MeleeWeaponDetailsSO weaponDetails)
-    {
-        MeleeWeapon weapon = new MeleeWeapon() { weaponDetails = weaponDetails};
-
-        // Add the weapon to the list
-        weaponList.Add(weapon);
-
-        // Set weapon position in list
-        weapon.weaponListPosition = weaponList.Count;
-
-        // Set the added weapon as active
-        setActiveWeaponEvent.CallSetActiveWeaponEvent(weapon);
-
-        return weapon;
-
     }
 
     /// <summary>

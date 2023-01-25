@@ -8,7 +8,7 @@ public class FireWeaponEvent : MonoBehaviour
 {
     public event Action<FireWeaponEvent, FireWeaponEventArgs> OnFireWeapon;
 
-    public void CallFireWeaponEvent(bool fire, bool firePreviousFrame = false, float aimAngle = 0f, float weaponAimAngle = 0f, Vector3 weaponAimDirectionVector = new Vector3())
+    public void CallFireWeaponEvent(bool fire, bool firePreviousFrame, float aimAngle, float weaponAimAngle, Vector3 weaponAimDirectionVector)
     {
         OnFireWeapon?.Invoke(this, new FireWeaponEventArgs() { fire = fire, firePreviousFrame = firePreviousFrame, aimAngle = aimAngle, weaponAimAngle = weaponAimAngle, weaponAimDirectionVector = weaponAimDirectionVector });
     }
