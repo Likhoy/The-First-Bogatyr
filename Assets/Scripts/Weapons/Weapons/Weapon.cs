@@ -5,7 +5,7 @@ public class Weapon
 
 public class MeleeWeapon : Weapon
 {
-    MeleeWeaponDetailsSO weaponDetails;
+    public MeleeWeaponDetailsSO weaponDetails;
 }
 
 public class RangedWeapon : Weapon

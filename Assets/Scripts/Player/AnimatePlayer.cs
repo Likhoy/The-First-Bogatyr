@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -24,8 +25,16 @@ public class AnimatePlayer : MonoBehaviour
         // Subscribe to idle event
         player.idleEvent.OnIdle += IdleEvent_OnIdle;
 
-        // Subscribe to weapon aim event
-        // player.aimWeaponEvent.OnWeaponAim += AimWeaponEvent_OnWeaponAim;
+        // Subscribe to set active weapon event
+        player.setActiveWeaponEvent.OnSetActiveWeapon += SetActiveWeaponEvent_OnSetActiveWeapon;
+
+        // TODO: add setting weapon inactive reaction
+
+        // Subscribe to fire weapon event
+        player.fireWeaponEvent.OnFireWeapon += FireWeaponEvent_OnFireWeapon;
+
+        // Subscribe to weapon fired event
+        player.weaponFiredEvent.OnWeaponFired += WeaponFiredEvent_OnWeaponFired;
     }
 
     private void OnDisable()
@@ -39,8 +48,14 @@ public class AnimatePlayer : MonoBehaviour
         // Unsubscribe from idle event
         player.idleEvent.OnIdle -= IdleEvent_OnIdle;
 
-        // Unsubscribe from weapon aim event event
-        // player.aimWeaponEvent.OnWeaponAim -= AimWeaponEvent_OnWeaponAim;
+        // Unsubscribe from set active weapon event
+        player.setActiveWeaponEvent.OnSetActiveWeapon -= SetActiveWeaponEvent_OnSetActiveWeapon;
+
+        // Unsubscribe from fire weapon event
+        player.fireWeaponEvent.OnFireWeapon -= FireWeaponEvent_OnFireWeapon;
+
+        // Unsubscribe from weapon fired event
+        player.weaponFiredEvent.OnWeaponFired -= WeaponFiredEvent_OnWeaponFired;
     }
 
     /// <summary>
@@ -48,7 +63,7 @@ public class AnimatePlayer : MonoBehaviour
     /// </summary>
     private void MovementByVelocityEvent_OnMovementByVelocity(MovementByVelocityEvent movementByVelocityEvent, MovementByVelocityArgs movementByVelocityArgs)
     {
-        // InitializeRollAnimationParameters();
+        // InitializeDashAnimationParameters();
         InitializeLookAnimationParameters();
         SetMovementAnimationParameters();
 
@@ -76,19 +91,63 @@ public class AnimatePlayer : MonoBehaviour
     /// </summary>
     private void IdleEvent_OnIdle(IdleEvent idleEvent)
     {
-
         SetIdleAnimationParameters();
     }
 
     /// <summary>
-    /// On weapon aim event handler
+    /// On set active weapon event handler
     /// </summary>
-    /*private void AimWeaponEvent_OnWeaponAim(AimWeaponEvent aimWeaponEvent, AimWeaponEventArgs aimWeaponEventArgs)
+    private void SetActiveWeaponEvent_OnSetActiveWeapon(SetActiveWeaponEvent setActiveWeaponEvent, SetActiveWeaponEventArgs setActiveWeaponEventArgs)
     {
-        InitializeAimAnimationParameters();
-        InitializeRollAnimationParameters();
-        SetAimWeaponAnimationParameters(aimWeaponEventArgs.aimDirection);
-    }*/
+        SetHoldingWeaponAnimationParameters();
+    }
+
+    /// <summary>
+    /// On fire weapon event handler
+    /// </summary>
+    private void FireWeaponEvent_OnFireWeapon(FireWeaponEvent fireWeaponEvent, FireWeaponEventArgs fireWeaponEventArgs)
+    {
+        PlayWeaponFireAnimation();
+    }
+
+    /// <summary>
+    /// On weapon fired event handler
+    /// </summary>
+    private void WeaponFiredEvent_OnWeaponFired(WeaponFiredEvent weaponFiredEvent, WeaponFiredEventArgs weaponFiredEventArgs)
+    {
+        InitializeAttackAnimationParameters();
+    }
+
+    /// <summary>
+    /// Set holding weapon animation parameters (player now is holding a weapon)
+    /// </summary>
+    private void SetHoldingWeaponAnimationParameters()
+    {
+        player.animator.SetBool(Settings.holdsWeapon, true);
+    }
+
+    private void InitializeAttackAnimationParameters()
+    {
+        player.animator.SetBool(Settings.attackUp, false);
+        player.animator.SetBool(Settings.attackDown, false);
+        player.animator.SetBool(Settings.attackRight, false);
+        player.animator.SetBool(Settings.attackLeft, false);
+    }
+
+    /// <summary>
+    /// Plays weapon fire animation
+    /// </summary>
+    private void PlayWeaponFireAnimation()
+    {
+        if (player.animator.GetBool(Settings.lookUp))
+            player.animator.SetBool(Settings.attackUp, true);
+        else if (player.animator.GetBool(Settings.lookDown))
+            player.animator.SetBool(Settings.attackDown, true);
+        else if (player.animator.GetBool(Settings.lookRight))
+            player.animator.SetBool(Settings.attackRight, true);
+        else if (player.animator.GetBool(Settings.lookLeft))
+            player.animator.SetBool(Settings.attackLeft, true);
+    }
 
     /// <summary>
     /// Initialise look animation parameters
@@ -101,7 +160,7 @@ public class AnimatePlayer : MonoBehaviour
         player.animator.SetBool(Settings.lookDown, false);
     }
 
-    /*private void InitializeRollAnimationParameters()
+    /*private void InitializeDashAnimationParameters()
     {
         player.animator.SetBool(Settings.rollDown, false);
         player.animator.SetBool(Settings.rollRight, false);
@@ -184,4 +243,3 @@ public class AnimatePlayer : MonoBehaviour
     }
 
 }
-
