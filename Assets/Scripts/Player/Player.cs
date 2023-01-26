@@ -130,11 +130,15 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// Add a weapon to the player weapon dictionary !!! needs to refactored, because ranged weapon is not supported here
+    /// Add a weapon to the player weapon dictionary 
     /// </summary>
-    public Weapon AddWeaponToPlayer(MeleeWeaponDetailsSO weaponDetails)
+    public Weapon AddWeaponToPlayer(WeaponDetailsSO weaponDetails)
     {
-        MeleeWeapon weapon = new MeleeWeapon() { weaponDetails = weaponDetails };
+        Weapon weapon;
+        if (weaponDetails is MeleeWeaponDetailsSO meleeWeaponDetails)
+            weapon = new MeleeWeapon() { weaponDetails = meleeWeaponDetails };
+        else
+            weapon = new RangedWeapon() { weaponDetails = weaponDetails as RangedWeaponDetailsSO };
 
         // Add the weapon to the list
         weaponList.Add(weapon);
@@ -142,14 +146,10 @@ public class Player : MonoBehaviour
         // Set weapon position in list
         weapon.weaponListPosition = weaponList.Count;
 
-        // Store weapon damage per shot
-        weapon.weaponDamagePerShot = weaponDetails.weaponDamage;
-
         // Set the added weapon as active
         setActiveWeaponEvent.CallSetActiveWeaponEvent(weapon);
 
         return weapon;
-
     }
 
     /// <summary>

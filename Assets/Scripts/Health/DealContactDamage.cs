@@ -20,9 +20,9 @@ public class DealContactDamage : MonoBehaviour
 
     private void Start()
     {
-        // Set contact damage amount matching weaponDamage if character is holding a weapon
-        ActiveWeapon activeWeapon = GetComponentInParent<ActiveWeapon>();
-        contactDamageAmount = activeWeapon?.GetCurrentWeapon().weaponDamagePerShot ?? contactDamageAmount;
+        // Set contact damage amount matching weaponDamage if character is holding a melee weapon
+        MeleeWeapon weapon = GetComponentInParent<ActiveWeapon>().GetCurrentWeapon() as MeleeWeapon;
+        contactDamageAmount = weapon?.weaponDetails.weaponDamage ?? contactDamageAmount;
     }
 
     // Trigger contact damage when enter a collider
