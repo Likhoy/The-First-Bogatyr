@@ -1,26 +1,12 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "WeaponDetails_", menuName = "Scriptable Objects/Weapons/Melee Weapon Details")]
-public class MeleeWeaponDetailsSO : ScriptableObject
+public class MeleeWeaponDetailsSO : WeaponDetailsSO
 {
-    #region Header WEAPON BASE DETAILS
-    [Space(10)]
-    [Header("WEAPON BASE DETAILS")]
-    #endregion Header WEAPON BASE DETAILS
     #region Tooltip
-    [Tooltip("Weapon name")]
-    #endregion Tooltip
-    public string weaponName;
-    #region Tooltip
-    [Tooltip("The sprite for the weapon - the sprite should have the 'generate physics shape' option selected ")]
-    #endregion Tooltip
-    public Sprite weaponSprite;
-
-    #region Tooltip
-    [Tooltip("Populate with a damage amount per hit for a weapon")]
+    [Tooltip("Populate with weapon damage per hit")]
     #endregion Tooltip
     public int weaponDamage;
-
     #region Tooltip
     [Tooltip("Populate with weapon strike animation time")]
     #endregion Tooltip
