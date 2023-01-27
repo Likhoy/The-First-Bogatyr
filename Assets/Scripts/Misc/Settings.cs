@@ -22,7 +22,7 @@ public static class Settings
     public static int isMoving = Animator.StringToHash("isMoving");
     public static int holdsWeapon = Animator.StringToHash("holdsWeapon");
 
-    public static float baseSpeedForPlayerAnimations = 8f;
+    public const float baseSpeedForPlayerAnimations = 8f;
 
     #endregion ANIMATOR PARAMETERS
 
@@ -52,6 +52,15 @@ public static class Settings
     #region ENEMY PARAMETERS
     public const int defaultEnemyHealth = 50;
     #endregion
+
+    #region BUTTON ASSIGNMENTS
+    public static Dictionary<Command, KeyCode> commandButtons = new Dictionary<Command, KeyCode>()
+    {
+        [Command.Dash] = KeyCode.LeftShift,
+        [Command.Hit] = KeyCode.Space,
+        [Command.TakeItem] = KeyCode.Mouse0
+    };
+    #endregion 
 
     // added for testing purposes
     #region CONTACT DAMAGE PARAMETERS
