@@ -11,4 +11,5 @@ public enum Command
     Dash,
     Hit,
     TakeItem,
+    ContinueDialog
 }

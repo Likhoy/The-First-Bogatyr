@@ -169,7 +169,7 @@ public class PlayerController : MonoBehaviour
     private void DialogInput()
     {
         // check for mouse down event - switch dialog text
-        if (DialogManager.Instance.isDialogPlaying && Input.GetMouseButtonDown(0) && !DialogManager.Instance.optionButtonsAreBeingDisplayed)
+        if (DialogManager.Instance.isDialogPlaying && Input.GetKeyDown(Settings.commandButtons[Command.ContinueDialog]) && !DialogManager.Instance.optionButtonsAreBeingDisplayed)
         {
             player.dialogProceededEvent.CallDialogProceedEvent();
         }
@@ -189,6 +189,7 @@ public class PlayerController : MonoBehaviour
     public void DisablePlayer()
     {
         isPlayerMovementDisabled = true;
+        StopPlayerDashRoutine();
         player.idleEvent.CallIdleEvent();
     }
 
