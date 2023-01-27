@@ -14,6 +14,8 @@ public class EnemyWeaponAI : MonoBehaviour
     [SerializeField] private Transform weaponShootPosition;
     private Enemy enemy;
     private EnemyDetailsSO enemyDetails;
+
+    private float meleeAttackCooldownTimer;
     private float firingIntervalTimer;
     private float firingDurationTimer;
 

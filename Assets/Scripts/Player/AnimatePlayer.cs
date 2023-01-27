@@ -31,7 +31,10 @@ public class AnimatePlayer : MonoBehaviour
         // TODO: add setting weapon inactive reaction
 
         // Subscribe to fire weapon event
-        player.fireWeaponEvent.OnFireWeapon += FireWeaponEvent_OnFireWeapon;
+        // player.fireWeaponEvent.OnFireWeapon += FireWeaponEvent_OnFireWeapon;
+
+        // Subscribe to melee attack event
+        player.meleeAttackEvent.OnMeleeAttack += MeleeAttackEvent_OnMeleeAttack;
 
         // Subscribe to weapon fired event
         player.weaponFiredEvent.OnWeaponFired += WeaponFiredEvent_OnWeaponFired;
@@ -52,7 +55,10 @@ public class AnimatePlayer : MonoBehaviour
         player.setActiveWeaponEvent.OnSetActiveWeapon -= SetActiveWeaponEvent_OnSetActiveWeapon;
 
         // Unsubscribe from fire weapon event
-        player.fireWeaponEvent.OnFireWeapon -= FireWeaponEvent_OnFireWeapon;
+        // player.fireWeaponEvent.OnFireWeapon -= FireWeaponEvent_OnFireWeapon;
+
+        // Unsubscribe from melee attack event
+        player.meleeAttackEvent.OnMeleeAttack -= MeleeAttackEvent_OnMeleeAttack;
 
         // Unsubscribe from weapon fired event
         player.weaponFiredEvent.OnWeaponFired -= WeaponFiredEvent_OnWeaponFired;
@@ -103,11 +109,11 @@ public class AnimatePlayer : MonoBehaviour
     }
 
     /// <summary>
-    /// On fire weapon event handler
+    /// On melee attack event handler
     /// </summary>
-    private void FireWeaponEvent_OnFireWeapon(FireWeaponEvent fireWeaponEvent, FireWeaponEventArgs fireWeaponEventArgs)
+    private void MeleeAttackEvent_OnMeleeAttack(MeleeAttackEvent meleeAttackEvent, MeleeAttackEventArgs meleeAttackEventArgs)
     {
-        PlayWeaponFireAnimation();
+        PlayMeleeAttackAnimation();
     }
 
     /// <summary>
@@ -137,7 +143,7 @@ public class AnimatePlayer : MonoBehaviour
     /// <summary>
     /// Plays weapon fire animation
     /// </summary>
-    private void PlayWeaponFireAnimation()
+    private void PlayMeleeAttackAnimation()
     {
         if (player.animator.GetBool(Settings.lookUp))
             player.animator.SetBool(Settings.attackUp, true);
