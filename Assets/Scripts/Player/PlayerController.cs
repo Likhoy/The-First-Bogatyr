@@ -206,9 +206,9 @@ public class PlayerController : MonoBehaviour
             {
                 if (timeBetweenAttack <= 0)
                 {
-                    // TODO: adjust architecture
-                    player.fireWeaponEvent.CallFireWeaponEvent(false);
-                    //isPlayerMovementDisabled = true;
+                    player.meleeAttackEvent.CallMeleeAttackEvent();
+                    // isPlayerMovementDisabled = true;
+                    // Maybe there is a way better ?
                     Invoke("DealWithMeleeWeaponStrikedEvent", meleeWeapon.weaponDetails.weaponStrikeTime);
                     timeBetweenAttack = meleeWeapon.weaponDetails.weaponCooldownTime;
                 }
