@@ -13,6 +13,7 @@ using UnityEngine;
 [RequireComponent(typeof(MovementToPosition))]
 [RequireComponent(typeof(IdleEvent))]
 [RequireComponent(typeof(Idle))]
+[RequireComponent(typeof(MeleeAttackEvent))]
 [RequireComponent(typeof(FireWeaponEvent))]
 [RequireComponent(typeof(FireWeapon))]
 [RequireComponent(typeof(SetActiveWeaponEvent))]
@@ -39,6 +40,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public MovementByVelocityEvent movementByVelocityEvent;
     [HideInInspector] public MovementToPositionEvent movementToPositionEvent;
     [HideInInspector] public IdleEvent idleEvent;
+    [HideInInspector] public MeleeAttackEvent meleeAttackEvent;
     [HideInInspector] public FireWeaponEvent fireWeaponEvent;
     [HideInInspector] public SetActiveWeaponEvent setActiveWeaponEvent;
     [HideInInspector] public ActiveWeapon activeWeapon;
@@ -64,6 +66,7 @@ public class Player : MonoBehaviour
         movementByVelocityEvent = GetComponent<MovementByVelocityEvent>();
         movementToPositionEvent = GetComponent<MovementToPositionEvent>();
         idleEvent = GetComponent<IdleEvent>();
+        meleeAttackEvent = GetComponent<MeleeAttackEvent>();
         fireWeaponEvent = GetComponent<FireWeaponEvent>();
         setActiveWeaponEvent = GetComponent<SetActiveWeaponEvent>();
         activeWeapon = GetComponent<ActiveWeapon>();
@@ -130,11 +133,15 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// Add a weapon to the player weapon dictionary !!! needs to refactored, because ranged weapon is not supported here
+    /// Add a weapon to the player weapon dictionary 
     /// </summary>
-    public Weapon AddWeaponToPlayer(MeleeWeaponDetailsSO weaponDetails)
+    public Weapon AddWeaponToPlayer(WeaponDetailsSO weaponDetails)
     {
-        MeleeWeapon weapon = new MeleeWeapon() { weaponDetails = weaponDetails };
+        Weapon weapon;
+        if (weaponDetails is MeleeWeaponDetailsSO meleeWeaponDetails)
+            weapon = new MeleeWeapon() { weaponDetails = meleeWeaponDetails };
+        else
+            weapon = new RangedWeapon() { weaponDetails = weaponDetails as RangedWeaponDetailsSO };
 
         // Add the weapon to the list
         weaponList.Add(weapon);
@@ -146,7 +153,6 @@ public class Player : MonoBehaviour
         setActiveWeaponEvent.CallSetActiveWeaponEvent(weapon);
 
         return weapon;
-
     }
 
     /// <summary>
