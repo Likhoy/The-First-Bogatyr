@@ -1,5 +1,70 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3873933048915210732
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6712194894880595544}
+  - component: {fileID: 4440446442786040523}
+  - component: {fileID: 1648192146671412873}
+  m_Layer: 7
+  m_Name: MeleeWeapon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6712194894880595544
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3873933048915210732}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8677506862603195842}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4440446442786040523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3873933048915210732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 745fbc423a963d14db6672738d2ae43f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contactDamageAmount: 5
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 136
+--- !u!58 &1648192146671412873
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3873933048915210732}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.23277706}
+  serializedVersion: 2
+  m_Radius: 0.26722294
 --- !u!1001 &6751177229919431839
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -180,6 +245,11 @@ PrefabInstance:
 --- !u!212 &3333610480645930785 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 8355200929324520382, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
+  m_PrefabInstance: {fileID: 6751177229919431839}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8677506862603195842 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2728140617652107613, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
   m_PrefabInstance: {fileID: 6751177229919431839}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &8704154344957601495 stripped
