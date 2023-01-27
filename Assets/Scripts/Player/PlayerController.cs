@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
 
     [HideInInspector] public bool isPlayerDashing = false;
 
+    private bool spacePressed = false;
     private float timeBetweenAttack = 0f;
 
 
@@ -196,18 +197,21 @@ public class PlayerController : MonoBehaviour
     private void ProcessWeaponInput()
     {
         if (Input.GetKeyDown(KeyCode.Space))
+            spacePressed = true;
+        else if (Input.GetKeyUp(KeyCode.Space))
+            spacePressed = false;
+        if (spacePressed)
         {
             if (player.activeWeapon.GetCurrentWeapon() is MeleeWeapon meleeWeapon)
             {
                 if (timeBetweenAttack <= 0)
                 {
-                    // TODO: adjust architecture
-                    player.fireWeaponEvent.CallFireWeaponEvent(false);
-                    isPlayerMovementDisabled = true;
+                    player.meleeAttackEvent.CallMeleeAttackEvent();
+                    // isPlayerMovementDisabled = true;
+                    // Maybe there is a way better ?
                     Invoke("DealWithMeleeWeaponStrikedEvent", meleeWeapon.weaponDetails.weaponStrikeTime);
+                    timeBetweenAttack = meleeWeapon.weaponDetails.weaponCooldownTime;
                 }
-
-                timeBetweenAttack = meleeWeapon.weaponDetails.weaponCooldownTime;
             }
             else
             {
@@ -215,8 +219,6 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-
-
 
     private void PlayerWeaponCooldownTimer()
     {
@@ -228,7 +230,7 @@ public class PlayerController : MonoBehaviour
 
     private void DealWithMeleeWeaponStrikedEvent()
     {
-        EnablePlayer();
+        //EnablePlayer();
         player.weaponFiredEvent.CallWeaponFiredEvent(player.activeWeapon.GetCurrentWeapon());
     }
 }
