@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d032b866ef51454480845a9dbb9929b, type: 3}
-  m_Name: PlayerDetails_MainChar_Test
+  m_Name: PlayerDetails_Bogatyr
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 6461650756046700630, guid: c419607579c3f844a871583bfd0cdcdb, type: 3}
+  startingWeapon: {fileID: 11400000, guid: 5c3a262877038f94a90100ec8a40ebae, type: 2}
   playerHealthAmount: 100
   hasHitEffect: 1
   hitEffectTime: 0.66
