@@ -20,7 +20,6 @@ public class PlayerController : MonoBehaviour
 
     [HideInInspector] public bool isPlayerDashing = false;
 
-    private bool spacePressed = false;
     private float timeBetweenAttack = 0f;
 
 
@@ -71,7 +70,7 @@ public class PlayerController : MonoBehaviour
         // Get movement input
         float horizontalMovement = Input.GetAxisRaw("Horizontal");
         float verticalMovement = Input.GetAxisRaw("Vertical");
-        bool rightMouseButtonDown = Input.GetMouseButtonDown(1);
+        bool rightMouseButtonDown = Input.GetKey(KeyCode.LeftShift);
 
         // Create a direction vector based on the input
         Vector2 direction = new Vector2(horizontalMovement, verticalMovement);
@@ -196,11 +195,7 @@ public class PlayerController : MonoBehaviour
 
     private void ProcessWeaponInput()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-            spacePressed = true;
-        else if (Input.GetKeyUp(KeyCode.Space))
-            spacePressed = false;
-        if (spacePressed)
+        if (Input.GetKey(KeyCode.Space))
         {
             if (player.activeWeapon.GetCurrentWeapon() is MeleeWeapon meleeWeapon)
             {
