@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -70,7 +69,7 @@ public class PlayerController : MonoBehaviour
         // Get movement input
         float horizontalMovement = Input.GetAxisRaw("Horizontal");
         float verticalMovement = Input.GetAxisRaw("Vertical");
-        bool rightMouseButtonDown = Input.GetKey(KeyCode.LeftShift);
+        bool dashButtonPressed = Input.GetKey(Settings.commandButtons[Command.Dash]);
 
         // Create a direction vector based on the input
         Vector2 direction = new Vector2(horizontalMovement, verticalMovement);
@@ -84,7 +83,7 @@ public class PlayerController : MonoBehaviour
         // If there is movement then move
         if (direction != Vector2.zero)
         {
-            if (!rightMouseButtonDown)
+            if (!dashButtonPressed)
             {
                 // trigger movement event
                 player.movementByVelocityEvent.CallMovementByVelocityEvent(direction, moveSpeed);
@@ -170,7 +169,7 @@ public class PlayerController : MonoBehaviour
     private void DialogInput()
     {
         // check for mouse down event - switch dialog text
-        if (DialogManager.Instance.isDialogPlaying && Input.GetMouseButtonDown(0) && !DialogManager.Instance.optionButtonsAreBeingDisplayed)
+        if (DialogManager.Instance.isDialogPlaying && Input.GetKeyDown(Settings.commandButtons[Command.ContinueDialog]) && !DialogManager.Instance.optionButtonsAreBeingDisplayed)
         {
             player.dialogProceededEvent.CallDialogProceedEvent();
         }
@@ -190,12 +189,13 @@ public class PlayerController : MonoBehaviour
     public void DisablePlayer()
     {
         isPlayerMovementDisabled = true;
+        StopPlayerDashRoutine();
         player.idleEvent.CallIdleEvent();
     }
 
     private void ProcessWeaponInput()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(Settings.commandButtons[Command.Hit]))
         {
             if (player.activeWeapon.GetCurrentWeapon() is MeleeWeapon meleeWeapon)
             {
