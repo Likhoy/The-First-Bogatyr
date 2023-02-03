@@ -1,16 +1,17 @@
 public class Weapon
 {
+    public WeaponDetailsSO weaponDetails;
     public int weaponListPosition;
 }
 
 public class MeleeWeapon : Weapon
 {
-    MeleeWeaponDetailsSO weaponDetails;
+    public new MeleeWeaponDetailsSO weaponDetails;
 }
 
 public class RangedWeapon : Weapon
 {
-    public RangedWeaponDetailsSO weaponDetails;
+    public new RangedWeaponDetailsSO weaponDetails;
     public float weaponReloadTimer;
     public int weaponClipRemainingAmmo;
     public int weaponRemainingAmmo;
