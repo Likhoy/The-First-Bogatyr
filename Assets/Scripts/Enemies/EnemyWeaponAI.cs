@@ -14,11 +14,17 @@ public class EnemyWeaponAI : MonoBehaviour
     [SerializeField] private Transform weaponShootPosition;
     private Enemy enemy;
     private EnemyDetailsSO enemyDetails;
+
+    private float meleeAttackCooldownTimer;
     private float firingIntervalTimer;
     private float firingDurationTimer;
 
-
-    
+    private float DeltaTime;
+    public float startDeltaTime;
+    public Transform attackPose;
+    public float attackRange;
+    private LayerMask player;
+    public int damageAmount;
 
     private void Awake()
     {
@@ -73,7 +79,20 @@ public class EnemyWeaponAI : MonoBehaviour
 
     private void MeleeAttack()
     {
-        
+        if (DeltaTime <= 0)
+        {
+            Collider2D[] plyerToDamage = Physics2D.OverlapCircleAll(attackPose.position, attackRange, player);
+            for (int i = 0; i < plyerToDamage.Length; i++)
+            {
+                plyerToDamage[i].GetComponent<Health>().TakeDamage(damageAmount);
+            }
+            DeltaTime = startDeltaTime;
+        }
+
+        else
+        {
+            DeltaTime -= Time.deltaTime;
+        }
     }
 
     /// <summary>

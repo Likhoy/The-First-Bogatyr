@@ -13,6 +13,15 @@ using UnityEngine;
 [RequireComponent(typeof(MovementToPosition))]
 [RequireComponent(typeof(IdleEvent))]
 [RequireComponent(typeof(Idle))]
+[RequireComponent(typeof(MeleeAttackEvent))]
+[RequireComponent(typeof(FireWeaponEvent))]
+[RequireComponent(typeof(FireWeapon))]
+[RequireComponent(typeof(SetActiveWeaponEvent))]
+[RequireComponent(typeof(ActiveWeapon))]
+[RequireComponent(typeof(WeaponFiredEvent))]
+[RequireComponent(typeof(ReloadWeaponEvent))]
+[RequireComponent(typeof(ReloadWeapon))]
+[RequireComponent(typeof(WeaponReloadedEvent))]
 [RequireComponent(typeof(ItemUsedEvent))]
 [RequireComponent(typeof(DialogStartedEvent))]
 [RequireComponent(typeof(DialogProceededEvent))]
@@ -31,6 +40,13 @@ public class Player : MonoBehaviour
     [HideInInspector] public MovementByVelocityEvent movementByVelocityEvent;
     [HideInInspector] public MovementToPositionEvent movementToPositionEvent;
     [HideInInspector] public IdleEvent idleEvent;
+    [HideInInspector] public MeleeAttackEvent meleeAttackEvent;
+    [HideInInspector] public FireWeaponEvent fireWeaponEvent;
+    [HideInInspector] public SetActiveWeaponEvent setActiveWeaponEvent;
+    [HideInInspector] public ActiveWeapon activeWeapon;
+    [HideInInspector] public WeaponFiredEvent weaponFiredEvent;
+    [HideInInspector] public ReloadWeaponEvent reloadWeaponEvent;
+    [HideInInspector] public WeaponReloadedEvent weaponReloadedEvent;
     [HideInInspector] public ItemUsedEvent itemUsedEvent;
     [HideInInspector] public DialogStartedEvent dialogStartedEvent;
     [HideInInspector] public DialogProceededEvent dialogProceededEvent;
@@ -50,6 +66,13 @@ public class Player : MonoBehaviour
         movementByVelocityEvent = GetComponent<MovementByVelocityEvent>();
         movementToPositionEvent = GetComponent<MovementToPositionEvent>();
         idleEvent = GetComponent<IdleEvent>();
+        meleeAttackEvent = GetComponent<MeleeAttackEvent>();
+        fireWeaponEvent = GetComponent<FireWeaponEvent>();
+        setActiveWeaponEvent = GetComponent<SetActiveWeaponEvent>();
+        activeWeapon = GetComponent<ActiveWeapon>();
+        weaponFiredEvent = GetComponent<WeaponFiredEvent>();
+        reloadWeaponEvent = GetComponent<ReloadWeaponEvent>();
+        weaponReloadedEvent = GetComponent<WeaponReloadedEvent>();
         itemUsedEvent = GetComponent<ItemUsedEvent>();
         dialogStartedEvent = GetComponent<DialogStartedEvent>();
         dialogProceededEvent = GetComponent<DialogProceededEvent>();
@@ -66,8 +89,8 @@ public class Player : MonoBehaviour
     {
         this.playerDetails = playerDetails;
 
-        //Create player starting weapons
-        // CreatePlayerStartingWeapons();
+        // Create player starting weapons
+        CreatePlayerStartingWeapon();
 
         // Set player starting health
         SetPlayerHealth();
@@ -98,6 +121,41 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
+    /// Set the player starting weapon
+    /// </summary>
+    private void CreatePlayerStartingWeapon()
+    {
+        // Clear list
+        weaponList.Clear();
+
+        // Add weapon to player
+        AddWeaponToPlayer(playerDetails.startingWeapon);
+    }
+
+    /// <summary>
+    /// Add a weapon to the player weapon dictionary 
+    /// </summary>
+    public Weapon AddWeaponToPlayer(WeaponDetailsSO weaponDetails)
+    {
+        Weapon weapon;
+        if (weaponDetails is MeleeWeaponDetailsSO meleeWeaponDetails)
+            weapon = new MeleeWeapon() { weaponDetails = meleeWeaponDetails };
+        else
+            weapon = new RangedWeapon() { weaponDetails = weaponDetails as RangedWeaponDetailsSO };
+
+        // Add the weapon to the list
+        weaponList.Add(weapon);
+
+        // Set weapon position in list
+        weapon.weaponListPosition = weaponList.Count;
+
+        // Set the added weapon as active
+        setActiveWeaponEvent.CallSetActiveWeaponEvent(weapon);
+
+        return weapon;
+    }
+
+    /// <summary>
     /// Returns the player position
     /// </summary>
     public Vector3 GetPlayerPosition()
@@ -113,4 +171,3 @@ public class Player : MonoBehaviour
         health.SetStartingHealth(playerDetails.playerHealthAmount);
     }
 }
-
