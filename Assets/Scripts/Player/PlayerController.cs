@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -20,12 +19,7 @@ public class PlayerController : MonoBehaviour
 
     [HideInInspector] public bool isPlayerDashing = false;
 
-    private float timeBetweenAttack;
-    public float startTimeBetweenAttack;
-    public Transform attackPose;
-    public float attackRange;
-    private LayerMask enemy;
-    public int damageAmount;
+    private float timeBetweenAttack = 0f;
 
 
     private void Awake()
@@ -50,15 +44,21 @@ public class PlayerController : MonoBehaviour
         if (isPlayerMovementDisabled)
             return;
 
-        //if Player is dashing then return
+        // if player is dashing then return
         if (isPlayerDashing)
             return;
 
         // Process the player movement input
         ProcessMovementInput();
 
-        //player dash cooldown timer
+        // Process the player weapon input
+        ProcessWeaponInput();
+
+        // player dash cooldown timer
         PlayerDashCooldownTimer();
+
+        // player weapon cooldown timer
+        PlayerWeaponCooldownTimer();
     }
 
     /// <summary>
@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
         // Get movement input
         float horizontalMovement = Input.GetAxisRaw("Horizontal");
         float verticalMovement = Input.GetAxisRaw("Vertical");
-        bool rightMouseButtonDown = Input.GetMouseButtonDown(1);
+        bool dashButtonPressed = Input.GetKey(Settings.commandButtons[Command.Dash]);
 
         // Create a direction vector based on the input
         Vector2 direction = new Vector2(horizontalMovement, verticalMovement);
@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
         // If there is movement then move
         if (direction != Vector2.zero)
         {
-            if (!rightMouseButtonDown)
+            if (!dashButtonPressed)
             {
                 // trigger movement event
                 player.movementByVelocityEvent.CallMovementByVelocityEvent(direction, moveSpeed);
@@ -169,7 +169,7 @@ public class PlayerController : MonoBehaviour
     private void DialogInput()
     {
         // check for mouse down event - switch dialog text
-        if (DialogManager.Instance.isDialogPlaying && Input.GetMouseButtonDown(0) && !DialogManager.Instance.optionButtonsAreBeingDisplayed)
+        if (DialogManager.Instance.isDialogPlaying && Input.GetKeyDown(Settings.commandButtons[Command.ContinueDialog]) && !DialogManager.Instance.optionButtonsAreBeingDisplayed)
         {
             player.dialogProceededEvent.CallDialogProceedEvent();
         }
@@ -189,29 +189,43 @@ public class PlayerController : MonoBehaviour
     public void DisablePlayer()
     {
         isPlayerMovementDisabled = true;
+        StopPlayerDashRoutine();
         player.idleEvent.CallIdleEvent();
     }
 
-    private void WeaponInput()
+    private void ProcessWeaponInput()
     {
-        if(timeBetweenAttack <= 0)
+        if (Input.GetKey(Settings.commandButtons[Command.Hit]))
         {
-            if(Input.GetKey(KeyCode.Space))
+            if (player.activeWeapon.GetCurrentWeapon() is MeleeWeapon meleeWeapon)
             {
-               Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPose.position, attackRange, enemy);
-                for (int i = 0; i < enemiesToDamage.Length; i++)
+                if (timeBetweenAttack <= 0)
                 {
-                    enemiesToDamage[i].GetComponent<Health>().TakeDamage(damageAmount);
-                } 
+                    player.meleeAttackEvent.CallMeleeAttackEvent();
+                    // isPlayerMovementDisabled = true;
+                    // Maybe there is a way better ?
+                    Invoke("DealWithMeleeWeaponStrikedEvent", meleeWeapon.weaponDetails.weaponStrikeTime);
+                    timeBetweenAttack = meleeWeapon.weaponDetails.weaponCooldownTime;
+                }
             }
-            
-            
-            timeBetweenAttack = startTimeBetweenAttack;
+            else
+            {
+                RangedWeapon rangedWeapon = player.activeWeapon.GetCurrentWeapon() as RangedWeapon;
+            }
         }
+    }
 
-        else
+    private void PlayerWeaponCooldownTimer()
+    {
+        if (timeBetweenAttack >= 0f)
         {
             timeBetweenAttack -= Time.deltaTime;
         }
+    }
+
+    private void DealWithMeleeWeaponStrikedEvent()
+    {
+        //EnablePlayer();
+        player.weaponFiredEvent.CallWeaponFiredEvent(player.activeWeapon.GetCurrentWeapon());
     }
 }
