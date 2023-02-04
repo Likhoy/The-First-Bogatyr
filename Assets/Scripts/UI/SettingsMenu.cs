@@ -8,36 +8,61 @@ using UnityEngine.Audio;
 
 public class SettingsMenu : MonoBehaviour
 {
+    
+    private Toggle AudioToggle;
+
     public TMP_Dropdown resolutionDropdown;
-    public AudioMixerGroup Mixer;
+
+    public AudioMixer theMixer;
+
+    public TMP_Text mastLabel, musicLabel, sfxLabel;
+    public Slider mastSlider, musicSlider, sfxSlider;
+
+    public bool volumeOn = false;
 
     Resolution[] resolutions;
 
     void Start()
     {
-        resolutionDropdown.ClearOptions();
-        List<string> options = new List<string>();
-        resolutions = Screen.resolutions;
-        int currentResolutionIndex = 0;
 
+        resolutions = Screen.resolutions;
+
+        resolutionDropdown.ClearOptions();
+
+        List<string> options = new List<string>();
+
+        int currentResolutionIndex = 0;
         for (int i = 0; i < resolutions.Length; i++)
         {
             string option = resolutions[i].width + "x" + resolutions[i].height + " " + resolutions[i].refreshRate + "Hz";
             options.Add(option);
-            if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
+
+            if (resolutions[i].width == Screen.currentResolution.width &&
+                resolutions[i].height == Screen.currentResolution.height)
+            {
                 currentResolutionIndex = i;
+            }
         }
 
         resolutionDropdown.AddOptions(options);
+        resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
-        LoadSettings(currentResolutionIndex);
+
+        float vol = 0f;
+        theMixer.GetFloat("MasterVol", out vol);
+        mastSlider.value = vol;
+
+        theMixer.GetFloat("MusicVol", out vol);
+        musicSlider.value = vol;
+
+        theMixer.GetFloat("SFXVol", out vol);
+        sfxSlider.value = vol;
+
+        mastLabel.text = Mathf.RoundToInt(mastSlider.value + 80).ToString();
+        musicLabel.text = Mathf.RoundToInt(musicSlider.value + 80).ToString();
+        sfxLabel.text = Mathf.RoundToInt(sfxSlider.value + 80).ToString();
     }
 
-    public void FullScreenToggle(bool isFullscreen)
-    {
-        isFullscreen = !isFullscreen;
-        Screen.fullScreen = isFullscreen;
-    }
 
     public void SetResolution(int resolutionIndex)
     {
@@ -46,34 +71,46 @@ public class SettingsMenu : MonoBehaviour
     }
 
 
-    public void ToggleMusic(bool enabled)
+    public void SetMasterVol()
     {
-        if (enabled)
-            Mixer.audioMixer.SetFloat("MusicVolume", 0);
-        else
-            Mixer.audioMixer.SetFloat("MusicVolume", -80);
+        mastLabel.text = Mathf.RoundToInt(mastSlider.value + 80).ToString();
+
+        theMixer.SetFloat("MasterVol", mastSlider.value);
+
+        PlayerPrefs.SetFloat("MasterVol", mastSlider.value);
     }
 
-    public void ChangeVolume(float volume)
+    public void SetMusicVol()
     {
-        Mixer.audioMixer.SetFloat("MasterVolume", Mathf.Lerp(-80, 0, volume));
+        musicLabel.text = Mathf.RoundToInt(musicSlider.value + 80).ToString();
+
+        theMixer.SetFloat("MusicVol", musicSlider.value);
+
+        PlayerPrefs.SetFloat("MusicVol", musicSlider.value);
     }
 
-    public void SaveSettings()
+    public void SetSFXVol()
     {
-        PlayerPrefs.SetInt("ResolutionPreference", resolutionDropdown.value);
-        PlayerPrefs.SetInt("FullscreenPreference", System.Convert.ToInt32(Screen.fullScreen));
+        sfxLabel.text = Mathf.RoundToInt(sfxSlider.value + 80).ToString();
+
+        theMixer.SetFloat("SFXVol", sfxSlider.value);
+
+        PlayerPrefs.SetFloat("SFXVol", sfxSlider.value);
     }
 
-    public void LoadSettings(int currentResolutionIndex)
+    public void Mute()
+
     {
-        if (PlayerPrefs.HasKey("ResolutionPreference"))
-            resolutionDropdown.value = PlayerPrefs.GetInt("ResolutionPreference");
+        if (volumeOn)
+        {
+            volumeOn = false;
+            AudioListener.volume = 0;
+        }
         else
-            resolutionDropdown.value = currentResolutionIndex;
-        if (PlayerPrefs.HasKey("FullscreenPreference"))
-            Screen.fullScreen = System.Convert.ToBoolean(PlayerPrefs.GetInt("FullscreenPreference"));
-        else
-            Screen.fullScreen = true;
+        {
+            volumeOn = true;
+            AudioListener.volume = 1;
+
+        }
     }
 }
