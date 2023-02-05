@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Item : MonoBehaviour, IUseable
@@ -27,7 +29,27 @@ public class Item : MonoBehaviour, IUseable
         isTaken = false;
     }
 
-    private void OnMouseDown() => TakeItem();
+    //private void OnMouseDown() => TakeItem();
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.gameObject.tag == "Player")
+        {
+            PlayerController player = collider.gameObject.GetComponent<PlayerController>();
+            if (!player.takeItemList.Contains(this))
+                player.takeItemList.Add(this);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collider)
+    {
+        if (collider.gameObject.tag == "Player")
+        {
+            PlayerController player = collider.gameObject.GetComponent<PlayerController>();
+            if (player.takeItemList.Contains(this))
+                player.takeItemList.Remove(this);
+        }   
+    }
 
     public void TakeItem()
     {
@@ -43,6 +65,11 @@ public class Item : MonoBehaviour, IUseable
     }
 
     virtual public void UseItem()
+    {
+        throw new System.NotImplementedException();
+    }
+
+   public void SellItem()
     {
         throw new System.NotImplementedException();
     }
