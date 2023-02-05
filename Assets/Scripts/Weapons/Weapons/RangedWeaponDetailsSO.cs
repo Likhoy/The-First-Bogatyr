@@ -1,21 +1,8 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "WeaponDetails_", menuName = "Scriptable Objects/Weapons/Ranged Weapon Details")]
-public class RangedWeaponDetailsSO : ScriptableObject
+public class RangedWeaponDetailsSO : WeaponDetailsSO
 {
-    #region Header WEAPON BASE DETAILS
-    [Space(10)]
-    [Header("WEAPON BASE DETAILS")]
-    #endregion Header WEAPON BASE DETAILS
-    #region Tooltip
-    [Tooltip("Weapon name")]
-    #endregion Tooltip
-    public string weaponName;
-    #region Tooltip
-    [Tooltip("The sprite for the weapon - the sprite should have the 'generate physics shape' option selected ")]
-    #endregion Tooltip
-    public Sprite weaponSprite;
-
     #region Header WEAPON CONFIGURATION
     [Space(10)]
     [Header("WEAPON CONFIGURATION")]
