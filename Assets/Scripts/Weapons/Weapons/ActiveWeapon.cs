@@ -62,9 +62,12 @@ public class ActiveWeapon : MonoBehaviour
         }
         else if (currentWeapon is MeleeWeapon meleeWeapon)
         {
-            // TODO
+            // Set current weapon sprite
+            if (weaponSpriteRenderer != null)
+                weaponSpriteRenderer.sprite = meleeWeapon.weaponDetails.weaponSprite;
+            // ...
         }
-        
+
 
         // If the weapon has a polygon collider and a sprite then set it to the weapon sprite physics shape
         if (weaponPolygonCollider2D != null && weaponSpriteRenderer.sprite != null)
