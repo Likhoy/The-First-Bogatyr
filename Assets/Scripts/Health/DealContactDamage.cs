@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -17,13 +16,6 @@ public class DealContactDamage : MonoBehaviour
     #endregion
     [SerializeField] private LayerMask layerMask;
     private bool isColliding = false;
-
-    private void Start()
-    {
-        // Set contact damage amount matching weaponDamage if character is holding a melee weapon
-        MeleeWeapon weapon = GetComponentInParent<ActiveWeapon>().GetCurrentWeapon() as MeleeWeapon;
-        contactDamageAmount = weapon?.weaponDetails.weaponDamage ?? contactDamageAmount;
-    }
 
     // Trigger contact damage when enter a collider
     private void OnTriggerEnter2D(Collider2D collision)
