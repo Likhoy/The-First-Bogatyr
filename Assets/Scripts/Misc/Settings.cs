@@ -14,15 +14,10 @@ public static class Settings
     public static int lookDown = Animator.StringToHash("lookDown");
     public static int lookRight = Animator.StringToHash("lookRight");
     public static int lookLeft = Animator.StringToHash("lookLeft");
-    public static int attackUp = Animator.StringToHash("attackUp");
-    public static int attackDown = Animator.StringToHash("attackDown");
-    public static int attackRight = Animator.StringToHash("attackRight");
-    public static int attackLeft = Animator.StringToHash("attackLeft");
     public static int isIdle = Animator.StringToHash("isIdle");
     public static int isMoving = Animator.StringToHash("isMoving");
-    public static int holdsWeapon = Animator.StringToHash("holdsWeapon");
 
-    public const float baseSpeedForPlayerAnimations = 8f;
+    public static float baseSpeedForPlayerAnimations = 8f;
 
     #endregion ANIMATOR PARAMETERS
 
@@ -52,16 +47,6 @@ public static class Settings
     #region ENEMY PARAMETERS
     public const int defaultEnemyHealth = 50;
     #endregion
-
-    #region BUTTON ASSIGNMENTS
-    public static Dictionary<Command, KeyCode> commandButtons = new Dictionary<Command, KeyCode>()
-    {
-        [Command.Dash] = KeyCode.LeftShift,
-        [Command.Hit] = KeyCode.Space,
-        [Command.TakeItem] = KeyCode.Mouse0,
-        [Command.ContinueDialog] = KeyCode.Mouse0
-    };
-    #endregion 
 
     // added for testing purposes
     #region CONTACT DAMAGE PARAMETERS

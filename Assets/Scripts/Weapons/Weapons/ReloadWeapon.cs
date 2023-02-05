@@ -133,9 +133,10 @@ public class ReloadWeapon : MonoBehaviour
     /// </summary>
     private void SetActiveWeaponEvent_OnSetActiveWeapon(SetActiveWeaponEvent setActiveWeaponEvent, SetActiveWeaponEventArgs setActiveWeaponEventArgs)
     {
-        RangedWeapon weapon = setActiveWeaponEventArgs.weapon as RangedWeapon;
-        if (weapon == null)
+        if (setActiveWeaponEventArgs.weapon is MeleeWeapon)
             return;
+
+        RangedWeapon weapon = (RangedWeapon)setActiveWeaponEventArgs.weapon;
         if (weapon.isWeaponReloading)
         {
             if (reloadWeaponCoroutine != null)
