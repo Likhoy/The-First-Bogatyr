@@ -471,7 +471,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: EventGuid
-        value: 552607b2-9692-498d-b1ae-93ad818b6283
+        value: 
         type: 0
         typeString: 
       conversationID: 1
@@ -492,19 +492,7 @@ MonoBehaviour:
       userScript: 
       onExecute:
         m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 0}
-            m_TargetAssemblyTypeName: 
-            m_MethodName: 
-            m_Mode: 1
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: 
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
+          m_Calls: []
       canvasRect:
         serializedVersion: 2
         x: 216
@@ -592,6 +580,10 @@ MonoBehaviour:
         typeString: 
       - title: Sequence
         value: 
+        type: 0
+        typeString: 
+      - title: EventGuid
+        value: 6509f240-8e3f-429c-bda4-6d202c5ad5e1
         type: 0
         typeString: 
       conversationID: 1

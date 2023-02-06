@@ -1,28 +1,38 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Net.Http.Headers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TradingUI : MonoBehaviour
 {
+    private Image[] images;
+    private TextMeshProUGUI[] prices;
+    private Button[] buttons;
+
+    private void Awake()
+    {
+        // Cash components
+        images = GetComponentsInChildren<Image>(true);
+        prices = GetComponentsInChildren<TextMeshProUGUI>(true);
+        buttons = GetComponentsInChildren<Button>(true);
+    }
+
+
     public void ShowTradingWindow(NPC npc)
     {
+        int i = 0;
         this.gameObject.SetActive(true);
-        // Vector2 firstPos = Settings.firstProductPosition;
-        int count = 0;
         foreach (Product product in npc.npcDetails.products)
         {
-            /*float xOffset = Settings.productsXOffset * count % Settings.productsInRowAmount;
-            float yOffset = Settings.productsYOffset * (count / Settings.productsInRowAmount);
-            GameObject productGameObject = Instantiate(productPrefab, firstPos + new Vector2(xOffset, yOffset), Quaternion.identity, this.transform);
-            Image productImage = productGameObject.GetComponent<Image>();
-            TextMeshProUGUI productTextComponent = productGameObject.GetComponentInChildren<TextMeshProUGUI>();
-            productTextComponent.text = product.price + " монет";
-            productImage.sprite = product.sprite;
-            count++;*/
+            prices[i].text = product.price.ToString();
+            images[i + 1].sprite = product.sprite;
+            buttons[i].onClick.AddListener(delegate { GameManager.Instance.GetPlayer().playerResources.TryBuyProduct(product); });
+            this.transform.GetChild(i).gameObject.SetActive(true);
+            i++;
         }
+        
     }
+
+    
 
 }
