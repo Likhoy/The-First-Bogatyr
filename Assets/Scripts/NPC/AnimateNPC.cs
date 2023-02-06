@@ -27,9 +27,6 @@ public class AnimateNPC : MonoBehaviour
     /// <summary>
     /// On trading stage launched event handler
     /// </summary>
-    private void TradingStageLaunchedEvent_OnLaunchTradingStage(TradingStageLaunchedEvent tradingStageLaunchedEvent, TradingStageLaunchedEventArgs tradingStageLaunchedEventArgs)
-    {
-       
-    }
+    
 
 }
