@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "NPCDetails_", menuName = "Scriptable Objects/NPC/NPC Details")]
 public class NPCDetailsSO : ScriptableObject
 {
     #region Header NPC BASE DETAILS

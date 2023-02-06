@@ -1,4 +1,4 @@
-using Cinemachine;
+/*using Cinemachine;
 using UnityEngine;
 
 public class DialogManager : SingletonMonobehaviour<DialogManager>
@@ -50,3 +50,4 @@ public class DialogManager : SingletonMonobehaviour<DialogManager>
         isDialogReady = false; 
     }
 }
+*/
