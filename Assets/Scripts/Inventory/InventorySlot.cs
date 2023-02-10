@@ -5,11 +5,14 @@ using UnityEngine;
 using TMPro;
 using System;
 using UnityEngine.UIElements;
+using UnityEngine.EventSystems;
 
-public class InventorySlot : MonoBehaviour
+public class InventorySlot : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField]
     int id;
+    [SerializeField]
+    int slot_number;
     public int ID { get { return id; } }
     Item item;
     [SerializeField] GameObject textObject;
@@ -34,24 +37,19 @@ public class InventorySlot : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown((KeyCode)(slot_number + 48)))
             if (!isEmpty)
-            {
-                Debug.Log("1 pressed: UseItem()");
                 UseItem();
-            }
     }
 
-    private void OnMouseDown()
+    void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
     {
-        //Debug.Log("Slot: OnMouseDown()");
         if (!isEmpty)
             UseItem();
     }
 
     private void UseItem()
     {
-        //Debug.Log("UseItem()");
         item.UseItem();
         count--;
         text.text = count.ToString();
