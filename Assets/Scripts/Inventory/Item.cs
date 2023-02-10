@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Item : MonoBehaviour, IUseable
+public abstract class Item : MonoBehaviour, IUseable
 {
     public int itemType = 0;
 
@@ -21,7 +21,7 @@ public class Item : MonoBehaviour, IUseable
     public bool isTaken;
     //public int itemCount = 0;
     //public int itemMaxCount = 1;
-    [SerializeField] public Sprite sprite;
+    public Sprite sprite;
 
     virtual protected void Start()
     {

@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        DialogInput();
+        //DialogInput();
 
         // if player movement disabled then return
         if (isPlayerMovementDisabled)
@@ -178,21 +178,6 @@ public class PlayerController : MonoBehaviour
         {
             StopCoroutine(playerDashCoroutine);
             isPlayerDashing = false;
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == Settings.NPCTag && DialogManager.Instance.isDialogReady)
-            player.dialogStartedEvent.CallDialogStartedEvent(); // maybe better in NPC class
-    }
-
-    private void DialogInput()
-    {
-        // check for mouse down event - switch dialog text
-        if (DialogManager.Instance.isDialogPlaying && Input.GetKeyDown(Settings.commandButtons[Command.ContinueDialog]) && !DialogManager.Instance.optionButtonsAreBeingDisplayed)
-        {
-            player.dialogProceededEvent.CallDialogProceedEvent();
         }
     }
 
