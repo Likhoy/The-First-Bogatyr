@@ -1,3 +1,4 @@
+using PixelCrushers.DialogueSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,27 +6,17 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     [SerializeField] private InventorySlot[] slots;
-    private DialogStartedEvent dialogStartedEvent;
-    private DialogEndedEvent dialogEndedEvent;
-
-    private void Awake()
-    {
-        dialogStartedEvent = GameObject.FindGameObjectWithTag("Player").GetComponent<DialogStartedEvent>();
-        dialogEndedEvent = GameObject.FindGameObjectWithTag("Player").GetComponent<DialogEndedEvent>();
-    }
 
     private void OnEnable()
     {
-        // Subscribe to movement to position event
-        dialogStartedEvent.OnStartDialog += HideInventory;
-        dialogEndedEvent.OnEndDialog += ShowInventory;
+        GameManager.Instance.GetPlayer().GetComponent<DialogueSystemEvents>().conversationEvents.onConversationStart.AddListener(delegate { HideInventory(); });
+        GameManager.Instance.GetPlayer().GetComponent<DialogueSystemEvents>().conversationEvents.onConversationEnd.AddListener(delegate { ShowInventory(); });
     }
 
     private void OnDisable()
     {
-        // Unsubscribe from movement to position event
-        dialogStartedEvent.OnStartDialog -= HideInventory;
-        dialogEndedEvent.OnEndDialog -= ShowInventory;
+        GameManager.Instance.GetPlayer().GetComponent<DialogueSystemEvents>().conversationEvents.onConversationStart.RemoveListener(delegate { HideInventory(); });
+        GameManager.Instance.GetPlayer().GetComponent<DialogueSystemEvents>().conversationEvents.onConversationEnd.RemoveListener(delegate { ShowInventory(); });
     }
 
     public void AddItem(Item item)
@@ -47,13 +38,13 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    private void ShowInventory(DialogEndedEvent movementToPositionEvent, DialogEndedEventArgs movementToPositionArgs)
+    public void ShowInventory()
     {
         foreach(InventorySlot slot in slots)
             slot.ShowInventorySlot();
     }
 
-    private void HideInventory(DialogStartedEvent movementToPositionEvent, DialogStartedEventArgs movementToPositionArgs)
+    public void HideInventory()
     {
         foreach (InventorySlot slot in slots)
             slot.HideInventorySlot();
