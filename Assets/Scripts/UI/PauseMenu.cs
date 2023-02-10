@@ -10,11 +10,13 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenuUI;
     private GameObject inventory;
     private GameObject HealthBar;
+    private GameObject Bestiary;
 
     private void Start()
     {
         inventory = GameObject.Find("Inventory");
         HealthBar = GameObject.FindGameObjectWithTag("HealthBar");
+        Bestiary = GameObject.Find("BestiaryButton");
     }
 
     void Update()
@@ -40,6 +42,7 @@ public class PauseMenu : MonoBehaviour
         GameIsPaused = false;
         inventory.SetActive(true);
         HealthBar.SetActive(true);
+        Bestiary.SetActive(true);
     }
 
     void Pause()
@@ -49,6 +52,7 @@ public class PauseMenu : MonoBehaviour
         GameIsPaused = true;
         inventory.SetActive(false);
         HealthBar.SetActive(false);
+        Bestiary.SetActive(false);
     }
 
     public void LoadMenu()
