@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 #region REQUIRE COMPONENTS
+[RequireComponent(typeof(PlayerResources))]
 [RequireComponent(typeof(HealthEvent))]
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(ReceiveContactDamage))]
@@ -23,8 +24,7 @@ using UnityEngine;
 [RequireComponent(typeof(ReloadWeapon))]
 [RequireComponent(typeof(WeaponReloadedEvent))]
 [RequireComponent(typeof(ItemUsedEvent))]
-[RequireComponent(typeof(DialogStartedEvent))]
-[RequireComponent(typeof(DialogProceededEvent))]
+[RequireComponent(typeof(ProductBoughtEvent))]
 [RequireComponent(typeof(PlayerController))]
 [RequireComponent(typeof(AnimatePlayer))]
 [RequireComponent(typeof(SpriteRenderer))]
@@ -34,6 +34,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [HideInInspector] public PlayerDetailsSO playerDetails;
+    [HideInInspector] public PlayerResources playerResources;
     [HideInInspector] public HealthEvent healthEvent;
     [HideInInspector] public Health health;
     [HideInInspector] public DestroyedEvent destroyedEvent;
@@ -48,9 +49,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public ReloadWeaponEvent reloadWeaponEvent;
     [HideInInspector] public WeaponReloadedEvent weaponReloadedEvent;
     [HideInInspector] public ItemUsedEvent itemUsedEvent;
-    [HideInInspector] public DialogStartedEvent dialogStartedEvent;
-    [HideInInspector] public DialogProceededEvent dialogProceededEvent;
-    [HideInInspector] public DialogEndedEvent dialogEndedEvent;
+    [HideInInspector] public ProductBoughtEvent productBoughtEvent;
     [HideInInspector] public PlayerController playerControl;
     [HideInInspector] public SpriteRenderer spriteRenderer;
     [HideInInspector] public Animator animator;
@@ -60,6 +59,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         // Load components
+        playerResources = GetComponent<PlayerResources>();
         healthEvent = GetComponent<HealthEvent>();
         health = GetComponent<Health>();
         destroyedEvent = GetComponent<DestroyedEvent>();
@@ -74,9 +74,7 @@ public class Player : MonoBehaviour
         reloadWeaponEvent = GetComponent<ReloadWeaponEvent>();
         weaponReloadedEvent = GetComponent<WeaponReloadedEvent>();
         itemUsedEvent = GetComponent<ItemUsedEvent>();
-        dialogStartedEvent = GetComponent<DialogStartedEvent>();
-        dialogProceededEvent = GetComponent<DialogProceededEvent>();
-        dialogEndedEvent = GetComponent<DialogEndedEvent>();
+        productBoughtEvent = GetComponent<ProductBoughtEvent>();    
         playerControl = GetComponent<PlayerController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
