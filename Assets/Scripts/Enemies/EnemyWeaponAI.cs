@@ -19,11 +19,8 @@ public class EnemyWeaponAI : MonoBehaviour
     private float firingIntervalTimer;
     private float firingDurationTimer;
 
-    private float DeltaTime;
+    private float DeltaTime= 0f;
     public float startDeltaTime;
-    public Transform attackPose;
-    public float attackRange;
-    private LayerMask player;
     public int damageAmount;
 
     private void Awake()
@@ -43,6 +40,7 @@ public class EnemyWeaponAI : MonoBehaviour
 
     private void Update()
     {
+        EnemyWeaponCooldownTimer();
         // if chasing player
         if (enemy.enemyMovementAI.chasePlayer)
         {
@@ -79,20 +77,35 @@ public class EnemyWeaponAI : MonoBehaviour
 
     private void MeleeAttack()
     {
-        if (DeltaTime <= 0)
+        if (enemy.activeWeapon.GetCurrentWeapon() is MeleeWeapon meleeWeapon)
         {
-            Collider2D[] plyerToDamage = Physics2D.OverlapCircleAll(attackPose.position, attackRange, player);
-            for (int i = 0; i < plyerToDamage.Length; i++)
+            if (DeltaTime <= 0)
             {
-                plyerToDamage[i].GetComponent<Health>().TakeDamage(damageAmount);
+                enemy.meleeAttackEvent.CallMeleeAttackEvent();
+                // isPlayerMovementDisabled = true;
+                // Maybe there is a way better ?
+                Invoke("DealWithMeleeWeaponStrikedEvent", meleeWeapon.weaponDetails.weaponStrikeTime);
+                DeltaTime = meleeWeapon.weaponDetails.weaponCooldownTime;
             }
-            DeltaTime = startDeltaTime;
         }
-
         else
+        {
+            RangedWeapon rangedWeapon = enemy.activeWeapon.GetCurrentWeapon() as RangedWeapon;
+        }
+    }
+
+    private void EnemyWeaponCooldownTimer()
+    {
+        if (DeltaTime >= 0f)
         {
             DeltaTime -= Time.deltaTime;
         }
+    }
+
+    private void DealWithMeleeWeaponStrikedEvent()
+    {
+        //EnablePlayer();
+        enemy.weaponFiredEvent.CallWeaponFiredEvent(enemy.activeWeapon.GetCurrentWeapon());
     }
 
     /// <summary>
