@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -151,7 +151,7 @@ public class DialogUI : MonoBehaviour
         spaceAnimator.SetBool(Settings.spaceOpen, false);
         dialogText.text = "";
         currentNodes = null;
-        GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().dialogEndedEvent.CallDialogEndedEvent();
+        player.dialogEndedEvent.CallDialogEndedEvent();
     }
 
     private void DisplayStatementOptions(List<string> statementOptions)
@@ -201,3 +201,4 @@ public class DialogUI : MonoBehaviour
         }
     }
 }
+*/
