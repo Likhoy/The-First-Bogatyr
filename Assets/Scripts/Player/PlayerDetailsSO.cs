@@ -38,5 +38,13 @@ public class PlayerDetailsSO : ScriptableObject
     #endregion
     public float hitEffectTime;
 
+    #region Header RESOURCES
+    [Space(10)]
+    [Header("RESOURCES")]
+    #endregion
+    #region Tooltip
+    [Tooltip("Player starting money amount")]
+    #endregion
+    public int playerMoneyAmount;
 }
 

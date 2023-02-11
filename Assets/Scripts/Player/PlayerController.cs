@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -10,6 +12,8 @@ public class PlayerController : MonoBehaviour
     #endregion Tooltip
     [SerializeField] private MovementDetailsSO movementDetails;
 
+    public List<Item> takeItemList;
+    public bool isTaking;
     private Player player;
     private float moveSpeed;
     private Coroutine playerDashCoroutine;
@@ -34,11 +38,13 @@ public class PlayerController : MonoBehaviour
     {
         // create waitForFixedUpdate for use in corountine
         waitForFixedUpdate = new WaitForFixedUpdate();
+        takeItemList = new List<Item>();
+        isTaking = false;
     }
 
     void Update()
     {
-        DialogInput();
+        //DialogInput();
 
         // if player movement disabled then return
         if (isPlayerMovementDisabled)
@@ -59,6 +65,21 @@ public class PlayerController : MonoBehaviour
 
         // player weapon cooldown timer
         PlayerWeaponCooldownTimer();
+
+        // collecting items by the player controller
+        TakeItem();
+    }
+
+    private void TakeItem()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+            if (takeItemList.Count > 0)
+            {
+                System.Random r = new System.Random();
+                Item item = takeItemList[r.Next(takeItemList.Count)];
+                takeItemList.Remove(item);
+                item.TakeItem();
+            }
     }
 
     /// <summary>
@@ -157,21 +178,6 @@ public class PlayerController : MonoBehaviour
         {
             StopCoroutine(playerDashCoroutine);
             isPlayerDashing = false;
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == Settings.NPCTag && DialogManager.Instance.isDialogReady)
-            player.dialogStartedEvent.CallDialogStartedEvent(); // maybe better in NPC class
-    }
-
-    private void DialogInput()
-    {
-        // check for mouse down event - switch dialog text
-        if (DialogManager.Instance.isDialogPlaying && Input.GetKeyDown(Settings.commandButtons[Command.ContinueDialog]) && !DialogManager.Instance.optionButtonsAreBeingDisplayed)
-        {
-            player.dialogProceededEvent.CallDialogProceedEvent();
         }
     }
 
