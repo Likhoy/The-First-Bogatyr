@@ -22,6 +22,10 @@ public class AnimateEnemy : MonoBehaviour
 
         // Subscribe to weapon aim event
         // enemy.aimWeaponEvent.OnWeaponAim += AimWeaponEvent_OnWeaponAim;
+
+        // Subscribe to melee attack event
+        enemy.meleeAttackEvent.OnMeleeAttack += MeleeAttackEvent_OnMeleeAttack;
+
     }
 
     private void OnDisable()
@@ -34,6 +38,9 @@ public class AnimateEnemy : MonoBehaviour
 
         // Unsubscribe from weapon aim event event
         // enemy.aimWeaponEvent.OnWeaponAim -= AimWeaponEvent_OnWeaponAim;
+
+        // Unsubscribe from melee attack event
+        enemy.meleeAttackEvent.OnMeleeAttack -= MeleeAttackEvent_OnMeleeAttack;
     }
 
     /// <summary>
@@ -97,6 +104,32 @@ public class AnimateEnemy : MonoBehaviour
         // Set idle
         enemy.animator.SetBool(Settings.isMoving, false);
         enemy.animator.SetBool(Settings.isIdle, true);
+    }
+
+    /// <summary>
+    /// On melee attack event handler
+    /// </summary>
+    private void MeleeAttackEvent_OnMeleeAttack(MeleeAttackEvent meleeAttackEvent, MeleeAttackEventArgs meleeAttackEventArgs)
+    {
+        EnemyMeleeAttackAnimation();
+    }
+
+
+
+
+    /// <summary>
+    /// Plays weapon fire animation
+    /// </summary>
+    private void EnemyMeleeAttackAnimation()
+    {
+        if (enemy.animator.GetBool(Settings.lookUp))
+            enemy.animator.SetBool(Settings.attackUp, true);
+        else if (enemy.animator.GetBool(Settings.lookDown))
+            enemy.animator.SetBool(Settings.attackDown, true);
+        else if (enemy.animator.GetBool(Settings.lookRight))
+            enemy.animator.SetBool(Settings.attackRight, true);
+        else if (enemy.animator.GetBool(Settings.lookLeft))
+            enemy.animator.SetBool(Settings.attackLeft, true);
     }
 
     /// <summary>
