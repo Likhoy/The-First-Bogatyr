@@ -12,8 +12,8 @@ public class PlayerController : MonoBehaviour
     #endregion Tooltip
     [SerializeField] private MovementDetailsSO movementDetails;
 
-    public List<Item> takeItemList;
-    public bool isTaking;
+    [HideInInspector] public List<Item> takeItemList;
+    [HideInInspector] public bool isTaking;
     private Player player;
     private float moveSpeed;
     private Coroutine playerDashCoroutine;
