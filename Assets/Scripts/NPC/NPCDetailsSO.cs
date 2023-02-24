@@ -21,4 +21,12 @@ public class NPCDetailsSO : ScriptableObject
 
 
     public List<Product> products;
+
+    public float moveSpeed;
+
+    public bool movesRandomly;
+
+    public bool movesToSomePoints;
+
+    public Vector2[] pointsToMove;
 }

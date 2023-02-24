@@ -233,9 +233,12 @@ namespace PixelCrushers.DialogueSystem
             if (nameText.gameObject != this.gameObject && includeName) nameText.SetActive(value);
             if (barkText.gameObject != this.gameObject) barkText.SetActive(value);
             if (canvas != null && canvas.gameObject != this.gameObject) canvas.gameObject.SetActive(value);
-            if (value == true && canvas != null) canvas.enabled = true;
-            // Our game Bark UI panel specific location
-            panelRectTransform.localPosition = new Vector3(0f, -500f);
+            if (value == true && canvas != null)
+            {
+                canvas.enabled = true;
+                // Our game Bark UI panel specific location
+                panelRectTransform.localPosition = new Vector3(0f, -500f);
+            }
         }
 
         public virtual void OnBarkEnd(Transform actor)

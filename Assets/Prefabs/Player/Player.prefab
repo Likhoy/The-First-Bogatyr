@@ -946,10 +946,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   once: 0
-  conversation: Quest1Prolog
+  conversation: Quest1PlayerFirstBark
   condition:
     luaConditions: []
-    questConditions: []
+    questConditions:
+    - questName: "\u041A\u0432\u0435\u0441\u0442 1"
+      questState: 1
+      checkQuestEntry: 0
+      entryNumber: 0
+      questEntryState: 0
     acceptedTags: []
     acceptedGameObjects: []
     luaWizardIndex: -1
@@ -959,9 +964,9 @@ MonoBehaviour:
   conversant: {fileID: 0}
   useConversationTitlePicker: 1
   selectedDatabase: {fileID: 0}
-  barkOrder: 0
+  barkOrder: 2
   allowDuringConversations: 0
   cacheBarkLines: 0
   minSeconds: 5
-  maxSeconds: 10
+  maxSeconds: 5
   target: {fileID: 0}
