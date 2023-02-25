@@ -25,6 +25,15 @@ public class GameResources : MonoBehaviour
     #endregion Tooltip
     public List<PlayerDetailsSO> playerDetailsList;
 
+    #region Header PLAYER_WEAPONS
+    [Space(10)]
+    [Header("PLAYER_WEAPONS")]
+    #endregion Header PLAYER_WEAPONS
+    #region Tooltip
+    [Tooltip("Player weapons details list - populate the list with the weapondetails scriptable objects")]
+    #endregion Tooltip
+    public List<WeaponDetailsSO> weaponDetailsList;
+
 
     #region Header INVENTORY
     [Space(10)]

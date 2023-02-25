@@ -7,16 +7,21 @@ using UnityEngine;
 public class NPC : MonoBehaviour
 {
     public NPCDetailsSO npcDetails;
-    private DialogueSystemTrigger dialogTrigger;
+    private DialogueSystemTrigger[] dialogTriggers;
+    [HideInInspector] public MovementToPositionEvent movementToPositionEvent;
 
     private void Awake()
     {
-        dialogTrigger = GetComponent<DialogueSystemTrigger>();
+        dialogTriggers = GetComponents<DialogueSystemTrigger>();
+        movementToPositionEvent = GetComponent<MovementToPositionEvent>();
     }
 
     private void Start()
     {
-        dialogTrigger.conversationActor = GameManager.Instance.GetPlayer().gameObject.transform;
+        
+        if (npcDetails.hasDialogWithPlayer)
+            foreach (var dialogTrigger in dialogTriggers)
+                dialogTrigger.conversationActor = GameManager.Instance.GetPlayer().gameObject.transform;
     }
 
 

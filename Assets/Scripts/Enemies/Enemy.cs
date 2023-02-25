@@ -48,6 +48,9 @@ public class Enemy : MonoBehaviour
     private PolygonCollider2D polygonCollider2D;
     [HideInInspector] public SpriteRenderer[] spriteRendererArray;
     [HideInInspector] public Animator animator;
+    [HideInInspector] public MeleeAttackEvent meleeAttackEvent;
+    [HideInInspector] public ActiveWeapon activeWeapon;
+    [HideInInspector] public WeaponFiredEvent weaponFiredEvent;
 
     private void Awake()
     {
@@ -66,6 +69,9 @@ public class Enemy : MonoBehaviour
         polygonCollider2D = GetComponent<PolygonCollider2D>();
         spriteRendererArray = GetComponentsInChildren<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        meleeAttackEvent = GetComponent<MeleeAttackEvent>();
+        activeWeapon = GetComponent<ActiveWeapon>();
+        weaponFiredEvent = GetComponent<WeaponFiredEvent>();
     }
 
     private void OnEnable()

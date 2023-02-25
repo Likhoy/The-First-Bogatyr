@@ -19,8 +19,9 @@ public class EnemyWeaponAI : MonoBehaviour
     private float firingIntervalTimer;
     private float firingDurationTimer;
 
-
-    
+    private float DeltaTime= 0f;
+    public float startDeltaTime;
+    public int damageAmount;
 
     private void Awake()
     {
@@ -39,6 +40,7 @@ public class EnemyWeaponAI : MonoBehaviour
 
     private void Update()
     {
+        EnemyWeaponCooldownTimer();
         // if chasing player
         if (enemy.enemyMovementAI.chasePlayer)
         {
@@ -75,7 +77,35 @@ public class EnemyWeaponAI : MonoBehaviour
 
     private void MeleeAttack()
     {
-        
+        if (enemy.activeWeapon.GetCurrentWeapon() is MeleeWeapon meleeWeapon)
+        {
+            if (DeltaTime <= 0)
+            {
+                enemy.meleeAttackEvent.CallMeleeAttackEvent();
+                // isPlayerMovementDisabled = true;
+                // Maybe there is a way better ?
+                Invoke("DealWithMeleeWeaponStrikedEvent", meleeWeapon.weaponDetails.weaponStrikeTime);
+                DeltaTime = meleeWeapon.weaponDetails.weaponCooldownTime;
+            }
+        }
+        else
+        {
+            RangedWeapon rangedWeapon = enemy.activeWeapon.GetCurrentWeapon() as RangedWeapon;
+        }
+    }
+
+    private void EnemyWeaponCooldownTimer()
+    {
+        if (DeltaTime >= 0f)
+        {
+            DeltaTime -= Time.deltaTime;
+        }
+    }
+
+    private void DealWithMeleeWeaponStrikedEvent()
+    {
+        //EnablePlayer();
+        enemy.weaponFiredEvent.CallWeaponFiredEvent(enemy.activeWeapon.GetCurrentWeapon());
     }
 
     /// <summary>
