@@ -237,7 +237,7 @@ namespace PixelCrushers.DialogueSystem
             {
                 canvas.enabled = true;
                 // Our game Bark UI panel specific location
-                panelRectTransform.localPosition = new Vector3(0f, -500f);
+                panelRectTransform.localPosition = new Vector3(0f, -450f);
             }
         }
 
