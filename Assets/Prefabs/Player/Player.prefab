@@ -726,7 +726,7 @@ MonoBehaviour:
   selectAt: 1
   layerMask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 2048
   distanceFrom: 0
   maxSelectionDistance: 30
   runRaycasts: 0
@@ -964,7 +964,7 @@ MonoBehaviour:
   conversant: {fileID: 0}
   useConversationTitlePicker: 1
   selectedDatabase: {fileID: 0}
-  barkOrder: 2
+  barkOrder: 1
   allowDuringConversations: 0
   cacheBarkLines: 0
   minSeconds: 5

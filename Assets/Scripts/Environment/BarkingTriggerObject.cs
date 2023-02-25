@@ -5,6 +5,11 @@ public class BarkingTriggerObject : MonoBehaviour
 {
     private void Awake()
     {
-        GetComponent<DialogueSystemTrigger>().barker = GameManager.Instance.GetPlayer().transform;
+        var dialogTrigger = GetComponent<DialogueSystemTrigger>();
+        var barkOnIdle = GetComponent<BarkOnIdle>();
+        if (dialogTrigger != null)
+            dialogTrigger.barker = GameManager.Instance.GetPlayer().transform;
+        if (barkOnIdle != null)
+            barkOnIdle.conversant = GameManager.Instance.GetPlayer().transform;
     }
 }

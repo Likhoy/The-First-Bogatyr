@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcName: Headman
   npcPrefab: {fileID: 0}
+  hasDialogWithPlayer: 0
   products: []
-  moveSpeed: 0
+  moveSpeed: 5
   movesRandomly: 0
   movesToSomePoints: 1
+  movesCyclically: 0
   pointsToMove:
   - {x: 0.5, y: 21.5}
