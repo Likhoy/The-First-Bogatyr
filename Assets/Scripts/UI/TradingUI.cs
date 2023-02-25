@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,6 +16,7 @@ public class TradingUI : MonoBehaviour
         images = GetComponentsInChildren<Image>(true);
         prices = GetComponentsInChildren<TextMeshProUGUI>(true);
         buttons = GetComponentsInChildren<Button>(true);
+        buttons.Last().onClick.AddListener(delegate { GameManager.Instance.GetPlayer().playerControl.EnablePlayer(); });
     }
 
 
