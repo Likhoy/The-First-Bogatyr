@@ -1,6 +1,4 @@
 using PixelCrushers.DialogueSystem;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
@@ -15,8 +13,12 @@ public class Inventory : MonoBehaviour
 
     private void OnDisable()
     {
-        GameManager.Instance.GetPlayer().GetComponent<DialogueSystemEvents>().conversationEvents.onConversationStart.RemoveListener(delegate { HideInventory(); });
-        GameManager.Instance.GetPlayer().GetComponent<DialogueSystemEvents>().conversationEvents.onConversationEnd.RemoveListener(delegate { ShowInventory(); });
+        Player player = GameManager.Instance.GetPlayer();
+        if (player != null)
+        {
+            player.GetComponent<DialogueSystemEvents>().conversationEvents.onConversationStart.RemoveListener(delegate { HideInventory(); });
+            player.GetComponent<DialogueSystemEvents>().conversationEvents.onConversationEnd.RemoveListener(delegate { ShowInventory(); });
+        }
     }
 
     public void AddItem(Item item)
