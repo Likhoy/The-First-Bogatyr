@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using UnityEngine;
 
@@ -11,17 +12,34 @@ public class DealContactDamage : MonoBehaviour
     #region Tooltip
     [Tooltip("The contact damage to deal (is overridden by the receiver)")]
     #endregion
-    [SerializeField] private int contactDamageAmount;
+    [SerializeField] private int contactDamageAmount = 0;
     #region Tooltip
     [Tooltip("Specify what layers objects should be on to receive contact damage")]
     #endregion
     [SerializeField] private LayerMask layerMask;
     private bool isColliding = false;
 
-    private void Start()
+    private void OnEnable()
+    {
+        GetComponentInParent<SetActiveWeaponEvent>().OnSetActiveWeapon += SetActiveWeaponEvent_OnSetActiveWeapon;
+    }
+
+    private void OnDisable()
+    {
+        SetActiveWeaponEvent setActiveWeaponEvent = GetComponentInParent<SetActiveWeaponEvent>();
+        if (setActiveWeaponEvent != null)
+            setActiveWeaponEvent.OnSetActiveWeapon -= SetActiveWeaponEvent_OnSetActiveWeapon;
+    }
+
+    private void SetActiveWeaponEvent_OnSetActiveWeapon(SetActiveWeaponEvent setActiveWeaponEvent, SetActiveWeaponEventArgs setActiveWeaponEventArgs)
+    {
+        SetContactDamageAmount(setActiveWeaponEventArgs);
+    }
+
+    private void SetContactDamageAmount(SetActiveWeaponEventArgs setActiveWeaponEventArgs)
     {
         // Set contact damage amount matching weaponDamage if character is holding a melee weapon
-        MeleeWeapon weapon = GetComponentInParent<ActiveWeapon>().GetCurrentWeapon() as MeleeWeapon;
+        MeleeWeapon weapon = setActiveWeaponEventArgs.weapon as MeleeWeapon;
         contactDamageAmount = weapon?.weaponDetails.weaponDamage ?? contactDamageAmount;
     }
 
