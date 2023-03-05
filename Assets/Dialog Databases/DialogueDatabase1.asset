@@ -122,8 +122,9 @@ MonoBehaviour:
       type: 0
       typeString: CustomFieldType_Text
     - title: Success Description
-      value: "\u042F \u0432\u0441\u0442\u0440\u0435\u0442\u0438\u043B \u0431\u0440\u0430\u0442\u0430
-        \u043A\u0430\u043A \u043F\u043E\u0434\u043E\u0431\u0430\u0435\u0442\u0441\u044F."
+      value: "\u042F \u043D\u0435 \u0441\u043C\u043E\u0433 \u0441\u0434\u0435\u043B\u0430\u0442\u044C
+        \u043F\u0438\u0440\u043E\u0433, \u0437\u0430\u0442\u043E \u0432\u0435\u0440\u043D\u0443\u043B
+        \u0432 \u0434\u0435\u0440\u0435\u0432\u043D\u044E \u0441\u043F\u043E\u043A\u043E\u0439\u0441\u0442\u0432\u0438\u0435."
       type: 0
       typeString: CustomFieldType_Text
     - title: Failure Description
@@ -139,7 +140,7 @@ MonoBehaviour:
       type: 2
       typeString: CustomFieldType_Boolean
     - title: Entry Count
-      value: 4
+      value: 5
       type: 1
       typeString: CustomFieldType_Number
     - title: Entry 1 State
@@ -148,7 +149,7 @@ MonoBehaviour:
       typeString: CustomFieldType_QuestState
     - title: Entry 1
       value: "\u0421\u043E\u0431\u0440\u0430\u0442\u044C \u044F\u0439\u0446\u0430
-        \u0432 \u043A\u0443\u0440\u044F\u0442\u043D\u0438\u043A\u0435 [var=eggsCollected]"
+        \u0432 \u043A\u0443\u0440\u044F\u0442\u043D\u0438\u043A\u0435"
       type: 0
       typeString: CustomFieldType_Text
     - title: Trackable
@@ -164,8 +165,7 @@ MonoBehaviour:
       type: 0
       typeString: CustomFieldType_QuestState
     - title: Entry 2
-      value: "\u041F\u043E\u0434\u043E\u0438\u0442\u044C \u043A\u043E\u0440\u043E\u0432\u0443
-        [var=milkCollected]"
+      value: "\u041F\u043E\u0434\u043E\u0438\u0442\u044C \u043A\u043E\u0440\u043E\u0432\u0443"
       type: 0
       typeString: CustomFieldType_Text
     - title: Entry 3 State
@@ -173,87 +173,39 @@ MonoBehaviour:
       type: 0
       typeString: CustomFieldType_QuestState
     - title: Entry 3
-      value: "\u041F\u0440\u043E\u0432\u0435\u0434\u0430\u0442\u044C \u0441\u0442\u0430\u0440\u043E\u0441\u0442\u0443
-        [var=headmanVisited]"
+      value: "\u0418\u0441\u043F\u0435\u0447\u044C \u043F\u0438\u0440\u043E\u0433"
       type: 0
       typeString: CustomFieldType_Text
     - title: Entry 4 State
-      value: active
+      value: unassigned
       type: 0
       typeString: CustomFieldType_QuestState
     - title: Entry 4
-      value: "\u0418\u0441\u043F\u0435\u0447\u044C \u043F\u0438\u0440\u043E\u0433
-        [var=pieMade]"
+      value: "\u041F\u0440\u043E\u0432\u0435\u0434\u0430\u0442\u044C \u0441\u0442\u0430\u0440\u043E\u0441\u0442\u0443"
       type: 0
       typeString: CustomFieldType_Text
+    - title: Entry 5 State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Entry 5
+      value: "\u0420\u0430\u0437\u043E\u0431\u0440\u0430\u0442\u044C\u0441\u044F
+        \u0441 \u0434\u0443\u0445\u043E\u043C \u043A \u0432\u043E\u0441\u0442\u043E\u043A\u0443
+        \u043E\u0442 \u0434\u0435\u0440\u0435\u0432\u043D\u0438"
+      type: 0
+      typeString: 
   locations: []
   variables:
   - id: 1
     fields:
     - title: Name
-      value: Alert
+      value: fielderKilled
       type: 0
       typeString: 
     - title: Initial Value
-      value: 
-      type: 0
-      typeString: CustomFieldType_Text
-    - title: Description
-      value: 
-      type: 0
-      typeString: 
-  - id: 2
-    fields:
-    - title: Name
-      value: eggsCollected
-      type: 0
-      typeString: 
-    - title: Initial Value
-      value: 
-      type: 0
-      typeString: CustomFieldType_Text
-    - title: Description
-      value: 
-      type: 0
-      typeString: 
-  - id: 3
-    fields:
-    - title: Name
-      value: milkCollected
-      type: 0
-      typeString: 
-    - title: Initial Value
-      value: 
-      type: 0
-      typeString: CustomFieldType_Text
-    - title: Description
-      value: 
-      type: 0
-      typeString: 
-  - id: 4
-    fields:
-    - title: Name
-      value: headmanVisited
-      type: 0
-      typeString: 
-    - title: Initial Value
-      value: 
-      type: 0
-      typeString: CustomFieldType_Text
-    - title: Description
-      value: 
-      type: 0
-      typeString: 
-  - id: 5
-    fields:
-    - title: Name
-      value: pieMade
-      type: 0
-      typeString: 
-    - title: Initial Value
-      value: 
-      type: 0
-      typeString: CustomFieldType_Text
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
     - title: Description
       value: 
       type: 0
@@ -1452,7 +1404,9 @@ MonoBehaviour:
       conditionsString: 
       userScript: "GiveWeaponToPlayer(\"Wooden sword\");\nShowAlert(\"\u041F\u043E\u043B\u0443\u0447\u0435\u043D
         \u043D\u043E\u0432\u044B\u0439 \u043F\u0440\u0435\u0434\u043C\u0435\u0442: 
-        \u043C\u0435\u0447\");\nVariable[\"headmanVisited\"] = \"\u0413\u041E\u0422\u041E\u0412\u041E\""
+        \u043C\u0435\u0447\");\nSetQuestEntryState(\"\u041A\u0432\u0435\u0441\u0442
+        1\", 4, \"success\");\nSetQuestEntryState(\"\u041A\u0432\u0435\u0441\u0442
+        1\", 5, \"active\")"
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -1606,8 +1560,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 47.473053, y: 18.161732}
-    canvasZoom: 1.1499997
+    canvasScrollPosition: {x: 39.390747, y: 15.599624}
+    canvasZoom: 1.1199998
   - id: 7
     fields:
     - title: Title
@@ -1698,6 +1652,12 @@ MonoBehaviour:
         destinationDialogueID: 5
         isConnector: 0
         priority: 2
+      - originConversationID: 7
+        originDialogueID: 0
+        destinationConversationID: 7
+        destinationDialogueID: 6
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -1710,6 +1670,60 @@ MonoBehaviour:
         width: 160
         height: 30
     - id: 5
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: "\u041D\u0430\u0434\u043E \u043F\u043E\u0439\u0442\u0438 \u043F\u0440\u043E\u0432\u0435\u0440\u0438\u0442\u044C,
+          \u0447\u0442\u043E \u0442\u0430\u043C \u043F\u0440\u043E\u0438\u0441\u0445\u043E\u0434\u0438\u0442."
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: EventGuid
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 7
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks: []
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 229
+        y: 47
+        width: 160
+        height: 30
+    - id: 6
       fields:
       - title: Title
         value: 
@@ -1732,8 +1746,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\u041D\u0430\u0434\u043E \u043F\u043E\u0439\u0442\u0438 \u043F\u0440\u043E\u0432\u0435\u0440\u0438\u0442\u044C,
-          \u0447\u0442\u043E \u0442\u0430\u043C \u043F\u0440\u043E\u0438\u0441\u0445\u043E\u0434\u0438\u0442."
+        value: 
         type: 0
         typeString: 
       - title: Sequence
@@ -1741,7 +1754,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: EventGuid
-        value: 07e9ee2a-5040-44e3-b5b8-29d54c61f6ba
+        value: 1e31aca2-eb36-4d03-93c9-97a09770db6e
         type: 0
         typeString: 
       conversationID: 7
@@ -1753,19 +1766,19 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: "SetQuestEntryState(\"\u041A\u0432\u0435\u0441\u0442 1\", 4, \"active\")"
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 229
-        y: 47
+        x: 231.8302
+        y: 117.754715
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 17}
-    canvasZoom: 1
+    canvasScrollPosition: {x: 19.296383, y: 21.989372}
+    canvasZoom: 1.06
   syncInfo:
     syncActors: 0
     syncItems: 0
