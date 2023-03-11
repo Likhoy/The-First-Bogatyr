@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -10,6 +12,8 @@ public class PlayerController : MonoBehaviour
     #endregion Tooltip
     [SerializeField] private MovementDetailsSO movementDetails;
 
+    [HideInInspector] public List<Item> takeItemList;
+    [HideInInspector] public bool isTaking;
     private Player player;
     private float moveSpeed;
     private Coroutine playerDashCoroutine;
@@ -34,6 +38,8 @@ public class PlayerController : MonoBehaviour
     {
         // create waitForFixedUpdate for use in corountine
         waitForFixedUpdate = new WaitForFixedUpdate();
+        takeItemList = new List<Item>();
+        isTaking = false;
     }
 
     void Update()
@@ -59,6 +65,21 @@ public class PlayerController : MonoBehaviour
 
         // player weapon cooldown timer
         PlayerWeaponCooldownTimer();
+
+        // collecting items by the player controller
+        TakeItem();
+    }
+
+    private void TakeItem()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+            if (takeItemList.Count > 0)
+            {
+                System.Random r = new System.Random();
+                Item item = takeItemList[r.Next(takeItemList.Count)];
+                takeItemList.Remove(item);
+                item.TakeItem();
+            }
     }
 
     /// <summary>

@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+using PixelCrushers.DialogueSystem;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 [DisallowMultipleComponent]
 public class GameManager : SingletonMonobehaviour<GameManager>
@@ -29,6 +25,16 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         InstantiatePlayer();
     }
 
+    private void OnEnable()
+    {
+        Lua.RegisterFunction("GiveWeaponToPlayer", this, SymbolExtensions.GetMethodInfo(() => GiveWeaponToPlayer(string.Empty)));
+    }
+
+    private void OnDisable()
+    {
+        Lua.UnregisterFunction("GiveWeaponToPlayer");
+    }
+
     private void Start()
     {
         // Spawn enemies (maybe this will be placed in enemy controller class)
@@ -52,6 +58,15 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         player = playerGameObject.GetComponent<Player>();
 
         player.Initialize(playerDetails);
+    }
+
+    public void GiveWeaponToPlayer(string weaponName)
+    {
+        foreach (WeaponDetailsSO weaponDetails in GameResources.Instance.weaponDetailsList)
+        {
+            if (weaponDetails.weaponName == weaponName)
+                player.AddWeaponToPlayer(weaponDetails);
+        }
     }
 
     /// <summary>
