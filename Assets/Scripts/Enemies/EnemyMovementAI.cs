@@ -228,9 +228,6 @@ public class EnemyMovementAI : MonoBehaviour
 
         Vector2Int adjustedPlayerCellPositon = new Vector2Int(playerCellPosition.x + LocationInfo.locationUpperBounds.x, playerCellPosition.y + LocationInfo.locationUpperBounds.y);
 
-        /*Debug.Log(adjustedPlayerCellPositon.x);
-        Debug.Log(adjustedPlayerCellPositon.y);*/
-
         //int obstacle = Mathf.Min(SceneInfo.aStarMovementPenalty[adjustedPlayerCellPositon.x, adjustedPlayerCellPositon.y], currentRoom.instantiatedRoom.aStarItemObstacles[adjustedPlayerCellPositon.x, adjustedPlayerCellPositon.y]);
         int obstacle = LocationInfo.AStarMovementPenalty[adjustedPlayerCellPositon.x, adjustedPlayerCellPositon.y];
 

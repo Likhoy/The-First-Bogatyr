@@ -1,3 +1,4 @@
+using PixelCrushers.DialogueSystem;
 using System.Collections;
 using UnityEngine;
 
@@ -46,7 +47,7 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
             for (int i = 0; i < enemiesToSpawn; i++)
             {
                 // for testing
-                Vector3Int cellPosition = new Vector3Int(10, 10, 0); //(Vector3Int)SceneInfo.spawnPositionArray[necesary_index];
+                Vector3Int cellPosition = new Vector3Int(75, 0, 0); //(Vector3Int)SceneInfo.spawnPositionArray[necesary_index];
 
                 // Create Enemy - Get next enemy type to spawn 
                 CreateEnemy(enemyDetails, grid.CellToWorld(cellPosition)); // necessary enemy details
@@ -85,6 +86,10 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
     {
         // Unsubscribe from event
         destroyedEvent.OnDestroyed -= Enemy_OnDestroyed;
+
+        // TODO - adjust architecture (for the first quest)
+        if (enemiesSpawnedSoFar == 1)
+            GetComponent<DialogueSystemTrigger>().OnUse();
 
         // reduce current enemy count
         currentEnemyCount--;

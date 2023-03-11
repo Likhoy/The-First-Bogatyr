@@ -152,6 +152,8 @@ namespace PixelCrushers.DialogueSystem
             CharacterInfo.RegisterActorTransform(actor, transform);
         }
 
+        
+
         protected virtual void OnDisable()
         {
             if (string.IsNullOrEmpty(actor)) return;

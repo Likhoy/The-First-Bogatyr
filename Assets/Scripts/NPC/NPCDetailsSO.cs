@@ -19,6 +19,17 @@ public class NPCDetailsSO : ScriptableObject
     #endregion
     public GameObject npcPrefab;
 
+    public bool hasDialogWithPlayer;
 
     public List<Product> products;
+
+    public float moveSpeed;
+
+    public bool movesRandomly;
+
+    public bool movesToSomePoints;
+
+    public bool movesCyclically;
+
+    public Vector2[] pointsToMove;
 }
