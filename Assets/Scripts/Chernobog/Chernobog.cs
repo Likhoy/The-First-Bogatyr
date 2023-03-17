@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 
 
 public class Chernobog : MonoBehaviour
@@ -79,3 +79,4 @@ public class Chernobog : MonoBehaviour
 
 }
 
+*/
