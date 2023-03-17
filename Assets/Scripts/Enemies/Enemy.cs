@@ -34,7 +34,7 @@ using UnityEngine.Rendering;
 public class Enemy : MonoBehaviour
 {
     [HideInInspector] public EnemyDetailsSO enemyDetails;
-    private HealthEvent healthEvent;
+    [HideInInspector] public HealthEvent healthEvent;
     private Health health;
     //[HideInInspector] public AimWeaponEvent aimWeaponEvent;
     [HideInInspector] public FireWeaponEvent fireWeaponEvent;
