@@ -1,8 +1,5 @@
 using UnityEngine;
 
-#region REQUIRE COMPONENTS
-[RequireComponent(typeof(Health))]
-#endregion REQUIRE COMPONENTS
 
 public class Chernobog : MonoBehaviour
 {
@@ -12,22 +9,17 @@ public class Chernobog : MonoBehaviour
     [SerializeField] private GameObject FirstShadowPrefab;
     [SerializeField] private GameObject SecondShadowPrefab;
     [SerializeField] private GameObject ThirdShadowPrefab;
-    private Health health;
-
+    private Enemy enemy;
     
     private void Start()
     {
-        health = GetComponent<Health>();
-        float first_x = UnityEngine.Random.Range(FirstShadow.transform.position.x - 2, FirstShadow.transform.position.x + 2);
-        float first_y = UnityEngine.Random.Range(FirstShadow.transform.position.y - 2, FirstShadow.transform.position.y + 2);
+        
         float second_x = UnityEngine.Random.Range(SecondShadow.transform.position.x - 2, SecondShadow.transform.position.x + 2);
         float second_y = UnityEngine.Random.Range(SecondShadow.transform.position.y - 2, SecondShadow.transform.position.y + 2);
         float third_x = UnityEngine.Random.Range(ThirdShadow.transform.position.x - 2, ThirdShadow.transform.position.x + 2);
         float third_y = UnityEngine.Random.Range(ThirdShadow.transform.position.y - 2, ThirdShadow.transform.position.y + 2);
         
-        FirstShadow = Instantiate(FirstShadowPrefab);
-        FirstShadow.transform.position = new Vector2(first_x, first_y);
-        FirstShadow.SetActive(false);
+        
         
         SecondShadow = Instantiate(SecondShadowPrefab);
         SecondShadow.transform.position = new Vector2(second_x, second_y);
@@ -39,15 +31,36 @@ public class Chernobog : MonoBehaviour
 
     }
 
+    private void Awake()
+    {
+        enemy = GetComponent<Enemy>();
+    }
+
+    private void OnEnable()
+    {
+        enemy.healthEvent.OnHealthChanged += FirstShadowLogic();
+    }
+
     private void Update()
     {
         FirstShadowLogic();
         SecondShadowLogic();
         ThirdShadowLogic();
     }
+
+    private void SpawnMobs()
+    {
+        float first_x = UnityEngine.Random.Range(FirstShadow.transform.position.x - 2, FirstShadow.transform.position.x + 2);
+        float first_y = UnityEngine.Random.Range(FirstShadow.transform.position.y - 2, FirstShadow.transform.position.y + 2);
+
+        FirstShadow = Instantiate(FirstShadowPrefab, new Vector2(first_x, first_y), Quaternion.identity, transform);
+
+        enemy.GetComponent<Enemy>().EnemyInitialization(enemyDetails, enemiesSpawnedSoFar);
+    }
+
     private void FirstShadowLogic()
     {
-        if (health.currentHealth == health.startingHealth - 1 && FirstShadow != null)
+        if (currentHealth == startingHealth - 1 && FirstShadow != null)
         {
             FirstShadow.SetActive(true);
         }
