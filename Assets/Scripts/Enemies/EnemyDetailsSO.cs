@@ -119,6 +119,17 @@ public class EnemyDetailsSO : ScriptableObject
     public bool isHealthBarDisplayed = false;
 
 
+    [Space(10)]
+
+    public bool isBoss = false;
+
+    public bool spawningImmediately = false;
+
+    public int enemiesToSpawn;
+
+    public float spawnRadius;
+
+    public EnemyDetailsSO littleEnemyDetails;
 
     #region Validation
 #if UNITY_EDITOR
