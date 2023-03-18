@@ -203,7 +203,7 @@ public class FireWeapon : MonoBehaviour
         }
 
         // Call weapon fired event
-        weaponFiredEvent.CallWeaponFiredEvent(activeWeapon.GetCurrentWeapon());
+        weaponFiredEvent.CallWeaponFiredEvent(currentWeapon);
 
         // Display weapon shoot effect
         // WeaponShootEffect(aimAngle);
