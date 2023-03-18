@@ -12,10 +12,6 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
     [SerializeField] private LocationDetailsSO locationDetails;
     private Grid grid;
 
-    private void Start()
-    {
-        
-    }
 
     /// <summary>
     /// Spawn the enemies
