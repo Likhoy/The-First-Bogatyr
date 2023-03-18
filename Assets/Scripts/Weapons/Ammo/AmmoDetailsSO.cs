@@ -56,9 +56,13 @@ public class AmmoDetailsSO : ScriptableObject
     [Header("AMMO BASE PARAMETERS")]
     #endregion
     #region Tooltip
-    [Tooltip("The damage each ammo deals")]
+    [Tooltip("The min damage each ammo deals")]
     #endregion
-    public int ammoDamage = 1;
+    public int ammoMinDamage = 1;
+    #region Tooltip
+    [Tooltip("The max damage each ammo deals")]
+    #endregion
+    public int ammoMaxDamage = 2;
     #region Tooltip
     [Tooltip("The minimum speed of the ammo - the speed will be a random value between the min and max")]
     #endregion
@@ -75,6 +79,8 @@ public class AmmoDetailsSO : ScriptableObject
     [Tooltip("The rotation speed in degrees per second of the ammo pattern")]
     #endregion
     public float ammoRotationSpeed = 1f;
+
+    public int GetAmmoDamage() => Random.Range(ammoMinDamage, ammoMaxDamage);
 
     #region Header AMMO SPREAD DETAILS
     [Space(10)]
@@ -147,7 +153,8 @@ public class AmmoDetailsSO : ScriptableObject
         // HelperUtilities.ValidateCheckNullValue(this, nameof(ammoMaterial), ammoMaterial);
         if (ammoChargeTime > 0)
             HelperUtilities.ValidateCheckNullValue(this, nameof(ammoChargeMaterial), ammoChargeMaterial);
-        HelperUtilities.ValidateCheckPositiveValue(this, nameof(ammoDamage), ammoDamage, false);
+        HelperUtilities.ValidateCheckPositiveValue(this, nameof(ammoMinDamage), ammoMinDamage, false);
+        HelperUtilities.ValidateCheckPositiveValue(this, nameof(ammoMaxDamage), ammoMaxDamage, false);
         HelperUtilities.ValidateCheckPositiveRange(this, nameof(ammoSpeedMin), ammoSpeedMin, nameof(ammoSpeedMax), ammoSpeedMax, false);
         HelperUtilities.ValidateCheckPositiveValue(this, nameof(ammoRange), ammoRange, false);
         HelperUtilities.ValidateCheckPositiveRange(this, nameof(ammoSpreadMin), ammoSpreadMin, nameof(ammoSpreadMax), ammoSpreadMax, true);
