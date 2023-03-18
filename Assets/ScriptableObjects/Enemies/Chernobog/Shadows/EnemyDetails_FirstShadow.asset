@@ -16,14 +16,14 @@ MonoBehaviour:
   enemyPrefab: {fileID: 1174784082978343962, guid: ce9130059c9a5944b9dd70e6f509b2eb, type: 3}
   aggressionDistance: 30
   chaseDistance: 50
-  handDistance: 3
+  handDistance: 0
   enemyMeleeWeapon: {fileID: 0}
-  enemyRangedWeapon: {fileID: 0}
+  enemyRangedWeapon: {fileID: 11400000, guid: 1c6979bf14d4b7648a85c524e18c4f3b, type: 2}
   firingIntervalMin: 0.1
   firingIntervalMax: 1
-  firingDurationMin: 1
-  firingDurationMax: 2
+  firingDurationMin: 12
+  firingDurationMax: 12
   firingLineOfSightRequired: 0
-  hasHitEffect: 0
-  hitEffectTime: 0
+  hasHitEffect: 1
+  hitEffectTime: 0.66
   isHealthBarDisplayed: 0
