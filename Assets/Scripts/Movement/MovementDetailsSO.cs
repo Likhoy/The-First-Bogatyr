@@ -28,7 +28,9 @@ public class MovementDetailsSO : ScriptableObject
     #endregion
     public float dashCooldownTime;
 
-    public Vector2 patrolingArea;
+    public Vector2 patrolingAreaLeftBottom;
+
+    public Vector2 patrolingAreaRightTop;
 
     /// <summary>
     /// Get a random movement speed between the minimum and maximum values
