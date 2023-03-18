@@ -194,6 +194,44 @@ MonoBehaviour:
         \u043E\u0442 \u0434\u0435\u0440\u0435\u0432\u043D\u0438"
       type: 0
       typeString: 
+  - id: 2
+    fields:
+    - title: Name
+      value: "\u041A\u0432\u0435\u0441\u0442 2"
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: "\u041D\u0430\u0434\u043E \u043D\u0430\u0439\u0442\u0438 \u0446\u0432\u0435\u0442\u043E\u043A..."
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Success Description
+      value: 
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Failure Description
+      value: 
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: State
+      value: unassigned
+      type: 0
+      typeString: CustomFieldType_QuestState
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Track
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
   locations: []
   variables:
   - id: 1
