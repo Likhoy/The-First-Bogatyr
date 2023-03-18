@@ -1,15 +1,22 @@
 using PixelCrushers.DialogueSystem;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 [DisallowMultipleComponent]
 public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
 {
-    private int enemiesToSpawn = 1; // for testing
+    private int enemiesToSpawn;
     private int currentEnemyCount;
     private int enemiesSpawnedSoFar;
-    //private int enemyMaxConcurrentSpawnNumber
-    [SerializeField] private EnemyDetailsSO enemyDetails; // for testing
+    [SerializeField] private LocationDetailsSO locationDetails;
+    private Grid grid;
+
+    private void Start()
+    {
+        enemiesToSpawn = locationDetails.enemiesToSpawnImmediately.Length;
+        grid = LocationInfo.Grid;
+    }
 
     /// <summary>
     /// Spawn the enemies
@@ -30,32 +37,33 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
             GameManager.Instance.gameState = GameState.engagingEnemies;
         }*/
 
-        StartCoroutine(SpawnEnemiesRoutine());
-    }
-
-    /// <summary>
-    /// Spawn the enemies coroutine
-    /// </summary>
-    private IEnumerator SpawnEnemiesRoutine()
-    {
-        Grid grid = LocationInfo.Grid;
-
         // Check we have somewhere to spawn the enemies
-        if (true)//SceneInfo.spawnPositionArray.Length > 0)
+        if (enemiesToSpawn > 0)
         {
             // Loop through to create all the enemeies
             for (int i = 0; i < enemiesToSpawn; i++)
             {
-                // for testing
-                Vector3Int cellPosition = new Vector3Int(75, 0, 0); //(Vector3Int)SceneInfo.spawnPositionArray[necesary_index];
+                EnemyDetailsSO enemyDetails = locationDetails.enemiesToSpawnImmediately[enemiesSpawnedSoFar].enemyDetails;
+
+                Vector3Int cellPosition = (Vector3Int)locationDetails.enemiesToSpawnImmediately[enemiesSpawnedSoFar].spawnPosition;
 
                 // Create Enemy - Get next enemy type to spawn 
-                CreateEnemy(enemyDetails, grid.CellToWorld(cellPosition)); // necessary enemy details
-
-                yield return null; // new WaitForSeconds(GetEnemySpawnInterval());
+                CreateEnemy(enemyDetails, grid.CellToWorld(cellPosition));
             }
         }
     }
+
+    public void SpawnEnemy(string enemyName, string spawnPosition)
+    {
+        int[] coords = spawnPosition.Split(" ").Select(coord => int.Parse(coord)).ToArray();
+        Vector3Int spawnPositionVect = new Vector3Int(coords[0], coords[1], coords[2]);
+        foreach (EnemyDetailsSO enemyDetails in GameResources.Instance.enemyDetailsList)
+        {
+            if (enemyDetails.enemyName == enemyName)
+                CreateEnemy(enemyDetails, grid.CellToWorld(spawnPositionVect));
+        }
+    }
+
 
     /// <summary>
     /// Create an enemy in the specified position
