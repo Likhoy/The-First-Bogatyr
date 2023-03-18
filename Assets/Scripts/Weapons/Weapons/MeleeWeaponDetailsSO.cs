@@ -4,9 +4,13 @@ using UnityEngine;
 public class MeleeWeaponDetailsSO : WeaponDetailsSO
 {
     #region Tooltip
-    [Tooltip("Populate with weapon damage per hit")]
+    [Tooltip("Populate with weapon min damage per hit")]
     #endregion Tooltip
-    public int weaponDamage;
+    public int weaponMinDamage;
+    #region Tooltip
+    [Tooltip("Populate with weapon max damage per hit")]
+    #endregion Tooltip
+    public int weaponMaxDamage;
     #region Tooltip
     [Tooltip("Populate with weapon strike animation time")]
     #endregion Tooltip
@@ -15,6 +19,8 @@ public class MeleeWeaponDetailsSO : WeaponDetailsSO
     [Tooltip("Select weapon cooldown time")]
     #endregion Tooltip
     public float weaponCooldownTime;
+
+    public int GetWeaponDamage() => Random.Range(weaponMinDamage, weaponMaxDamage);
 
     #region Validation
 #if UNITY_EDITOR
