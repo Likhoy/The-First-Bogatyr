@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: 
   enemyPrefab: {fileID: 1174784082978343962, guid: 35679a8f74a985b4c95bb06e1d44dd00, type: 3}
-  aggressionDistance: 30
-  chaseDistance: 50
-  handDistance: 3
-  enemyMeleeWeapon: {fileID: 0}
+  aggressionDistance: 15
+  chaseDistance: 30
+  handDistance: 4
+  enemyMeleeWeapon: {fileID: 11400000, guid: 4ac951476d17daa49b20b276dd59b9f1, type: 2}
   enemyRangedWeapon: {fileID: 0}
   firingIntervalMin: 0.1
   firingIntervalMax: 1
-  firingDurationMin: 1
-  firingDurationMax: 2
+  firingDurationMin: 6
+  firingDurationMax: 8
   firingLineOfSightRequired: 0
-  hasHitEffect: 0
-  hitEffectTime: 0
+  hasHitEffect: 1
+  hitEffectTime: 0.66
   isHealthBarDisplayed: 0
