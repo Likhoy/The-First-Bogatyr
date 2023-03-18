@@ -20,7 +20,8 @@ MonoBehaviour:
   ammoInvisibleTime: 0.1
   ammoChargeTime: 0.1
   ammoChargeMaterial: {fileID: 0}
-  ammoDamage: 4
+  ammoMinDamage: 10
+  ammoMaxDamage: 15
   ammoSpeedMin: 8
   ammoSpeedMax: 10
   ammoRange: 20
