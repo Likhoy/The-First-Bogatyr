@@ -2,12 +2,6 @@ using UnityEngine;
 using System;
 public class Chernobog : MonoBehaviour
 {
-    /*private GameObject FirstShadow;
-    private GameObject SecondShadow;
-    private GameObject ThirdShadow;
-    [SerializeField] private GameObject FirstShadowPrefab;
-    [SerializeField] private GameObject SecondShadowPrefab;
-    [SerializeField] private GameObject ThirdShadowPrefab;*/
 
     private int enemiesSpawnedSoFar = 1; // configure
     private Enemy enemy;
@@ -22,11 +16,6 @@ public class Chernobog : MonoBehaviour
     {
         enemy.healthEvent.OnHealthChanged += HealthEvent_OnHealthChanged;
     }
-
-    /*private void Update()
-    {
-       
-    }*/
 
     private void HealthEvent_OnHealthChanged(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
     {
@@ -47,7 +36,7 @@ public class Chernobog : MonoBehaviour
             needsToSpawn[2] = false;
             SpawnLittleEnemies();
         }
-        else
+        else if (healthEventArgs.healthPercent < 75)
             enemy.healthEvent.OnHealthChanged -= HealthEvent_OnHealthChanged;
     }
 
