@@ -14,8 +14,7 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
 
     private void Start()
     {
-        enemiesToSpawn = locationDetails.enemiesToSpawnImmediately.Length;
-        grid = LocationInfo.Grid;
+        
     }
 
     /// <summary>
@@ -36,6 +35,9 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
             GameManager.Instance.previousGameState = GameState.playingLevel;
             GameManager.Instance.gameState = GameState.engagingEnemies;
         }*/
+
+        grid = LocationInfo.Grid;
+        enemiesToSpawn = locationDetails.enemiesToSpawnImmediately.Length;
 
         // Check we have somewhere to spawn the enemies
         if (enemiesToSpawn > 0)

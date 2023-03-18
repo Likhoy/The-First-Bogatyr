@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 public class Chernobog : MonoBehaviour
 {
     /*private GameObject FirstShadow;
@@ -10,6 +11,7 @@ public class Chernobog : MonoBehaviour
 
     private int enemiesSpawnedSoFar = 1; // configure
     private Enemy enemy;
+    private bool[] needsToSpawn = new bool[3] { true, false, false };
 
     private void Awake()
     {
@@ -28,13 +30,29 @@ public class Chernobog : MonoBehaviour
 
     private void HealthEvent_OnHealthChanged(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
     {
-        SpawnLittleEnemies();
-        enemy.healthEvent.OnHealthChanged -= HealthEvent_OnHealthChanged;
+        if (needsToSpawn[0] && healthEventArgs.healthPercent - 75f < 0)
+        {
+            needsToSpawn[0] = false;
+            needsToSpawn[1] = true;
+            SpawnLittleEnemies();
+        }
+        else if (needsToSpawn[1] && healthEventArgs.healthPercent - 50f < 0)
+        {
+            needsToSpawn[1] = false;
+            needsToSpawn[2] = true;
+            SpawnLittleEnemies();
+        }
+        else if (needsToSpawn[2] && healthEventArgs.healthPercent - 25f < 0)
+        {
+            needsToSpawn[2] = false;
+            SpawnLittleEnemies();
+        }
+        else
+            enemy.healthEvent.OnHealthChanged -= HealthEvent_OnHealthChanged;
     }
 
     private void SpawnLittleEnemies()
     {
-
         if (enemy.enemyDetails.spawningImmediately)
         {
             for (int i = 0; i < enemy.enemyDetails.enemiesToSpawn; i++)
@@ -54,8 +72,8 @@ public class Chernobog : MonoBehaviour
 
     private GameObject SpawnLittleEnemy()
     {
-        Vector2 spawnPosition = new Vector2(Random.Range(transform.position.x - enemy.enemyDetails.spawnRadius / 2, transform.position.x + enemy.enemyDetails.spawnRadius / 2),
-                                                     Random.Range(transform.position.y - enemy.enemyDetails.spawnRadius / 2, transform.position.y + enemy.enemyDetails.spawnRadius / 2));
+        Vector2 spawnPosition = new Vector2(UnityEngine.Random.Range(transform.position.x - enemy.enemyDetails.spawnRadius / 2, transform.position.x + enemy.enemyDetails.spawnRadius / 2),
+                                            UnityEngine.Random.Range(transform.position.y - enemy.enemyDetails.spawnRadius / 2, transform.position.y + enemy.enemyDetails.spawnRadius / 2));
         GameObject littleEnemy = Instantiate(enemy.enemyDetails.enemyPrefab, spawnPosition, Quaternion.identity, transform);
         littleEnemy.GetComponent<Enemy>().EnemyInitialization(enemy.enemyDetails.littleEnemyDetails, enemiesSpawnedSoFar);
 
