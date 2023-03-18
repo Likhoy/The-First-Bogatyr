@@ -28,6 +28,7 @@ using UnityEngine.Rendering;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(PolygonCollider2D))]
+[RequireComponent(typeof(DealContactDamage))]
 #endregion REQUIRE COMPONENTS
 
 [DisallowMultipleComponent]
