@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Enemy))]
@@ -20,12 +21,14 @@ public class AnimateEnemy : MonoBehaviour
         // Subscribe to idle event
         enemy.idleEvent.OnIdle += IdleEvent_OnIdle;
 
-        // Subscribe to weapon aim event
-        // enemy.aimWeaponEvent.OnWeaponAim += AimWeaponEvent_OnWeaponAim;
+        // Subscribe to set active weapon event
+        //enemy.setActiveWeaponEvent.OnSetActiveWeapon += SetActiveWeaponEvent_OnSetActiveWeapon;
 
         // Subscribe to melee attack event
         enemy.meleeAttackEvent.OnMeleeAttack += MeleeAttackEvent_OnMeleeAttack;
 
+        // Subscribe to weapon fired event
+        enemy.weaponFiredEvent.OnWeaponFired += WeaponFiredEvent_OnWeaponFired;
     }
 
     private void OnDisable()
@@ -36,21 +39,48 @@ public class AnimateEnemy : MonoBehaviour
         // Unsubscribe from idle event
         enemy.idleEvent.OnIdle -= IdleEvent_OnIdle;
 
-        // Unsubscribe from weapon aim event event
-        // enemy.aimWeaponEvent.OnWeaponAim -= AimWeaponEvent_OnWeaponAim;
+        // Unsubscribe from set active weapon event
+        //enemy.setActiveWeaponEvent.OnSetActiveWeapon -= SetActiveWeaponEvent_OnSetActiveWeapon;
 
         // Unsubscribe from melee attack event
         enemy.meleeAttackEvent.OnMeleeAttack -= MeleeAttackEvent_OnMeleeAttack;
+
+        // Unsubscribe from weapon fired event
+        enemy.weaponFiredEvent.OnWeaponFired -= WeaponFiredEvent_OnWeaponFired;
+    }
+
+    /*/// <summary>
+    /// On set active weapon event handler
+    /// </summary>
+    private void SetActiveWeaponEvent_OnSetActiveWeapon(SetActiveWeaponEvent setActiveWeaponEvent, SetActiveWeaponEventArgs setActiveWeaponEventArgs)
+    {
+        if (setActiveWeaponEventArgs.weapon is MeleeWeapon)
+            SetHoldingWeaponAnimationParameters(true);
+        else
+            SetHoldingWeaponAnimationParameters(false);
+    }*/
+
+    private void SetHoldingWeaponAnimationParameters(bool value)
+    {
+        enemy.animator.SetBool(Settings.holdsWeapon, value);
     }
 
     /// <summary>
-    /// On weapon aim event handler
+    /// On weapon fired event handler
     /// </summary>
-    /*private void AimWeaponEvent_OnWeaponAim(AimWeaponEvent aimWeaponEvent, AimWeaponEventArgs aimWeaponEventArgs)
+    private void WeaponFiredEvent_OnWeaponFired(WeaponFiredEvent weaponFiredEvent, WeaponFiredEventArgs weaponFiredEventArgs)
     {
-        InitialiseAimAnimationParameters();
-        SetAimWeaponAnimationParameters(aimWeaponEventArgs.aimDirection);
-    }*/
+        InitializeAttackAnimationParameters();
+    }
+
+    private void InitializeAttackAnimationParameters()
+    {
+        SetHoldingWeaponAnimationParameters(false);
+        enemy.animator.SetBool(Settings.attackUp, false);
+        enemy.animator.SetBool(Settings.attackDown, false);
+        enemy.animator.SetBool(Settings.attackRight, false);
+        enemy.animator.SetBool(Settings.attackLeft, false);
+    }
 
     /// <summary>
     /// On movement event handler
@@ -115,13 +145,12 @@ public class AnimateEnemy : MonoBehaviour
     }
 
 
-
-
     /// <summary>
     /// Plays weapon fire animation
     /// </summary>
     private void EnemyMeleeAttackAnimation()
     {
+        SetHoldingWeaponAnimationParameters(true);
         if (enemy.animator.GetBool(Settings.lookUp))
             enemy.animator.SetBool(Settings.attackUp, true);
         else if (enemy.animator.GetBool(Settings.lookDown))
