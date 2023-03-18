@@ -1,4 +1,6 @@
 using PixelCrushers.DialogueSystem;
+using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -8,10 +10,12 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
     private int currentEnemyCount;
     private int enemiesSpawnedSoFar;
     [SerializeField] private LocationDetailsSO locationDetails;
+    private Grid grid;
 
     private void Start()
     {
-        enemiesToSpawn = locationDetails.enemiesToSpawnArray.Length;
+        enemiesToSpawn = locationDetails.enemiesToSpawnImmediately.Length;
+        grid = LocationInfo.Grid;
     }
 
     /// <summary>
@@ -33,21 +37,30 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
             GameManager.Instance.gameState = GameState.engagingEnemies;
         }*/
 
-        Grid grid = LocationInfo.Grid;
-
         // Check we have somewhere to spawn the enemies
         if (enemiesToSpawn > 0)
         {
             // Loop through to create all the enemeies
             for (int i = 0; i < enemiesToSpawn; i++)
             {
-                EnemyDetailsSO enemyDetails = locationDetails.enemiesToSpawnArray[enemiesSpawnedSoFar].enemyDetails;
+                EnemyDetailsSO enemyDetails = locationDetails.enemiesToSpawnImmediately[enemiesSpawnedSoFar].enemyDetails;
 
-                Vector3Int cellPosition = (Vector3Int)locationDetails.enemiesToSpawnArray[enemiesSpawnedSoFar].spawnPosition;
+                Vector3Int cellPosition = (Vector3Int)locationDetails.enemiesToSpawnImmediately[enemiesSpawnedSoFar].spawnPosition;
 
                 // Create Enemy - Get next enemy type to spawn 
                 CreateEnemy(enemyDetails, grid.CellToWorld(cellPosition));
             }
+        }
+    }
+
+    public void SpawnEnemy(string enemyName, string spawnPosition)
+    {
+        int[] coords = spawnPosition.Split(" ").Select(coord => int.Parse(coord)).ToArray();
+        Vector3Int spawnPositionVect = new Vector3Int(coords[0], coords[1], coords[2]);
+        foreach (EnemyDetailsSO enemyDetails in GameResources.Instance.enemyDetailsList)
+        {
+            if (enemyDetails.enemyName == enemyName)
+                CreateEnemy(enemyDetails, grid.CellToWorld(spawnPositionVect));
         }
     }
 

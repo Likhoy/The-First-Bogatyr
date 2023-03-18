@@ -28,6 +28,8 @@ public class MovementDetailsSO : ScriptableObject
     #endregion
     public float dashCooldownTime;
 
+    public Vector2 patrolingArea;
+
     /// <summary>
     /// Get a random movement speed between the minimum and maximum values
     /// </summary>
