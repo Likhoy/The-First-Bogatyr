@@ -10,5 +10,5 @@ public class LocationDetailsSO : ScriptableObject
     #endregion
 
     [Tooltip("TODO")]
-    public EnemySpawnData[] enemiesToSpawnArray;
+    public EnemySpawnData[] enemiesToSpawnImmediately;
 }
