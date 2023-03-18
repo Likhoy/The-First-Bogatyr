@@ -22,7 +22,7 @@ public class DealContactDamage : MonoBehaviour
 
     private void OnEnable()
     {
-        GetComponentInParent<FireWeaponEvent>().OnFireWeapon += FireWeaponEvent_OnFireWeapon;
+        GetComponentInParent<MeleeAttackEvent>().OnMeleeAttack += MeleeAttackEvent_OnMeleeAttack;
         GetComponentInParent<SetActiveWeaponEvent>().OnSetActiveWeapon += SetActiveWeaponEvent_OnSetActiveWeapon;
     }
 
@@ -31,7 +31,7 @@ public class DealContactDamage : MonoBehaviour
         SetActiveWeaponEvent setActiveWeaponEvent = GetComponentInParent<SetActiveWeaponEvent>();
         if (setActiveWeaponEvent != null)
         {
-            GetComponentInParent<FireWeaponEvent>().OnFireWeapon -= FireWeaponEvent_OnFireWeapon;
+            GetComponentInParent<MeleeAttackEvent>().OnMeleeAttack -= MeleeAttackEvent_OnMeleeAttack;
             setActiveWeaponEvent.OnSetActiveWeapon -= SetActiveWeaponEvent_OnSetActiveWeapon;
         }
             
@@ -42,7 +42,7 @@ public class DealContactDamage : MonoBehaviour
         weapon = setActiveWeaponEventArgs.weapon as MeleeWeapon;
     }
 
-    private void FireWeaponEvent_OnFireWeapon(FireWeaponEvent fireWeaponEvent, FireWeaponEventArgs fireWeaponEventArgs)
+    private void MeleeAttackEvent_OnMeleeAttack(MeleeAttackEvent meleeAttackEvent, MeleeAttackEventArgs meleeAttackEventArgs)
     {
         SetContactDamageAmount();
     }
