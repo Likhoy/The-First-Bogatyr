@@ -18,9 +18,11 @@ public class DealContactDamage : MonoBehaviour
     #endregion
     [SerializeField] private LayerMask layerMask;
     private bool isColliding = false;
+    private MeleeWeapon weapon;
 
     private void OnEnable()
     {
+        GetComponentInParent<FireWeaponEvent>().OnFireWeapon += FireWeaponEvent_OnFireWeapon;
         GetComponentInParent<SetActiveWeaponEvent>().OnSetActiveWeapon += SetActiveWeaponEvent_OnSetActiveWeapon;
     }
 
@@ -28,20 +30,29 @@ public class DealContactDamage : MonoBehaviour
     {
         SetActiveWeaponEvent setActiveWeaponEvent = GetComponentInParent<SetActiveWeaponEvent>();
         if (setActiveWeaponEvent != null)
+        {
+            GetComponentInParent<FireWeaponEvent>().OnFireWeapon -= FireWeaponEvent_OnFireWeapon;
             setActiveWeaponEvent.OnSetActiveWeapon -= SetActiveWeaponEvent_OnSetActiveWeapon;
+        }
+            
     }
 
     private void SetActiveWeaponEvent_OnSetActiveWeapon(SetActiveWeaponEvent setActiveWeaponEvent, SetActiveWeaponEventArgs setActiveWeaponEventArgs)
     {
-        SetContactDamageAmount(setActiveWeaponEventArgs);
+        weapon = setActiveWeaponEventArgs.weapon as MeleeWeapon;
     }
 
-    private void SetContactDamageAmount(SetActiveWeaponEventArgs setActiveWeaponEventArgs)
+    private void FireWeaponEvent_OnFireWeapon(FireWeaponEvent fireWeaponEvent, FireWeaponEventArgs fireWeaponEventArgs)
+    {
+        SetContactDamageAmount();
+    }
+
+    private void SetContactDamageAmount()
     {
         // Set contact damage amount matching weaponDamage if character is holding a melee weapon
-        MeleeWeapon weapon = setActiveWeaponEventArgs.weapon as MeleeWeapon;
         contactDamageAmount = weapon?.weaponDetails.GetWeaponDamage() ?? contactDamageAmount;
     }
+
 
     // Trigger contact damage when enter a collider
     private void OnTriggerEnter2D(Collider2D collision)
