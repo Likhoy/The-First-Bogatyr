@@ -8,10 +8,12 @@ public struct EnemySpawnData
 }
 
 
+
 [System.Serializable]
 public struct LittleEnemySpawnData
 {
     public EnemyDetailsSO enemyDetails;
     public int CountEnemies;
 }
+
 
