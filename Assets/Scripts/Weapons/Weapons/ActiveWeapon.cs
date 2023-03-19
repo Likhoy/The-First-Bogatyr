@@ -66,6 +66,7 @@ public class ActiveWeapon : MonoBehaviour
             if (weaponSpriteRenderer != null)
                 weaponSpriteRenderer.sprite = meleeWeapon.weaponDetails.weaponSprite;
             // ...
+
         }
 
 

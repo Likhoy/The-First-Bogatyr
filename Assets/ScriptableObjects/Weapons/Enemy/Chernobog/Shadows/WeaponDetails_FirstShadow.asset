@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a1055647d9f39a49ae940f2d7eb1c98, type: 3}
-  m_Name: WeaponDetails_Fielder
+  m_Name: WeaponDetails_FirstShadow
   m_EditorClassIdentifier: 
-  weaponName: Spike launcher
+  weaponName: GreyBall
   weaponSprite: {fileID: 0}
-  weaponShootPosition: {x: 0, y: 0.27, z: 0}
-  weaponCurrentAmmo: {fileID: 11400000, guid: 97bb04da4de6101478f0d000ddbcf75e, type: 2}
+  weaponShootPosition: {x: 0, y: 0, z: 0}
+  weaponCurrentAmmo: {fileID: 11400000, guid: 8ba85a2d2d91b24479cc81894ab8d1f2, type: 2}
   hasInfiniteAmmo: 1
   hasInfiniteClipCapacity: 1
   weaponClipAmmoCapacity: 0
   weaponAmmoCapacity: 0
-  weaponFireRate: 0.25
+  weaponFireRate: 0.2
   weaponPrechargeTime: 0
   weaponReloadTime: 0

@@ -29,6 +29,7 @@ public class PlayerDetailsSO : ScriptableObject
     [Tooltip("Player starting health amount")]
     #endregion
     public int playerHealthAmount;
+
     #region Tooltip
     [Tooltip("Select if has some effect period immediately after being hit.  If so specify the effect time in seconds in the other field")]
     #endregion
