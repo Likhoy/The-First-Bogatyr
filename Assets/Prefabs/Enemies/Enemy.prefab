@@ -288,12 +288,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyDetails: {fileID: 0}
+  healthEvent: {fileID: 0}
   fireWeaponEvent: {fileID: 0}
+  setActiveWeaponEvent: {fileID: 0}
   enemyMovementAI: {fileID: 0}
   movementToPositionEvent: {fileID: 0}
   idleEvent: {fileID: 0}
   spriteRendererArray: []
   animator: {fileID: 0}
+  meleeAttackEvent: {fileID: 0}
+  activeWeapon: {fileID: 0}
+  weaponFiredEvent: {fileID: 0}
 --- !u!114 &5592646621270956941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,7 +311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 301ac05f85e595e4ab291958b45003ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementDetails: {fileID: 11400000, guid: af7a2bcc060b2b341b5c02a8192a525a, type: 2}
+  movementDetails: {fileID: 0}
   moveSpeed: 0
   chasePlayer: 0
   updateFrameNumber: 1
@@ -379,6 +384,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 392
   weaponShootPosition: {fileID: 0}
+  startDeltaTime: 0
+  damageAmount: 0
 --- !u!114 &6997670445888944142
 MonoBehaviour:
   m_ObjectHideFlags: 0
