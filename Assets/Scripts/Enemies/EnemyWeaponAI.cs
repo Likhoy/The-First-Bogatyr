@@ -23,6 +23,8 @@ public class EnemyWeaponAI : MonoBehaviour
     public float startDeltaTime;
     public int damageAmount;
 
+    private bool holdsRangedWeapon;
+
     private void Awake()
     {
         // Load Components
@@ -35,6 +37,7 @@ public class EnemyWeaponAI : MonoBehaviour
 
         firingIntervalTimer = WeaponShootInterval();
         firingDurationTimer = WeaponShootDuration();
+        holdsRangedWeapon = enemy.activeWeapon.GetCurrentWeapon() is RangedWeapon;
     }
 
 
@@ -47,11 +50,21 @@ public class EnemyWeaponAI : MonoBehaviour
             // if close enough use melee attack
             if (Vector3.Distance(transform.position, GameManager.Instance.GetPlayer().GetPlayerPosition()) <= enemy.enemyDetails.handDistance)
             {
+                if (holdsRangedWeapon)
+                {
+                    enemy.setActiveWeaponEvent.CallSetActiveWeaponEvent(enemy.MeleeWeapon);
+                    holdsRangedWeapon = false;
+                }   
                 MeleeAttack();
             }
             // else fire if possible
             else if (enemy.enemyDetails.enemyRangedWeapon != null)
             {
+                if (!holdsRangedWeapon)
+                {
+                    enemy.setActiveWeaponEvent.CallSetActiveWeaponEvent(enemy.RangedWeapon);
+                    holdsRangedWeapon = true;
+                }
                 // Update timers
                 firingIntervalTimer -= Time.deltaTime;
 
@@ -87,10 +100,6 @@ public class EnemyWeaponAI : MonoBehaviour
                 Invoke("DealWithMeleeWeaponStrikedEvent", meleeWeapon.weaponDetails.weaponStrikeTime);
                 DeltaTime = meleeWeapon.weaponDetails.weaponCooldownTime;
             }
-        }
-        else
-        {
-            RangedWeapon rangedWeapon = enemy.activeWeapon.GetCurrentWeapon() as RangedWeapon;
         }
     }
 

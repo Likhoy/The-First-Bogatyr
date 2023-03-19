@@ -147,6 +147,9 @@ public class FireWeapon : MonoBehaviour
     /// </summary>
     private IEnumerator FireAmmoRoutine(AmmoDetailsSO currentAmmo, float aimAngle, float weaponAimAngle, Vector3 weaponAimDirectionVector)
     {
+
+        RangedWeapon currentWeapon = activeWeapon.GetCurrentWeapon() as RangedWeapon;
+
         int ammoCounter = 0;
 
         // Get random ammo per shot
@@ -192,8 +195,6 @@ public class FireWeapon : MonoBehaviour
             yield return new WaitForSeconds(ammoSpawnInterval);
         }
 
-        RangedWeapon currentWeapon = activeWeapon.GetCurrentWeapon() as RangedWeapon;
-
         // Reduce ammo clip count if not infinite clip capacity
         if (!currentWeapon.weaponDetails.hasInfiniteClipCapacity)
         {
@@ -202,7 +203,7 @@ public class FireWeapon : MonoBehaviour
         }
 
         // Call weapon fired event
-        weaponFiredEvent.CallWeaponFiredEvent(activeWeapon.GetCurrentWeapon());
+        weaponFiredEvent.CallWeaponFiredEvent(currentWeapon);
 
         // Display weapon shoot effect
         // WeaponShootEffect(aimAngle);
