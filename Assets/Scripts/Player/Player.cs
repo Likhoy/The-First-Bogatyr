@@ -30,6 +30,7 @@ using UnityEngine;
 [RequireComponent(typeof(AnimatePlayer))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(ReceiveContactDamage))]
 #endregion REQUIRE COMPONENTS
 
 public class Player : MonoBehaviour
