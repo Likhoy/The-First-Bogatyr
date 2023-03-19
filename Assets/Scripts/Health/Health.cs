@@ -27,6 +27,8 @@ public class Health : MonoBehaviour
     [HideInInspector] public bool isDamageable = true;
     [HideInInspector] public Enemy enemy;
 
+    private int chanceToAvoidDamage = 0;
+
     private void Awake()
     {
         //Load compnents
@@ -86,6 +88,12 @@ public class Health : MonoBehaviour
 
         if (isDamageable && !isDashing)
         {
+            if (chanceToAvoidDamage > 0)
+            {
+                int value = Random.Range(1, 101);
+                if (value <= chanceToAvoidDamage)
+                    return;
+            }
             currentHealth -= damageAmount;
             CallHealthEvent(damageAmount);
 
@@ -98,6 +106,11 @@ public class Health : MonoBehaviour
                 healthBar.SetHealthBarValue((float)currentHealth / (float)startingHealth);
             }*/
         }
+    }
+
+    public void SetChanceToAvoidDamage(int new_value)
+    {
+        chanceToAvoidDamage = new_value;
     }
 
     /// <summary>
