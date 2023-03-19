@@ -15,11 +15,10 @@ public class EnemyWeaponAI : MonoBehaviour
     private Enemy enemy;
     private EnemyDetailsSO enemyDetails;
 
-    private float meleeAttackCooldownTimer;
     private float firingIntervalTimer;
     private float firingDurationTimer;
 
-    private float DeltaTime= 0f;
+    private float meleeWeaponCooldownTimer= 0f;
     public float startDeltaTime;
     public int damageAmount;
 
@@ -47,8 +46,9 @@ public class EnemyWeaponAI : MonoBehaviour
         // if chasing player
         if (enemy.enemyMovementAI.chasePlayer)
         {
+            Vector3 playerPosition = GameManager.Instance.GetPlayer().GetPlayerPosition();
             // if close enough use melee attack
-            if (Vector3.Distance(transform.position, GameManager.Instance.GetPlayer().GetPlayerPosition()) <= enemy.enemyDetails.handDistance)
+            if (Vector3.Distance(transform.position, playerPosition) <= enemy.enemyDetails.strikeDistance)
             {
                 if (holdsRangedWeapon)
                 {
@@ -58,7 +58,7 @@ public class EnemyWeaponAI : MonoBehaviour
                 MeleeAttack();
             }
             // else fire if possible
-            else if (enemy.enemyDetails.enemyRangedWeapon != null)
+            else if (enemy.enemyDetails.enemyRangedWeapon != null && Vector3.Distance(transform.position, playerPosition) > enemy.enemyDetails.handDistance)
             {
                 if (!holdsRangedWeapon)
                 {
@@ -90,31 +90,27 @@ public class EnemyWeaponAI : MonoBehaviour
 
     private void MeleeAttack()
     {
-        if (enemy.activeWeapon.GetCurrentWeapon() is MeleeWeapon meleeWeapon)
+        if (meleeWeaponCooldownTimer <= 0)
         {
-            if (DeltaTime <= 0)
-            {
-                enemy.meleeAttackEvent.CallMeleeAttackEvent();
-                // isPlayerMovementDisabled = true;
-                // Maybe there is a way better ?
-                Invoke("DealWithMeleeWeaponStrikedEvent", meleeWeapon.weaponDetails.weaponStrikeTime);
-                DeltaTime = meleeWeapon.weaponDetails.weaponCooldownTime;
-            }
+            MeleeWeapon meleeWeapon = enemy.MeleeWeapon;
+            enemy.meleeAttackEvent.CallMeleeAttackEvent();
+            Invoke("DealWithMeleeWeaponStrikedEvent", meleeWeapon.weaponDetails.weaponStrikeTime);
+            meleeWeaponCooldownTimer = meleeWeapon.weaponDetails.weaponCooldownTime;
         }
     }
 
     private void EnemyWeaponCooldownTimer()
     {
-        if (DeltaTime >= 0f)
+        if (meleeWeaponCooldownTimer >= 0f)
         {
-            DeltaTime -= Time.deltaTime;
+            meleeWeaponCooldownTimer -= Time.deltaTime;
         }
     }
 
     private void DealWithMeleeWeaponStrikedEvent()
     {
         //EnablePlayer();
-        enemy.weaponFiredEvent.CallWeaponFiredEvent(enemy.activeWeapon.GetCurrentWeapon());
+        enemy.weaponFiredEvent.CallWeaponFiredEvent(enemy.MeleeWeapon);
     }
 
     /// <summary>
