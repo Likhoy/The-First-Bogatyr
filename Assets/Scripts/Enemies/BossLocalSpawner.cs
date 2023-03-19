@@ -1,6 +1,6 @@
 using UnityEngine;
 using System;
-public class Chernobog : MonoBehaviour
+public class BossLocalSpawner : MonoBehaviour
 {
 
     private int enemiesSpawnedSoFar = 1; // configure
@@ -67,7 +67,7 @@ public class Chernobog : MonoBehaviour
     {
         Vector2 spawnPosition = new Vector2(UnityEngine.Random.Range(transform.position.x - enemy.enemyDetails.spawnRadius / 2, transform.position.x + enemy.enemyDetails.spawnRadius / 2),
                                             UnityEngine.Random.Range(transform.position.y - enemy.enemyDetails.spawnRadius / 2, transform.position.y + enemy.enemyDetails.spawnRadius / 2));
-        GameObject littleEnemy = Instantiate(enemy.enemyDetails.enemyPrefab, spawnPosition, Quaternion.identity, transform);
+        GameObject littleEnemy = Instantiate(enemyDetails.enemyPrefab, spawnPosition, Quaternion.identity, transform);
         littleEnemy.GetComponent<Enemy>().EnemyInitialization(enemyDetails, enemiesSpawnedSoFar);
 
         ++enemiesSpawnedSoFar;

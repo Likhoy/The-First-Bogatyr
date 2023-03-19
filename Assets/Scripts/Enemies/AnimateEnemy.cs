@@ -11,6 +11,7 @@ public class AnimateEnemy : MonoBehaviour
     {
         // Load components
         enemy = GetComponent<Enemy>();
+        
     }
 
     private void OnEnable()

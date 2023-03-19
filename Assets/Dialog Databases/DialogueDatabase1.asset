@@ -2175,7 +2175,8 @@ MonoBehaviour:
         \u043F\u0440\u0435\u0434\u043C\u0435\u0442: \u0441\u0442\u0430\u0440\u044B\u0439
         \u043E\u0431\u0435\u0440\u0435\u0433\");\nSetQuestEntryState(\"\u041A\u0432\u0435\u0441\u0442
         2\", 1, \"success\");\nSetQuestEntryState(\"\u041A\u0432\u0435\u0441\u0442
-        2\", 2, \"active\")"
+        2\", 2, \"active\");\nSpawnEnemy(\"Shadow2\", \"36 34 0\");\nSpawnEnemy(\"Shadow2\",
+        \"45 39 0\");\nSpawnEnemy(\"Shadow2\", \"58 26 0\")"
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -2186,8 +2187,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 20.497904, y: 0}
-    canvasZoom: 0.9699999
+    canvasScrollPosition: {x: 6.5145826, y: 0}
+    canvasZoom: 0.93999994
   - id: 7
     fields:
     - title: Title
