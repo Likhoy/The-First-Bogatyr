@@ -127,11 +127,10 @@ public class EnemyDetailsSO : ScriptableObject
 
     public bool spawningImmediately = false;
 
-    public int enemiesToSpawn;
+    public LittleEnemySpawnData[] littleEnemySpawnDatas;
 
     public float spawnRadius;
 
-    public EnemyDetailsSO littleEnemyDetails;
 
     #region Validation
 #if UNITY_EDITOR
