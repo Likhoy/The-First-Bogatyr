@@ -29,7 +29,7 @@ public abstract class Item : MonoBehaviour, IUseable
         isTaken = false;
     }
 
-    //private void OnMouseDown() => TakeItem();
+    // private void OnMouseDown() => TakeItem();
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
