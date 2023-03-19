@@ -232,6 +232,36 @@ MonoBehaviour:
       value: True
       type: 2
       typeString: CustomFieldType_Boolean
+    - title: Entry Count
+      value: 3
+      type: 1
+      typeString: CustomFieldType_Number
+    - title: Entry 1 State
+      value: active
+      type: 0
+      typeString: 
+    - title: Entry 1
+      value: "\u0412\u0435\u0440\u043D\u0443\u0442\u044C\u0441\u044F \u043A \u0441\u0442\u0430\u0440\u043E\u0441\u0442\u0435"
+      type: 0
+      typeString: 
+    - title: Entry 2 State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Entry 2
+      value: "\u041D\u0430\u0439\u0442\u0438 \u043F\u0443\u0442\u044C \u043A \u0446\u0432\u0435\u0442\u0443
+        \u0441\u0438\u043B\u044B"
+      type: 0
+      typeString: 
+    - title: Entry 3 State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Entry 3
+      value: "\u041F\u0440\u043E\u0432\u0435\u0434\u0430\u0442\u044C \u043A\u0443\u043F\u0446\u0430
+        \u0421\u0432\u0435\u0442\u043E\u0437\u0430\u0440\u0430"
+      type: 0
+      typeString: 
   locations: []
   variables:
   - id: 1
@@ -2143,7 +2173,9 @@ MonoBehaviour:
         \u043F\u0440\u0435\u0434\u043C\u0435\u0442: \u0436\u0438\u0432\u0430\u044F
         \u0432\u043E\u0434\u0430 x5\");\nShowAlert(\"\u041F\u043E\u043B\u0443\u0447\u0435\u043D
         \u043F\u0440\u0435\u0434\u043C\u0435\u0442: \u0441\u0442\u0430\u0440\u044B\u0439
-        \u043E\u0431\u0435\u0440\u0435\u0433\")"
+        \u043E\u0431\u0435\u0440\u0435\u0433\");\nSetQuestEntryState(\"\u041A\u0432\u0435\u0441\u0442
+        2\", 1, \"success\");\nSetQuestEntryState(\"\u041A\u0432\u0435\u0441\u0442
+        2\", 2, \"active\")"
       onExecute:
         m_PersistentCalls:
           m_Calls: []
