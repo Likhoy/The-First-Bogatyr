@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20d0238ce429f4943a7fe4810a7bfa29, type: 3}
-  m_Name: WeaponDetails_Fielder
+  m_Name: MeleeWeaponDetails_Fielder
   m_EditorClassIdentifier: 
   weaponName: Fist
   weaponSprite: {fileID: 0}
-  weaponMinDamage: 15
-  weaponMaxDamage: 20
-  weaponStrikeTime: 0.633
-  weaponCooldownTime: 0.5
+  weaponMinDamage: 7
+  weaponMaxDamage: 10
+  weaponStrikeTime: 0.65
+  weaponCooldownTime: 1
