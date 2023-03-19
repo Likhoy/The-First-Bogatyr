@@ -11,6 +11,7 @@ public class AnimateEnemy : MonoBehaviour
     {
         // Load components
         enemy = GetComponent<Enemy>();
+        
     }
 
     private void OnEnable()
@@ -60,27 +61,29 @@ public class AnimateEnemy : MonoBehaviour
             SetHoldingWeaponAnimationParameters(false);
     }*/
 
-    private void SetHoldingWeaponAnimationParameters(bool value)
+    /*private void SetHoldingWeaponAnimationParameters()
     {
-        enemy.animator.SetBool(Settings.holdsWeapon, value);
-    }
+        enemy.animator.SetBool(Settings.holdsWeapon, true);
+        enemy.animator.SetBool(Settings.isIdle, false);
+    }*/
 
     /// <summary>
     /// On weapon fired event handler
     /// </summary>
     private void WeaponFiredEvent_OnWeaponFired(WeaponFiredEvent weaponFiredEvent, WeaponFiredEventArgs weaponFiredEventArgs)
     {
-        InitializeAttackAnimationParameters();
+        //InitializeAttackAnimationParameters();
+        enemy.animator.ResetTrigger("attackTrigger");
     }
 
-    private void InitializeAttackAnimationParameters()
+    /*private void InitializeAttackAnimationParameters()
     {
-        SetHoldingWeaponAnimationParameters(false);
+        enemy.animator.SetBool(Settings.holdsWeapon, false);
         enemy.animator.SetBool(Settings.attackUp, false);
         enemy.animator.SetBool(Settings.attackDown, false);
         enemy.animator.SetBool(Settings.attackRight, false);
         enemy.animator.SetBool(Settings.attackLeft, false);
-    }
+    }*/
 
     /// <summary>
     /// On movement event handler
@@ -141,7 +144,13 @@ public class AnimateEnemy : MonoBehaviour
     /// </summary>
     private void MeleeAttackEvent_OnMeleeAttack(MeleeAttackEvent meleeAttackEvent, MeleeAttackEventArgs meleeAttackEventArgs)
     {
+        //SetHoldingWeaponAnimationParameters();
+        InitializeLookAnimationParameters();
+        float attackAngle = HelperUtilities.GetAngleFromVector((GameManager.Instance.GetPlayer().transform.position - transform.position).normalized);
+        LookDirection lookDirection = HelperUtilities.GetLookDirection(attackAngle);
+        SetLookAnimationParameters(lookDirection);
         EnemyMeleeAttackAnimation();
+        enemy.animator.SetBool(Settings.isIdle, false);
     }
 
 
@@ -150,15 +159,15 @@ public class AnimateEnemy : MonoBehaviour
     /// </summary>
     private void EnemyMeleeAttackAnimation()
     {
-        SetHoldingWeaponAnimationParameters(true);
-        if (enemy.animator.GetBool(Settings.lookUp))
+        /*if (enemy.animator.GetBool(Settings.lookUp))
             enemy.animator.SetBool(Settings.attackUp, true);
         else if (enemy.animator.GetBool(Settings.lookDown))
             enemy.animator.SetBool(Settings.attackDown, true);
         else if (enemy.animator.GetBool(Settings.lookRight))
             enemy.animator.SetBool(Settings.attackRight, true);
         else if (enemy.animator.GetBool(Settings.lookLeft))
-            enemy.animator.SetBool(Settings.attackLeft, true);
+            enemy.animator.SetBool(Settings.attackLeft, true);*/
+        enemy.animator.SetTrigger("attackTrigger");
     }
 
     /// <summary>

@@ -33,6 +33,8 @@ public class EnemyDetailsSO : ScriptableObject
     #endregion
     public float handDistance = 3f;
 
+    public float strikeDistance = 1f;
+
     /*#region Header ENEMY MATERIAL
     [Space(10)]
     [Header("ENEMY MATERIAL")]
@@ -125,11 +127,10 @@ public class EnemyDetailsSO : ScriptableObject
 
     public bool spawningImmediately = false;
 
-    public int enemiesToSpawn;
+    public LittleEnemySpawnData[] littleEnemySpawnDatas;
 
     public float spawnRadius;
 
-    public EnemyDetailsSO littleEnemyDetails;
 
     #region Validation
 #if UNITY_EDITOR

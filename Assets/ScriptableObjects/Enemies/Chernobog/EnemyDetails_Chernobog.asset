@@ -17,8 +17,9 @@ MonoBehaviour:
   aggressionDistance: 45
   chaseDistance: 60
   handDistance: 5
+  strikeDistance: -1
   enemyMeleeWeapon: {fileID: 0}
-  enemyRangedWeapon: {fileID: 11400000, guid: f57e6d33cacb7cb439ec493b41df44d7, type: 2}
+  enemyRangedWeapon: {fileID: 0}
   firingIntervalMin: 0.1
   firingIntervalMax: 1
   firingDurationMin: 7
@@ -28,7 +29,10 @@ MonoBehaviour:
   hitEffectTime: 0.66
   isHealthBarDisplayed: 0
   isBoss: 1
-  spawningImmediately: 0
-  enemiesToSpawn: 0
-  spawnRadius: 0
-  littleEnemyDetails: {fileID: 0}
+  spawningImmediately: 1
+  littleEnemySpawnDatas:
+  - enemyDetails: {fileID: 11400000, guid: 65f5ad3025f99d745878348b70cf71a9, type: 2}
+    CountEnemies: 2
+  - enemyDetails: {fileID: 11400000, guid: 65f5ad3025f99d745878348b70cf71a9, type: 2}
+    CountEnemies: 2
+  spawnRadius: 12
