@@ -10,23 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 070c0af462fb0c2479ff9dfc92a05008, type: 3}
-  m_Name: AmmoDetails_Spikes_Fielder
+  m_Name: AmmoDetails_Chernobog
   m_EditorClassIdentifier: 
-  ammoName: Fielder spikes
+  ammoName: Lightning
   isPlayerAmmo: 0
-  ammoSprite: {fileID: 21300000, guid: f8419081a679c404da858516622ae220, type: 3}
-  ammoPrefabArray:
-  - {fileID: 769429740093453056, guid: a259640d7b02aa94c852951fd75fddda, type: 3}
+  ammoSprite: {fileID: 0}
+  ammoPrefabArray: []
   ammoMaterial: {fileID: 0}
-  ammoChargeTime: 0
+  ammoInvisibleTime: 0.1
+  ammoChargeTime: 0.1
   ammoChargeMaterial: {fileID: 0}
-  ammoDamage: 3
-  ammoSpeedMin: 13
-  ammoSpeedMax: 15
-  ammoRange: 25
+  ammoMinDamage: 10
+  ammoMaxDamage: 15
+  ammoSpeedMin: 8
+  ammoSpeedMax: 10
+  ammoRange: 20
   ammoRotationSpeed: 1
-  ammoSpreadMin: 2
-  ammoSpreadMax: 4
+  ammoSpreadMin: 4
+  ammoSpreadMax: 5
   ammoSpawnAmountMin: 1
   ammoSpawnAmountMax: 1
   ammoSpawnIntervalMin: 0
