@@ -13,7 +13,7 @@ public class MoneyUI : MonoBehaviour
 
     private void Start()
     {
-        moneyAmount.text = GameManager.Instance.GetPlayer().playerDetails.playerMoneyAmount.ToString() + " монет";
+        moneyAmount.text = GameManager.Instance.GetPlayer().playerDetails.playerMoneyAmount.ToString();
     }
 
     private void OnEnable()
@@ -39,7 +39,7 @@ public class MoneyUI : MonoBehaviour
     /// </summary>
     public void UpdateMoneyAmount(int newMoneyAmount)
     {
-        moneyAmount.text = newMoneyAmount.ToString() + " монет";
+        moneyAmount.text = newMoneyAmount.ToString();
     }
 
 
