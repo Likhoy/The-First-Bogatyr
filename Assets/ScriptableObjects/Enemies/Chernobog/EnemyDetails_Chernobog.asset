@@ -29,6 +29,9 @@ MonoBehaviour:
   isHealthBarDisplayed: 0
   isBoss: 1
   spawningImmediately: 0
-  enemiesToSpawn: 0
-  spawnRadius: 0
-  littleEnemyDetails: {fileID: 0}
+  littleEnemySpawnDatas:
+  - enemyDetails: {fileID: 11400000, guid: 68283f1e18cd82644bcc85595b42438e, type: 2}
+    CountEnemies: 2
+  - enemyDetails: {fileID: 11400000, guid: 65f5ad3025f99d745878348b70cf71a9, type: 2}
+    CountEnemies: 2
+  spawnRadius: 12
