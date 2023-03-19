@@ -1,6 +1,6 @@
 using UnityEngine;
 using System;
-public class Chernobog : MonoBehaviour
+public class BossLocalSpawner : MonoBehaviour
 {
 
     private int enemiesSpawnedSoFar = 1; // configure
@@ -44,27 +44,31 @@ public class Chernobog : MonoBehaviour
     {
         if (enemy.enemyDetails.spawningImmediately)
         {
-            for (int i = 0; i < enemy.enemyDetails.enemiesToSpawn; i++)
+            for (int i = 0; i < enemy.enemyDetails.littleEnemySpawnDatas.Length; i++)
             {
-                SpawnLittleEnemy();
+                for (int j = 0; j < enemy.enemyDetails.littleEnemySpawnDatas[i].CountEnemies; j++)
+                {
+                    SpawnLittleEnemy(enemy.enemyDetails.littleEnemySpawnDatas[i].enemyDetails);
+                }
             }
+            
         }
-        else
-        {
-            GameObject littleEnemy = SpawnLittleEnemy();
-            // subscribe to enemy destroyed event
-            littleEnemy.GetComponent<DestroyedEvent>().OnDestroyed += Enemy_OnDestroyed;
-        }
+        //else
+        //{
+        //    GameObject littleEnemy = SpawnLittleEnemy(enemy.enemyDetails.littleEnemySpawnDatas.enemyDetails);
+        //    // subscribe to enemy destroyed event
+        //    littleEnemy.GetComponent<DestroyedEvent>().OnDestroyed += Enemy_OnDestroyed;
+        //}
     }
 
     
 
-    private GameObject SpawnLittleEnemy()
+    private GameObject SpawnLittleEnemy(EnemyDetailsSO enemyDetails)
     {
         Vector2 spawnPosition = new Vector2(UnityEngine.Random.Range(transform.position.x - enemy.enemyDetails.spawnRadius / 2, transform.position.x + enemy.enemyDetails.spawnRadius / 2),
                                             UnityEngine.Random.Range(transform.position.y - enemy.enemyDetails.spawnRadius / 2, transform.position.y + enemy.enemyDetails.spawnRadius / 2));
-        GameObject littleEnemy = Instantiate(enemy.enemyDetails.enemyPrefab, spawnPosition, Quaternion.identity, transform);
-        littleEnemy.GetComponent<Enemy>().EnemyInitialization(enemy.enemyDetails.littleEnemyDetails, enemiesSpawnedSoFar);
+        GameObject littleEnemy = Instantiate(enemyDetails.enemyPrefab, spawnPosition, Quaternion.identity, transform);
+        littleEnemy.GetComponent<Enemy>().EnemyInitialization(enemyDetails, enemiesSpawnedSoFar);
 
         ++enemiesSpawnedSoFar;
         return littleEnemy;
@@ -74,12 +78,12 @@ public class Chernobog : MonoBehaviour
     {
         destroyedEvent.OnDestroyed -= Enemy_OnDestroyed;
 
-        if (enemy.enemyDetails.enemiesToSpawn < enemiesSpawnedSoFar)
-        {
-            GameObject littleEnemy = SpawnLittleEnemy();
-            // subscribe to enemy destroyed event
-            littleEnemy.GetComponent<DestroyedEvent>().OnDestroyed += Enemy_OnDestroyed;
-        }
+        //if (enemy.enemyDetails.enemiesToSpawn < enemiesSpawnedSoFar)
+        //{
+        //    GameObject littleEnemy = SpawnLittleEnemy();
+        //    // subscribe to enemy destroyed event
+        //    littleEnemy.GetComponent<DestroyedEvent>().OnDestroyed += Enemy_OnDestroyed;
+        //}
     }
 
     /*private void FirstShadowLogic()

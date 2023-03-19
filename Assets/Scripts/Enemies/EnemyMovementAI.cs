@@ -178,7 +178,8 @@ public class EnemyMovementAI : MonoBehaviour
         }
 
         // End of path steps - trigger the enemy idle event
-        enemy.idleEvent.CallIdleEvent();
+        if (!chasePlayer)
+            enemy.idleEvent.CallIdleEvent();
     }
 
     /// <summary>

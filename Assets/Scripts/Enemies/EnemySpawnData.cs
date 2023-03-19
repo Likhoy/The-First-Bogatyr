@@ -7,3 +7,13 @@ public struct EnemySpawnData
     public Vector2Int spawnPosition;
 }
 
+
+
+[System.Serializable]
+public struct LittleEnemySpawnData
+{
+    public EnemyDetailsSO enemyDetails;
+    public int CountEnemies;
+}
+
+

@@ -11,7 +11,16 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
     private int enemiesSpawnedSoFar;
     [SerializeField] private LocationDetailsSO locationDetails;
     private Grid grid;
+    
+    private void OnEnable()
+    {
+        Lua.RegisterFunction("SpawnEnemy", this, SymbolExtensions.GetMethodInfo(() => SpawnEnemy(string.Empty, string.Empty)));
+    }
 
+    private void OnDisable()
+    {
+        Lua.UnregisterFunction("SpawnEnemy");
+    }
 
     /// <summary>
     /// Spawn the enemies
