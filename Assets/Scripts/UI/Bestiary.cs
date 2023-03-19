@@ -26,25 +26,25 @@ public class Bestiary : MonoBehaviour
 
     public void Next()
     {
-        if (currentIndex < mobImages.Length / 2 -1 )
+        if (currentIndex < mobImages.Length / 2 - 1)
         {
             currentIndex++;
             UpdateDisplay();
         }
-        
+
     }
 
     public void Prev()
     {
-        
+
         if (currentIndex > 0)
         {
             currentIndex--;
             UpdateDisplay();
         }
-        
+
     }
-    
+
     void UpdateDisplay()
     {
         leftImage.sprite = mobImages[currentIndex * 2];
