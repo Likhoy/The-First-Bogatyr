@@ -33,6 +33,8 @@ public class EnemyDetailsSO : ScriptableObject
     #endregion
     public float handDistance = 3f;
 
+    public float strikeDistance = 1f;
+
     /*#region Header ENEMY MATERIAL
     [Space(10)]
     [Header("ENEMY MATERIAL")]
