@@ -22,19 +22,24 @@ public class DealContactDamage : MonoBehaviour
 
     private void OnEnable()
     {
-        GetComponentInParent<MeleeAttackEvent>().OnMeleeAttack += MeleeAttackEvent_OnMeleeAttack;
-        GetComponentInParent<SetActiveWeaponEvent>().OnSetActiveWeapon += SetActiveWeaponEvent_OnSetActiveWeapon;
+        if (GetComponent<Enemy>() == null)
+        {
+            GetComponentInParent<MeleeAttackEvent>().OnMeleeAttack += MeleeAttackEvent_OnMeleeAttack;
+            GetComponentInParent<SetActiveWeaponEvent>().OnSetActiveWeapon += SetActiveWeaponEvent_OnSetActiveWeapon;
+        }
     }
 
     private void OnDisable()
     {
-        SetActiveWeaponEvent setActiveWeaponEvent = GetComponentInParent<SetActiveWeaponEvent>();
-        if (setActiveWeaponEvent != null)
+        if (GetComponent<Enemy>() == null)
         {
-            GetComponentInParent<MeleeAttackEvent>().OnMeleeAttack -= MeleeAttackEvent_OnMeleeAttack;
-            setActiveWeaponEvent.OnSetActiveWeapon -= SetActiveWeaponEvent_OnSetActiveWeapon;
-        }
-            
+            SetActiveWeaponEvent setActiveWeaponEvent = GetComponentInParent<SetActiveWeaponEvent>();
+            if (setActiveWeaponEvent != null)
+            {
+                GetComponentInParent<MeleeAttackEvent>().OnMeleeAttack -= MeleeAttackEvent_OnMeleeAttack;
+                setActiveWeaponEvent.OnSetActiveWeapon -= SetActiveWeaponEvent_OnSetActiveWeapon;
+            }
+        }   
     }
 
     private void SetActiveWeaponEvent_OnSetActiveWeapon(SetActiveWeaponEvent setActiveWeaponEvent, SetActiveWeaponEventArgs setActiveWeaponEventArgs)
