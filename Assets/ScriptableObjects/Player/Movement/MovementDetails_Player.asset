@@ -16,4 +16,6 @@ MonoBehaviour:
   maxMoveSpeed: 6
   dashSpeed: 13
   dashDistance: 4
-  dashCooldownTime: 0.2
+  dashCooldownTime: 1
+  patrolingAreaLeftBottom: {x: 0, y: 0}
+  patrolingAreaRightTop: {x: 0, y: 0}
