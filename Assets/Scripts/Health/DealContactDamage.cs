@@ -18,30 +18,46 @@ public class DealContactDamage : MonoBehaviour
     #endregion
     [SerializeField] private LayerMask layerMask;
     private bool isColliding = false;
+    private MeleeWeapon weapon;
 
     private void OnEnable()
     {
-        GetComponentInParent<SetActiveWeaponEvent>().OnSetActiveWeapon += SetActiveWeaponEvent_OnSetActiveWeapon;
+        if (GetComponent<Enemy>() == null)
+        {
+            GetComponentInParent<MeleeAttackEvent>().OnMeleeAttack += MeleeAttackEvent_OnMeleeAttack;
+            GetComponentInParent<SetActiveWeaponEvent>().OnSetActiveWeapon += SetActiveWeaponEvent_OnSetActiveWeapon;
+        }
     }
 
     private void OnDisable()
     {
-        SetActiveWeaponEvent setActiveWeaponEvent = GetComponentInParent<SetActiveWeaponEvent>();
-        if (setActiveWeaponEvent != null)
-            setActiveWeaponEvent.OnSetActiveWeapon -= SetActiveWeaponEvent_OnSetActiveWeapon;
+        if (GetComponent<Enemy>() == null)
+        {
+            SetActiveWeaponEvent setActiveWeaponEvent = GetComponentInParent<SetActiveWeaponEvent>();
+            if (setActiveWeaponEvent != null)
+            {
+                GetComponentInParent<MeleeAttackEvent>().OnMeleeAttack -= MeleeAttackEvent_OnMeleeAttack;
+                setActiveWeaponEvent.OnSetActiveWeapon -= SetActiveWeaponEvent_OnSetActiveWeapon;
+            }
+        }   
     }
 
     private void SetActiveWeaponEvent_OnSetActiveWeapon(SetActiveWeaponEvent setActiveWeaponEvent, SetActiveWeaponEventArgs setActiveWeaponEventArgs)
     {
-        SetContactDamageAmount(setActiveWeaponEventArgs);
+        weapon = setActiveWeaponEventArgs.weapon as MeleeWeapon;
     }
 
-    private void SetContactDamageAmount(SetActiveWeaponEventArgs setActiveWeaponEventArgs)
+    private void MeleeAttackEvent_OnMeleeAttack(MeleeAttackEvent meleeAttackEvent, MeleeAttackEventArgs meleeAttackEventArgs)
+    {
+        SetContactDamageAmount();
+    }
+
+    private void SetContactDamageAmount()
     {
         // Set contact damage amount matching weaponDamage if character is holding a melee weapon
-        MeleeWeapon weapon = setActiveWeaponEventArgs.weapon as MeleeWeapon;
-        contactDamageAmount = weapon?.weaponDetails.weaponDamage ?? contactDamageAmount;
+        contactDamageAmount = weapon?.weaponDetails.GetWeaponDamage() ?? contactDamageAmount;
     }
+
 
     // Trigger contact damage when enter a collider
     private void OnTriggerEnter2D(Collider2D collision)

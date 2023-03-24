@@ -1,15 +1,26 @@
 using PixelCrushers.DialogueSystem;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 [DisallowMultipleComponent]
 public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
 {
-    private int enemiesToSpawn = 1; // for testing
+    private int enemiesToSpawn;
     private int currentEnemyCount;
-    private int enemiesSpawnedSoFar;
-    //private int enemyMaxConcurrentSpawnNumber
-    [SerializeField] private EnemyDetailsSO enemyDetails; // for testing
+    public int EnemiesSpawnedSoFar { get; set; }
+    [SerializeField] private LocationDetailsSO locationDetails;
+    private Grid grid;
+    
+    private void OnEnable()
+    {
+        Lua.RegisterFunction("SpawnEnemy", this, SymbolExtensions.GetMethodInfo(() => SpawnEnemy(string.Empty, string.Empty)));
+    }
+
+    private void OnDisable()
+    {
+        Lua.UnregisterFunction("SpawnEnemy");
+    }
 
     /// <summary>
     /// Spawn the enemies
@@ -30,32 +41,36 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
             GameManager.Instance.gameState = GameState.engagingEnemies;
         }*/
 
-        StartCoroutine(SpawnEnemiesRoutine());
-    }
-
-    /// <summary>
-    /// Spawn the enemies coroutine
-    /// </summary>
-    private IEnumerator SpawnEnemiesRoutine()
-    {
-        Grid grid = LocationInfo.Grid;
+        grid = LocationInfo.Grid;
+        enemiesToSpawn = locationDetails.enemiesToSpawnImmediately.Length;
 
         // Check we have somewhere to spawn the enemies
-        if (true)//SceneInfo.spawnPositionArray.Length > 0)
+        if (enemiesToSpawn > 0)
         {
             // Loop through to create all the enemeies
             for (int i = 0; i < enemiesToSpawn; i++)
             {
-                // for testing
-                Vector3Int cellPosition = new Vector3Int(75, 0, 0); //(Vector3Int)SceneInfo.spawnPositionArray[necesary_index];
+                EnemyDetailsSO enemyDetails = locationDetails.enemiesToSpawnImmediately[EnemiesSpawnedSoFar].enemyDetails;
+
+                Vector3Int cellPosition = (Vector3Int)locationDetails.enemiesToSpawnImmediately[EnemiesSpawnedSoFar].spawnPosition;
 
                 // Create Enemy - Get next enemy type to spawn 
-                CreateEnemy(enemyDetails, grid.CellToWorld(cellPosition)); // necessary enemy details
-
-                yield return null; // new WaitForSeconds(GetEnemySpawnInterval());
+                CreateEnemy(enemyDetails, grid.CellToWorld(cellPosition));
             }
         }
     }
+
+    public void SpawnEnemy(string enemyName, string spawnPosition)
+    {
+        int[] coords = spawnPosition.Split(" ").Select(coord => int.Parse(coord)).ToArray();
+        Vector3Int spawnPositionVect = new Vector3Int(coords[0], coords[1], coords[2]);
+        foreach (EnemyDetailsSO enemyDetails in GameResources.Instance.enemyDetailsList)
+        {
+            if (enemyDetails.enemyName == enemyName)
+                CreateEnemy(enemyDetails, grid.CellToWorld(spawnPositionVect));
+        }
+    }
+
 
     /// <summary>
     /// Create an enemy in the specified position
@@ -63,7 +78,7 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
     private void CreateEnemy(EnemyDetailsSO enemyDetails, Vector3 position)
     {
         // keep track of the number of enemies spawned so far 
-        enemiesSpawnedSoFar++;
+        EnemiesSpawnedSoFar++;
 
         // Add one to the current enemy count - this is reduced when an enemy is destroyed
         currentEnemyCount++;
@@ -72,7 +87,7 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
         GameObject enemy = Instantiate(enemyDetails.enemyPrefab, position, Quaternion.identity, transform);
 
         // Initialize Enemy
-        enemy.GetComponent<Enemy>().EnemyInitialization(enemyDetails, enemiesSpawnedSoFar);
+        enemy.GetComponent<Enemy>().EnemyInitialization(enemyDetails, EnemiesSpawnedSoFar);
 
         // subscribe to enemy destroyed event
         enemy.GetComponent<DestroyedEvent>().OnDestroyed += Enemy_OnDestroyed;
@@ -88,13 +103,13 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
         destroyedEvent.OnDestroyed -= Enemy_OnDestroyed;
 
         // TODO - adjust architecture (for the first quest)
-        if (enemiesSpawnedSoFar == 1)
+        if (EnemiesSpawnedSoFar == 1)
             GetComponent<DialogueSystemTrigger>().OnUse();
 
         // reduce current enemy count
         currentEnemyCount--;
 
-        if (currentEnemyCount <= 0 && enemiesSpawnedSoFar == enemiesToSpawn)
+        if (currentEnemyCount <= 0 && EnemiesSpawnedSoFar == enemiesToSpawn)
         {
 
             // Set game state
