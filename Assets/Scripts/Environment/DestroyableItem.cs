@@ -1,3 +1,4 @@
+using PixelCrushers.DialogueSystem;
 using System.Collections;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ public class DestroyableItem : MonoBehaviour
     [Tooltip("What the starting health for this destroyable item should be")]
     #endregion Tooltip
     [SerializeField] private int startingHealthAmount = 1;
+    public float effectTime = 0.66f;
     /*#region SOUND EFFECT
     [Header("SOUND EFFECT")]
     #endregion SOUND EFFECT
@@ -48,7 +50,7 @@ public class DestroyableItem : MonoBehaviour
     {
         if (healthEventArgs.healthAmount <= 0f)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 
