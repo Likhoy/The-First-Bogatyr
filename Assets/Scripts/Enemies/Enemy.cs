@@ -34,12 +34,12 @@ using UnityEngine.Rendering;
 public class Enemy : MonoBehaviour
 {
     [HideInInspector] public EnemyDetailsSO enemyDetails;
-    private HealthEvent healthEvent;
+    [HideInInspector] public HealthEvent healthEvent;
     private Health health;
     //[HideInInspector] public AimWeaponEvent aimWeaponEvent;
     [HideInInspector] public FireWeaponEvent fireWeaponEvent;
     private FireWeapon fireWeapon;
-    private SetActiveWeaponEvent setActiveWeaponEvent;
+    [HideInInspector] public SetActiveWeaponEvent setActiveWeaponEvent;
     [HideInInspector] public EnemyMovementAI enemyMovementAI;
     [HideInInspector] public MovementToPositionEvent movementToPositionEvent;
     [HideInInspector] public IdleEvent idleEvent;
@@ -51,6 +51,8 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public MeleeAttackEvent meleeAttackEvent;
     [HideInInspector] public ActiveWeapon activeWeapon;
     [HideInInspector] public WeaponFiredEvent weaponFiredEvent;
+    public MeleeWeapon MeleeWeapon { get; private set; }
+    public RangedWeapon RangedWeapon { get; private set; }
 
     private void Awake()
     {
@@ -132,7 +134,7 @@ public class Enemy : MonoBehaviour
     private void SetEnemyMovementUpdateFrame(int enemySpawnNumber)
     {
         // Set frame number that enemy should process it's updates
-        //enemyMovementAI.SetUpdateFrameNumber(enemySpawnNumber % Settings.targetFrameRateToSpreadPathfindingOver);
+        enemyMovementAI.SetUpdateFrameNumber(enemySpawnNumber % Settings.targetFrameRateToSpreadPathfindingOver);
     }
 
 
@@ -165,10 +167,14 @@ public class Enemy : MonoBehaviour
 
             //Set weapon for enemy
             setActiveWeaponEvent.CallSetActiveWeaponEvent(weapon);
-
+            RangedWeapon = weapon;
         }
-        // TODO 
-        // add melee weapon
+        if (enemyDetails.enemyMeleeWeapon != null)
+        {
+            MeleeWeapon = new MeleeWeapon() { weaponDetails = enemyDetails.enemyMeleeWeapon, weaponListPosition = 0 };
+            if (activeWeapon.GetCurrentWeapon() == null)
+                setActiveWeaponEvent.CallSetActiveWeaponEvent(MeleeWeapon);
+        }
     }
 
     /// <summary>
