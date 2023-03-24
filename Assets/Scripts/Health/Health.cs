@@ -27,6 +27,8 @@ public class Health : MonoBehaviour
     [HideInInspector] public bool isDamageable = true;
     [HideInInspector] public Enemy enemy;
 
+    private int chanceToAvoidDamage = 0;
+
     private void Awake()
     {
         //Load compnents
@@ -41,7 +43,7 @@ public class Health : MonoBehaviour
         // Attempt to load enemy / player components
         player = GetComponent<Player>();
         enemy = GetComponent<Enemy>();
-
+        DestroyableItem destroyableItem = GetComponent<DestroyableItem>();
 
         // Get player / enemy hit effect details
         if (player != null)
@@ -61,6 +63,12 @@ public class Health : MonoBehaviour
                 effectTime = enemy.enemyDetails.hitEffectTime;
                 spriteRenderer = enemy.spriteRendererArray[0];
             }
+        }
+        else if (destroyableItem != null)
+        {
+            hasHitEffect = true;
+            effectTime = destroyableItem.effectTime;
+            spriteRenderer = destroyableItem.GetComponent<SpriteRenderer>();
         }
 
         // Enable the health bar if required
@@ -86,6 +94,12 @@ public class Health : MonoBehaviour
 
         if (isDamageable && !isDashing)
         {
+            if (chanceToAvoidDamage > 0)
+            {
+                int value = Random.Range(1, 101);
+                if (value <= chanceToAvoidDamage)
+                    return;
+            }
             currentHealth -= damageAmount;
             CallHealthEvent(damageAmount);
 
@@ -98,6 +112,11 @@ public class Health : MonoBehaviour
                 healthBar.SetHealthBarValue((float)currentHealth / (float)startingHealth);
             }*/
         }
+    }
+
+    public void SetChanceToAvoidDamage(int new_value)
+    {
+        chanceToAvoidDamage = new_value;
     }
 
     /// <summary>

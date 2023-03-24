@@ -28,11 +28,13 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private void OnEnable()
     {
         Lua.RegisterFunction("GiveWeaponToPlayer", this, SymbolExtensions.GetMethodInfo(() => GiveWeaponToPlayer(string.Empty)));
+        Lua.RegisterFunction("GiveChanceToAvoidDamageToCreature", this, SymbolExtensions.GetMethodInfo(() => GiveChanceToAvoidDamageToCreature(string.Empty, 0.0)));
     }
 
     private void OnDisable()
     {
         Lua.UnregisterFunction("GiveWeaponToPlayer");
+        Lua.UnregisterFunction("GiveChanceToAvoidDamageToCreature");
     }
 
     private void Start()
@@ -41,10 +43,6 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         EnemySpawner.Instance.SpawnEnemies();
     }
 
-    /*private void Update()
-    {
-        
-    }*/
 
     /// <summary>
     /// Create player in scene at position
@@ -66,6 +64,16 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         {
             if (weaponDetails.weaponName == weaponName)
                 player.AddWeaponToPlayer(weaponDetails);
+        }
+    }
+
+    public void GiveChanceToAvoidDamageToCreature(string creatureTag, double percent)
+    {
+        if (creatureTag == "Player")
+            player.health.SetChanceToAvoidDamage((int)percent);
+        else
+        {
+            // TODO
         }
     }
 

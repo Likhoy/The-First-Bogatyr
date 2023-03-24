@@ -34,6 +34,14 @@ public class GameResources : MonoBehaviour
     #endregion Tooltip
     public List<WeaponDetailsSO> weaponDetailsList;
 
+    #region Header ENEMIES
+    [Space(10)]
+    [Header("ENEMIES")]
+    #endregion Header ENEMIES
+    #region Tooltip
+    [Tooltip("Populate with enemies, which would be spawned in quests")]
+    #endregion Tooltip
+    public List<EnemyDetailsSO> enemyDetailsList;
 
     #region Header INVENTORY
     [Space(10)]
