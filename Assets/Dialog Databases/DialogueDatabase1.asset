@@ -105,7 +105,8 @@ MonoBehaviour:
   - id: 1
     fields:
     - title: Name
-      value: "\u041A\u0432\u0435\u0441\u0442 1"
+      value: "\u0412\u043E\u0437\u0432\u0440\u0430\u0449\u0435\u043D\u0438\u0435
+        \u0431\u0440\u0430\u0442\u0430"
       type: 0
       typeString: CustomFieldType_Text
     - title: Pictures
@@ -140,7 +141,7 @@ MonoBehaviour:
       type: 2
       typeString: CustomFieldType_Boolean
     - title: Entry Count
-      value: 5
+      value: 4
       type: 1
       typeString: CustomFieldType_Number
     - title: Entry 1 State
@@ -184,16 +185,6 @@ MonoBehaviour:
       value: "\u041F\u0440\u043E\u0432\u0435\u0434\u0430\u0442\u044C \u0441\u0442\u0430\u0440\u043E\u0441\u0442\u0443"
       type: 0
       typeString: CustomFieldType_Text
-    - title: Entry 5 State
-      value: unassigned
-      type: 0
-      typeString: 
-    - title: Entry 5
-      value: "\u0420\u0430\u0437\u043E\u0431\u0440\u0430\u0442\u044C\u0441\u044F
-        \u0441 \u0434\u0443\u0445\u043E\u043C \u043A \u0432\u043E\u0441\u0442\u043E\u043A\u0443
-        \u043E\u0442 \u0434\u0435\u0440\u0435\u0432\u043D\u0438"
-      type: 0
-      typeString: 
   - id: 2
     fields:
     - title: Name
@@ -1310,7 +1301,8 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: "SetQuestState(\"\u041A\u0432\u0435\u0441\u0442 1\", \"active\");\nShowAlert(\"\u041D\u043E\u0432\u043E\u0435
+      userScript: "SetQuestState(\"\u0412\u043E\u0437\u0432\u0440\u0430\u0449\u0435\u043D\u0438\u0435
+        \u0431\u0440\u0430\u0442\u0430\", \"active\");\nShowAlert(\"\u041D\u043E\u0432\u043E\u0435
         \u0437\u0430\u0434\u0430\u043D\u0438\u0435 - \u043F\u043E\u0434\u0433\u043E\u0442\u043E\u0432\u0438\u0442\u044C\u0441\u044F
         \u043A \u043F\u0440\u0438\u0435\u0437\u0434\u0443 \u0431\u0440\u0430\u0442\u0430\")"
       onExecute:
@@ -1483,9 +1475,10 @@ MonoBehaviour:
       conditionsString: 
       userScript: "GiveWeaponToPlayer(\"Wooden sword\");\nShowAlert(\"\u041F\u043E\u043B\u0443\u0447\u0435\u043D
         \u043D\u043E\u0432\u044B\u0439 \u043F\u0440\u0435\u0434\u043C\u0435\u0442: 
-        \u043C\u0435\u0447\");\nSetQuestEntryState(\"\u041A\u0432\u0435\u0441\u0442
-        1\", 4, \"success\");\nSetQuestEntryState(\"\u041A\u0432\u0435\u0441\u0442
-        1\", 5, \"active\")"
+        \u043C\u0435\u0447\");\nSetQuestEntryState(\"\u0412\u043E\u0437\u0432\u0440\u0430\u0449\u0435\u043D\u0438\u0435
+        \u0431\u0440\u0430\u0442\u0430\", 4, \"success\");\nSetQuestState(\"\u0412\u043E\u0437\u0432\u0440\u0430\u0449\u0435\u043D\u0438\u0435
+        \u0431\u0440\u0430\u0442\u0430\", \"success\");\nSetQuestState(\"\u041A\u0432\u0435\u0441\u0442
+        2\", \"active\")"
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -1559,8 +1552,8 @@ MonoBehaviour:
         destinationDialogueID: 3
         isConnector: 0
         priority: 2
-      conditionsString: "CurrentQuestEntryState(\"\u041A\u0432\u0435\u0441\u0442
-        1\", 5) == \"unassigned\""
+      conditionsString: "CurrentQuestState(\"\u041A\u0432\u0435\u0441\u0442 2\")
+        == \"unassigned\""
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -1755,9 +1748,8 @@ MonoBehaviour:
         destinationDialogueID: 6
         isConnector: 0
         priority: 2
-      conditionsString: "(CurrentQuestState(\"\u041A\u0432\u0435\u0441\u0442 1\")
-        == \"active\") and (CurrentQuestEntryState(\"\u041A\u0432\u0435\u0441\u0442
-        1\", 5) == \"active\")"
+      conditionsString: "CurrentQuestState(\"\u041A\u0432\u0435\u0441\u0442 2\")
+        == \"active\""
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -2395,7 +2387,8 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: "SetQuestEntryState(\"\u041A\u0432\u0435\u0441\u0442 1\", 4, \"active\")"
+      userScript: "SetQuestEntryState(\"\u0412\u043E\u0437\u0432\u0440\u0430\u0449\u0435\u043D\u0438\u0435
+        \u0431\u0440\u0430\u0442\u0430\", 4, \"active\")"
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -2406,8 +2399,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 19.296383, y: 21.989372}
-    canvasZoom: 1.06
+    canvasScrollPosition: {x: 0, y: 0}
+    canvasZoom: 1.1647493
   syncInfo:
     syncActors: 0
     syncItems: 0
