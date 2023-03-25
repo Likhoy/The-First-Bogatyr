@@ -123,13 +123,21 @@ MonoBehaviour:
       type: 0
       typeString: CustomFieldType_Text
     - title: Success Description
-      value: "\u042F \u043D\u0435 \u0441\u043C\u043E\u0433 \u0441\u0434\u0435\u043B\u0430\u0442\u044C
-        \u043F\u0438\u0440\u043E\u0433, \u0437\u0430\u0442\u043E \u0432\u0435\u0440\u043D\u0443\u043B
-        \u0432 \u0434\u0435\u0440\u0435\u0432\u043D\u044E \u0441\u043F\u043E\u043A\u043E\u0439\u0441\u0442\u0432\u0438\u0435."
+      value: "\u041E\u0447\u0435\u043D\u044C \u0441\u043A\u043E\u0440\u043E \u0434\u043E\u043B\u0436\u0435\u043D
+        \u043F\u0440\u0438\u0435\u0445\u0430\u0442\u044C \u043C\u043E\u0439 \u0431\u0440\u0430\u0442.
+        \u042F \u0445\u043E\u0447\u0443 \u043F\u0440\u0438\u0433\u043E\u0442\u043E\u0432\u0438\u0442\u044C
+        \u043F\u0438\u0440\u043E\u0433 \u043A \u0435\u0433\u043E \u043F\u043E\u044F\u0432\u043B\u0435\u043D\u0438\u044E,
+        \u0432\u0435\u0434\u044C \u043C\u044B \u0442\u0430\u043A \u0434\u0430\u0432\u043D\u043E
+        \u043D\u0435 \u0432\u0438\u0434\u0435\u043B\u0438\u0441\u044C."
       type: 0
       typeString: CustomFieldType_Text
     - title: Failure Description
-      value: 
+      value: "\u041E\u0447\u0435\u043D\u044C \u0441\u043A\u043E\u0440\u043E \u0434\u043E\u043B\u0436\u0435\u043D
+        \u043F\u0440\u0438\u0435\u0445\u0430\u0442\u044C \u043C\u043E\u0439 \u0431\u0440\u0430\u0442.
+        \u042F \u0445\u043E\u0447\u0443 \u043F\u0440\u0438\u0433\u043E\u0442\u043E\u0432\u0438\u0442\u044C
+        \u043F\u0438\u0440\u043E\u0433 \u043A \u0435\u0433\u043E \u043F\u043E\u044F\u0432\u043B\u0435\u043D\u0438\u044E,
+        \u0432\u0435\u0434\u044C \u043C\u044B \u0442\u0430\u043A \u0434\u0430\u0432\u043D\u043E
+        \u043D\u0435 \u0432\u0438\u0434\u0435\u043B\u0438\u0441\u044C."
       type: 0
       typeString: CustomFieldType_Text
     - title: State
@@ -185,10 +193,11 @@ MonoBehaviour:
       value: "\u041F\u0440\u043E\u0432\u0435\u0434\u0430\u0442\u044C \u0441\u0442\u0430\u0440\u043E\u0441\u0442\u0443"
       type: 0
       typeString: CustomFieldType_Text
-  - id: 2
+  - id: 3
     fields:
     - title: Name
-      value: "\u041A\u0432\u0435\u0441\u0442 2"
+      value: "\u041F\u043E\u043C\u0435\u0448\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u043E
+        \u0434\u0443\u0445\u043E\u0432"
       type: 0
       typeString: CustomFieldType_Text
     - title: Pictures
@@ -196,15 +205,21 @@ MonoBehaviour:
       type: 3
       typeString: CustomFieldType_Files
     - title: Description
-      value: "\u041D\u0430\u0434\u043E \u043D\u0430\u0439\u0442\u0438 \u0446\u0432\u0435\u0442\u043E\u043A..."
+      value: "\u0420\u0430\u0437\u043E\u0431\u0440\u0430\u0442\u044C\u0441\u044F
+        \u0441 \u0434\u0443\u0445\u043E\u043C \u043A \u0432\u043E\u0441\u0442\u043E\u043A\u0443
+        \u043E\u0442 \u0434\u0435\u0440\u0435\u0432\u043D\u0438."
       type: 0
       typeString: CustomFieldType_Text
     - title: Success Description
-      value: 
+      value: "\u0420\u0430\u0437\u043E\u0431\u0440\u0430\u0442\u044C\u0441\u044F
+        \u0441 \u0434\u0443\u0445\u043E\u043C \u043A \u0432\u043E\u0441\u0442\u043E\u043A\u0443
+        \u043E\u0442 \u0434\u0435\u0440\u0435\u0432\u043D\u0438."
       type: 0
       typeString: CustomFieldType_Text
     - title: Failure Description
-      value: 
+      value: "\u0420\u0430\u0437\u043E\u0431\u0440\u0430\u0442\u044C\u0441\u044F
+        \u0441 \u0434\u0443\u0445\u043E\u043C \u043A \u0432\u043E\u0441\u0442\u043E\u043A\u0443
+        \u043E\u0442 \u0434\u0435\u0440\u0435\u0432\u043D\u0438."
       type: 0
       typeString: CustomFieldType_Text
     - title: State
@@ -224,7 +239,7 @@ MonoBehaviour:
       type: 2
       typeString: CustomFieldType_Boolean
     - title: Entry Count
-      value: 3
+      value: 2
       type: 1
       typeString: CustomFieldType_Number
     - title: Entry 1 State
@@ -232,7 +247,7 @@ MonoBehaviour:
       type: 0
       typeString: 
     - title: Entry 1
-      value: "\u0412\u0435\u0440\u043D\u0443\u0442\u044C\u0441\u044F \u043A \u0441\u0442\u0430\u0440\u043E\u0441\u0442\u0435"
+      value: "\u041D\u0430\u0439\u0442\u0438 \u0434\u0443\u0445\u0430 \u043F\u043E\u043B\u044F"
       type: 0
       typeString: 
     - title: Entry 2 State
@@ -240,15 +255,84 @@ MonoBehaviour:
       type: 0
       typeString: 
     - title: Entry 2
-      value: "\u041D\u0430\u0439\u0442\u0438 \u043F\u0443\u0442\u044C \u043A \u0446\u0432\u0435\u0442\u0443
-        \u0441\u0438\u043B\u044B"
+      value: "\u0412\u0435\u0440\u043D\u0443\u0442\u044C\u0441\u044F \u043A \u0441\u0442\u0430\u0440\u043E\u0441\u0442\u0435"
       type: 0
       typeString: 
-    - title: Entry 3 State
+  - id: 2
+    fields:
+    - title: Name
+      value: "\u041A\u043E\u0440\u0435\u043D\u044C \u0431\u0435\u0437\u0443\u043C\u0438\u044F"
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: "\u041A\u0430\u0436\u0435\u0442\u0441\u044F \u044F \u0432\u0438\u0434\u0435\u043B
+        \u043A\u0430\u043A\u0438\u0435-\u0442\u043E \u0441\u0442\u0440\u0430\u043D\u043D\u044B\u0435
+        \u043A\u043E\u0440\u043D\u0438 \u0440\u044F\u0434\u043E\u043C \u0441 \u0442\u0435\u043C
+        \u043C\u0435\u0441\u0442\u043E\u043C, \u0433\u0434\u0435 \u043D\u0430 \u043C\u0435\u043D\u044F
+        \u043D\u0430\u043F\u0430\u043B \u044D\u0442\u043E\u0442 \u041F\u043E\u043B\u0435\u0432\u0438\u043A.
+        \u041D\u0430\u0434\u043E \u0431\u044B \u043F\u0440\u043E\u0432\u0435\u0440\u0438\u0442\u044C
+        \u044D\u0442\u043E \u043C\u0435\u0441\u0442\u043E."
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Success Description
+      value: "\u041A\u0430\u0436\u0435\u0442\u0441\u044F \u044F \u0432\u0438\u0434\u0435\u043B
+        \u043A\u0430\u043A\u0438\u0435-\u0442\u043E \u0441\u0442\u0440\u0430\u043D\u043D\u044B\u0435
+        \u043A\u043E\u0440\u043D\u0438 \u0440\u044F\u0434\u043E\u043C \u0441 \u0442\u0435\u043C
+        \u043C\u0435\u0441\u0442\u043E\u043C, \u0433\u0434\u0435 \u043D\u0430 \u043C\u0435\u043D\u044F
+        \u043D\u0430\u043F\u0430\u043B \u044D\u0442\u043E\u0442 \u041F\u043E\u043B\u0435\u0432\u0438\u043A.
+        \u041D\u0430\u0434\u043E \u0431\u044B \u043F\u0440\u043E\u0432\u0435\u0440\u0438\u0442\u044C
+        \u044D\u0442\u043E \u043C\u0435\u0441\u0442\u043E."
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Failure Description
+      value: "\u041A\u0430\u0436\u0435\u0442\u0441\u044F \u044F \u0432\u0438\u0434\u0435\u043B
+        \u043A\u0430\u043A\u0438\u0435-\u0442\u043E \u0441\u0442\u0440\u0430\u043D\u043D\u044B\u0435
+        \u043A\u043E\u0440\u043D\u0438 \u0440\u044F\u0434\u043E\u043C \u0441 \u0442\u0435\u043C
+        \u043C\u0435\u0441\u0442\u043E\u043C, \u0433\u0434\u0435 \u043D\u0430 \u043C\u0435\u043D\u044F
+        \u043D\u0430\u043F\u0430\u043B \u044D\u0442\u043E\u0442 \u041F\u043E\u043B\u0435\u0432\u0438\u043A.
+        \u041D\u0430\u0434\u043E \u0431\u044B \u043F\u0440\u043E\u0432\u0435\u0440\u0438\u0442\u044C
+        \u044D\u0442\u043E \u043C\u0435\u0441\u0442\u043E."
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: State
+      value: unassigned
+      type: 0
+      typeString: CustomFieldType_QuestState
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Track
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Entry Count
+      value: 2
+      type: 1
+      typeString: CustomFieldType_Number
+    - title: Entry 1 State
+      value: active
+      type: 0
+      typeString: 
+    - title: Entry 1
+      value: "\u0412\u0435\u0440\u043D\u0443\u0442\u044C\u0441\u044F \u043D\u0430
+        \u043F\u043E\u043B\u0435 \u0438 \u043E\u0441\u043C\u043E\u0442\u0440\u0435\u0442\u044C
+        \u043A\u043E\u0440\u043D\u0438"
+      type: 0
+      typeString: 
+    - title: Entry 2 State
       value: unassigned
       type: 0
       typeString: 
-    - title: Entry 3
+    - title: Entry 2
       value: "\u041F\u0440\u043E\u0432\u0435\u0434\u0430\u0442\u044C \u043A\u0443\u043F\u0446\u0430
         \u0421\u0432\u0435\u0442\u043E\u0437\u0430\u0440\u0430"
       type: 0
@@ -1477,8 +1561,8 @@ MonoBehaviour:
         \u043D\u043E\u0432\u044B\u0439 \u043F\u0440\u0435\u0434\u043C\u0435\u0442: 
         \u043C\u0435\u0447\");\nSetQuestEntryState(\"\u0412\u043E\u0437\u0432\u0440\u0430\u0449\u0435\u043D\u0438\u0435
         \u0431\u0440\u0430\u0442\u0430\", 4, \"success\");\nSetQuestState(\"\u0412\u043E\u0437\u0432\u0440\u0430\u0449\u0435\u043D\u0438\u0435
-        \u0431\u0440\u0430\u0442\u0430\", \"success\");\nSetQuestState(\"\u041A\u0432\u0435\u0441\u0442
-        2\", \"active\")"
+        \u0431\u0440\u0430\u0442\u0430\", \"success\");\nSetQuestState(\"\u041F\u043E\u043C\u0435\u0448\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u043E
+        \u0434\u0443\u0445\u043E\u0432\", \"active\")"
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -1552,8 +1636,8 @@ MonoBehaviour:
         destinationDialogueID: 3
         isConnector: 0
         priority: 2
-      conditionsString: "CurrentQuestState(\"\u041A\u0432\u0435\u0441\u0442 2\")
-        == \"unassigned\""
+      conditionsString: "CurrentQuestState(\"\u041F\u043E\u043C\u0435\u0448\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u043E
+        \u0434\u0443\u0445\u043E\u0432\") == \"unassigned\""
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -1690,8 +1774,9 @@ MonoBehaviour:
         destinationDialogueID: 7
         isConnector: 0
         priority: 2
-      conditionsString: "CurrentQuestState(\"\u041A\u0432\u0435\u0441\u0442 2\")
-        == \"active\""
+      conditionsString: " CurrentQuestEntryState(\"\u041F\u043E\u043C\u0435\u0448\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u043E
+        \u0434\u0443\u0445\u043E\u0432\", 1) == \"success\" and (CurrentQuestState(\"\u041F\u043E\u043C\u0435\u0448\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u043E
+        \u0434\u0443\u0445\u043E\u0432\") == \"active\")"
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -1748,8 +1833,8 @@ MonoBehaviour:
         destinationDialogueID: 6
         isConnector: 0
         priority: 2
-      conditionsString: "CurrentQuestState(\"\u041A\u0432\u0435\u0441\u0442 2\")
-        == \"active\""
+      conditionsString: "CurrentQuestEntryState(\"\u041F\u043E\u043C\u0435\u0448\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u043E
+        \u0434\u0443\u0445\u043E\u0432\", 1) == \"active\""
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -2168,9 +2253,11 @@ MonoBehaviour:
         \u043E\u0431\u0435\u0440\u0435\u0433\\n\u041F\u043E\u043B\u0443\u0447\u0435\u043D
         \u0448\u0430\u043D\u0441 \u0438\u0437\u0431\u0435\u0436\u0430\u043D\u0438\u044F
         \u0443\u0440\u043E\u043D\u0430 \u0432 \u0440\u0430\u0437\u043C\u0435\u0440\u0435
-        15%\");\nSetQuestEntryState(\"\u041A\u0432\u0435\u0441\u0442 2\", 1, \"success\");\nSetQuestEntryState(\"\u041A\u0432\u0435\u0441\u0442
-        2\", 2, \"active\");\nSpawnEnemy(\"Shadow2\", \"36 34 0\");\nSpawnEnemy(\"Shadow2\",
-        \"45 39 0\");\nSpawnEnemy(\"Shadow2\", \"58 26 0\")"
+        15%\");\nSetQuestState(\"\u041F\u043E\u043C\u0435\u0448\u0430\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u043E
+        \u0434\u0443\u0445\u043E\u0432\", \"success\");\nSetQuestState(\"\u041A\u043E\u0440\u0435\u043D\u044C
+        \u0431\u0435\u0437\u0443\u043C\u0438\u044F\",  \"active\");\nSpawnEnemy(\"Shadow2\",
+        \"36 34 0\");\nSpawnEnemy(\"Shadow2\", \"45 39 0\");\nSpawnEnemy(\"Shadow2\",
+        \"58 26 0\")"
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -2181,8 +2268,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 6.5145826, y: 0}
-    canvasZoom: 0.93999994
+    canvasScrollPosition: {x: 0.36165315, y: 0.10948888}
+    canvasZoom: 0.92675114
   - id: 7
     fields:
     - title: Title
