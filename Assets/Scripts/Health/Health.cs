@@ -43,7 +43,7 @@ public class Health : MonoBehaviour
         // Attempt to load enemy / player components
         player = GetComponent<Player>();
         enemy = GetComponent<Enemy>();
-
+        DestroyableItem destroyableItem = GetComponent<DestroyableItem>();
 
         // Get player / enemy hit effect details
         if (player != null)
@@ -63,6 +63,12 @@ public class Health : MonoBehaviour
                 effectTime = enemy.enemyDetails.hitEffectTime;
                 spriteRenderer = enemy.spriteRendererArray[0];
             }
+        }
+        else if (destroyableItem != null)
+        {
+            hasHitEffect = true;
+            effectTime = destroyableItem.effectTime;
+            spriteRenderer = destroyableItem.GetComponent<SpriteRenderer>();
         }
 
         // Enable the health bar if required

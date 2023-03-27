@@ -3,7 +3,7 @@ using System;
 public class BossLocalSpawner : MonoBehaviour
 {
 
-    private int enemiesSpawnedSoFar = 1; // configure
+    //private int enemiesSpawnedSoFar = EnemySpawner.Instance.EnemiesSpawnedSoFar;
     private Enemy enemy;
     private bool[] needsToSpawn = new bool[3] { true, false, false };
 
@@ -61,16 +61,14 @@ public class BossLocalSpawner : MonoBehaviour
         //}
     }
 
-    
-
     private GameObject SpawnLittleEnemy(EnemyDetailsSO enemyDetails)
     {
-        Vector2 spawnPosition = new Vector2(UnityEngine.Random.Range(transform.position.x - enemy.enemyDetails.spawnRadius / 2, transform.position.x + enemy.enemyDetails.spawnRadius / 2),
-                                            UnityEngine.Random.Range(transform.position.y - enemy.enemyDetails.spawnRadius / 2, transform.position.y + enemy.enemyDetails.spawnRadius / 2));
+        Vector2 spawnPosition = new Vector2(UnityEngine.Random.Range(transform.position.x - enemy.enemyDetails.spawnRadius, transform.position.x + enemy.enemyDetails.spawnRadius),
+                                            UnityEngine.Random.Range(transform.position.y - enemy.enemyDetails.spawnRadius, transform.position.y + enemy.enemyDetails.spawnRadius));
         GameObject littleEnemy = Instantiate(enemyDetails.enemyPrefab, spawnPosition, Quaternion.identity, transform);
-        littleEnemy.GetComponent<Enemy>().EnemyInitialization(enemyDetails, enemiesSpawnedSoFar);
+        littleEnemy.GetComponent<Enemy>().EnemyInitialization(enemyDetails, EnemySpawner.Instance.EnemiesSpawnedSoFar);
 
-        ++enemiesSpawnedSoFar;
+        ++EnemySpawner.Instance.EnemiesSpawnedSoFar;
         return littleEnemy;
     }
 
