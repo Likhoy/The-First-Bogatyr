@@ -8,7 +8,7 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
 {
     private int enemiesToSpawn;
     private int currentEnemyCount;
-    private int enemiesSpawnedSoFar;
+    public int EnemiesSpawnedSoFar { get; set; }
     [SerializeField] private LocationDetailsSO locationDetails;
     private Grid grid;
     
@@ -50,9 +50,9 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
             // Loop through to create all the enemeies
             for (int i = 0; i < enemiesToSpawn; i++)
             {
-                EnemyDetailsSO enemyDetails = locationDetails.enemiesToSpawnImmediately[enemiesSpawnedSoFar].enemyDetails;
+                EnemyDetailsSO enemyDetails = locationDetails.enemiesToSpawnImmediately[EnemiesSpawnedSoFar].enemyDetails;
 
-                Vector3Int cellPosition = (Vector3Int)locationDetails.enemiesToSpawnImmediately[enemiesSpawnedSoFar].spawnPosition;
+                Vector3Int cellPosition = (Vector3Int)locationDetails.enemiesToSpawnImmediately[EnemiesSpawnedSoFar].spawnPosition;
 
                 // Create Enemy - Get next enemy type to spawn 
                 CreateEnemy(enemyDetails, grid.CellToWorld(cellPosition));
@@ -78,7 +78,7 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
     private void CreateEnemy(EnemyDetailsSO enemyDetails, Vector3 position)
     {
         // keep track of the number of enemies spawned so far 
-        enemiesSpawnedSoFar++;
+        EnemiesSpawnedSoFar++;
 
         // Add one to the current enemy count - this is reduced when an enemy is destroyed
         currentEnemyCount++;
@@ -87,7 +87,7 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
         GameObject enemy = Instantiate(enemyDetails.enemyPrefab, position, Quaternion.identity, transform);
 
         // Initialize Enemy
-        enemy.GetComponent<Enemy>().EnemyInitialization(enemyDetails, enemiesSpawnedSoFar);
+        enemy.GetComponent<Enemy>().EnemyInitialization(enemyDetails, EnemiesSpawnedSoFar);
 
         // subscribe to enemy destroyed event
         enemy.GetComponent<DestroyedEvent>().OnDestroyed += Enemy_OnDestroyed;
@@ -103,13 +103,13 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
         destroyedEvent.OnDestroyed -= Enemy_OnDestroyed;
 
         // TODO - adjust architecture (for the first quest)
-        if (enemiesSpawnedSoFar == 1)
+        if (EnemiesSpawnedSoFar == 1)
             GetComponent<DialogueSystemTrigger>().OnUse();
 
         // reduce current enemy count
         currentEnemyCount--;
 
-        if (currentEnemyCount <= 0 && enemiesSpawnedSoFar == enemiesToSpawn)
+        if (currentEnemyCount <= 0 && EnemiesSpawnedSoFar == enemiesToSpawn)
         {
 
             // Set game state
