@@ -23,6 +23,8 @@ public abstract class Item : MonoBehaviour, IUseable
     //public int itemMaxCount = 1;
     public Sprite sprite;
 
+    public Item() { }
+
     virtual protected void Start()
     {
         sprite = GetComponent<SpriteRenderer>().sprite;
@@ -56,12 +58,13 @@ public abstract class Item : MonoBehaviour, IUseable
         //Костыль (исправить)
         if (!isTaken)
         {
+            Inventory inventory = GameObject.FindObjectOfType<Inventory>();
             GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
-            GameObject.FindObjectOfType<Inventory>().AddItem(this);
+            inventory.AddItem(this);
             isTaken = true;
-            return;
+            if (inventory.ContainsItem(itemID) > 1)
+                GameObject.Destroy(this.gameObject);
         }
-        GameObject.Destroy(this.gameObject);
     }
 
     virtual public void UseItem()
