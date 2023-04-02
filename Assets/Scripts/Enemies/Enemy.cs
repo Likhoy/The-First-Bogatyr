@@ -152,7 +152,7 @@ public class Enemy : MonoBehaviour
                 return;
             }
         }*/
-        health.SetStartingHealth(Settings.defaultEnemyHealth);
+        health.SetStartingHealth(enemyDetails.startingHealthAmount);
     }
 
     /// <summary>
