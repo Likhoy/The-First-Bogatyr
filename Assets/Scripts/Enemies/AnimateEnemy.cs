@@ -95,6 +95,7 @@ public class AnimateEnemy : MonoBehaviour
 
         float moveAngle = HelperUtilities.GetAngleFromVector(movementToPositionArgs.moveDirection);
         LookDirection lookDirection = HelperUtilities.GetLookDirection(moveAngle);
+        Debug.Log(moveAngle + " " + lookDirection);
         SetLookAnimationParameters(lookDirection);
         //SetMovementToPositionAnimationParameters();
     }
