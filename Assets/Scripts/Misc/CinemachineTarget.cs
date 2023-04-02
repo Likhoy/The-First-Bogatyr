@@ -33,7 +33,7 @@ public class CinemachineTarget : MonoBehaviour
 
         CinemachineTargetGroup.Target cinemachineGroupTarget_cursor = new CinemachineTargetGroup.Target { weight = 0.3f, radius = 1f, target = cursorTarget };
 
-        CinemachineTargetGroup.Target[] cinemachineTargetArray = new CinemachineTargetGroup.Target[] { cinemachineGroupTarget_player, cinemachineGroupTarget_cursor };
+        CinemachineTargetGroup.Target[] cinemachineTargetArray = new CinemachineTargetGroup.Target[] { cinemachineGroupTarget_player }; // , cinemachineGroupTarget_cursor
 
         cinemachineTargetGroup.m_Targets = cinemachineTargetArray;
 
