@@ -57,4 +57,18 @@ public class Inventory : MonoBehaviour
         foreach (InventorySlot slot in slots)
             slot.HideInventorySlot();
     }
+
+    public int ContainsItem(int ID)
+    {
+        int res = 0;
+
+        foreach (InventorySlot slot in slots)
+            if (slot.ID == ID)
+            {
+                res = slot.Count;
+                break;
+            }
+
+        return res;
+    }
 }
