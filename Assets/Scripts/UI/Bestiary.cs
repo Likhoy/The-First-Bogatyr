@@ -6,7 +6,7 @@ using TMPro;
 
 
 public class Bestiary : MonoBehaviour
-{
+{  
     public Sprite[] mobImages;
     public string[] mobDescriptions;
 
