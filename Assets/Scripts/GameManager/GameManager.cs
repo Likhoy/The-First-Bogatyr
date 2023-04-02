@@ -43,10 +43,6 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         EnemySpawner.Instance.SpawnEnemies();
     }
 
-    /*private void Update()
-    {
-        
-    }*/
 
     /// <summary>
     /// Create player in scene at position

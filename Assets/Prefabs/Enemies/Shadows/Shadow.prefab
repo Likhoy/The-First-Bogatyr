@@ -764,10 +764,6 @@ PrefabInstance:
       value: -2.08
       objectReference: {fileID: 0}
     - target: {fileID: 8265982038236108386, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
-      propertyPath: m_Mass
-      value: 0.56545776
-      objectReference: {fileID: 0}
-    - target: {fileID: 8265982038236108386, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
       propertyPath: m_UseAutoMass
       value: 1
       objectReference: {fileID: 0}
@@ -782,7 +778,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1767373786716691614, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
   m_PrefabInstance: {fileID: 633691425181061252}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &-7814819857037550012
+--- !u!114 &-5648675151974463413
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -794,10 +790,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 745fbc423a963d14db6672738d2ae43f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  contactDamageAmount: 2
+  contactDamageAmount: 4
   layerMask:
     serializedVersion: 2
-    m_Bits: 1032
+    m_Bits: 8
 --- !u!114 &-3397597601617535946
 MonoBehaviour:
   m_ObjectHideFlags: 0
