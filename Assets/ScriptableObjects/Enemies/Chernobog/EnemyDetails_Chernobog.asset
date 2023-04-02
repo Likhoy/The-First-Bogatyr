@@ -19,12 +19,13 @@ MonoBehaviour:
   handDistance: 5
   strikeDistance: -1
   enemyMeleeWeapon: {fileID: 0}
-  enemyRangedWeapon: {fileID: 0}
+  enemyRangedWeapon: {fileID: 11400000, guid: f57e6d33cacb7cb439ec493b41df44d7, type: 2}
   firingIntervalMin: 0.1
   firingIntervalMax: 1
   firingDurationMin: 7
   firingDurationMax: 10
   firingLineOfSightRequired: 0
+  startingHealthAmount: 80
   hasHitEffect: 1
   hitEffectTime: 0.66
   isHealthBarDisplayed: 0
