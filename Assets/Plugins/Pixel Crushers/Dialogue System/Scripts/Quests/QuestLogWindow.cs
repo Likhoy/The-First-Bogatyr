@@ -29,10 +29,10 @@ namespace PixelCrushers.DialogueSystem
         public TextTable textTable = null; // v2: changed from LocalizedTextTable.
 
         [Tooltip("Text to show (or localize) when there are no active quests.")]
-        public string noActiveQuestsText = "No Active Quests";
+        public string noActiveQuestsText = "Нет поручений";
 
         [Tooltip("Text to show (or localize) when there are no completed quests.")]
-        public string noCompletedQuestsText = "No Completed Quests";
+        public string noCompletedQuestsText = "Нет поручений";
 
         [Tooltip("Check if quest has a field named 'Visible'. If field is false, don't show quest.")]
         public bool checkVisibleField = false;
