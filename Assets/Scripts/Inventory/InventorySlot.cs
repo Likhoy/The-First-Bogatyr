@@ -21,6 +21,7 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler
     [SerializeField] TextMeshProUGUI text;
     Animator animator;
     int count = 0;
+    public int Count { get { return count; } }
     bool isEmpty;
     public bool IsEmpty { get { return isEmpty; } }
 
@@ -90,6 +91,8 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler
         count = 0;
         id = -1;
         isEmpty = true;
+        if (item != null)
+            GameObject.Destroy(item.gameObject);
         item = null;
     }
 
