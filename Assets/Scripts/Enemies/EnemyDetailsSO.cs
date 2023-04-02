@@ -107,6 +107,8 @@ public class EnemyDetailsSO : ScriptableObject
     [Tooltip("The health of the enemy for each level")]
     #endregion
     public EnemyHealthDetails[] enemyHealthDetailsArray;*/
+
+    public int startingHealthAmount = Settings.defaultEnemyHealth;
     #region Tooltip
     [Tooltip("Select if has some effect period immediately after being hit.  If so specify the effect time in seconds in the other field")]
     #endregion
