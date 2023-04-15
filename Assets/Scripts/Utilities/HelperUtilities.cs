@@ -65,7 +65,7 @@ public static class HelperUtilities
 
 
     /// <summary>
-    /// Get AimDirection enum value from the pased in angleDegrees
+    /// Get AimDirection enum value from the passed in angleDegrees
     /// </summary>
     public static LookDirection GetLookDirection(float angleDegrees)
     {
@@ -99,6 +99,20 @@ public static class HelperUtilities
 
         return lookDirection;
 
+    }
+
+    /// <summary>
+    /// Get AimDirection enum value from the passed in angleDegrees - left-right version
+    /// </summary>
+    public static LookDirection GetLookDirectionLR(float angleDegrees)
+    {
+        LookDirection lookDirection;
+
+        if (angleDegrees > -90f && angleDegrees <= 90f)
+            lookDirection = LookDirection.Right;
+        else
+            lookDirection = LookDirection.Left;
+        return lookDirection;
     }
 
     /// <summary>
