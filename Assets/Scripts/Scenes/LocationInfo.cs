@@ -13,6 +13,31 @@ public static class LocationInfo
     public static readonly Vector2Int locationLowerBounds = new Vector2Int(-200, -200);
     public static readonly Vector2Int locationUpperBounds = new Vector2Int(200, 200);
 
+    private static GridNodes gridNodes = null;
+
+    public static GridNodes GridNodes
+    {
+        get
+        {
+            if (gridNodes == null)
+                gridNodes = new GridNodes(locationUpperBounds.x - locationLowerBounds.x + 1, locationUpperBounds.y - locationLowerBounds.y + 1);
+            return gridNodes;
+        }
+    }
+
+    public static void ClearGridNodes()
+    {
+        foreach (Node node in GridNodes.gridNode)
+        {
+            if (node.FCost != 0)
+            {
+                node.gCost = 0;
+                node.hCost = 0;
+                node.parentNode = null;
+            }
+        }
+    }
+
     public static Grid Grid
     {
         get

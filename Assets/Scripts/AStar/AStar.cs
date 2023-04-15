@@ -19,17 +19,17 @@ public static class AStar
         HashSet<Node> closedNodeHashSet = new HashSet<Node>();
 
         // Create gridnodes for path finding
-        GridNodes gridNodes = new GridNodes(LocationInfo.locationUpperBounds.x - LocationInfo.locationLowerBounds.x + 1, LocationInfo.locationUpperBounds.y - LocationInfo.locationLowerBounds.y + 1);
-        // GridNodes gridNodes = new GridNodes(Math.Abs(startGridPosition.x - endGridPosition.x) + 11, Math.Abs(startGridPosition.y - endGridPosition.y) + 11);
-
+        //GridNodes gridNodes = new GridNodes(LocationInfo.locationUpperBounds.x - LocationInfo.locationLowerBounds.x + 1, LocationInfo.locationUpperBounds.y - LocationInfo.locationLowerBounds.y + 1);
+        GridNodes gridNodes = null; // LocationInfo.GridNodes;
+        LocationInfo.ClearGridNodes();
         /*Debug.Log(startGridPosition.x);
         Debug.Log(startGridPosition.y);
 
         Debug.Log(endGridPosition.x);
         Debug.Log(endGridPosition.y);*/
 
-        Node startNode = gridNodes.GetGridNode(startGridPosition.x, startGridPosition.y);
-        Node targetNode = gridNodes.GetGridNode(endGridPosition.x, endGridPosition.y);
+        Node startNode = LocationInfo.GridNodes.GetGridNode(startGridPosition.x, startGridPosition.y);
+        Node targetNode = LocationInfo.GridNodes.GetGridNode(endGridPosition.x, endGridPosition.y);
 
         Node endPathNode = FindShortestPath(startNode, targetNode, gridNodes, openNodeList, closedNodeHashSet);
 
@@ -182,7 +182,7 @@ public static class AStar
         }
 
         // Get neighbour node
-        Node neighbourNode = gridNodes.GetGridNode(neighbourNodeXPosition, neighbourNodeYPosition);
+        Node neighbourNode = LocationInfo.GridNodes.GetGridNode(neighbourNodeXPosition, neighbourNodeYPosition);
 
         // check for obstacle at that position
         //int movementPenaltyForGridSpace = instantiatedRoom.aStarMovementPenalty[neighbourNodeXPosition, neighbourNodeYPosition];
