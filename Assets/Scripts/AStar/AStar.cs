@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public static class AStar
 {
@@ -19,6 +20,7 @@ public static class AStar
 
         // Create gridnodes for path finding
         GridNodes gridNodes = new GridNodes(LocationInfo.locationUpperBounds.x - LocationInfo.locationLowerBounds.x + 1, LocationInfo.locationUpperBounds.y - LocationInfo.locationLowerBounds.y + 1);
+        // GridNodes gridNodes = new GridNodes(Math.Abs(startGridPosition.x - endGridPosition.x) + 11, Math.Abs(startGridPosition.y - endGridPosition.y) + 11);
 
         /*Debug.Log(startGridPosition.x);
         Debug.Log(startGridPosition.y);

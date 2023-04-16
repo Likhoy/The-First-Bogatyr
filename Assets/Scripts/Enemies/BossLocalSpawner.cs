@@ -19,24 +19,24 @@ public class BossLocalSpawner : MonoBehaviour
 
     private void HealthEvent_OnHealthChanged(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
     {
-        if (needsToSpawn[0] && healthEventArgs.healthPercent - 75f < 0)
+        if (needsToSpawn[0] && healthEventArgs.healthPercent * 100 < 75f)
         {
             needsToSpawn[0] = false;
             needsToSpawn[1] = true;
             SpawnLittleEnemies();
         }
-        else if (needsToSpawn[1] && healthEventArgs.healthPercent - 50f < 0)
+        else if (needsToSpawn[1] && healthEventArgs.healthPercent * 100 < 50f)
         {
             needsToSpawn[1] = false;
             needsToSpawn[2] = true;
             SpawnLittleEnemies();
         }
-        else if (needsToSpawn[2] && healthEventArgs.healthPercent - 25f < 0)
+        else if (needsToSpawn[2] && healthEventArgs.healthPercent * 100 < 25f)
         {
             needsToSpawn[2] = false;
             SpawnLittleEnemies();
         }
-        else if (healthEventArgs.healthPercent < 75)
+        else if (!needsToSpawn[2] && healthEventArgs.healthPercent * 100 < 25f)
             enemy.healthEvent.OnHealthChanged -= HealthEvent_OnHealthChanged;
     }
 
