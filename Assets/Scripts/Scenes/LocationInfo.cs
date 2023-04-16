@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class LocationInfo
@@ -15,6 +16,8 @@ public static class LocationInfo
 
     private static GridNodes gridNodes = null;
 
+    internal static HashSet<Node> spoiledNodes = new HashSet<Node>();
+
     public static GridNodes GridNodes
     {
         get
@@ -27,15 +30,13 @@ public static class LocationInfo
 
     public static void ClearGridNodes()
     {
-        foreach (Node node in GridNodes.gridNode)
+        foreach (Node node in spoiledNodes)
         {
-            if (node.FCost != 0)
-            {
-                node.gCost = 0;
-                node.hCost = 0;
-                node.parentNode = null;
-            }
+            node.gCost = 0;
+            node.hCost = 0;
+            node.parentNode = null;
         }
+        spoiledNodes.Clear();
     }
 
     public static Grid Grid

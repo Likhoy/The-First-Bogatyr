@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
-using System;
+using Utils;
 
 public static class AStar
 {
@@ -18,9 +19,12 @@ public static class AStar
         List<Node> openNodeList = new List<Node>();
         HashSet<Node> closedNodeHashSet = new HashSet<Node>();
 
+
+        //PriorityQueue<Node, int> queue;
+
         // Create gridnodes for path finding
         //GridNodes gridNodes = new GridNodes(LocationInfo.locationUpperBounds.x - LocationInfo.locationLowerBounds.x + 1, LocationInfo.locationUpperBounds.y - LocationInfo.locationLowerBounds.y + 1);
-        GridNodes gridNodes = null; // LocationInfo.GridNodes;
+        GridNodes gridNodes = LocationInfo.GridNodes;
         LocationInfo.ClearGridNodes();
         /*Debug.Log(startGridPosition.x);
         Debug.Log(startGridPosition.y);
@@ -28,8 +32,8 @@ public static class AStar
         Debug.Log(endGridPosition.x);
         Debug.Log(endGridPosition.y);*/
 
-        Node startNode = LocationInfo.GridNodes.GetGridNode(startGridPosition.x, startGridPosition.y);
-        Node targetNode = LocationInfo.GridNodes.GetGridNode(endGridPosition.x, endGridPosition.y);
+        Node startNode = gridNodes.GetGridNode(startGridPosition.x, startGridPosition.y);
+        Node targetNode = gridNodes.GetGridNode(endGridPosition.x, endGridPosition.y);
 
         Node endPathNode = FindShortestPath(startNode, targetNode, gridNodes, openNodeList, closedNodeHashSet);
 
@@ -59,9 +63,12 @@ public static class AStar
             Node currentNode = openNodeList[0];
             openNodeList.RemoveAt(0);
 
+            LocationInfo.spoiledNodes.Add(currentNode);
+
             // if the current node = target node then finish
             if (currentNode == targetNode)
             {
+                LocationInfo.spoiledNodes.AddRange(openNodeList);
                 return currentNode;
             }
 
@@ -182,7 +189,7 @@ public static class AStar
         }
 
         // Get neighbour node
-        Node neighbourNode = LocationInfo.GridNodes.GetGridNode(neighbourNodeXPosition, neighbourNodeYPosition);
+        Node neighbourNode = gridNodes.GetGridNode(neighbourNodeXPosition, neighbourNodeYPosition);
 
         // check for obstacle at that position
         //int movementPenaltyForGridSpace = instantiatedRoom.aStarMovementPenalty[neighbourNodeXPosition, neighbourNodeYPosition];
