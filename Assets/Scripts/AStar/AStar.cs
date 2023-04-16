@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
-using System;
+using Utils;
 
 public static class AStar
 {
@@ -15,13 +16,15 @@ public static class AStar
         endGridPosition -= (Vector3Int)LocationInfo.locationLowerBounds;
 
         // Create open list and closed hashset
-        List<Node> openNodeList = new List<Node>();
+        PriorityQueue<Node, int> openNodeQueue = new PriorityQueue<Node, int>();
+        HashSet<Node> openNodeHashSet = new HashSet<Node>();
         HashSet<Node> closedNodeHashSet = new HashSet<Node>();
 
-        // Create gridnodes for path finding
-        GridNodes gridNodes = new GridNodes(LocationInfo.locationUpperBounds.x - LocationInfo.locationLowerBounds.x + 1, LocationInfo.locationUpperBounds.y - LocationInfo.locationLowerBounds.y + 1);
-        // GridNodes gridNodes = new GridNodes(Math.Abs(startGridPosition.x - endGridPosition.x) + 11, Math.Abs(startGridPosition.y - endGridPosition.y) + 11);
 
+        // Create gridnodes for path finding
+        //GridNodes gridNodes = new GridNodes(LocationInfo.locationUpperBounds.x - LocationInfo.locationLowerBounds.x + 1, LocationInfo.locationUpperBounds.y - LocationInfo.locationLowerBounds.y + 1);
+        GridNodes gridNodes = LocationInfo.GridNodes;
+        LocationInfo.ClearGridNodes();
         /*Debug.Log(startGridPosition.x);
         Debug.Log(startGridPosition.y);
 
@@ -31,7 +34,7 @@ public static class AStar
         Node startNode = gridNodes.GetGridNode(startGridPosition.x, startGridPosition.y);
         Node targetNode = gridNodes.GetGridNode(endGridPosition.x, endGridPosition.y);
 
-        Node endPathNode = FindShortestPath(startNode, targetNode, gridNodes, openNodeList, closedNodeHashSet);
+        Node endPathNode = FindShortestPath(startNode, targetNode, gridNodes, openNodeQueue, openNodeHashSet, closedNodeHashSet);
 
         if (endPathNode != null)
         {
@@ -44,24 +47,25 @@ public static class AStar
     /// <summary>
     /// Find the shortest path - returns the end Node if a path has been found, else returns null.
     /// </summary>
-    private static Node FindShortestPath(Node startNode, Node targetNode, GridNodes gridNodes, List<Node> openNodeList, HashSet<Node> closedNodeHashSet)
+    private static Node FindShortestPath(Node startNode, Node targetNode, GridNodes gridNodes, PriorityQueue<Node, int> openNodeQueue, HashSet<Node> openNodeHashSet, HashSet<Node> closedNodeHashSet)
     {
         // Add start node to open list
-        openNodeList.Add(startNode);
+        openNodeQueue.Enqueue(startNode, startNode.FCost);
+        openNodeHashSet.Add(startNode);
 
         // Loop through open node list until empty
-        while (openNodeList.Count > 0)
+        while (openNodeQueue.Count > 0)
         {
-            // Sort List
-            openNodeList.Sort();
-
             // current node = the node in the open list with the lowest fCost
-            Node currentNode = openNodeList[0];
-            openNodeList.RemoveAt(0);
+            Node currentNode = openNodeQueue.Dequeue();
+            openNodeHashSet.Remove(currentNode);
+
+            LocationInfo.spoiledNodes.Add(currentNode);
 
             // if the current node = target node then finish
             if (currentNode == targetNode)
             {
+                LocationInfo.spoiledNodes.AddRange(openNodeHashSet);
                 return currentNode;
             }
 
@@ -69,7 +73,7 @@ public static class AStar
             closedNodeHashSet.Add(currentNode);
 
             // evaluate fcost for each neighbour of the current node
-            EvaluateCurrentNodeNeighbours(currentNode, targetNode, gridNodes, openNodeList, closedNodeHashSet);
+            EvaluateCurrentNodeNeighbours(currentNode, targetNode, gridNodes, openNodeQueue, openNodeHashSet, closedNodeHashSet);
         }
 
         return null;
@@ -109,7 +113,7 @@ public static class AStar
     /// <summary>
     /// Evaluate neighbour nodes
     /// </summary>
-    private static void EvaluateCurrentNodeNeighbours(Node currentNode, Node targetNode, GridNodes gridNodes, List<Node> openNodeList, HashSet<Node> closedNodeHashSet)
+    private static void EvaluateCurrentNodeNeighbours(Node currentNode, Node targetNode, GridNodes gridNodes, PriorityQueue<Node, int> openNodeQueue, HashSet<Node> openNodeHashSet, HashSet<Node> closedNodeHashSet)
     {
         Vector2Int currentNodeGridPosition = currentNode.gridPosition;
 
@@ -137,7 +141,7 @@ public static class AStar
 
                     newCostToNeighbour = currentNode.gCost + GetDistance(currentNode, validNeighbourNode) + movementPenaltyForGridSpace;
 
-                    bool isValidNeighbourNodeInOpenList = openNodeList.Contains(validNeighbourNode);
+                    bool isValidNeighbourNodeInOpenList = openNodeHashSet.Contains(validNeighbourNode);
 
                     if (newCostToNeighbour < validNeighbourNode.gCost || !isValidNeighbourNodeInOpenList)
                     {
@@ -147,7 +151,8 @@ public static class AStar
 
                         if (!isValidNeighbourNodeInOpenList)
                         {
-                            openNodeList.Add(validNeighbourNode);
+                            openNodeQueue.Enqueue(validNeighbourNode, validNeighbourNode.FCost);
+                            openNodeHashSet.Add(validNeighbourNode);
                         }
                     }
                 }
