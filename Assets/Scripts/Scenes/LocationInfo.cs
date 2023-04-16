@@ -11,6 +11,9 @@ public static class LocationInfo
     // use to store position of moveable items that are obstacles
     private static int[,] aStarItemObstacles = new int[0, 0];
 
+    public const int realLocationWidth = 292;
+    public const int realLocationHeight = 212;
+
     public static readonly Vector2Int locationLowerBounds = new Vector2Int(-200, -200);
     public static readonly Vector2Int locationUpperBounds = new Vector2Int(200, 200);
 
