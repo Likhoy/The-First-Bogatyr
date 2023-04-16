@@ -51,13 +51,14 @@ public static class AStar
     {
         // Add start node to open list
         openNodeQueue.Enqueue(startNode, startNode.FCost);
+        openNodeHashSet.Add(startNode);
 
         // Loop through open node list until empty
         while (openNodeQueue.Count > 0)
         {
             // current node = the node in the open list with the lowest fCost
             Node currentNode = openNodeQueue.Dequeue();
-            openNodeHashSet.Add(currentNode);
+            openNodeHashSet.Remove(currentNode);
 
             LocationInfo.spoiledNodes.Add(currentNode);
 
