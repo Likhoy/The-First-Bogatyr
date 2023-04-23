@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class LocationInfo
@@ -10,8 +11,36 @@ public static class LocationInfo
     // use to store position of moveable items that are obstacles
     private static int[,] aStarItemObstacles = new int[0, 0];
 
+    public const int realLocationWidth = 292;
+    public const int realLocationHeight = 212;
+
     public static readonly Vector2Int locationLowerBounds = new Vector2Int(-200, -200);
     public static readonly Vector2Int locationUpperBounds = new Vector2Int(200, 200);
+
+    private static GridNodes gridNodes = null;
+
+    internal static HashSet<Node> spoiledNodes = new HashSet<Node>();
+
+    public static GridNodes GridNodes
+    {
+        get
+        {
+            if (gridNodes == null)
+                gridNodes = new GridNodes(locationUpperBounds.x - locationLowerBounds.x + 1, locationUpperBounds.y - locationLowerBounds.y + 1);
+            return gridNodes;
+        }
+    }
+
+    public static void ClearGridNodes()
+    {
+        foreach (Node node in spoiledNodes)
+        {
+            node.gCost = 0;
+            node.hCost = 0;
+            node.parentNode = null;
+        }
+        spoiledNodes.Clear();
+    }
 
     public static Grid Grid
     {

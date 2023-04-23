@@ -69,7 +69,7 @@ public class AnimateChernobog : MonoBehaviour
     private void InitializeLookAnimationParameters()
     {
         enemy.animator.SetBool(Settings.lookRight, false);
-        //enemy.animator.SetBool(Settings.lookLeft, false);
+        enemy.animator.SetBool(Settings.lookLeft, false);
     }
 
     /// <summary>
@@ -92,14 +92,10 @@ public class AnimateChernobog : MonoBehaviour
         {
             case LookDirection.Right:
                 enemy.animator.SetBool(Settings.lookRight, true);
-                if (enemy.transform.localScale.x < 0f)
-                    enemy.transform.localScale = new Vector3(-enemy.transform.localScale.x, enemy.transform.localScale.y, enemy.transform.localScale.z);
                 break;
 
             case LookDirection.Left:
-                enemy.animator.SetBool(Settings.lookRight, true); // new way of direction changing using scale
-                if (enemy.transform.localScale.x > 0f)
-                    enemy.transform.localScale = new Vector3(-enemy.transform.localScale.x, enemy.transform.localScale.y, enemy.transform.localScale.z);
+                enemy.animator.SetBool(Settings.lookLeft, true); 
                 break;
         }
     }

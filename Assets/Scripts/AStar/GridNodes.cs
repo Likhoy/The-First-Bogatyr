@@ -5,7 +5,7 @@ public class GridNodes
     private int width;
     private int height;
 
-    private Node[,] gridNode;
+    public readonly Node[,] gridNode;
 
     public GridNodes(int width, int height)
     {
