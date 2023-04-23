@@ -22,7 +22,7 @@ using UnityEngine.Rendering;
 [RequireComponent(typeof(MovementToPosition))]
 [RequireComponent(typeof(IdleEvent))]
 [RequireComponent(typeof(Idle))]
-[RequireComponent(typeof(AnimateEnemy))]
+//[RequireComponent(typeof(AnimateEnemy))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody2D))]
@@ -152,7 +152,7 @@ public class Enemy : MonoBehaviour
                 return;
             }
         }*/
-        health.SetStartingHealth(Settings.defaultEnemyHealth);
+        health.SetStartingHealth(enemyDetails.startingHealthAmount);
     }
 
     /// <summary>
