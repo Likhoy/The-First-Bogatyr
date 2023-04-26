@@ -2,30 +2,40 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FadingOutText : MonoBehaviour
 {
-    TextMeshProUGUI text;
-    float alphaDecrease = 0.05f;
-    WaitForSeconds alphaDecreaseCooldown = new WaitForSeconds(0.1f);
+    public string TextToShow { get; set; } = "";
+    private TextMeshProUGUI TMPro;
+    private float alphaDecrease = 0.05f;
+    private WaitForSeconds alphaDecreaseCooldown = new WaitForSeconds(0.1f);
 
-    private void OnEnable()
+    private void Awake()
     {
-        text = GetComponent<TextMeshProUGUI>();
-        StartCoroutine(FadingOutRoutine());
+        TMPro = GetComponent<TextMeshProUGUI>();
     }
 
-    private IEnumerator FadingOutRoutine()
+    public void ShowHint(float delayDuration)
     {
+        StartCoroutine(FadingOutRoutine(delayDuration));
+    }
+
+
+    private IEnumerator FadingOutRoutine(float delayDuration)
+    {
+        if (delayDuration > 0)
+            yield return new WaitForSeconds(delayDuration);
+        TMPro.text = TextToShow;
         yield return new WaitForSeconds(3f);
 
-        while (text.alpha > 0f)
+        while (TMPro.alpha > 0f)
         {
-            text.alpha -= alphaDecrease;
+            TMPro.alpha -= alphaDecrease;
             yield return alphaDecreaseCooldown;
         }
-        gameObject.SetActive(false);
-        text.alpha = 1f;
+        TMPro.alpha = 1f;
+        TMPro.text = "";
     }
 }

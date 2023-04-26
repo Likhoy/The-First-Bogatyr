@@ -51,5 +51,5 @@ public class GameResources : MonoBehaviour
     [Tooltip("Poplate this with working Inventory gameobject")]
     #endregion Tooltip
     public Inventory inventory;
-    
+
 }
