@@ -38,8 +38,8 @@ public static class Settings
     #endregion
 
     #region ASTAR PATHFINDING PARAMETERS
-    public const int defaultGridNodesWidthForPathBuilding = 400;
-    public const int defaultGridNodesHeightForPathBuilding = 400;
+    public const int defaultGridNodesWidthForPathBuilding = 401;
+    public const int defaultGridNodesHeightForPathBuilding = 401;
 
     public const int defaultAStarMovementPenalty = 40;
     public const int preferredPathAStarMovementPenalty = 1;

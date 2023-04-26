@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public static class LocationInfo
 {
@@ -57,7 +59,17 @@ public static class LocationInfo
         get 
         { 
             if (aStarMovementPenalty.Length == 0)
+            {
                 AddObstacles();
+                /*for (int i = 0; i < aStarMovementPenalty.Length; i++)
+                {
+                    StringBuilder b = new StringBuilder();
+                    for (int j = 0; j < 401; j++)
+                        b.Append(aStarMovementPenalty[i,j].ToString() + " ");
+                    Debug.Log(b.ToString());
+                }*/
+            }
+                
             return aStarMovementPenalty;
         }
     } 
@@ -69,13 +81,14 @@ public static class LocationInfo
 
 
     /// <summary>
-    /// Update obstacles used by AStar pathfinmding.
+    /// Update obstacles used by AStar pathfinding.
     /// </summary>
     private static void AddObstacles()
     {
         // this array will be populated with wall obstacles 
         aStarMovementPenalty = new int[Settings.defaultGridNodesHeightForPathBuilding, Settings.defaultGridNodesWidthForPathBuilding];
 
+        Tilemap collisionTilemap = GameObject.FindGameObjectWithTag("collisionTilemap").GetComponent<Tilemap>();
 
         // Loop thorugh all grid squares
         for (int x = 0; x < Settings.defaultGridNodesHeightForPathBuilding; x++)
@@ -86,20 +99,23 @@ public static class LocationInfo
                 aStarMovementPenalty[x, y] = Settings.defaultAStarMovementPenalty;
 
                 // Add obstacles for collision tiles the enemy can't walk on
-                /*TileBase tile = collisionTilemap.GetTile(new Vector3Int(x, y, 0));
+                TileBase tile = collisionTilemap.GetTile(new Vector3Int(x + locationLowerBounds.x, y + locationLowerBounds.y, 0));
 
                 foreach (TileBase collisionTile in GameResources.Instance.enemyUnwalkableCollisionTilesArray)
                 {
                     if (tile == collisionTile)
                     {
                         aStarMovementPenalty[x, y] = 0;
+                        Debug.Log("yes");
                         break;
                     }
                 }
 
+                
+
                 // Add preferred path for enemies (1 is the preferred path value, default value for
                 // a grid location is specified in the Settings).
-                if (tile == GameResources.Instance.preferredEnemyPathTile)
+                /*if (tile == GameResources.Instance.preferredEnemyPathTile)
                 {
                     aStarMovementPenalty[x, y] = Settings.preferredPathAStarMovementPenalty;
                 }*/
