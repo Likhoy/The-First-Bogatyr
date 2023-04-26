@@ -100,6 +100,7 @@ public class Player : MonoBehaviour
     {
         // Subscribe to player health event
         healthEvent.OnHealthChanged += HealthEvent_OnHealthChanged;
+        healthEvent.OnHealthChanged += HealthEvent_OnHealthChanged2; // for button helper
     }
 
     private void OnDisable()
@@ -117,6 +118,17 @@ public class Player : MonoBehaviour
         if (healthEventArgs.healthAmount <= 0f)
         {
             destroyedEvent.CallDestroyedEvent(true, 0);
+        }
+    }
+
+    private void HealthEvent_OnHealthChanged2(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
+    {
+        if (healthEventArgs.healthAmount <= 75f)
+        {
+            FadingOutText fadingOutText = FindObjectOfType<FadingOutText>();
+            fadingOutText.TextToShow = "Святая вода восстанавличает здоровье...";
+            fadingOutText.ShowHint(0);
+            healthEvent.OnHealthChanged -= HealthEvent_OnHealthChanged2;
         }
     }
 
