@@ -25,9 +25,10 @@ public class FadingOutText : MonoBehaviour
 
     private IEnumerator FadingOutRoutine(float delayDuration)
     {
+        string textToShow = TextToShow;
         if (delayDuration > 0)
             yield return new WaitForSeconds(delayDuration);
-        TMPro.text = TextToShow;
+        TMPro.text = textToShow;
         yield return new WaitForSeconds(3f);
 
         while (TMPro.alpha > 0f)

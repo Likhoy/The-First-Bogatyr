@@ -1,3 +1,4 @@
+using PixelCrushers;
 using PixelCrushers.DialogueSystem;
 using System.Collections.Generic;
 using UnityEngine;
@@ -109,6 +110,7 @@ public class Player : MonoBehaviour
         healthEvent.OnHealthChanged -= HealthEvent_OnHealthChanged;
     }
 
+
     /// <summary>
     /// Handle health changed event
     /// </summary>
@@ -117,7 +119,9 @@ public class Player : MonoBehaviour
         // If player has died
         if (healthEventArgs.healthAmount <= 0f)
         {
-            destroyedEvent.CallDestroyedEvent(true, 0);
+            /*destroyedEvent.CallDestroyedEvent(true, 0);
+            Destroy(this);*/
+            SaveSystem.LoadFromSlot(1);
         }
     }
 
