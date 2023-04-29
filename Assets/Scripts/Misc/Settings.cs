@@ -38,8 +38,8 @@ public static class Settings
     #endregion
 
     #region ASTAR PATHFINDING PARAMETERS
-    public const int defaultGridNodesWidthForPathBuilding = 400;
-    public const int defaultGridNodesHeightForPathBuilding = 400;
+    public const int defaultGridNodesWidthForPathBuilding = 401;
+    public const int defaultGridNodesHeightForPathBuilding = 401;
 
     public const int defaultAStarMovementPenalty = 40;
     public const int preferredPathAStarMovementPenalty = 1;
@@ -57,7 +57,7 @@ public static class Settings
     public static Dictionary<Command, KeyCode> commandButtons = new Dictionary<Command, KeyCode>()
     {
         [Command.Dash] = KeyCode.LeftShift,
-        [Command.Hit] = KeyCode.Mouse0,
+        [Command.Hit] = KeyCode.Mouse1,
         [Command.TakeItem] = KeyCode.Mouse0,
         [Command.ContinueDialog] = KeyCode.Mouse0
     };
