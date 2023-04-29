@@ -67,4 +67,8 @@ public static class Settings
     #region CONTACT DAMAGE PARAMETERS
     public const float contactDamageCollisionResetDelay = 0.5f;
     #endregion 
+
+    #region INVENTORY PARAMETERS
+    public const int inventorySlotsCount = 5;
+    #endregion 
 }
