@@ -23,11 +23,6 @@ public class EnemyMovementAI : MonoBehaviour
     [HideInInspector] public int updateFrameNumber = 1; // default value.  This is set by the enemy spawner.
     private List<Vector2Int> surroundingPositionList = new List<Vector2Int>();
 
-    [SerializeField] 
-    private Vector2 _minPosition;
-    [SerializeField]
-    private Vector2 _maxPosition;
-
     private Vector3 randomPosition; // for choosing patroling path
     private bool isSetTargetPoint = false; // patroling path has been chosen
 
@@ -107,8 +102,9 @@ public class EnemyMovementAI : MonoBehaviour
     private void SetRandomTargetPoint()
     {
         do {
-            randomPosition = new Vector3(Random.Range(_minPosition.x, _maxPosition.x), Random.Range(_minPosition.y, _maxPosition.y), 0); // рандомный выбор позиции
-            randomPosition = GetNearestNonObstaclePlayerPosition();
+            randomPosition = new Vector3(Random.Range(movementDetails.patrolingAreaLeftBottom.x, movementDetails.patrolingAreaRightTop.x), 
+                Random.Range(movementDetails.patrolingAreaLeftBottom.y, movementDetails.patrolingAreaRightTop.y), 0); // рандомный выбор позиции
+            randomPosition = LocationInfo.Grid.CellToWorld(GetNearestNonObstaclePlayerPosition());
         } 
         while (Vector2.Distance(transform.position, randomPosition) < 3f || randomPosition == Vector3Int.zero);
         
