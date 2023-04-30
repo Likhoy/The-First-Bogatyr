@@ -78,7 +78,7 @@ public class EnemyMovementAI : MonoBehaviour
         {
             if (chasePlayer)
             {
-                randomPosition = new Vector3(_maxPosition.x - _minPosition.x, _maxPosition.y - _minPosition.y, 0);
+                SetRandomTargetPoint();
                 if (moveEnemyRoutine != null)
                     StopCoroutine(moveEnemyRoutine);
                 chasePlayer = false;
@@ -106,11 +106,12 @@ public class EnemyMovementAI : MonoBehaviour
 
     private void SetRandomTargetPoint()
     {
-        randomPosition = new Vector3(Random.Range(_minPosition.x, _maxPosition.x), Random.Range(_minPosition.y, _maxPosition.y), 0); // рандомный выбор позиции
-        while (Vector2.Distance(transform.position, randomPosition) < 3f)
-        {
+        do {
             randomPosition = new Vector3(Random.Range(_minPosition.x, _maxPosition.x), Random.Range(_minPosition.y, _maxPosition.y), 0); // рандомный выбор позиции
-        }
+            randomPosition = GetNearestNonObstaclePlayerPosition();
+        } 
+        while (Vector2.Distance(transform.position, randomPosition) < 3f || randomPosition == Vector3Int.zero);
+        
         isSetTargetPoint = true;
     }
 
@@ -223,7 +224,7 @@ public class EnemyMovementAI : MonoBehaviour
     /// </summary>
     private Vector3Int GetNearestNonObstaclePlayerPosition()
     {
-        Vector3 playerPosition = GameManager.Instance.GetPlayer().GetPlayerPosition();
+        Vector3 playerPosition = chasePlayer ? GameManager.Instance.GetPlayer().GetPlayerPosition() : randomPosition;
 
         Vector3Int playerCellPosition = LocationInfo.Grid.WorldToCell(playerPosition);
 

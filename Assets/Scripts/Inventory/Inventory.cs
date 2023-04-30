@@ -5,6 +5,8 @@ public class Inventory : MonoBehaviour
 {
     [SerializeField] private InventorySlot[] slots;
 
+    public InventorySlot[] Slots { get => slots; }
+
     private void OnEnable()
     {
         GameManager.Instance.GetPlayer().GetComponent<DialogueSystemEvents>().conversationEvents.onConversationStart.AddListener(delegate { HideInventory(); });
