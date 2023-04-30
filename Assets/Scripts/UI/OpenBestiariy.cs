@@ -15,6 +15,13 @@ public class OpenBestiariy : MonoBehaviour
             bestiary.SetActive(!bestiary.activeInHierarchy);
 
         if (Input.GetKeyDown(KeyCode.M))
+        {
+            if (!map.activeInHierarchy)
+                Time.timeScale = 0;
+            else
+                Time.timeScale = 1f;
             map.SetActive(!map.activeInHierarchy);
+        }
+            
     }
 }
