@@ -14,7 +14,8 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler
     [SerializeField]
     int slot_number;
     public int ID { get { return id; } }
-    Item item;
+    private Item item;
+    public Item Item { get => item; }
     [SerializeField] GameObject textObject;
     [SerializeField] GameObject imageObject;
     [SerializeField] UnityEngine.UI.Image image;
