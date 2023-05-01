@@ -106,7 +106,6 @@ public static class LocationInfo
                     if (tile == collisionTile)
                     {
                         aStarMovementPenalty[x, y] = 0;
-                        Debug.Log("yes");
                         break;
                     }
                 }
