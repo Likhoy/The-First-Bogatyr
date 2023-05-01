@@ -136,6 +136,17 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void HealthEvent_OnHealthChanged2(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
+    {
+        if (healthEventArgs.healthAmount <= 75f)
+        {
+            FadingOutText fadingOutText = FindObjectOfType<FadingOutText>();
+            fadingOutText.TextToShow = "Святая вода восстанавличает здоровье...";
+            fadingOutText.ShowHint(0);
+            healthEvent.OnHealthChanged -= HealthEvent_OnHealthChanged2;
+        }
+    }
+
     /// <summary>
     /// Set the player starting weapon
     /// </summary>
