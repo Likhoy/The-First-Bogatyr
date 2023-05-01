@@ -66,6 +66,8 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler
 
     public void AddNewItem(Item item)
     {
+        if (this.item != null)
+            GameObject.Destroy(this.item.gameObject);
         count = 1;
         isEmpty = false;
         id = item.itemID;
@@ -91,9 +93,6 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler
         count = 0;
         id = -1;
         isEmpty = true;
-        if (item != null)
-            GameObject.Destroy(item.gameObject);
-        item = null;
     }
 
     public void HideInventorySlot() => animator.SetTrigger("HideSlot");
