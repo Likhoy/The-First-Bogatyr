@@ -130,8 +130,11 @@ public class Player : MonoBehaviour
         if (healthEventArgs.healthAmount <= 75f)
         {
             FadingOutText fadingOutText = FindObjectOfType<FadingOutText>();
-            fadingOutText.TextToShow = "Святая вода восстанавличает здоровье...";
-            fadingOutText.ShowHint(0);
+            if (fadingOutText != null)
+            {
+                fadingOutText.TextToShow = "Святая вода восстанавличает здоровье...";
+                fadingOutText.ShowHint(0);
+            }
             healthEvent.OnHealthChanged -= HealthEvent_OnHealthChanged2;
         }
     }
