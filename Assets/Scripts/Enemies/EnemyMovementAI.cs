@@ -25,6 +25,7 @@ public class EnemyMovementAI : MonoBehaviour
 
     private Vector3 randomPosition; // for choosing patroling path
     private bool isSetTargetPoint = false; // patroling path has been chosen
+    private bool pathRebuildNeeded = true; // for building path while patroling
 
     private void Awake()
     {
@@ -87,13 +88,32 @@ public class EnemyMovementAI : MonoBehaviour
     /// </summary>
     private void PatrolTheArea()
     {
-        if (isSetTargetPoint)
-            enemy.movementToPositionEvent.CallMovementToPositionEvent(randomPosition, transform.position, moveSpeed, (randomPosition - transform.position).normalized);
-        else
+        if (isSetTargetPoint && pathRebuildNeeded)
+        {
+            CreatePath();
+
+            // If a path has been found move the enemy
+            if (movementSteps != null)
+            {
+                if (moveEnemyRoutine != null)
+                {
+                    // Trigger idle event
+                    enemy.idleEvent.CallIdleEvent();
+                    StopCoroutine(moveEnemyRoutine);
+                }
+
+                // Move enemy along the path using a coroutine
+                moveEnemyRoutine = StartCoroutine(MoveEnemyRoutine(movementSteps));
+
+                pathRebuildNeeded = false;
+            }
+        }   
+        else if (!isSetTargetPoint)
             enemy.idleEvent.CallIdleEvent();
         if (isSetTargetPoint && Vector2.Distance(transform.position, randomPosition) < 0.2f)
         {
             isSetTargetPoint = false;
+            pathRebuildNeeded = true;
             Invoke(nameof(SetRandomTargetPoint), 3);
         }
     }
