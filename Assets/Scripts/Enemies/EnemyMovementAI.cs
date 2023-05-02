@@ -27,6 +27,8 @@ public class EnemyMovementAI : MonoBehaviour
     private bool isSetTargetPoint = false; // patroling path has been chosen
     private bool pathRebuildNeeded = true; // for building path while patroling
 
+    private Vector3 cellMidPoint; // needed to adjust enemy target point when patroling
+
     private void Awake()
     {
         // Load components
@@ -42,7 +44,9 @@ public class EnemyMovementAI : MonoBehaviour
 
         // Reset player reference position
         playerReferencePosition = GameManager.Instance.GetPlayer().GetPlayerPosition();
-        
+
+        cellMidPoint = new Vector3(LocationInfo.Grid.cellSize.x * 0.5f, LocationInfo.Grid.cellSize.y * 0.5f, 0f);
+
         SetRandomTargetPoint();
     }
 
@@ -124,7 +128,7 @@ public class EnemyMovementAI : MonoBehaviour
         do {
             randomPosition = new Vector3(Random.Range(movementDetails.patrolingAreaLeftBottom.x, movementDetails.patrolingAreaRightTop.x), 
                 Random.Range(movementDetails.patrolingAreaLeftBottom.y, movementDetails.patrolingAreaRightTop.y), 0); // рандомный выбор позиции
-            randomPosition = LocationInfo.Grid.CellToWorld(GetNearestNonObstaclePlayerPosition());
+            randomPosition = LocationInfo.Grid.CellToWorld(GetNearestNonObstaclePlayerPosition()) + cellMidPoint;
         } 
         while (Vector2.Distance(transform.position, randomPosition) < 3f || randomPosition == Vector3Int.zero);
         
@@ -181,7 +185,7 @@ public class EnemyMovementAI : MonoBehaviour
         while (movementSteps.Count > 0)
         {
             Vector3 nextPosition = movementSteps.Pop();
-
+            
             // while not very close continue to move - when close move onto the next step
             while (Vector3.Distance(nextPosition, transform.position) > 0.2f)
             {
