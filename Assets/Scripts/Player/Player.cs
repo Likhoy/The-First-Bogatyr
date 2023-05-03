@@ -130,7 +130,7 @@ public class Player : MonoBehaviour
         if (healthEventArgs.healthAmount <= 75f)
         {
             FadingOutText fadingOutText = FindObjectOfType<FadingOutText>();
-            if (fadingOutText != null)
+            if (fadingOutText != null && EnemySpawner.Instance.EnemiesSpawnedSoFar == 1) // bad condition - fix
             {
                 fadingOutText.TextToShow = "Святая вода восстанавличает здоровье...";
                 fadingOutText.ShowHint(0);
