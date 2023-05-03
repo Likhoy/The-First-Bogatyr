@@ -183,7 +183,7 @@ public class Enemy : MonoBehaviour
     private void SetEnemyAnimationSpeed()
     {
         // Set animator speed to match movement speed
-        // animator.speed = enemyMovementAI.moveSpeed / Settings.baseSpeedForEnemyAnimations;
+        //animator.speed = enemyMovementAI.moveSpeed / Settings.baseSpeedForEnemyAnimations;
     }
 
     /*private IEnumerator MaterializeEnemy()
