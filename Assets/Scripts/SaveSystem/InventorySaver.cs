@@ -35,11 +35,10 @@ public class InventorySaver : Saver
     {
         realSlotsCount = inventory.Slots.Count(slot => !slot.IsEmpty);
         m_data.realSlotsCount = realSlotsCount;
-        m_data.item_ids = new int[realSlotsCount]; 
+        m_data.item_ids = new int[realSlotsCount];
         m_data.counts = new int[realSlotsCount];
         for (int i = 0; i < realSlotsCount; i++)
         {
-            
             m_data.item_ids[i] = inventory.Slots[i].Item.itemID;
             m_data.counts[i] = inventory.Slots[i].Count;
         }
