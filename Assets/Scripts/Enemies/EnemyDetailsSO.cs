@@ -122,6 +122,14 @@ public class EnemyDetailsSO : ScriptableObject
     #endregion
     public bool isHealthBarDisplayed = false;
 
+    #region Header REWARD FOR ENEMY DEATH
+    [Space(10)]
+    [Header("REWARD FOR ENEMY DEATH")]
+    #endregion
+
+    public int moneyReward = 0;
+
+    public float moneyDropRadius = 5f;
 
     [Space(10)]
 

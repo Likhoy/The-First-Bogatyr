@@ -77,7 +77,7 @@ public class Player : MonoBehaviour
         reloadWeaponEvent = GetComponent<ReloadWeaponEvent>();
         weaponReloadedEvent = GetComponent<WeaponReloadedEvent>();
         itemUsedEvent = GetComponent<ItemUsedEvent>();
-        productBoughtEvent = GetComponent<ProductBoughtEvent>();    
+        productBoughtEvent = GetComponent<ProductBoughtEvent>();
         playerControl = GetComponent<PlayerController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
@@ -180,6 +180,11 @@ public class Player : MonoBehaviour
     public Vector3 GetPlayerPosition()
     {
         return transform.position;
+    }
+
+    public int GetPlayerMoney()
+    {
+        return playerResources.PlayerMoney;
     }
 
     /// <summary>
