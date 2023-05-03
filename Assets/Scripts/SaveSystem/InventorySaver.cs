@@ -4,6 +4,7 @@ using UnityEngine;
 using PixelCrushers;
 using System;
 using UnityEngine.UI;
+using System.Linq;
 
 /// <summary>
 /// Saves the slots data of the inventory
@@ -13,6 +14,8 @@ public class InventorySaver : Saver
 {
     private Inventory inventory;
 
+    private int realSlotsCount;
+
     public override void Awake()
     {
         inventory = GetComponent<Inventory>();
@@ -21,7 +24,8 @@ public class InventorySaver : Saver
     [Serializable]
     public class Data
     {
-        public Item[] items;
+        public int realSlotsCount;
+        public int[] item_ids;
         public int[] counts;
     }
 
@@ -29,11 +33,13 @@ public class InventorySaver : Saver
 
     public override string RecordData()
     {
-        m_data.items = new Item[inventory.Slots.Length]; 
-        m_data.counts = new int[inventory.Slots.Length];
-        for (int i = 0; i < inventory.Slots.Length; i++)
+        realSlotsCount = inventory.Slots.Count(slot => !slot.IsEmpty);
+        m_data.realSlotsCount = realSlotsCount;
+        m_data.item_ids = new int[realSlotsCount];
+        m_data.counts = new int[realSlotsCount];
+        for (int i = 0; i < realSlotsCount; i++)
         {
-            m_data.items[i] = inventory.Slots[i].Item;
+            m_data.item_ids[i] = inventory.Slots[i].Item.itemID;
             m_data.counts[i] = inventory.Slots[i].Count;
         }
         return SaveSystem.Serialize(m_data);
@@ -45,11 +51,11 @@ public class InventorySaver : Saver
         var data = SaveSystem.Deserialize<Data>(s, m_data);
         if (data == null) return;
         m_data = data;
-        for (int i = 0; i < inventory.Slots.Length; i++)
+        for (int i = 0; i < m_data.realSlotsCount; i++)
         {
-            inventory.Slots[i].AddNewItem(m_data.items[i]);
-            for (int j = 0; j < m_data.counts[i] - 1; j++)
-                inventory.Slots[i].IncCount();
+            GameObject itemPrefab = GameResources.Instance.items.First(item => item.GetComponent<Item>().itemID == m_data.item_ids[i]);
+            for (int j = 0; j < m_data.counts[i]; j++)
+                GameManager.Instance.GiveItem(itemPrefab);
         }
     }
 }

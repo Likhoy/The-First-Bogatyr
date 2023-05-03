@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -5,6 +6,7 @@ using UnityEngine;
 
 public class HolyWater : Item
 {
+
     private int healthBoostPerSecond;
     private float healingDuration;
 
