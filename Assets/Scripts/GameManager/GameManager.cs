@@ -1,6 +1,8 @@
 using PixelCrushers.DialogueSystem;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [DisallowMultipleComponent]
 public class GameManager : SingletonMonobehaviour<GameManager>
@@ -76,6 +78,14 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         {
             // TODO
         }
+    }
+
+    public IEnumerator FinishGameRoutine()
+    {
+        GameObject transitionImage = GameObject.FindGameObjectWithTag("transitionImage");
+        transitionImage.GetComponent<Animator>().SetTrigger("Finish");
+        yield return new WaitForSeconds(15f);
+        SceneManager.LoadScene("Menu");
     }
 
     /// <summary>

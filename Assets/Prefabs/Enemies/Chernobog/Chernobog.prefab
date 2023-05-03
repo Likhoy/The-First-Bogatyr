@@ -25,7 +25,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 944632650330016525, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
       propertyPath: m_SpriteTilingProperty.pivot.y
-      value: 0.025
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 944632650330016525, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
       propertyPath: m_SpriteTilingProperty.newSize.x
@@ -149,7 +149,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7932139898352477546, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
       propertyPath: m_SpriteTilingProperty.pivot.y
-      value: 0.025
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 7932139898352477546, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
       propertyPath: m_SpriteTilingProperty.newSize.x
@@ -4609,5 +4609,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ad8bda48027496409e93ea286ed00bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-8315122985850420624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8309658863052230953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68974cf7be1768049891b6913d281e01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
