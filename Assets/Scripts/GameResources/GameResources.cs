@@ -53,6 +53,8 @@ public class GameResources : MonoBehaviour
     #endregion Tooltip
     public GameObject[] items;
 
+    public GameObject[] coins;
+
     #region Header SPECIAL TILEMAP TILES
     [Space(10)]
     [Header("SPECIAL TILEMAP TILES")]
