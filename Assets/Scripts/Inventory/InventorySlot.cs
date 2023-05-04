@@ -23,7 +23,7 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler
     Animator animator;
     int count = 0;
     public int Count { get { return count; } }
-    bool isEmpty;
+    bool isEmpty = true;
     public bool IsEmpty { get { return isEmpty; } }
 
     //Костыль (исправить)
