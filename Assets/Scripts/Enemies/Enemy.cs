@@ -1,6 +1,10 @@
 using System.Collections;
+using System.Linq;
+using Unity.VisualScripting;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 #region REQUIRE COMPONENTS
 [RequireComponent(typeof(HealthEvent))]
@@ -84,7 +88,7 @@ public class Enemy : MonoBehaviour
 
     private void OnDisable()
     {
-        //subscribe to health event
+        // unsubscribe from health event
         healthEvent.OnHealthChanged -= HealthEvent_OnHealthLost;
     }
 
@@ -106,6 +110,17 @@ public class Enemy : MonoBehaviour
     {
         DestroyedEvent destroyedEvent = GetComponent<DestroyedEvent>();
         destroyedEvent.CallDestroyedEvent(false, health.GetStartingHealth());
+
+        if (enemyDetails.moneyReward > 0 && SceneManager.GetActiveScene().name != "Purple World")
+        {
+            for (int i = 0; i < enemyDetails.moneyReward / 100; i++) // needed to add another money values
+            {
+                float positionXOffset = Random.Range(-enemyDetails.moneyDropRadius, enemyDetails.moneyDropRadius);
+                float yMaxOffset = Mathf.Sqrt(enemyDetails.moneyDropRadius * enemyDetails.moneyDropRadius - positionXOffset * positionXOffset);
+                float positionYOffset = Random.Range(-yMaxOffset, yMaxOffset);
+                Instantiate(GameResources.Instance.coins[0], transform.position + new Vector3(positionYOffset, positionYOffset), Quaternion.identity);
+            }
+        }
     }
 
 
