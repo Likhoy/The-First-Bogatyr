@@ -111,6 +111,7 @@ GameObject:
   - component: {fileID: 3057475426759464204}
   - component: {fileID: 2035950908431676431}
   - component: {fileID: 7645810633592137281}
+  - component: {fileID: 7935410479848980205}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -892,9 +893,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_key: 
-  m_appendSaverTypeToKey: 0
+  m_appendSaverTypeToKey: 1
   m_saveAcrossSceneChanges: 1
   m_restoreStateOnStart: 0
   m_target: {fileID: 0}
   m_usePlayerSpawnpoint: 1
   m_multiscene: 0
+--- !u!114 &7935410479848980205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6461650756046700630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c57d1b0e0f1b57c45b2618dcc035696a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_key: 
+  m_appendSaverTypeToKey: 1
+  m_saveAcrossSceneChanges: 1
+  m_restoreStateOnStart: 0
