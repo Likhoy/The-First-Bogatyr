@@ -27,6 +27,7 @@ public class BossLocalSpawner : MonoBehaviour
             needsToSpawn[1] = true;
             SpawnLittleEnemies();
             enemy.defendingStageStartedEvent.CallDefendingStageStartedEvent();
+            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
             GetComponent<PolygonCollider2D>().enabled = false;
             GetComponent<EnemyWeaponAI>().enabled = false;
             GetComponent<EnemyMovementAI>().enabled = false;
@@ -37,6 +38,7 @@ public class BossLocalSpawner : MonoBehaviour
             needsToSpawn[2] = true;
             SpawnLittleEnemies();
             enemy.defendingStageStartedEvent.CallDefendingStageStartedEvent();
+            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
             GetComponent<PolygonCollider2D>().enabled = false;
             GetComponent<EnemyWeaponAI>().enabled = false;
             GetComponent<EnemyMovementAI>().enabled = false;
@@ -46,6 +48,7 @@ public class BossLocalSpawner : MonoBehaviour
             needsToSpawn[2] = false;
             SpawnLittleEnemies();
             enemy.defendingStageStartedEvent.CallDefendingStageStartedEvent();
+            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
             GetComponent<PolygonCollider2D>().enabled = false;
             GetComponent<EnemyWeaponAI>().enabled = false;
             GetComponent<EnemyMovementAI>().enabled = false;
@@ -84,6 +87,8 @@ public class BossLocalSpawner : MonoBehaviour
         littleEnemy.GetComponent<Enemy>().EnemyInitialization(enemyDetails, EnemySpawner.Instance.EnemiesSpawnedSoFar);
         ++countCurrrentShadow;
         ++EnemySpawner.Instance.EnemiesSpawnedSoFar;
+        // subscribe to enemy destroyed event
+        littleEnemy.GetComponent<DestroyedEvent>().OnDestroyed += Enemy_OnDestroyed;
         return littleEnemy;
     }
 
@@ -94,6 +99,7 @@ public class BossLocalSpawner : MonoBehaviour
         if (countCurrrentShadow == 0)
         {
             enemy.defendingStageEndedEvent.CallDefendingStageEndedEvent();
+            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
             GetComponent<PolygonCollider2D>().enabled = true;
             GetComponent<EnemyWeaponAI>().enabled = true;
             GetComponent<EnemyMovementAI>().enabled = true;
