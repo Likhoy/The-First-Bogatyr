@@ -79,7 +79,7 @@ public class AnimateChernobog : MonoBehaviour
 
     private void TriggerDefendingAnimation()
     {
-        enemy.animator.SetTrigger("defendTrigger");
+        enemy.animator.SetBool("isDefending", true);
         enemy.animator.ResetTrigger("attackTrigger");
         enemy.animator.SetBool(Settings.isIdle, false);
         enemy.animator.SetBool(Settings.isMoving, false);
@@ -87,7 +87,7 @@ public class AnimateChernobog : MonoBehaviour
 
     private void StopDefendingAnimation()
     {
-        enemy.animator.ResetTrigger("defendTrigger");
+        enemy.animator.SetBool("isDefending", false);
     }
 
     private IEnumerator DefendingStageRoutine()
