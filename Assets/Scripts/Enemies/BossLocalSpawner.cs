@@ -6,6 +6,8 @@ public class BossLocalSpawner : MonoBehaviour
     //private int enemiesSpawnedSoFar = EnemySpawner.Instance.EnemiesSpawnedSoFar;
     private Enemy enemy;
     private bool[] needsToSpawn = new bool[3] { true, false, false };
+    private int countCurrrentShadow = 0;
+
 
     private void Awake()
     {
@@ -24,20 +26,33 @@ public class BossLocalSpawner : MonoBehaviour
             needsToSpawn[0] = false;
             needsToSpawn[1] = true;
             SpawnLittleEnemies();
+            enemy.defendingStageStartedEvent.CallDefendingStageStartedEvent();
+            GetComponent<PolygonCollider2D>().enabled = false;
+            GetComponent<EnemyWeaponAI>().enabled = false;
+            GetComponent<EnemyMovementAI>().enabled = false;
         }
         else if (needsToSpawn[1] && healthEventArgs.healthPercent * 100 < 50f)
         {
             needsToSpawn[1] = false;
             needsToSpawn[2] = true;
             SpawnLittleEnemies();
+            enemy.defendingStageStartedEvent.CallDefendingStageStartedEvent();
+            GetComponent<PolygonCollider2D>().enabled = false;
+            GetComponent<EnemyWeaponAI>().enabled = false;
+            GetComponent<EnemyMovementAI>().enabled = false;
         }
         else if (needsToSpawn[2] && healthEventArgs.healthPercent * 100 < 25f)
         {
             needsToSpawn[2] = false;
             SpawnLittleEnemies();
+            enemy.defendingStageStartedEvent.CallDefendingStageStartedEvent();
+            GetComponent<PolygonCollider2D>().enabled = false;
+            GetComponent<EnemyWeaponAI>().enabled = false;
+            GetComponent<EnemyMovementAI>().enabled = false;
         }
         else if (!needsToSpawn[2] && healthEventArgs.healthPercent * 100 < 25f)
             enemy.healthEvent.OnHealthChanged -= HealthEvent_OnHealthChanged;
+
     }
 
     private void SpawnLittleEnemies()
@@ -67,7 +82,7 @@ public class BossLocalSpawner : MonoBehaviour
                                             UnityEngine.Random.Range(transform.position.y - enemy.enemyDetails.spawnRadius, transform.position.y + enemy.enemyDetails.spawnRadius));
         GameObject littleEnemy = Instantiate(enemyDetails.enemyPrefab, spawnPosition, Quaternion.identity, transform);
         littleEnemy.GetComponent<Enemy>().EnemyInitialization(enemyDetails, EnemySpawner.Instance.EnemiesSpawnedSoFar);
-
+        ++countCurrrentShadow;
         ++EnemySpawner.Instance.EnemiesSpawnedSoFar;
         return littleEnemy;
     }
@@ -75,7 +90,14 @@ public class BossLocalSpawner : MonoBehaviour
     private void Enemy_OnDestroyed(DestroyedEvent destroyedEvent, DestroyedEventArgs destroyedEventArgs)
     {
         destroyedEvent.OnDestroyed -= Enemy_OnDestroyed;
-
+        --countCurrrentShadow;
+        if (countCurrrentShadow == 0)
+        {
+            enemy.defendingStageEndedEvent.CallDefendingStageEndedEvent();
+            GetComponent<PolygonCollider2D>().enabled = true;
+            GetComponent<EnemyWeaponAI>().enabled = true;
+            GetComponent<EnemyMovementAI>().enabled = true;
+        }
         //if (enemy.enemyDetails.enemiesToSpawn < enemiesSpawnedSoFar)
         //{
         //    GameObject littleEnemy = SpawnLittleEnemy();
