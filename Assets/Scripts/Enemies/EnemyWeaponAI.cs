@@ -18,7 +18,7 @@ public class EnemyWeaponAI : MonoBehaviour
     private float firingIntervalTimer;
     private float firingDurationTimer;
 
-    private float meleeWeaponCooldownTimer= 0f;
+    private float meleeWeaponCooldownTimer = 0f;
     public float startDeltaTime;
     public int damageAmount;
 
@@ -42,14 +42,14 @@ public class EnemyWeaponAI : MonoBehaviour
 
     private void Update()
     {
-        EnemyWeaponCooldownTimer();
         // if chasing player
         if (enemy.enemyMovementAI.chasePlayer)
         {
             Vector3 playerPosition = GameManager.Instance.GetPlayer().GetPlayerPosition();
             // if close enough use melee attack
-            if (Vector3.Distance(transform.position, playerPosition) <= enemy.enemyDetails.strikeDistance)
+            if (enemy.enemyDetails.enemyMeleeWeapon != null && Vector3.Distance(transform.position, playerPosition) <= enemy.enemyDetails.strikeDistance)
             {
+                EnemyMeleeWeaponCooldownTimer();
                 if (holdsRangedWeapon)
                 {
                     enemy.setActiveWeaponEvent.CallSetActiveWeaponEvent(enemy.MeleeWeapon);
@@ -99,7 +99,7 @@ public class EnemyWeaponAI : MonoBehaviour
         }
     }
 
-    private void EnemyWeaponCooldownTimer()
+    private void EnemyMeleeWeaponCooldownTimer()
     {
         if (meleeWeaponCooldownTimer >= 0f)
         {
