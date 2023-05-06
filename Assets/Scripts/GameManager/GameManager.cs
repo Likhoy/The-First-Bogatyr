@@ -118,6 +118,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         else
         {
             GameObject item = Instantiate(itemPrefab, player.transform);
+            item.GetComponent<CircleCollider2D>().enabled = false;
             item.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
             inventory.AddItem(item.GetComponent<Item>());
         }
