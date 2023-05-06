@@ -145,12 +145,13 @@ public class AnimateEnemy : MonoBehaviour
     private void MeleeAttackEvent_OnMeleeAttack(MeleeAttackEvent meleeAttackEvent, MeleeAttackEventArgs meleeAttackEventArgs)
     {
         //SetHoldingWeaponAnimationParameters();
+        enemy.animator.SetBool(Settings.isIdle, false);
+        enemy.animator.SetBool(Settings.isMoving, false);
         InitializeLookAnimationParameters();
         float attackAngle = HelperUtilities.GetAngleFromVector((GameManager.Instance.GetPlayer().transform.position - transform.position).normalized);
         LookDirection lookDirection = HelperUtilities.GetLookDirection(attackAngle);
         SetLookAnimationParameters(lookDirection);
         EnemyMeleeAttackAnimation();
-        enemy.animator.SetBool(Settings.isIdle, false);
     }
 
 
