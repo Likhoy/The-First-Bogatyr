@@ -31,9 +31,9 @@ public class CinemachineTarget : MonoBehaviour
         // Create target group for cinemachine for the cinemachine camera to follow  - group will include the player and screen cursor
         CinemachineTargetGroup.Target cinemachineGroupTarget_player = new CinemachineTargetGroup.Target { weight = 1f, radius = 2.5f, target = GameManager.Instance.GetPlayer().transform };
 
-        CinemachineTargetGroup.Target cinemachineGroupTarget_cursor = new CinemachineTargetGroup.Target { weight = 0.5f, radius = 1f, target = cursorTarget };
+        CinemachineTargetGroup.Target cinemachineGroupTarget_cursor = new CinemachineTargetGroup.Target { weight = 0.3f, radius = 1f, target = cursorTarget };
 
-        CinemachineTargetGroup.Target[] cinemachineTargetArray = new CinemachineTargetGroup.Target[] { cinemachineGroupTarget_player, cinemachineGroupTarget_cursor };
+        CinemachineTargetGroup.Target[] cinemachineTargetArray = new CinemachineTargetGroup.Target[] { cinemachineGroupTarget_player }; // , cinemachineGroupTarget_cursor
 
         cinemachineTargetGroup.m_Targets = cinemachineTargetArray;
 

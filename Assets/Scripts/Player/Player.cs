@@ -1,3 +1,4 @@
+using PixelCrushers;
 using PixelCrushers.DialogueSystem;
 using System.Collections.Generic;
 using UnityEngine;
@@ -90,7 +91,7 @@ public class Player : MonoBehaviour
         this.playerDetails = playerDetails;
 
         // Create player starting weapons
-        // CreatePlayerStartingWeapon();
+        //CreatePlayerStartingWeapon();
 
         // Set player starting health
         SetPlayerHealth();
@@ -100,6 +101,7 @@ public class Player : MonoBehaviour
     {
         // Subscribe to player health event
         healthEvent.OnHealthChanged += HealthEvent_OnHealthChanged;
+        healthEvent.OnHealthChanged += HealthEvent_OnHealthChanged2; // for button helper
     }
 
     private void OnDisable()
@@ -107,6 +109,7 @@ public class Player : MonoBehaviour
         // Unsubscribe from player health event
         healthEvent.OnHealthChanged -= HealthEvent_OnHealthChanged;
     }
+
 
     /// <summary>
     /// Handle health changed event
@@ -116,7 +119,20 @@ public class Player : MonoBehaviour
         // If player has died
         if (healthEventArgs.healthAmount <= 0f)
         {
-            destroyedEvent.CallDestroyedEvent(true, 0);
+            /*destroyedEvent.CallDestroyedEvent(true, 0);
+            Destroy(this);*/
+            SaveSystem.LoadFromSlot(1);
+        }
+    }
+
+    private void HealthEvent_OnHealthChanged2(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
+    {
+        if (healthEventArgs.healthAmount <= 75f)
+        {
+            FadingOutText fadingOutText = FindObjectOfType<FadingOutText>();
+            fadingOutText.TextToShow = "Святая вода восстанавличает здоровье...";
+            fadingOutText.ShowHint(0);
+            healthEvent.OnHealthChanged -= HealthEvent_OnHealthChanged2;
         }
     }
 

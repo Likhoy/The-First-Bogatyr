@@ -10,6 +10,8 @@ TagManager:
   - NPC
   - enemyWeapon
   - HealthBar
+  - Bestiariy
+  - collisionTilemap
   layers:
   - Default
   - TransparentFX
@@ -58,4 +60,7 @@ TagManager:
     locked: 0
   - name: Instances
     uniqueID: 4234746167
+    locked: 0
+  - name: Collision
+    uniqueID: 353375123
     locked: 0
