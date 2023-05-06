@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a1055647d9f39a49ae940f2d7eb1c98, type: 3}
-  m_Name: WeaponDetails_Chernobog
+  m_Name: WeaponDetails_RangeStick_Chernobog
   m_EditorClassIdentifier: 
   weaponName: Stick
   weaponSprite: {fileID: 0}
-  weaponShootPosition: {x: 0, y: 0, z: 0}
-  weaponCurrentAmmo: {fileID: 0}
+  weaponShootPosition: {x: 2.25, y: 8.76, z: 0}
+  weaponCurrentAmmo: {fileID: 11400000, guid: 43bc5893f86d1f546955a49b66fcd4cf, type: 2}
   hasInfiniteAmmo: 1
   hasInfiniteClipCapacity: 1
   weaponClipAmmoCapacity: 0
