@@ -38,7 +38,6 @@ public class MainMenu : MonoBehaviour
         SaveSystem.DeleteSavedGameInSlot(2);
         SaveSystem.RestartGame("MainScene");
         controller.ResetDatabase();
-        controller.Awake();
         /*if (SaveSystem.HasSavedGameInSlot(1))
             SaveSystem.LoadFromSlot(1);
         else*/
