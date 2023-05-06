@@ -55,7 +55,7 @@ public abstract class Item : MonoBehaviour, IUseable
 
     public void TakeItem()
     {
-        //Костыль (исправить)
+        //РљРѕСЃС‚С‹Р»СЊ (РёСЃРїСЂР°РІРёС‚СЊ)
         if (!isTaken)
         {
             Inventory inventory = GameObject.FindObjectOfType<Inventory>();
