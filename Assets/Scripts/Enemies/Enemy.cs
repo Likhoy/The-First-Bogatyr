@@ -1,6 +1,10 @@
 using System.Collections;
+using System.Linq;
+using Unity.VisualScripting;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 #region REQUIRE COMPONENTS
 [RequireComponent(typeof(HealthEvent))]
@@ -51,6 +55,11 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public MeleeAttackEvent meleeAttackEvent;
     [HideInInspector] public ActiveWeapon activeWeapon;
     [HideInInspector] public WeaponFiredEvent weaponFiredEvent;
+    [HideInInspector] public DefendingStageStartedEvent defendingStageStartedEvent;
+    [HideInInspector] public DefendingStageEndedEvent defendingStageEndedEvent;
+    [HideInInspector] public StaticAttackingStartedEvent staticAttackingStartedEvent;
+    [HideInInspector] public StaticAttackingEndedEvent staticAttackingEndedEvent;
+
     public MeleeWeapon MeleeWeapon { get; private set; }
     public RangedWeapon RangedWeapon { get; private set; }
 
@@ -74,6 +83,10 @@ public class Enemy : MonoBehaviour
         meleeAttackEvent = GetComponent<MeleeAttackEvent>();
         activeWeapon = GetComponent<ActiveWeapon>();
         weaponFiredEvent = GetComponent<WeaponFiredEvent>();
+        defendingStageStartedEvent = GetComponent<DefendingStageStartedEvent>();
+        defendingStageEndedEvent = GetComponent<DefendingStageEndedEvent>();
+        staticAttackingStartedEvent = GetComponent<StaticAttackingStartedEvent>(); 
+        staticAttackingEndedEvent = GetComponent<StaticAttackingEndedEvent>();
     }
 
     private void OnEnable()
@@ -84,7 +97,7 @@ public class Enemy : MonoBehaviour
 
     private void OnDisable()
     {
-        //subscribe to health event
+        // unsubscribe from health event
         healthEvent.OnHealthChanged -= HealthEvent_OnHealthLost;
     }
 
@@ -106,6 +119,17 @@ public class Enemy : MonoBehaviour
     {
         DestroyedEvent destroyedEvent = GetComponent<DestroyedEvent>();
         destroyedEvent.CallDestroyedEvent(false, health.GetStartingHealth());
+
+        if (enemyDetails.moneyReward > 0 && SceneManager.GetActiveScene().name != "Purple World")
+        {
+            for (int i = 0; i < enemyDetails.moneyReward / 100; i++) // needed to add another money values
+            {
+                float positionXOffset = Random.Range(-enemyDetails.moneyDropRadius, enemyDetails.moneyDropRadius);
+                float yMaxOffset = Mathf.Sqrt(enemyDetails.moneyDropRadius * enemyDetails.moneyDropRadius - positionXOffset * positionXOffset);
+                float positionYOffset = Random.Range(-yMaxOffset, yMaxOffset);
+                Instantiate(GameResources.Instance.coins[0], transform.position + new Vector3(positionYOffset, positionYOffset), Quaternion.identity);
+            }
+        }
     }
 
 
@@ -183,7 +207,7 @@ public class Enemy : MonoBehaviour
     private void SetEnemyAnimationSpeed()
     {
         // Set animator speed to match movement speed
-        // animator.speed = enemyMovementAI.moveSpeed / Settings.baseSpeedForEnemyAnimations;
+        //animator.speed = enemyMovementAI.moveSpeed / Settings.baseSpeedForEnemyAnimations;
     }
 
     /*private IEnumerator MaterializeEnemy()

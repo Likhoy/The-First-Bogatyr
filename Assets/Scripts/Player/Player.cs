@@ -77,7 +77,7 @@ public class Player : MonoBehaviour
         reloadWeaponEvent = GetComponent<ReloadWeaponEvent>();
         weaponReloadedEvent = GetComponent<WeaponReloadedEvent>();
         itemUsedEvent = GetComponent<ItemUsedEvent>();
-        productBoughtEvent = GetComponent<ProductBoughtEvent>();    
+        productBoughtEvent = GetComponent<ProductBoughtEvent>();
         playerControl = GetComponent<PlayerController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
@@ -121,7 +121,7 @@ public class Player : MonoBehaviour
         {
             /*destroyedEvent.CallDestroyedEvent(true, 0);
             Destroy(this);*/
-            SaveSystem.LoadFromSlot(1);
+            SaveSystem.LoadFromSlot(2);
         }
     }
 
@@ -130,8 +130,11 @@ public class Player : MonoBehaviour
         if (healthEventArgs.healthAmount <= 75f)
         {
             FadingOutText fadingOutText = FindObjectOfType<FadingOutText>();
-            fadingOutText.TextToShow = "Святая вода восстанавличает здоровье...";
-            fadingOutText.ShowHint(0);
+            if (fadingOutText != null && EnemySpawner.Instance.EnemiesSpawnedSoFar == 1) // bad condition - fix
+            {
+                fadingOutText.TextToShow = "Святая вода восстанавличает здоровье...";
+                fadingOutText.ShowHint(0);
+            }
             healthEvent.OnHealthChanged -= HealthEvent_OnHealthChanged2;
         }
     }
@@ -177,6 +180,11 @@ public class Player : MonoBehaviour
     public Vector3 GetPlayerPosition()
     {
         return transform.position;
+    }
+
+    public int GetPlayerMoney()
+    {
+        return playerResources.PlayerMoney;
     }
 
     /// <summary>

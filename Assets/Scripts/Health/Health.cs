@@ -5,17 +5,18 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class Health : MonoBehaviour
 {
-    /*#region Header References
+    #region Header References
     [Space(10)]
     [Header("References")]
     #endregion
     #region Tooltip
     [Tooltip("Populate with the HealthBar component on the HealthBar gameobject")]
     #endregion
-    [SerializeField] private HealthBar healthBar;*/
+    [SerializeField] private HealthBar healthBar;
     private int startingHealth;
     private int currentHealth;
-    private HealthEvent healthEvent;
+    public int CurrentHealth { get => currentHealth; }
+    internal HealthEvent healthEvent;
     private Player player;
     private Coroutine effectCoroutine;
     private bool hasHitEffect = false;
@@ -72,14 +73,14 @@ public class Health : MonoBehaviour
         }
 
         // Enable the health bar if required
-        /*if (enemy != null && enemy.enemyDetails.isHealthBarDisplayed == true && healthBar != null)
+        if (enemy != null && enemy.enemyDetails.isHealthBarDisplayed == true && healthBar != null)
         {
             healthBar.EnableHealthBar();
         }
         else if (healthBar != null)
         {
             healthBar.DisableHealthBar();
-        }*/
+        }
     }
 
     /// <summary>
@@ -107,11 +108,12 @@ public class Health : MonoBehaviour
                 PostHitEffect();
 
             // Set health bar as the percentage of health remaining
-            /*if (healthBar != null)
+            if (healthBar != null)
             {
                 healthBar.SetHealthBarValue((float)currentHealth / (float)startingHealth);
-            }*/
+            }
         }
+
     }
 
     public void SetChanceToAvoidDamage(int new_value)

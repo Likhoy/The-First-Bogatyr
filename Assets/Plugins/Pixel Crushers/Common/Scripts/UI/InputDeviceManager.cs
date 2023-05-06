@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
+using PixelCrushers.DialogueSystem;
 #if USE_NEW_INPUT
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
