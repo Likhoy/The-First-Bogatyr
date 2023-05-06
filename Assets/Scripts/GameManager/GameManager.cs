@@ -2,6 +2,7 @@ using PixelCrushers.DialogueSystem;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.SceneManagement;
 
 [DisallowMultipleComponent]
@@ -16,6 +17,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private PlayerDetailsSO playerDetails;
     private Player player;
 
+    DialogueSystemController controller;
+
     protected override void Awake()
     {
         // Call base class
@@ -26,6 +29,10 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
         // Instantiate player
         InstantiatePlayer();
+
+        controller = FindObjectOfType<DialogueSystemController>();
+        controller.transform.GetChild(0).gameObject.SetActive(true);
+        controller.transform.GetChild(1).gameObject.SetActive(true);
     }
 
     private void OnEnable()

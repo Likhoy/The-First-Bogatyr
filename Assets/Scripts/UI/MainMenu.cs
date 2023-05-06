@@ -9,9 +9,12 @@ public class MainMenu : MonoBehaviour
 {
 
     DialogueSystemController controller;
+    [SerializeField] private GameObject continueButton;
 
     private void Awake()
     {
+        if (!SaveSystem.HasSavedGameInSlot(2))
+            continueButton.SetActive(false);
         controller = FindObjectOfType<DialogueSystemController>();
         controller.transform.GetChild(0).gameObject.SetActive(false);
         controller.transform.GetChild(1).gameObject.SetActive(false);
@@ -19,12 +22,12 @@ public class MainMenu : MonoBehaviour
 
     public void PlayPressed()
     {
-        if (SaveSystem.HasSavedGameInSlot(1))
+        if (SaveSystem.HasSavedGameInSlot(2))
         {
-            SaveSystem.LoadFromSlot(1);
+            SaveSystem.LoadFromSlot(2);
         }
-        else
-            SceneManager.LoadScene("MainScene");
+        else if (SaveSystem.HasSavedGameInSlot(1))
+            SaveSystem.LoadFromSlot(1);
 
         controller.transform.GetChild(0).gameObject.SetActive(true);
         controller.transform.GetChild(1).gameObject.SetActive(true);
@@ -32,10 +35,12 @@ public class MainMenu : MonoBehaviour
 
     public void StartNewGamePressed()
     {
-        SaveSystem.DeleteSavedGameInSlot(1);
-        SceneManager.LoadScene("MainScene");
-        controller.transform.GetChild(0).gameObject.SetActive(true);
-        controller.transform.GetChild(1).gameObject.SetActive(true);
+        SaveSystem.DeleteSavedGameInSlot(2);
+        SaveSystem.ResetGameState();
+        if (SaveSystem.HasSavedGameInSlot(1))
+            SaveSystem.LoadFromSlot(1);
+        else
+            SceneManager.LoadScene("MainScene");
     }
 
     public void ExitPressed()
