@@ -28,9 +28,14 @@ public class MainMenu : MonoBehaviour
 
         controller.transform.GetChild(0).gameObject.SetActive(true);
         controller.transform.GetChild(1).gameObject.SetActive(true);
+    }
 
-        // очистка сохранения при начале игры заново
-        // SaveSystem.DeleteSavedGameInSlot(1);
+    public void StartNewGamePressed()
+    {
+        SaveSystem.DeleteSavedGameInSlot(1);
+        SceneManager.LoadScene("MainScene");
+        controller.transform.GetChild(0).gameObject.SetActive(true);
+        controller.transform.GetChild(1).gameObject.SetActive(true);
     }
 
     public void ExitPressed()
