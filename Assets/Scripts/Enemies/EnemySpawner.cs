@@ -67,7 +67,11 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
         foreach (EnemyDetailsSO enemyDetails in GameResources.Instance.enemyDetailsList)
         {
             if (enemyDetails.enemyName == enemyName)
+            {
                 CreateEnemy(enemyDetails, grid.CellToWorld(spawnPositionVect));
+                //Debug.Log("enemy created");
+            }
+                
         }
     }
 

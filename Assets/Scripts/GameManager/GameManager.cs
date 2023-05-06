@@ -1,4 +1,5 @@
 using PixelCrushers.DialogueSystem;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -83,6 +84,19 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     public Player GetPlayer()
     {
         return player;
+    }
+
+    public void GiveItem(GameObject itemPrefab)
+    {
+        Inventory inventory = FindObjectOfType<Inventory>();
+        if (inventory.ContainsItem(itemPrefab.GetComponent<Item>().itemID) >= 1)
+            inventory.AddItem(itemPrefab.GetComponent<Item>());
+        else
+        {
+            GameObject item = Instantiate(itemPrefab, player.transform);
+            item.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
+            inventory.AddItem(item.GetComponent<Item>());
+        }
     }
 
 }

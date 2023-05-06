@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 139804721194121710}
   - component: {fileID: 4444097059704409132}
-  - component: {fileID: 1069592965247930384}
   - component: {fileID: 3343474378735456422}
+  - component: {fileID: 4051055923809068224}
   m_Layer: 10
   m_Name: Oak
   m_TagString: Untagged
@@ -86,8 +86,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!61 &1069592965247930384
-BoxCollider2D:
+--- !u!70 &3343474378735456422
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -99,21 +99,11 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.013368607, y: -1.1438141}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.4983416, y: 0.33747923}
-    oldSize: {x: 10.24, y: 10.24}
-    newSize: {x: 10.24, y: 10.24}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 5.5737906, y: 1.9594483}
-  m_EdgeRadius: 0
---- !u!70 &3343474378735456422
-CapsuleCollider2D:
+  m_Offset: {x: -0.011076634, y: -0.520109}
+  m_Size: {x: 4.8754683, y: 2.2518141}
+  m_Direction: 1
+--- !u!58 &4051055923809068224
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -125,6 +115,6 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 1.0888555}
-  m_Size: {x: 10.239998, y: 10.461162}
-  m_Direction: 0
+  m_Offset: {x: 0.18590297, y: 1.9167877}
+  serializedVersion: 2
+  m_Radius: 5.1814246
