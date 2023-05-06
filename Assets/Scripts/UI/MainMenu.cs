@@ -13,8 +13,12 @@ public class MainMenu : MonoBehaviour
     private void Awake()
     {
         controller = FindObjectOfType<DialogueSystemController>();
-        controller.transform.GetChild(0).gameObject.SetActive(false);
-        controller.transform.GetChild(1).gameObject.SetActive(false);
+        if (controller != null)
+        {
+            controller.transform.GetChild(0).gameObject.SetActive(false);
+            controller.transform.GetChild(1).gameObject.SetActive(false);
+        }
+        
     }
 
     public void PlayPressed()
@@ -26,11 +30,11 @@ public class MainMenu : MonoBehaviour
         else
             SceneManager.LoadScene("MainScene");
 
-        controller.transform.GetChild(0).gameObject.SetActive(true);
-        controller.transform.GetChild(1).gameObject.SetActive(true);
-
-        // очистка сохранения при начале игры заново
-        // SaveSystem.DeleteSavedGameInSlot(1);
+        if (controller != null)
+        {
+            controller.transform.GetChild(0).gameObject.SetActive(true);
+            controller.transform.GetChild(1).gameObject.SetActive(true);
+        }
     }
 
     public void ExitPressed()
