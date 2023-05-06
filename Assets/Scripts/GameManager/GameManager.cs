@@ -1,6 +1,9 @@
 using PixelCrushers.DialogueSystem;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
+using UnityEngine.SceneManagement;
 
 [DisallowMultipleComponent]
 public class GameManager : SingletonMonobehaviour<GameManager>
@@ -14,6 +17,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private PlayerDetailsSO playerDetails;
     private Player player;
 
+    DialogueSystemController controller;
+
     protected override void Awake()
     {
         // Call base class
@@ -24,6 +29,17 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
         // Instantiate player
         InstantiatePlayer();
+
+        controller = FindObjectOfType<DialogueSystemController>();
+        Invoke("SetQuestUIActive", 9);
+        
+        /*controller.standardDialogueUI.Close();*/
+    }
+
+    private void SetQuestUIActive()
+    {
+        controller.transform.GetChild(0).gameObject.SetActive(true);
+        controller.transform.GetChild(1).gameObject.SetActive(true);
     }
 
     private void OnEnable()
@@ -78,6 +94,14 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         }
     }
 
+    public IEnumerator FinishGameRoutine()
+    {
+        GameObject transitionImage = GameObject.FindGameObjectWithTag("transitionImage");
+        transitionImage.GetComponent<Animator>().SetTrigger("Finish");
+        yield return new WaitForSeconds(15f);
+        SceneManager.LoadScene("Menu");
+    }
+
     /// <summary>
     /// Get the player
     /// </summary>
@@ -94,6 +118,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         else
         {
             GameObject item = Instantiate(itemPrefab, player.transform);
+            item.GetComponent<CircleCollider2D>().enabled = false;
             item.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
             inventory.AddItem(item.GetComponent<Item>());
         }

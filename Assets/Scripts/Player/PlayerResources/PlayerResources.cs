@@ -2,17 +2,26 @@ using PixelCrushers.DialogueSystem;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[RequireComponent(typeof(MoneyIncreasedEvent))]
 public class PlayerResources : MonoBehaviour
 {
     private Player player;
     private Inventory inventory;
     private int playerMoney;
-    
-    void Start()
+    public int PlayerMoney { get => playerMoney; }
+
+    [HideInInspector] public MoneyIncreasedEvent moneyIncreasedEvent;
+
+    private void Awake()
+    {
+        inventory = FindObjectOfType<Inventory>();
+        moneyIncreasedEvent = GetComponent<MoneyIncreasedEvent>();
+    }
+
+    private void Start()
     {
         player = GameManager.Instance.GetPlayer();
-        inventory = FindObjectOfType<Inventory>();
-        playerMoney = player.playerDetails.playerMoneyAmount;
+        playerMoney = player.playerDetails.initialPlayerMoneyAmount;
     }
 
     private bool SpendMoney(int moneySpent)
@@ -44,5 +53,11 @@ public class PlayerResources : MonoBehaviour
         {
             // send error message
         }
+    }
+
+    internal void AddMoney(int moneyAmount)
+    {
+        if (moneyAmount > 0)
+            playerMoney += moneyAmount;
     }
 }

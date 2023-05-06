@@ -24,6 +24,9 @@ public static class Settings
 
     public const float baseSpeedForPlayerAnimations = 8f;
 
+    // Animator parameters - Enemy
+    public static float baseSpeedForEnemyAnimations = 3f;
+
     #endregion ANIMATOR PARAMETERS
 
     #region GAMEOBJECT TAGS
@@ -66,5 +69,9 @@ public static class Settings
     // added for testing purposes
     #region CONTACT DAMAGE PARAMETERS
     public const float contactDamageCollisionResetDelay = 0.5f;
+    #endregion 
+
+    #region INVENTORY PARAMETERS
+    public const int inventorySlotsCount = 5;
     #endregion 
 }

@@ -49,9 +49,11 @@ public class GameResources : MonoBehaviour
     [Header("INVENTORY")]
     #endregion Header INVENTORY
     #region Tooltip
-    [Tooltip("Poplate this with working Inventory gameobject")]
+    [Tooltip("Poplate this with item prefabs")]
     #endregion Tooltip
-    public Inventory inventory;
+    public GameObject[] items;
+
+    public GameObject[] coins;
 
     #region Header SPECIAL TILEMAP TILES
     [Space(10)]
