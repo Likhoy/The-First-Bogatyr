@@ -30,30 +30,19 @@ public class MainMenu : MonoBehaviour
         else
             SceneManager.LoadScene("MainScene");
 
-<<<<<<< Updated upstream
         if (controller != null)
         {
             controller.transform.GetChild(0).gameObject.SetActive(true);
             controller.transform.GetChild(1).gameObject.SetActive(true);
         }
-=======
-        controller.transform.GetChild(0).gameObject.SetActive(true);
-        controller.transform.GetChild(1).gameObject.SetActive(true);
-    }
-
-    public void StartNewGamePressed()
-    {
-        SaveSystem.DeleteSavedGameInSlot(1);
-        SceneManager.LoadScene("MainScene");
-        controller.transform.GetChild(0).gameObject.SetActive(true);
-        controller.transform.GetChild(1).gameObject.SetActive(true);
->>>>>>> Stashed changes
     }
 
     public void ExitPressed()
     {
         Application.Quit();
     }
+
+    
 
 }
 
