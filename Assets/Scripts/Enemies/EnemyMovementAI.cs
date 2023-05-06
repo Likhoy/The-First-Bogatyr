@@ -29,10 +29,14 @@ public class EnemyMovementAI : MonoBehaviour
 
     private Vector3 cellMidPoint; // needed to adjust enemy target point when patroling
 
+    private AnimateChernobog animateChernobog;
+
     private void Awake()
     {
         // Load components
         enemy = GetComponent<Enemy>();
+
+        animateChernobog = GetComponent<AnimateChernobog>();
 
         moveSpeed = movementDetails.GetMoveSpeed();
     }
@@ -165,7 +169,7 @@ public class EnemyMovementAI : MonoBehaviour
                 if (moveEnemyRoutine != null)
                 {
                     // Trigger idle event
-                    enemy.idleEvent.CallIdleEvent();
+                    //enemy.idleEvent.CallIdleEvent();
                     StopCoroutine(moveEnemyRoutine);
                 }
 
