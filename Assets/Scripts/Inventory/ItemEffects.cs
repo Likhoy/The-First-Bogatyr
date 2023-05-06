@@ -16,4 +16,14 @@ public static class ItemEffects
             yield return new WaitForSeconds(1f);
         }
     }
+
+    public static IEnumerator DamageEffectRoutine(float strengthTimer)
+    {
+        while (strengthTimer > 0f)
+        {
+            Debug.Log("damage " + strengthTimer);
+            strengthTimer--;
+            yield return new WaitForSeconds(1f);
+        }
+    }
 }
