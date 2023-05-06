@@ -36,11 +36,13 @@ public class MainMenu : MonoBehaviour
     public void StartNewGamePressed()
     {
         SaveSystem.DeleteSavedGameInSlot(2);
-        SaveSystem.ResetGameState();
-        if (SaveSystem.HasSavedGameInSlot(1))
+        SaveSystem.RestartGame("MainScene");
+        controller.ResetDatabase();
+        controller.Awake();
+        /*if (SaveSystem.HasSavedGameInSlot(1))
             SaveSystem.LoadFromSlot(1);
-        else
-            SceneManager.LoadScene("MainScene");
+        else*/
+            //SceneManager.LoadScene("MainScene");
     }
 
     public void ExitPressed()

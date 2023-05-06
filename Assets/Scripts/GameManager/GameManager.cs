@@ -31,6 +31,13 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         InstantiatePlayer();
 
         controller = FindObjectOfType<DialogueSystemController>();
+        Invoke("SetQuestUIActive", 9);
+        
+        /*controller.standardDialogueUI.Close();*/
+    }
+
+    private void SetQuestUIActive()
+    {
         controller.transform.GetChild(0).gameObject.SetActive(true);
         controller.transform.GetChild(1).gameObject.SetActive(true);
     }
