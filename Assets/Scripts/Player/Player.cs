@@ -121,7 +121,7 @@ public class Player : MonoBehaviour
         {
             /*destroyedEvent.CallDestroyedEvent(true, 0);
             Destroy(this);*/
-            SaveSystem.LoadFromSlot(1);
+            SaveSystem.LoadFromSlot(2);
         }
     }
 
