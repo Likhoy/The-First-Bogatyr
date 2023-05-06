@@ -78,7 +78,7 @@ public static class HelperUtilities
             lookDirection = LookDirection.Up;
         }
         // Left
-        else if ((angleDegrees <= 180f && angleDegrees > 158f) || (angleDegrees > -180 && angleDegrees <= -135f))
+        else if ((angleDegrees <= 180f && angleDegrees > 158f) || (angleDegrees >= -180 && angleDegrees <= -135f))
         {
             lookDirection = LookDirection.Left;
         }

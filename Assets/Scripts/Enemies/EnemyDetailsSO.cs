@@ -28,6 +28,8 @@ public class EnemyDetailsSO : ScriptableObject
     #endregion
     public float chaseDistance = 50f;
 
+    public float shootDistance;
+
     #region Tooltip
     [Tooltip("Distance to the player before enemy starts using melee weapon")]
     #endregion

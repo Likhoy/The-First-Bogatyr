@@ -32,7 +32,9 @@ public class AnimateChernobog : MonoBehaviour
         // Subscribe to defending events
         enemy.defendingStageStartedEvent.OnDefendingStageStarted += DefendingStageStartedEvent_OnDefendingStageStarted;
         enemy.defendingStageEndedEvent.OnDefendingStageEnded += DefendingStageEndedEvent_OnDefendingStageEnded;
-       
+
+        enemy.staticAttackingStartedEvent.OnStaticAttackingStarted += StaticAttackingStartedEvent_OnStaticAttackingStarted;
+        enemy.staticAttackingEndedEvent.OnStaticAttackingEnded += StaticAttackingEndedEvent_OnStaticAttackingEnded;
 
         // Subscribe to idle event
         enemy.idleEvent.OnIdle += IdleEvent_OnIdle;
@@ -52,6 +54,9 @@ public class AnimateChernobog : MonoBehaviour
         // Unsubscribe from defending events
         enemy.defendingStageStartedEvent.OnDefendingStageStarted -= DefendingStageStartedEvent_OnDefendingStageStarted;
         enemy.defendingStageEndedEvent.OnDefendingStageEnded -= DefendingStageEndedEvent_OnDefendingStageEnded;
+
+        enemy.staticAttackingStartedEvent.OnStaticAttackingStarted -= StaticAttackingStartedEvent_OnStaticAttackingStarted;
+        enemy.staticAttackingEndedEvent.OnStaticAttackingEnded -= StaticAttackingEndedEvent_OnStaticAttackingEnded;
 
         // Unsubscribe from idle event
         enemy.idleEvent.OnIdle -= IdleEvent_OnIdle;
@@ -73,7 +78,7 @@ public class AnimateChernobog : MonoBehaviour
 
     private void DefendingStageStartedEvent_OnDefendingStageStarted(DefendingStageStartedEvent defendingStageStartedEvent, DefendingStageStartedEventArgs defendingStageStartedEventArgs)
     {
-        StartCoroutine(DefendingStageRoutine());
+        StartCoroutine(LookDirectionWatchRoutine());
         TriggerDefendingAnimation();
     }
 
@@ -90,13 +95,14 @@ public class AnimateChernobog : MonoBehaviour
         enemy.animator.SetBool("isDefending", false);
     }
 
-    private IEnumerator DefendingStageRoutine()
+    private IEnumerator LookDirectionWatchRoutine()
     {
         while (true)
         {
+            enemy.animator.SetBool(Settings.isMoving, false);
             InitializeLookAnimationParameters();
             float angleToPlayer = HelperUtilities.GetAngleFromVector((GameManager.Instance.GetPlayer().transform.position - transform.position).normalized);
-            LookDirection lookDirection = HelperUtilities.GetLookDirection(angleToPlayer);
+            LookDirection lookDirection = HelperUtilities.GetLookDirectionLR(angleToPlayer);
             SetLookAnimationParameters(lookDirection);
             yield return waitForFixedUpdate;
         }
@@ -104,23 +110,32 @@ public class AnimateChernobog : MonoBehaviour
 
     private void DefendingStageEndedEvent_OnDefendingStageEnded(DefendingStageEndedEvent defendingStageEndedEvent, DefendingStageEndedEventArgs defendingStageEndedEventArgs)
     {
-        StopCoroutine(DefendingStageRoutine());
+        StopCoroutine(LookDirectionWatchRoutine());
         StopDefendingAnimation();
     }
 
+    private void StaticAttackingStartedEvent_OnStaticAttackingStarted(StaticAttackingStartedEvent obj)
+    {
+        enemy.animator.SetBool(Settings.isMoving, false);
+        enemy.animator.SetBool(Settings.isIdle, false);
+        enemy.animator.SetBool("isDefending", false);
+        StartCoroutine(LookDirectionWatchRoutine());
+    }
+
+    private void StaticAttackingEndedEvent_OnStaticAttackingEnded(StaticAttackingEndedEvent obj)
+    {
+        StopCoroutine(LookDirectionWatchRoutine());
+    }
+
+    
+
     private void FireWeaponEvent_OnFireWeapon(FireWeaponEvent fireWeaponEvent, FireWeaponEventArgs fireWeaponEventArgs)
     {
-        InitializeLookAnimationParameters();
-        float attackAngle = HelperUtilities.GetAngleFromVector((GameManager.Instance.GetPlayer().transform.position - transform.position).normalized);
-        LookDirection lookDirection = HelperUtilities.GetLookDirection(attackAngle);
-        SetLookAnimationParameters(lookDirection);
         TriggerAttackAnimation();
     }
 
     private void TriggerAttackAnimation()
     {
-        enemy.animator.SetBool(Settings.isMoving, false);
-        enemy.animator.SetBool(Settings.isIdle, false);
         enemy.animator.SetTrigger("attackTrigger");
     }
 
