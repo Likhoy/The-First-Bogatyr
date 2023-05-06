@@ -30,13 +30,15 @@ public class FadingOutText : MonoBehaviour
             yield return new WaitForSeconds(delayDuration);
         TMPro.text = textToShow;
         yield return new WaitForSeconds(3f);
-
-        while (TMPro.alpha > 0f)
+        if (textToShow == TMPro.text)
         {
-            TMPro.alpha -= alphaDecrease;
-            yield return alphaDecreaseCooldown;
+            while (TMPro.alpha > 0f)
+            {
+                TMPro.alpha -= alphaDecrease;
+                yield return alphaDecreaseCooldown;
+            }
+            TMPro.alpha = 1f;
+            TMPro.text = "";
         }
-        TMPro.alpha = 1f;
-        TMPro.text = "";
     }
 }

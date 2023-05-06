@@ -111,6 +111,9 @@ GameObject:
   - component: {fileID: 3057475426759464204}
   - component: {fileID: 2035950908431676431}
   - component: {fileID: 7645810633592137281}
+  - component: {fileID: 7935410479848980205}
+  - component: {fileID: 5157490540917725417}
+  - component: {fileID: -8038907786833961648}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -373,6 +376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94e09870caf5fc4ba9b80a68cf80c08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthBar: {fileID: 0}
   isDamageable: 1
   enemy: {fileID: 0}
 --- !u!114 &393971044450647451
@@ -761,6 +765,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6042a149d211d34aba70c3d762dd61e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moneyIncreasedEvent: {fileID: 0}
 --- !u!114 &4341495926020170019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -892,9 +897,53 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_key: 
-  m_appendSaverTypeToKey: 0
+  m_appendSaverTypeToKey: 1
   m_saveAcrossSceneChanges: 1
   m_restoreStateOnStart: 0
   m_target: {fileID: 0}
   m_usePlayerSpawnpoint: 1
   m_multiscene: 0
+--- !u!114 &7935410479848980205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6461650756046700630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c57d1b0e0f1b57c45b2618dcc035696a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_key: 
+  m_appendSaverTypeToKey: 1
+  m_saveAcrossSceneChanges: 1
+  m_restoreStateOnStart: 0
+--- !u!114 &5157490540917725417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6461650756046700630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 878e09a283b677a4aa5b8dfb63925be7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-8038907786833961648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6461650756046700630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19166e73f303031489dc110e8909394e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_key: 
+  m_appendSaverTypeToKey: 1
+  m_saveAcrossSceneChanges: 1
+  m_restoreStateOnStart: 0

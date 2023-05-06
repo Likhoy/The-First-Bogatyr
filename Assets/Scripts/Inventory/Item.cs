@@ -23,7 +23,6 @@ public abstract class Item : MonoBehaviour, IUseable
     //public int itemMaxCount = 1;
     public Sprite sprite;
 
-    public Item() { }
 
     virtual protected void Start()
     {

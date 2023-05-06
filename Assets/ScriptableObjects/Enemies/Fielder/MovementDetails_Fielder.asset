@@ -14,3 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minMoveSpeed: 6
   maxMoveSpeed: 6
+  dashSpeed: 0
+  dashDistance: 0
+  dashCooldownTime: 0
+  patrolingAreaLeftBottom: {x: 62, y: 35}
+  patrolingAreaRightTop: {x: 115, y: 95}

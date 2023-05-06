@@ -23,18 +23,20 @@ public class EnemyMovementAI : MonoBehaviour
     [HideInInspector] public int updateFrameNumber = 1; // default value.  This is set by the enemy spawner.
     private List<Vector2Int> surroundingPositionList = new List<Vector2Int>();
 
-    [SerializeField] 
-    private Vector2 _minPosition;
-    [SerializeField]
-    private Vector2 _maxPosition;
-
     private Vector3 randomPosition; // for choosing patroling path
     private bool isSetTargetPoint = false; // patroling path has been chosen
+    private bool pathRebuildNeeded = true; // for building path while patroling
+
+    private Vector3 cellMidPoint; // needed to adjust enemy target point when patroling
+
+    private AnimateChernobog animateChernobog;
 
     private void Awake()
     {
         // Load components
         enemy = GetComponent<Enemy>();
+
+        animateChernobog = GetComponent<AnimateChernobog>();
 
         moveSpeed = movementDetails.GetMoveSpeed();
     }
@@ -46,7 +48,9 @@ public class EnemyMovementAI : MonoBehaviour
 
         // Reset player reference position
         playerReferencePosition = GameManager.Instance.GetPlayer().GetPlayerPosition();
-        
+
+        cellMidPoint = new Vector3(LocationInfo.Grid.cellSize.x * 0.5f, LocationInfo.Grid.cellSize.y * 0.5f, 0f);
+
         SetRandomTargetPoint();
     }
 
@@ -92,13 +96,32 @@ public class EnemyMovementAI : MonoBehaviour
     /// </summary>
     private void PatrolTheArea()
     {
-        if (isSetTargetPoint)
-            enemy.movementToPositionEvent.CallMovementToPositionEvent(randomPosition, transform.position, moveSpeed, (randomPosition - transform.position).normalized);
-        else
+        if (isSetTargetPoint && pathRebuildNeeded)
+        {
+            CreatePath();
+
+            // If a path has been found move the enemy
+            if (movementSteps != null)
+            {
+                if (moveEnemyRoutine != null)
+                {
+                    // Trigger idle event
+                    enemy.idleEvent.CallIdleEvent();
+                    StopCoroutine(moveEnemyRoutine);
+                }
+
+                // Move enemy along the path using a coroutine
+                moveEnemyRoutine = StartCoroutine(MoveEnemyRoutine(movementSteps));
+
+                pathRebuildNeeded = false;
+            }
+        }   
+        else if (!isSetTargetPoint)
             enemy.idleEvent.CallIdleEvent();
         if (isSetTargetPoint && Vector2.Distance(transform.position, randomPosition) < 0.2f)
         {
             isSetTargetPoint = false;
+            pathRebuildNeeded = true;
             Invoke(nameof(SetRandomTargetPoint), 3);
         }
     }
@@ -107,8 +130,9 @@ public class EnemyMovementAI : MonoBehaviour
     private void SetRandomTargetPoint()
     {
         do {
-            randomPosition = new Vector3(Random.Range(_minPosition.x, _maxPosition.x), Random.Range(_minPosition.y, _maxPosition.y), 0); // рандомный выбор позиции
-            randomPosition = GetNearestNonObstaclePlayerPosition();
+            randomPosition = new Vector3(Random.Range(movementDetails.patrolingAreaLeftBottom.x, movementDetails.patrolingAreaRightTop.x), 
+                Random.Range(movementDetails.patrolingAreaLeftBottom.y, movementDetails.patrolingAreaRightTop.y), 0); // рандомный выбор позиции
+            randomPosition = LocationInfo.Grid.CellToWorld(GetNearestNonObstaclePlayerPosition()) + cellMidPoint;
         } 
         while (Vector2.Distance(transform.position, randomPosition) < 3f || randomPosition == Vector3Int.zero);
         
@@ -145,7 +169,7 @@ public class EnemyMovementAI : MonoBehaviour
                 if (moveEnemyRoutine != null)
                 {
                     // Trigger idle event
-                    enemy.idleEvent.CallIdleEvent();
+                    //enemy.idleEvent.CallIdleEvent();
                     StopCoroutine(moveEnemyRoutine);
                 }
 
@@ -165,7 +189,7 @@ public class EnemyMovementAI : MonoBehaviour
         while (movementSteps.Count > 0)
         {
             Vector3 nextPosition = movementSteps.Pop();
-
+            
             // while not very close continue to move - when close move onto the next step
             while (Vector3.Distance(nextPosition, transform.position) > 0.2f)
             {
