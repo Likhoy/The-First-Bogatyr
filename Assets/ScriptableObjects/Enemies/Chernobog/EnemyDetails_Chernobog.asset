@@ -16,10 +16,11 @@ MonoBehaviour:
   enemyPrefab: {fileID: 8309658863052230953, guid: d2e27e4a9ca2a2440b3dedf2b97c7066, type: 3}
   aggressionDistance: 15
   chaseDistance: 25
-  handDistance: 5
-  strikeDistance: -1
+  shootDistance: 15
+  handDistance: 0
+  strikeDistance: 0
   enemyMeleeWeapon: {fileID: 0}
-  enemyRangedWeapon: {fileID: 0}
+  enemyRangedWeapon: {fileID: 11400000, guid: e00ca533632177e49a350dbe795bd078, type: 2}
   firingIntervalMin: 0.1
   firingIntervalMax: 1
   firingDurationMin: 7
@@ -29,6 +30,8 @@ MonoBehaviour:
   hasHitEffect: 1
   hitEffectTime: 0.66
   isHealthBarDisplayed: 1
+  moneyReward: 0
+  moneyDropRadius: 5
   isBoss: 1
   spawningImmediately: 1
   littleEnemySpawnDatas:

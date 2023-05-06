@@ -91,7 +91,7 @@ public class Player : MonoBehaviour
         this.playerDetails = playerDetails;
 
         // Create player starting weapons
-        //CreatePlayerStartingWeapon();
+        CreatePlayerStartingWeapon();
 
         // Set player starting health
         SetPlayerHealth();
