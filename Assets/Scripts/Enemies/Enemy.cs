@@ -55,6 +55,11 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public MeleeAttackEvent meleeAttackEvent;
     [HideInInspector] public ActiveWeapon activeWeapon;
     [HideInInspector] public WeaponFiredEvent weaponFiredEvent;
+    [HideInInspector] public DefendingStageStartedEvent defendingStageStartedEvent;
+    [HideInInspector] public DefendingStageEndedEvent defendingStageEndedEvent;
+    [HideInInspector] public StaticAttackingStartedEvent staticAttackingStartedEvent;
+    [HideInInspector] public StaticAttackingEndedEvent staticAttackingEndedEvent;
+
     public MeleeWeapon MeleeWeapon { get; private set; }
     public RangedWeapon RangedWeapon { get; private set; }
 
@@ -78,6 +83,10 @@ public class Enemy : MonoBehaviour
         meleeAttackEvent = GetComponent<MeleeAttackEvent>();
         activeWeapon = GetComponent<ActiveWeapon>();
         weaponFiredEvent = GetComponent<WeaponFiredEvent>();
+        defendingStageStartedEvent = GetComponent<DefendingStageStartedEvent>();
+        defendingStageEndedEvent = GetComponent<DefendingStageEndedEvent>();
+        staticAttackingStartedEvent = GetComponent<StaticAttackingStartedEvent>(); 
+        staticAttackingEndedEvent = GetComponent<StaticAttackingEndedEvent>();
     }
 
     private void OnEnable()
