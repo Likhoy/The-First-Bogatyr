@@ -18,11 +18,11 @@ public class EnemyWeaponAI : MonoBehaviour
     private float firingIntervalTimer;
     private float firingDurationTimer;
 
-    private float meleeWeaponCooldownTimer= 0f;
-    public float startDeltaTime;
-    public int damageAmount;
+    private float meleeWeaponCooldownTimer = 0f;
 
     private bool holdsRangedWeapon;
+
+    private bool attackingStageStarted;
 
     private void Awake()
     {
@@ -39,16 +39,22 @@ public class EnemyWeaponAI : MonoBehaviour
         holdsRangedWeapon = enemy.activeWeapon.GetCurrentWeapon() is RangedWeapon;
     }
 
+    private void OnEnable()
+    {
+        attackingStageStarted = false;
+    }
 
     private void Update()
     {
-        EnemyWeaponCooldownTimer();
+        Vector3 playerPosition = GameManager.Instance.GetPlayer().GetPlayerPosition();
+
         // if chasing player
         if (enemy.enemyMovementAI.chasePlayer)
         {
-            Vector3 playerPosition = GameManager.Instance.GetPlayer().GetPlayerPosition();
+            EnemyMeleeWeaponCooldownTimer();
+            
             // if close enough use melee attack
-            if (Vector3.Distance(transform.position, playerPosition) <= enemy.enemyDetails.strikeDistance)
+            if (enemy.enemyDetails.enemyMeleeWeapon != null && Vector3.Distance(transform.position, playerPosition) <= enemy.enemyDetails.strikeDistance)
             {
                 if (holdsRangedWeapon)
                 {
@@ -58,13 +64,22 @@ public class EnemyWeaponAI : MonoBehaviour
                 MeleeAttack();
             }
             // else fire if possible
-            else if (enemy.enemyDetails.enemyRangedWeapon != null && Vector3.Distance(transform.position, playerPosition) > enemy.enemyDetails.handDistance)
+            else if (enemy.enemyDetails.enemyRangedWeapon != null && Vector3.Distance(transform.position, playerPosition) > enemy.enemyDetails.handDistance && Vector3.Distance(transform.position, playerPosition) < enemy.enemyDetails.shootDistance)
             {
                 if (!holdsRangedWeapon)
                 {
                     enemy.setActiveWeaponEvent.CallSetActiveWeaponEvent(enemy.RangedWeapon);
                     holdsRangedWeapon = true;
                 }
+
+                if (enemy.staticAttackingStartedEvent != null && !attackingStageStarted)
+                {
+                    GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+                    GetComponent<EnemyMovementAI>().enabled = false;
+                    enemy.staticAttackingStartedEvent.CallStaticAttackingStartedEvent();
+                    attackingStageStarted = true;
+                }
+
                 // Update timers
                 firingIntervalTimer -= Time.deltaTime;
 
@@ -86,6 +101,13 @@ public class EnemyWeaponAI : MonoBehaviour
                 }
             }
         }
+        if (enemy.staticAttackingEndedEvent != null && attackingStageStarted && Vector3.Distance(transform.position, playerPosition) > enemy.enemyDetails.shootDistance)
+        {
+            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+            GetComponent<EnemyMovementAI>().enabled = true;
+            enemy.staticAttackingEndedEvent.CallStaticAttackingEndedEvent();
+            attackingStageStarted = false;
+        }
     }
 
     private void MeleeAttack()
@@ -99,7 +121,7 @@ public class EnemyWeaponAI : MonoBehaviour
         }
     }
 
-    private void EnemyWeaponCooldownTimer()
+    private void EnemyMeleeWeaponCooldownTimer()
     {
         if (meleeWeaponCooldownTimer >= 0f)
         {

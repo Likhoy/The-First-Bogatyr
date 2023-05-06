@@ -28,6 +28,8 @@ public class EnemyDetailsSO : ScriptableObject
     #endregion
     public float chaseDistance = 50f;
 
+    public float shootDistance;
+
     #region Tooltip
     [Tooltip("Distance to the player before enemy starts using melee weapon")]
     #endregion
@@ -122,6 +124,14 @@ public class EnemyDetailsSO : ScriptableObject
     #endregion
     public bool isHealthBarDisplayed = false;
 
+    #region Header REWARD FOR ENEMY DEATH
+    [Space(10)]
+    [Header("REWARD FOR ENEMY DEATH")]
+    #endregion
+
+    public int moneyReward = 0;
+
+    public float moneyDropRadius = 5f;
 
     [Space(10)]
 

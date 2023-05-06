@@ -13,17 +13,20 @@ public class MoneyUI : MonoBehaviour
 
     private void Start()
     {
-        moneyAmount.text = GameManager.Instance.GetPlayer().playerDetails.playerMoneyAmount.ToString();
+        moneyAmount.text = GameManager.Instance.GetPlayer().playerDetails.initialPlayerMoneyAmount.ToString();
     }
 
     private void OnEnable()
     {
         GameManager.Instance.GetPlayer().productBoughtEvent.OnBuyProduct += ProductBoughtEvent_OnBuyProduct;
+        GameManager.Instance.GetPlayer().playerResources.moneyIncreasedEvent.OnMoneyIncreased += MoneyIncreasedEvent_OnMoneyIncreased;
     }
+
 
     private void OnDisable()
     {
         GameManager.Instance.GetPlayer().productBoughtEvent.OnBuyProduct -= ProductBoughtEvent_OnBuyProduct;
+        GameManager.Instance.GetPlayer().playerResources.moneyIncreasedEvent.OnMoneyIncreased -= MoneyIncreasedEvent_OnMoneyIncreased;
     }
 
     /// <summary>
@@ -32,6 +35,12 @@ public class MoneyUI : MonoBehaviour
     private void ProductBoughtEvent_OnBuyProduct(ProductBoughtEvent productBoughtEvent, ProductBoughtEventArgs productBoughtEventArgs)
     {
         UpdateMoneyAmount(productBoughtEventArgs.playerMoney);
+    }
+
+
+    private void MoneyIncreasedEvent_OnMoneyIncreased(MoneyIncreasedEvent moneyIncreasedEvent, MoneyIncreasedEventArgs moneyIncreasedEventArgs)
+    {
+        UpdateMoneyAmount(moneyIncreasedEventArgs.playerMoney);
     }
 
     /// <summary>
