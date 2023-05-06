@@ -2,19 +2,54 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using PixelCrushers;
+using PixelCrushers.DialogueSystem;
 
 public class MainMenu : MonoBehaviour
 {
-   
+
+    DialogueSystemController controller;
+    [SerializeField] private GameObject continueButton;
+
+    private void Awake()
+    {
+        if (!SaveSystem.HasSavedGameInSlot(2))
+            continueButton.SetActive(false);
+        controller = FindObjectOfType<DialogueSystemController>();
+        controller.transform.GetChild(0).gameObject.SetActive(false);
+        controller.transform.GetChild(1).gameObject.SetActive(false);
+    }
+
     public void PlayPressed()
     {
-        SceneManager.LoadScene("test");
+        if (SaveSystem.HasSavedGameInSlot(2))
+        {
+            SaveSystem.LoadFromSlot(2);
+        }
+        else if (SaveSystem.HasSavedGameInSlot(1))
+            SaveSystem.LoadFromSlot(1);
+
+        controller.transform.GetChild(0).gameObject.SetActive(true);
+        controller.transform.GetChild(1).gameObject.SetActive(true);
+    }
+
+    public void StartNewGamePressed()
+    {
+        SaveSystem.DeleteSavedGameInSlot(2);
+        SaveSystem.RestartGame("MainScene");
+        controller.ResetDatabase();
+        /*if (SaveSystem.HasSavedGameInSlot(1))
+            SaveSystem.LoadFromSlot(1);
+        else*/
+            //SceneManager.LoadScene("MainScene");
     }
 
     public void ExitPressed()
     {
         Application.Quit();
     }
+
+    
 
 }
 
