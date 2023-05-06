@@ -162,7 +162,7 @@ public class Ammo : MonoBehaviour // IFireable
         SetFireDirection(ammoDetails, aimAngle, weaponAimAngle, weaponAimDirectionVector);
 
         // Set ammo sprite
-        // spriteRenderer.sprite = ammoDetails.ammoSprite;
+        spriteRenderer.sprite = ammoDetails.ammoSprite;
 
         // set initial ammo material depending on whether there is an ammo charge period
         if (ammoDetails.ammoChargeTime > 0f)
