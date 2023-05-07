@@ -51,7 +51,6 @@ public class FireWeapon : MonoBehaviour
     /// </summary>
     private void FireWeaponEvent_OnFireWeapon(FireWeaponEvent fireWeaponEvent, FireWeaponEventArgs fireWeaponEventArgs)
     {
-        audioEffects.PlayOneShot(CFire);
         WeaponFire(fireWeaponEventArgs);
     }
 
@@ -69,6 +68,8 @@ public class FireWeapon : MonoBehaviour
             // Test if weapon is ready to fire.
             if (IsWeaponReadyToFire())
             {
+                audioEffects.PlayOneShot(CFire);
+
                 FireAmmo(fireWeaponEventArgs.aimAngle, fireWeaponEventArgs.weaponAimAngle, fireWeaponEventArgs.weaponAimDirectionVector);
 
                 ResetCoolDownTimer();

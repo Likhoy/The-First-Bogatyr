@@ -24,7 +24,7 @@ public class EnemyWeaponAI : MonoBehaviour
 
     private bool attackingStageStarted;
 
-    private AudioSource audioEffets;
+    private AudioSource audioEffects;
     [SerializeField] private AudioClip CMeleeAttack;
 
     private void Awake()
@@ -40,6 +40,7 @@ public class EnemyWeaponAI : MonoBehaviour
         firingIntervalTimer = WeaponShootInterval();
         firingDurationTimer = WeaponShootDuration();
         holdsRangedWeapon = enemy.activeWeapon.GetCurrentWeapon() is RangedWeapon;
+        audioEffects = GameObject.Find("AudioEffects").GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -117,7 +118,7 @@ public class EnemyWeaponAI : MonoBehaviour
     {
         if (meleeWeaponCooldownTimer <= 0)
         {
-            audioEffets.PlayOneShot(CMeleeAttack);
+            audioEffects.PlayOneShot(CMeleeAttack);
             MeleeWeapon meleeWeapon = enemy.MeleeWeapon;
             enemy.meleeAttackEvent.CallMeleeAttackEvent();
             Invoke("DealWithMeleeWeaponStrikedEvent", meleeWeapon.weaponDetails.weaponStrikeTime);
