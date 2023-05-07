@@ -118,7 +118,7 @@ public class EnemyWeaponAI : MonoBehaviour
     {
         if (meleeWeaponCooldownTimer <= 0)
         {
-            audioEffects.PlayOneShot(CMeleeAttack);
+            //audioEffects.PlayOneShot(CMeleeAttack);
             MeleeWeapon meleeWeapon = enemy.MeleeWeapon;
             enemy.meleeAttackEvent.CallMeleeAttackEvent();
             Invoke("DealWithMeleeWeaponStrikedEvent", meleeWeapon.weaponDetails.weaponStrikeTime);
