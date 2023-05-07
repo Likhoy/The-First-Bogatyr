@@ -5,8 +5,12 @@ using UnityEngine.UI;
 
 public static class ItemEffects
 {
+    private static int healerEffectCount = 0;
+    private static int damageEffectCount = 0;
+
     public static IEnumerator HealerEffectRoutine(float healingTimer, int healthBoostPerSecond, Image effectImage, Sprite effectSprite)
     {
+        healerEffectCount++;
         effectImage.sprite = effectSprite;
         effectImage.color = Color.white;
         Player player = GameManager.Instance.GetPlayer();
@@ -17,27 +21,37 @@ public static class ItemEffects
             healingTimer--;
             yield return new WaitForSeconds(1f);
         }
-        effectImage.color = new Color(0, 0, 0, 0);
+        if (healerEffectCount == 1)
+            effectImage.color = new Color(0, 0, 0, 0);
+        healerEffectCount--;
     }
 
     public static IEnumerator DamageEffectRoutine(float strengthTimer, Image effectImage, Sprite effectSprite)
     {
+        damageEffectCount++;
+        
         Player _player = GameManager.Instance.GetPlayer();
 
         effectImage.sprite = effectSprite;
         effectImage.color = Color.white;
-
-        (_player.activeWeapon.GetCurrentWeapon() as MeleeWeapon).weaponDetails.weaponMinDamage *= 2;
-        (_player.activeWeapon.GetCurrentWeapon() as MeleeWeapon).weaponDetails.weaponMaxDamage *= 2;
+        if (damageEffectCount == 1)
+        {
+            (_player.activeWeapon.GetCurrentWeapon() as MeleeWeapon).weaponDetails.weaponMinDamage *= 2;
+            (_player.activeWeapon.GetCurrentWeapon() as MeleeWeapon).weaponDetails.weaponMaxDamage *= 2;
+        }
 
         while (strengthTimer > 0f)
         {
             strengthTimer--;
             yield return new WaitForSeconds(1f);
         }
-        (_player.activeWeapon.GetCurrentWeapon() as MeleeWeapon).weaponDetails.weaponMinDamage /= 2;
-        (_player.activeWeapon.GetCurrentWeapon() as MeleeWeapon).weaponDetails.weaponMaxDamage /= 2;
-
-        effectImage.color = new Color(0, 0, 0, 0);
+        if (damageEffectCount == 1)
+        {
+            (_player.activeWeapon.GetCurrentWeapon() as MeleeWeapon).weaponDetails.weaponMinDamage /= 2;
+            (_player.activeWeapon.GetCurrentWeapon() as MeleeWeapon).weaponDetails.weaponMaxDamage /= 2;
+        }
+        if (damageEffectCount == 1)
+            effectImage.color = new Color(0, 0, 0, 0);
+        damageEffectCount--;
     }
 }
