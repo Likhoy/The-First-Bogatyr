@@ -98,7 +98,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     public IEnumerator FinishGameRoutine()
     {
-        SaveSystem.DeleteSavedGameInSlot(2);
+        //SaveSystem.DeleteSavedGameInSlot(2);
         GameObject transitionImage = GameObject.FindGameObjectWithTag("transitionImage");
         transitionImage.GetComponent<Animator>().SetTrigger("Finish");
         yield return new WaitForSeconds(15f);
