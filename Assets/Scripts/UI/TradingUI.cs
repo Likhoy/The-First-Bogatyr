@@ -28,6 +28,7 @@ public class TradingUI : MonoBehaviour
         {
             prices[i].text = product.price.ToString();
             images[i + 1].sprite = product.sprite;
+            buttons[i].onClick.RemoveAllListeners();
             buttons[i].onClick.AddListener(delegate { GameManager.Instance.GetPlayer().playerResources.TryBuyProduct(product); });
             this.transform.GetChild(i).gameObject.SetActive(true);
             i++;
