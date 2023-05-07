@@ -91,7 +91,7 @@ public class Player : MonoBehaviour
         this.playerDetails = playerDetails;
 
         // Create player starting weapons
-        //CreatePlayerStartingWeapon();
+        // CreatePlayerStartingWeapon();
 
         // Set player starting health
         SetPlayerHealth();
@@ -132,7 +132,7 @@ public class Player : MonoBehaviour
             FadingOutText fadingOutText = FindObjectOfType<FadingOutText>();
             if (fadingOutText != null && EnemySpawner.Instance.EnemiesSpawnedSoFar == 1) // bad condition - fix
             {
-                fadingOutText.TextToShow = "Святая вода восстанавличает здоровье...";
+                fadingOutText.TextToShow = "РЎРІСЏС‚Р°СЏ РІРѕРґР° РІРѕСЃСЃС‚Р°РЅР°РІР»РёС‡Р°РµС‚ Р·РґРѕСЂРѕРІСЊРµ...";
                 fadingOutText.ShowHint(0);
             }
             healthEvent.OnHealthChanged -= HealthEvent_OnHealthChanged2;
