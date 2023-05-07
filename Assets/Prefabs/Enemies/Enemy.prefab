@@ -36,6 +36,7 @@ GameObject:
   - component: {fileID: 7932139898352477546}
   - component: {fileID: 5557371132118945120}
   - component: {fileID: 1147905809240725422}
+  - component: {fileID: 7110743881509623731}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
@@ -710,10 +711,10 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -6589914489095399406, guid: cdc3e4e9bd2842147841d16d43ecfa5b, type: 2}
   m_audioClip: {fileID: 8300000, guid: d972e2ec3407c0443921b55413a81588, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -795,6 +796,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7110743881509623731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1767373786716691614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f95fa478083da742a902d22bafd3c55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxVolume: 0.6
 --- !u!1 &4752275437848715928
 GameObject:
   m_ObjectHideFlags: 0

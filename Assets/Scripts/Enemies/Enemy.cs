@@ -62,6 +62,9 @@ public class Enemy : MonoBehaviour
 
     private AudioSource audioSource;
     [SerializeField] private AudioClip CGetDamage;
+    private Vector3 before;
+    private Vector3 after;
+    private bool costil = true;
 
     public MeleeWeapon MeleeWeapon { get; private set; }
     public RangedWeapon RangedWeapon { get; private set; }
@@ -91,6 +94,22 @@ public class Enemy : MonoBehaviour
         defendingStageEndedEvent = GetComponent<DefendingStageEndedEvent>();
         staticAttackingStartedEvent = GetComponent<StaticAttackingStartedEvent>(); 
         staticAttackingEndedEvent = GetComponent<StaticAttackingEndedEvent>();
+        before = transform.position;
+    }
+
+    private void Update()
+    {
+        after = transform.position;
+
+        if (before != after)
+        {
+            if (!audioSource.isPlaying)
+                audioSource.Play();
+        }
+        else
+            audioSource.Stop();
+
+        before = after;
     }
 
     private void OnEnable()
@@ -110,7 +129,8 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void HealthEvent_OnHealthLost(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
     {
-        audioSource.PlayOneShot(CGetDamage, 1f);
+        if (costil) costil = false;
+        else audioSource.PlayOneShot(CGetDamage, 0.7f);
 
         if (healthEventArgs.healthAmount <= 0)
         {
