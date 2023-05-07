@@ -6,6 +6,7 @@ public class GameFinishTrigger : MonoBehaviour
 {
     private void OnDestroy()
     {
-        GameManager.Instance.StartCoroutine(GameManager.Instance.FinishGameRoutine());
+        if (GameManager.Instance != null)
+            GameManager.Instance.StartCoroutine(GameManager.Instance.FinishGameRoutine());
     }
 }
