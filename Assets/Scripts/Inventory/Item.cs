@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class Item : MonoBehaviour, IUseable
 {
@@ -22,12 +23,16 @@ public abstract class Item : MonoBehaviour, IUseable
     //public int itemCount = 0;
     //public int itemMaxCount = 1;
     public Sprite sprite;
+
+    protected Image effectImage; 
+    [SerializeField] protected Sprite effectSprite;
     protected AudioSource audioEffects;
     [SerializeField] protected AudioClip CDrink;
 
     virtual protected void Start()
     {
         audioEffects = GameObject.Find("AudioEffects").GetComponent<AudioSource>();
+        effectImage = GameObject.Find("EffectsImage").GetComponent<Image>();
         sprite = GetComponent<SpriteRenderer>().sprite;
         isTaken = false;
     }
