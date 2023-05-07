@@ -19,11 +19,14 @@ public static class ItemEffects
 
     public static IEnumerator DamageEffectRoutine(float strengthTimer)
     {
+        Player _player = GameManager.Instance.GetPlayer();
         while (strengthTimer > 0f)
         {
-            Debug.Log("damage " + strengthTimer);
+            Debug.Log("Damage " + strengthTimer);
             strengthTimer--;
             yield return new WaitForSeconds(1f);
         }
+        (_player.activeWeapon.GetCurrentWeapon() as MeleeWeapon).weaponDetails.weaponMinDamage /= 2;
+        (_player.activeWeapon.GetCurrentWeapon() as MeleeWeapon).weaponDetails.weaponMaxDamage /= 2;
     }
 }
