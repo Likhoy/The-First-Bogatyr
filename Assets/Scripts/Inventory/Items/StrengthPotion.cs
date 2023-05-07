@@ -18,7 +18,7 @@ public class StrengthPotion : Item
     {
         if (_player.activeWeapon.GetCurrentWeapon() != null)
         {
-            StartCoroutine(ItemEffects.DamageEffectRoutine(_strengthDuration));
+            StartCoroutine(ItemEffects.DamageEffectRoutine(_strengthDuration, effectImage, effectSprite));
         }
 
     }
