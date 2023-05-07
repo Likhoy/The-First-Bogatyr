@@ -131,7 +131,7 @@ public class Player : MonoBehaviour
             FadingOutText fadingOutText = FindObjectOfType<FadingOutText>();
             if (fadingOutText != null && EnemySpawner.Instance.EnemiesSpawnedSoFar == 1) // bad condition - fix
             {
-                fadingOutText.TextToShow = "Святая вода восстанавличает здоровье...";
+                fadingOutText.TextToShow = "Святая вода восстанавливает здоровье...";
                 fadingOutText.ShowHint(0);
             }
             healthEvent.OnHealthChanged -= HealthEvent_OnHealthChanged2;
