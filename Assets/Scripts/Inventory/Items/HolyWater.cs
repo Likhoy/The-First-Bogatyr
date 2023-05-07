@@ -29,6 +29,7 @@ public class HolyWater : Item
 
     override public void UseItem()
     {
+        audioEffects.PlayOneShot(CDrink);
         // AnimateDrinking();
         healingTimer += healingDuration;
         //StopAllCoroutines();
