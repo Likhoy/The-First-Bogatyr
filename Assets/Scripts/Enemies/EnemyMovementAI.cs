@@ -31,6 +31,8 @@ public class EnemyMovementAI : MonoBehaviour
 
     private AnimateChernobog animateChernobog;
 
+    private bool costil = true;
+
     private void Awake()
     {
         // Load components
@@ -71,6 +73,12 @@ public class EnemyMovementAI : MonoBehaviour
             // if (EnemyVisionAI.PlayerIsInSightArea())
             ChasePlayer();
             chasePlayer = true;
+
+            if (costil && this.gameObject.tag == "Chernobog")
+            {
+                GameObject.Find("AudioManager").GetComponent<BossFightMusic>().SetBossFightMusic();
+                costil = false;
+            }
         }
         // Check distance to player to see if enemy should carry on chasing
         else if (chasePlayer && Vector3.Distance(transform.position, GameManager.Instance.GetPlayer().GetPlayerPosition()) < enemy.enemyDetails.chaseDistance)
