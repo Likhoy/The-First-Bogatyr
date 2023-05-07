@@ -72,6 +72,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7372112467778457580, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
+      propertyPath: CGetDamage
+      value: 
+      objectReference: {fileID: 8300000, guid: 018c32617892a4c40881c7579aa59783, type: 3}
     - target: {fileID: 84762816618317504, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.7
@@ -128,10 +132,18 @@ PrefabInstance:
       propertyPath: m_Volume
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1147905809240725422, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 018c32617892a4c40881c7579aa59783, type: 3}
     - target: {fileID: 1767373786716691614, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
       propertyPath: m_Name
       value: Shadow
       objectReference: {fileID: 0}
+    - target: {fileID: 2444608219693346077, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
+      propertyPath: CFire
+      value: 
+      objectReference: {fileID: 8300000, guid: 018c32617892a4c40881c7579aa59783, type: 3}
     - target: {fileID: 2728140617652107613, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -176,6 +188,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3981597268522686200, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
+      propertyPath: CMeleeAttack
+      value: 
+      objectReference: {fileID: 8300000, guid: 018c32617892a4c40881c7579aa59783, type: 3}
     - target: {fileID: 3981597268522686200, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
       propertyPath: weaponShootPosition
       value: 
