@@ -91,7 +91,7 @@ public class Player : MonoBehaviour
         this.playerDetails = playerDetails;
 
         // Create player starting weapons
-        CreatePlayerStartingWeapon();
+        // CreatePlayerStartingWeapon();
 
         // Set player starting health
         SetPlayerHealth();
@@ -119,9 +119,8 @@ public class Player : MonoBehaviour
         // If player has died
         if (healthEventArgs.healthAmount <= 0f)
         {
-            /*destroyedEvent.CallDestroyedEvent(true, 0);
-            Destroy(this);*/
             SaveSystem.LoadFromSlot(2);
+            Destroy(gameObject);
         }
     }
 
