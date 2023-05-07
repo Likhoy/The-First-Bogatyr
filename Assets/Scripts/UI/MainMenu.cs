@@ -35,7 +35,10 @@ public class MainMenu : MonoBehaviour
         else if (SaveSystem.HasSavedGameInSlot(1))
             SaveSystem.LoadFromSlot(1);
 
-        Invoke("ActivateDialogueSystem", 3);
+        controller.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
+        controller.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
+        controller.transform.GetChild(0).GetChild(3).gameObject.SetActive(true);
+        controller.transform.GetChild(1).gameObject.SetActive(true);
     }
 
     private void ActivateDialogueSystem()
