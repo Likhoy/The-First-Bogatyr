@@ -52,8 +52,8 @@ public class DestroyableItem : MonoBehaviour
     {
         if (healthEventArgs.healthAmount <= 0f)
         {
-            //Destroy(gameObject);
             dialogueSystemTrigger.OnUse();
+            Destroy(gameObject);
         }
     }
 
