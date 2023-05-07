@@ -6,10 +6,11 @@ public class StrengthPotion : Item  {
     private Player _player;
     private float _strengthTimer;
 
-    override protected void Start() {
+    override protected void Start() 
+    {
         base.Start();
         _player = GameManager.Instance.GetPlayer();
-        _strengthDuration = 30;
+        _strengthDuration = 15;
     }
 
     override public void UseItem() 
