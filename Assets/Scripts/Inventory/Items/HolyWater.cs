@@ -19,27 +19,19 @@ public class HolyWater : Item
         player = GameManager.Instance.GetPlayer();
         healthBoostPerSecond = 4;
         healingDuration = 5;
+        healingTimer = 0;
     }
 
     private void Update()
     {
-        healingTimer -= Time.deltaTime;
-    }
-
-    private IEnumerator HealerEffectRoutine()
-    {
-        while (healingTimer >= 0f)
-        {
-            player.health.AddHealth(healthBoostPerSecond);
-            yield return new WaitForSeconds(1f);
-        }
+        //healingTimer -= healingTimer >= 0 ? Time.deltaTime : 0;
     }
 
     override public void UseItem()
     {
         // AnimateDrinking();
-        healingTimer = healingDuration;
-        StopAllCoroutines();
-        StartCoroutine(HealerEffectRoutine());
+        healingTimer += healingDuration;
+        //StopAllCoroutines();
+        StartCoroutine(ItemEffects.HealerEffectRoutine(healingDuration, healthBoostPerSecond));
     }
 }
