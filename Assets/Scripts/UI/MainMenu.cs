@@ -28,21 +28,8 @@ public class MainMenu : MonoBehaviour
 
     public void PlayPressed()
     {
-        if (SaveSystem.HasSavedGameInSlot(2))
-        {
-            SaveSystem.LoadFromSlot(2);
-        }
-        else if (SaveSystem.HasSavedGameInSlot(1))
-            SaveSystem.LoadFromSlot(1);
+        SaveSystem.LoadFromSlot(2);
 
-        controller.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
-        controller.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
-        controller.transform.GetChild(0).GetChild(3).gameObject.SetActive(true);
-        controller.transform.GetChild(1).gameObject.SetActive(true);
-    }
-
-    private void ActivateDialogueSystem()
-    {
         controller.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
         controller.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
         controller.transform.GetChild(0).GetChild(3).gameObject.SetActive(true);
@@ -52,6 +39,7 @@ public class MainMenu : MonoBehaviour
     public void StartNewGamePressed()
     {
         SaveSystem.DeleteSavedGameInSlot(2);
+        SaveSystem.DeleteSavedGameInSlot(1);
         SaveSystem.RestartGame("MainScene");
         controller.ResetDatabase();
     }
