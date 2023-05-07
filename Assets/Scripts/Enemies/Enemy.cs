@@ -60,12 +60,16 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public StaticAttackingStartedEvent staticAttackingStartedEvent;
     [HideInInspector] public StaticAttackingEndedEvent staticAttackingEndedEvent;
 
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip CGetDamage;
+
     public MeleeWeapon MeleeWeapon { get; private set; }
     public RangedWeapon RangedWeapon { get; private set; }
 
     private void Awake()
     {
         // Load components
+        audioSource = GetComponent<AudioSource>();
         healthEvent = GetComponent<HealthEvent>();
         health = GetComponent<Health>();
         //aimWeaponEvent = GetComponent<AimWeaponEvent>();
@@ -106,6 +110,8 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void HealthEvent_OnHealthLost(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
     {
+        audioSource.PlayOneShot(CGetDamage, 1f);
+
         if (healthEventArgs.healthAmount <= 0)
         {
             EnemyDestroyed();
