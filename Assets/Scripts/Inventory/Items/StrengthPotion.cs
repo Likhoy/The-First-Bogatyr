@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class StrengthPotion : Item  {
+public class StrengthPotion : Item  
+{
     private float _strengthDuration;
 
     private Player _player;
