@@ -18,7 +18,7 @@ public class HealthSaver : Saver
 
     public override string RecordData()
     {
-        m_data.health = GetComponent<Health>().CurrentHealth;
+        m_data.health = GetComponent<Health>().currentHealth;
         return SaveSystem.Serialize(m_data);
     }
 
@@ -28,6 +28,7 @@ public class HealthSaver : Saver
         if (data == null) return;
         m_data = data;
         Health health = GetComponent<Health>();
+        health.currentHealth = m_data.health;
         health.healthEvent.CallHealthChangedEvent((float)m_data.health / (float)health.GetStartingHealth(), m_data.health, health.GetStartingHealth() - m_data.health);
     }
 }
