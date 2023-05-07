@@ -26,7 +26,7 @@ public class TradingUI : MonoBehaviour
         this.gameObject.SetActive(true);
         foreach (Product product in npc.npcDetails.products)
         {
-            prices[i].text = product.price.ToString();
+            prices[i].text = product.itemName + "\n" + product.price;
             images[i + 1].sprite = product.sprite;
             buttons[i].onClick.RemoveAllListeners();
             buttons[i].onClick.AddListener(delegate { GameManager.Instance.GetPlayer().playerResources.TryBuyProduct(product); });
