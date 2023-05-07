@@ -8,7 +8,7 @@ using UnityEngine.Audio;
 
 public class SettingsMenu : MonoBehaviour
 {
-    
+
     private Toggle AudioToggle;
 
     public TMP_Dropdown resolutionDropdown;
@@ -48,7 +48,7 @@ public class SettingsMenu : MonoBehaviour
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
 
-        float vol = 0f;
+        float vol = 1f;
         theMixer.GetFloat("MasterVol", out vol);
         mastSlider.value = vol;
 
@@ -58,9 +58,9 @@ public class SettingsMenu : MonoBehaviour
         theMixer.GetFloat("SFXVol", out vol);
         sfxSlider.value = vol;
 
-        mastLabel.text = Mathf.RoundToInt(mastSlider.value + 80).ToString();
-        musicLabel.text = Mathf.RoundToInt(musicSlider.value + 80).ToString();
-        sfxLabel.text = Mathf.RoundToInt(sfxSlider.value + 80).ToString();
+        mastLabel.text = Mathf.RoundToInt(mastSlider.value * 100).ToString();
+        musicLabel.text = Mathf.RoundToInt(musicSlider.value * 100).ToString();
+        sfxLabel.text = Mathf.RoundToInt(sfxSlider.value * 100).ToString();
     }
 
 
@@ -73,27 +73,27 @@ public class SettingsMenu : MonoBehaviour
 
     public void SetMasterVol()
     {
-        mastLabel.text = Mathf.RoundToInt(mastSlider.value + 80).ToString();
+        mastLabel.text = Mathf.RoundToInt(mastSlider.value * 100).ToString();
 
-        theMixer.SetFloat("MasterVol", mastSlider.value);
+        theMixer.SetFloat("MasterVol", Mathf.Log10( mastSlider.value) * 20);
 
         PlayerPrefs.SetFloat("MasterVol", mastSlider.value);
     }
 
     public void SetMusicVol()
     {
-        musicLabel.text = Mathf.RoundToInt(musicSlider.value + 80).ToString();
+        musicLabel.text = Mathf.RoundToInt(musicSlider.value * 100).ToString();
 
-        theMixer.SetFloat("MusicVol", musicSlider.value);
+        theMixer.SetFloat("MusicVol", Mathf.Log10(musicSlider.value) * 20);
 
         PlayerPrefs.SetFloat("MusicVol", musicSlider.value);
     }
 
     public void SetSFXVol()
     {
-        sfxLabel.text = Mathf.RoundToInt(sfxSlider.value + 80).ToString();
+        sfxLabel.text = Mathf.RoundToInt(sfxSlider.value * 100).ToString();
 
-        theMixer.SetFloat("SFXVol", sfxSlider.value);
+        theMixer.SetFloat("SFXVol", Mathf.Log10(sfxSlider.value) * 20);
 
         PlayerPrefs.SetFloat("SFXVol", sfxSlider.value);
     }

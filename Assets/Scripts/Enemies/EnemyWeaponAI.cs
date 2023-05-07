@@ -24,6 +24,9 @@ public class EnemyWeaponAI : MonoBehaviour
 
     private bool attackingStageStarted;
 
+    private AudioSource audioEffets;
+    [SerializeField] private AudioClip CMeleeAttack;
+
     private void Awake()
     {
         // Load Components
@@ -114,6 +117,7 @@ public class EnemyWeaponAI : MonoBehaviour
     {
         if (meleeWeaponCooldownTimer <= 0)
         {
+            audioEffets.PlayOneShot(CMeleeAttack);
             MeleeWeapon meleeWeapon = enemy.MeleeWeapon;
             enemy.meleeAttackEvent.CallMeleeAttackEvent();
             Invoke("DealWithMeleeWeaponStrikedEvent", meleeWeapon.weaponDetails.weaponStrikeTime);
