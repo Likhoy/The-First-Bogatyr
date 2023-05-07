@@ -61,7 +61,9 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public StaticAttackingEndedEvent staticAttackingEndedEvent;
 
     private AudioSource audioSource;
+    private AudioSource audioEffects;
     [SerializeField] private AudioClip CGetDamage;
+    [SerializeField] private AudioClip[] CMoney;
     private Vector3 before;
     private Vector3 after;
     private bool costil = true;
@@ -73,6 +75,7 @@ public class Enemy : MonoBehaviour
     {
         // Load components
         audioSource = GetComponent<AudioSource>();
+        audioEffects = GameObject.Find("AudioEffects").GetComponent<AudioSource>();
         healthEvent = GetComponent<HealthEvent>();
         health = GetComponent<Health>();
         //aimWeaponEvent = GetComponent<AimWeaponEvent>();
@@ -130,11 +133,11 @@ public class Enemy : MonoBehaviour
     private void HealthEvent_OnHealthLost(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
     {
         if (costil) costil = false;
-        else audioSource.PlayOneShot(CGetDamage, 0.7f);
+        else audioEffects.PlayOneShot(CGetDamage, 0.7f);
 
         if (healthEventArgs.healthAmount <= 0)
         {
-            audioSource.PlayOneShot(CGetDamage, 0.7f);
+            audioEffects.PlayOneShot(CGetDamage, 0.7f);
             EnemyDestroyed();
         }
     }
@@ -155,7 +158,8 @@ public class Enemy : MonoBehaviour
                 float yMaxOffset = Mathf.Sqrt(enemyDetails.moneyDropRadius * enemyDetails.moneyDropRadius - positionXOffset * positionXOffset);
                 float positionYOffset = Random.Range(-yMaxOffset, yMaxOffset);
                 Instantiate(GameResources.Instance.coins[0], transform.position + new Vector3(positionYOffset, positionYOffset), Quaternion.identity);
-                // Money
+                System.Random rand = new System.Random();
+                audioEffects.PlayOneShot(CMoney[rand.Next(CMoney.Length)]);
             }
         }
     }

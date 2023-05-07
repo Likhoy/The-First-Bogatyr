@@ -86,6 +86,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 1120854384145898019}
+  currentHealth: 0
   isDamageable: 1
   enemy: {fileID: 0}
 --- !u!114 &5358803689109666157
@@ -308,6 +309,10 @@ MonoBehaviour:
   staticAttackingStartedEvent: {fileID: 0}
   staticAttackingEndedEvent: {fileID: 0}
   CGetDamage: {fileID: 8300000, guid: 2e4895f2b57ddc747830ced2bec92b39, type: 3}
+  CMoney:
+  - {fileID: 8300000, guid: 4a340d141428b31478b36b6254de4e85, type: 3}
+  - {fileID: 8300000, guid: 43fe0211f4c3b8f44b43b253b00821fa, type: 3}
+  - {fileID: 8300000, guid: 2657c0408e982ae4ab2cf64c5b7dc647, type: 3}
 --- !u!114 &5592646621270956941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -391,6 +396,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 392
   weaponShootPosition: {fileID: 0}
+  CMeleeAttack: {fileID: 8300000, guid: ae63227c71f51ee43885698258e255f8, type: 3}
 --- !u!114 &6997670445888944142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -427,6 +433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 591194fd4ba59854ba694d91560b9026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CFire: {fileID: 0}
 --- !u!114 &7806689024229660459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -712,7 +719,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -6589914489095399406, guid: cdc3e4e9bd2842147841d16d43ecfa5b, type: 2}
   m_audioClip: {fileID: 8300000, guid: d972e2ec3407c0443921b55413a81588, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 1
   Mute: 0

@@ -15,6 +15,7 @@ public class FireWeapon : MonoBehaviour
     private FireWeaponEvent fireWeaponEvent;
     private ReloadWeaponEvent reloadWeaponEvent;
     private WeaponFiredEvent weaponFiredEvent;
+    private AudioSource audioEffects;
     [SerializeField] private AudioClip CFire;
 
     private void Awake()
@@ -24,6 +25,7 @@ public class FireWeapon : MonoBehaviour
         fireWeaponEvent = GetComponent<FireWeaponEvent>();
         reloadWeaponEvent = GetComponent<ReloadWeaponEvent>();
         weaponFiredEvent = GetComponent<WeaponFiredEvent>();
+        audioEffects = GameObject.Find("AudioEffects").GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -49,6 +51,7 @@ public class FireWeapon : MonoBehaviour
     /// </summary>
     private void FireWeaponEvent_OnFireWeapon(FireWeaponEvent fireWeaponEvent, FireWeaponEventArgs fireWeaponEventArgs)
     {
+        audioEffects.PlayOneShot(CFire);
         WeaponFire(fireWeaponEventArgs);
     }
 

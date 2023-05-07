@@ -379,6 +379,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 0}
+  currentHealth: 0
   isDamageable: 1
   enemy: {fileID: 0}
 --- !u!114 &393971044450647451
@@ -781,6 +782,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moneyIncreasedEvent: {fileID: 0}
+  CMoney:
+  - {fileID: 8300000, guid: 4a340d141428b31478b36b6254de4e85, type: 3}
+  - {fileID: 8300000, guid: 43fe0211f4c3b8f44b43b253b00821fa, type: 3}
+  - {fileID: 8300000, guid: 2657c0408e982ae4ab2cf64c5b7dc647, type: 3}
 --- !u!114 &4341495926020170019
 MonoBehaviour:
   m_ObjectHideFlags: 0
