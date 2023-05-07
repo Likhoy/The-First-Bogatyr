@@ -27,7 +27,10 @@ public class PlayerController : MonoBehaviour
 
     private AudioSource audioSource;
     [SerializeField]
-    AudioClip CAttac;
+    AudioClip CAttack;
+
+    private Vector3 before;
+    private Vector3 after;
 
     private void Awake()
     {
@@ -44,11 +47,23 @@ public class PlayerController : MonoBehaviour
         waitForFixedUpdate = new WaitForFixedUpdate();
         takeItemList = new List<Item>();
         isTaking = false;
+        audioSource.volume = 0.5f;
     }
 
     void Update()
     {
         //DialogInput();
+
+        // Play walk audio
+        after = transform.position;
+        if (before != after)
+        {
+            if (!audioSource.isPlaying)
+                audioSource.Play();
+        }
+        else
+            audioSource.Stop();
+        before = after;
 
         // if player movement disabled then return
         if (isPlayerMovementDisabled)
@@ -215,8 +230,8 @@ public class PlayerController : MonoBehaviour
             {
                 if (timeBetweenAttack <= 0)
                 {
-                    player.meleeAttackEvent.CallMeleeAttackEvent();
-                    audioSource.PlayOneShot(CAttac, 1);
+                    audioSource.PlayOneShot(CAttack, 1f);
+                    player.meleeAttackEvent.CallMeleeAttackEvent();   
                     // isPlayerMovementDisabled = true;
                     // Maybe there is a way better ?
                     Invoke("DealWithMeleeWeaponStrikedEvent", meleeWeapon.weaponDetails.weaponStrikeTime);

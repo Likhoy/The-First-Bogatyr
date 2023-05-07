@@ -206,7 +206,7 @@ MonoBehaviour:
   takeItemList: []
   isTaking: 0
   isPlayerDashing: 0
-  CAttac: {fileID: 8300000, guid: a18ee1e93c088964a8c139cd6a864be7, type: 3}
+  CAttack: {fileID: 8300000, guid: a18ee1e93c088964a8c139cd6a864be7, type: 3}
 --- !u!50 &6461650756046700633
 Rigidbody2D:
   serializedVersion: 4
@@ -541,6 +541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 591194fd4ba59854ba694d91560b9026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CFire: {fileID: 0}
 --- !u!114 &5010006491703101803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -973,7 +974,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -6589914489095399406, guid: cdc3e4e9bd2842147841d16d43ecfa5b, type: 2}
   m_audioClip: {fileID: 8300000, guid: d972e2ec3407c0443921b55413a81588, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 1
   Mute: 0

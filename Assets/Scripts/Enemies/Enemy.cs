@@ -134,6 +134,7 @@ public class Enemy : MonoBehaviour
 
         if (healthEventArgs.healthAmount <= 0)
         {
+            audioSource.PlayOneShot(CGetDamage, 0.7f);
             EnemyDestroyed();
         }
     }
@@ -154,6 +155,7 @@ public class Enemy : MonoBehaviour
                 float yMaxOffset = Mathf.Sqrt(enemyDetails.moneyDropRadius * enemyDetails.moneyDropRadius - positionXOffset * positionXOffset);
                 float positionYOffset = Random.Range(-yMaxOffset, yMaxOffset);
                 Instantiate(GameResources.Instance.coins[0], transform.position + new Vector3(positionYOffset, positionYOffset), Quaternion.identity);
+                // Money
             }
         }
     }

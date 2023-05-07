@@ -15,6 +15,7 @@ public class FireWeapon : MonoBehaviour
     private FireWeaponEvent fireWeaponEvent;
     private ReloadWeaponEvent reloadWeaponEvent;
     private WeaponFiredEvent weaponFiredEvent;
+    [SerializeField] private AudioClip CFire;
 
     private void Awake()
     {

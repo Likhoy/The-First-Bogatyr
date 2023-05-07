@@ -114,6 +114,7 @@ public class EnemyWeaponAI : MonoBehaviour
     {
         if (meleeWeaponCooldownTimer <= 0)
         {
+            //Sound для полевика
             MeleeWeapon meleeWeapon = enemy.MeleeWeapon;
             enemy.meleeAttackEvent.CallMeleeAttackEvent();
             Invoke("DealWithMeleeWeaponStrikedEvent", meleeWeapon.weaponDetails.weaponStrikeTime);

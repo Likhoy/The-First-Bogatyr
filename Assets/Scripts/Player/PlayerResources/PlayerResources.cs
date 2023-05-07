@@ -34,7 +34,7 @@ public class PlayerResources : MonoBehaviour
         return false;    
     }
 
-    public void TryBuyProduct(Product product)
+    public void TryBuyProduct(Product product) // Монеточки
     {
         if (SpendMoney(product.price))
         {
