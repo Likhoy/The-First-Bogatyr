@@ -22,10 +22,12 @@ public abstract class Item : MonoBehaviour, IUseable
     //public int itemCount = 0;
     //public int itemMaxCount = 1;
     public Sprite sprite;
-
+    protected AudioSource audioEffects;
+    [SerializeField] protected AudioClip CDrink;
 
     virtual protected void Start()
     {
+        audioEffects = GameObject.Find("AudioEffects").GetComponent<AudioSource>();
         sprite = GetComponent<SpriteRenderer>().sprite;
         isTaken = false;
     }

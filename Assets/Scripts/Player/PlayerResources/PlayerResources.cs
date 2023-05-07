@@ -11,6 +11,9 @@ public class PlayerResources : MonoBehaviour
 
     [HideInInspector] public MoneyIncreasedEvent moneyIncreasedEvent;
 
+    private AudioSource audioEffects;
+    [SerializeField] private AudioClip[] CMoney;
+
     private void Awake()
     {
         inventory = FindObjectOfType<Inventory>();
@@ -21,6 +24,7 @@ public class PlayerResources : MonoBehaviour
     {
         player = GameManager.Instance.GetPlayer();
         PlayerMoney = player.playerDetails.initialPlayerMoneyAmount;
+        audioEffects = GameObject.Find("AudioEffects").GetComponent<AudioSource>();
     }
 
     private bool SpendMoney(int moneySpent)
@@ -33,10 +37,12 @@ public class PlayerResources : MonoBehaviour
         return false;    
     }
 
-    public void TryBuyProduct(Product product)
+    public void TryBuyProduct(Product product) // Монеточки
     {
         if (SpendMoney(product.price))
         {
+            System.Random rand = new System.Random();
+            audioEffects.PlayOneShot(CMoney[rand.Next(CMoney.Length)]);
             GameManager.Instance.GiveItem(product.itemPrefab);
             player.productBoughtEvent.CallProductBoughtEvent(PlayerMoney);
         }
