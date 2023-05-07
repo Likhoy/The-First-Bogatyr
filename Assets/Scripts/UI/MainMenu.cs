@@ -16,7 +16,13 @@ public class MainMenu : MonoBehaviour
         if (!SaveSystem.HasSavedGameInSlot(2))
             continueButton.SetActive(false);
         controller = FindObjectOfType<DialogueSystemController>();
-        controller.transform.GetChild(0).gameObject.SetActive(false);
+        controller.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+    }
+
+    private void Start()
+    {
+        controller.transform.GetChild(0).GetChild(2).gameObject.SetActive(false);
+        controller.transform.GetChild(0).GetChild(3).gameObject.SetActive(false);
         controller.transform.GetChild(1).gameObject.SetActive(false);
     }
 
@@ -29,7 +35,14 @@ public class MainMenu : MonoBehaviour
         else if (SaveSystem.HasSavedGameInSlot(1))
             SaveSystem.LoadFromSlot(1);
 
-        controller.transform.GetChild(0).gameObject.SetActive(true);
+        Invoke("ActivateDialogueSystem", 3);
+    }
+
+    private void ActivateDialogueSystem()
+    {
+        controller.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
+        controller.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
+        controller.transform.GetChild(0).GetChild(3).gameObject.SetActive(true);
         controller.transform.GetChild(1).gameObject.SetActive(true);
     }
 
@@ -38,10 +51,6 @@ public class MainMenu : MonoBehaviour
         SaveSystem.DeleteSavedGameInSlot(2);
         SaveSystem.RestartGame("MainScene");
         controller.ResetDatabase();
-        /*if (SaveSystem.HasSavedGameInSlot(1))
-            SaveSystem.LoadFromSlot(1);
-        else*/
-            //SceneManager.LoadScene("MainScene");
     }
 
     public void ExitPressed()

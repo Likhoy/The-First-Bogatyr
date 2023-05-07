@@ -1,3 +1,4 @@
+using PixelCrushers;
 using PixelCrushers.DialogueSystem;
 using System.Collections;
 using Unity.VisualScripting;
@@ -33,12 +34,13 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         controller = FindObjectOfType<DialogueSystemController>();
         Invoke("SetQuestUIActive", 9);
         
-        /*controller.standardDialogueUI.Close();*/
     }
 
     private void SetQuestUIActive()
     {
-        controller.transform.GetChild(0).gameObject.SetActive(true);
+        controller.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
+        controller.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
+        controller.transform.GetChild(0).GetChild(3).gameObject.SetActive(true);
         controller.transform.GetChild(1).gameObject.SetActive(true);
     }
 
@@ -96,6 +98,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     public IEnumerator FinishGameRoutine()
     {
+        SaveSystem.DeleteSavedGameInSlot(2);
         GameObject transitionImage = GameObject.FindGameObjectWithTag("transitionImage");
         transitionImage.GetComponent<Animator>().SetTrigger("Finish");
         yield return new WaitForSeconds(15f);
