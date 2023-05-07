@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class GameFinishTrigger : MonoBehaviour
 {
-    private void OnDestroy()
+    private Health health;
+
+    private void Awake()
     {
-        if (GameManager.Instance != null)
+        health = GetComponent<Health>();
+    }
+
+    private void Update()
+    {
+        if (health.currentHealth <= 0f)
             GameManager.Instance.StartCoroutine(GameManager.Instance.FinishGameRoutine());
     }
 }
