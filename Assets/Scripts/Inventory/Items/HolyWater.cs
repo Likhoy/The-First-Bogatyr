@@ -33,6 +33,6 @@ public class HolyWater : Item
         // AnimateDrinking();
         healingTimer += healingDuration;
         //StopAllCoroutines();
-        StartCoroutine(ItemEffects.HealerEffectRoutine(healingDuration, healthBoostPerSecond));
+        StartCoroutine(ItemEffects.HealerEffectRoutine(healingDuration, healthBoostPerSecond, effectImage, effectSprite));
     }
 }
