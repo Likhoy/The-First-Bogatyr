@@ -1,19 +1,28 @@
+using PixelCrushers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameFinishTrigger : MonoBehaviour
 {
-    private Health health;
-
-    private void Awake()
+    private void OnEnable()
     {
-        health = GetComponent<Health>();
+        GetComponent<DestroyedEvent>().OnDestroyed += GameFinishTrigger_OnDestroyed;
     }
 
-    private void Update()
+    private void OnDisable()
     {
-        if (health.currentHealth <= 0f)
-            GameManager.Instance.StartCoroutine(GameManager.Instance.FinishGameRoutine());
+        GetComponent<DestroyedEvent>().OnDestroyed -= GameFinishTrigger_OnDestroyed;
+    }
+
+    private void GameFinishTrigger_OnDestroyed(DestroyedEvent arg1, DestroyedEventArgs arg2)
+    {
+        FinishGame();
+    }
+
+    private void FinishGame()
+    {
+        GameManager.Instance.StartCoroutine(GameManager.Instance.FinishGameRoutine());
+        SaveSystem.DeleteSavedGameInSlot(2);
     }
 }
