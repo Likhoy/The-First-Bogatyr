@@ -16,6 +16,7 @@ public class StrengthPotion : Item
 
     override public void UseItem() 
     {
+        audioEffects.PlayOneShot(CDrink);
         if (_player.activeWeapon.GetCurrentWeapon() != null)
         {
             StartCoroutine(ItemEffects.DamageEffectRoutine(_strengthDuration, effectImage, effectSprite));
