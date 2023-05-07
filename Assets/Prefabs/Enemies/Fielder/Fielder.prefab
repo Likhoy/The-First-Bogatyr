@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3873933048915210732}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1.14, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -124,6 +124,10 @@ PrefabInstance:
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 5.12
       objectReference: {fileID: 0}
+    - target: {fileID: 1147905809240725422, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: e15e679dfb0bc9e43b86af520d27de3b, type: 3}
     - target: {fileID: 1767373786716691614, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
       propertyPath: m_Name
       value: Fielder

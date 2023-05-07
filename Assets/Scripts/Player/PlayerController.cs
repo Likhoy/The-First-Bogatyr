@@ -25,6 +25,13 @@ public class PlayerController : MonoBehaviour
 
     private float timeBetweenAttack = 0f;
 
+    private AudioSource audioSource;
+    private AudioSource audioEffects;
+    [SerializeField]
+    AudioClip CAttack;
+
+    private Vector3 before;
+    private Vector3 after;
 
     private void Awake()
     {
@@ -37,15 +44,19 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         // create waitForFixedUpdate for use in corountine
+        audioSource = GetComponent<AudioSource>();
+        audioEffects = GameObject.Find("AudioEffects").GetComponent<AudioSource>();
         waitForFixedUpdate = new WaitForFixedUpdate();
         takeItemList = new List<Item>();
         isTaking = false;
+        audioSource.volume = 0.5f;
     }
 
     void Update()
     {
+        after = transform.position;
         //DialogInput();
-
+        
         // if player movement disabled then return
         if (isPlayerMovementDisabled)
             return;
@@ -68,6 +79,8 @@ public class PlayerController : MonoBehaviour
 
         // collecting items by the player controller
         TakeItem();
+
+        before = after;
     }
 
     private void TakeItem()
@@ -108,16 +121,23 @@ public class PlayerController : MonoBehaviour
             {
                 // trigger movement event
                 player.movementByVelocityEvent.CallMovementByVelocityEvent(direction, moveSpeed);
+                if (!audioSource.isPlaying && before != after)
+                    audioSource.Play();
             }
             // else player dash if not cooling down
             else if (playerDashCooldownTimer <= 0f)
             {
+                audioSource.Stop();
                 PlayerDash((Vector3)direction);
             }
+
+            if (before == after)
+                audioSource.Stop();
         }
         // else trigger idle event
         else
         {
+            audioSource.Stop();
             player.idleEvent.CallIdleEvent();
         }
     }
@@ -207,7 +227,8 @@ public class PlayerController : MonoBehaviour
             {
                 if (timeBetweenAttack <= 0)
                 {
-                    player.meleeAttackEvent.CallMeleeAttackEvent();
+                    audioEffects.PlayOneShot(CAttack, 1f);
+                    player.meleeAttackEvent.CallMeleeAttackEvent();   
                     // isPlayerMovementDisabled = true;
                     // Maybe there is a way better ?
                     Invoke("DealWithMeleeWeaponStrikedEvent", meleeWeapon.weaponDetails.weaponStrikeTime);
