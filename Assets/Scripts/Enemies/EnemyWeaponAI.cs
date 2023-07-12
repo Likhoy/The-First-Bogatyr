@@ -53,7 +53,13 @@ public class EnemyWeaponAI : MonoBehaviour
 
     private void Update()
     {
-        Vector3 playerPosition = GameManager.Instance.GetPlayer().GetPlayerPosition();
+        // ?. doesn't seem to work
+        Player player = GameManager.Instance.GetPlayer();
+        Vector3 playerPosition;
+        if (player != null)
+            playerPosition = player.GetPlayerPosition();
+        else
+            playerPosition = new Vector3(1000, 1000);
 
         // if chasing player
         if (enemy.enemyMovementAI.chasePlayer)
