@@ -24,6 +24,9 @@ public class EnemyWeaponAI : MonoBehaviour
 
     private bool attackingStageStarted;
 
+    private AudioSource audioEffects;
+    [SerializeField] private AudioClip CMeleeAttack;
+
     private void Awake()
     {
         // Load Components
@@ -37,6 +40,7 @@ public class EnemyWeaponAI : MonoBehaviour
         firingIntervalTimer = WeaponShootInterval();
         firingDurationTimer = WeaponShootDuration();
         holdsRangedWeapon = enemy.activeWeapon.GetCurrentWeapon() is RangedWeapon;
+        audioEffects = GameObject.Find("AudioEffects").GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -71,10 +75,12 @@ public class EnemyWeaponAI : MonoBehaviour
                     enemy.setActiveWeaponEvent.CallSetActiveWeaponEvent(enemy.RangedWeapon);
                     holdsRangedWeapon = true;
                 }
-
+                
                 if (enemy.staticAttackingStartedEvent != null && !attackingStageStarted)
                 {
-                    GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+                    //GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+                    GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+
                     GetComponent<EnemyMovementAI>().enabled = false;
                     enemy.staticAttackingStartedEvent.CallStaticAttackingStartedEvent();
                     attackingStageStarted = true;
@@ -103,7 +109,8 @@ public class EnemyWeaponAI : MonoBehaviour
         }
         if (enemy.staticAttackingEndedEvent != null && attackingStageStarted && Vector3.Distance(transform.position, playerPosition) > enemy.enemyDetails.shootDistance)
         {
-            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+            //GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
             GetComponent<EnemyMovementAI>().enabled = true;
             enemy.staticAttackingEndedEvent.CallStaticAttackingEndedEvent();
             attackingStageStarted = false;
@@ -114,6 +121,7 @@ public class EnemyWeaponAI : MonoBehaviour
     {
         if (meleeWeaponCooldownTimer <= 0)
         {
+            //audioEffects.PlayOneShot(CMeleeAttack);
             MeleeWeapon meleeWeapon = enemy.MeleeWeapon;
             enemy.meleeAttackEvent.CallMeleeAttackEvent();
             Invoke("DealWithMeleeWeaponStrikedEvent", meleeWeapon.weaponDetails.weaponStrikeTime);
