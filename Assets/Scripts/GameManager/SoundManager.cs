@@ -1,3 +1,4 @@
+using PixelCrushers.DialogueSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,13 +18,19 @@ public class SoundManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float dist = Vector3.Distance(transform.position, player.transform.position);
-        if (dist <= 15)
-            audioSource.volume = maxVolume;
-        else
+        float dist = 0f;
+        if (player != null)
         {
-            float pos = Mathf.Max(0f, 22 - dist);
-            audioSource.volume = maxVolume * (100f * pos / 6f) / 100f;
+            dist = Vector3.Distance(transform.position, player.transform.position);
+            if (dist <= 15)
+                audioSource.volume = maxVolume;
+            else
+            {
+                float pos = Mathf.Max(0f, 22 - dist);
+                audioSource.volume = maxVolume * (100f * pos / 6f) / 100f;
+            }
         }
+        else
+            audioSource.volume = 0f;
     }
 }
