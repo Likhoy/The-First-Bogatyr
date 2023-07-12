@@ -12,7 +12,9 @@ public class EnemyWeaponAI : MonoBehaviour
     [Tooltip("Populate this with the WeaponShootPosition child gameobject transform")]
     #endregion Tooltip
     [SerializeField] private Transform weaponShootPosition;
+    
     private Enemy enemy;
+    private new Rigidbody2D rigidbody2D;
     private EnemyDetailsSO enemyDetails;
 
     private float firingIntervalTimer;
@@ -31,6 +33,7 @@ public class EnemyWeaponAI : MonoBehaviour
     {
         // Load Components
         enemy = GetComponent<Enemy>();
+        rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
     private void Start()
@@ -78,12 +81,7 @@ public class EnemyWeaponAI : MonoBehaviour
                 
                 if (enemy.staticAttackingStartedEvent != null && !attackingStageStarted)
                 {
-                    //GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-                    GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-
-                    GetComponent<EnemyMovementAI>().enabled = false;
-                    enemy.staticAttackingStartedEvent.CallStaticAttackingStartedEvent();
-                    attackingStageStarted = true;
+                    ToggleStaticAttackingEvent(true);
                 }
 
                 // Update timers
@@ -109,11 +107,7 @@ public class EnemyWeaponAI : MonoBehaviour
         }
         if (enemy.staticAttackingEndedEvent != null && attackingStageStarted && Vector3.Distance(transform.position, playerPosition) > enemy.enemyDetails.shootDistance)
         {
-            //GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-            GetComponent<EnemyMovementAI>().enabled = true;
-            enemy.staticAttackingEndedEvent.CallStaticAttackingEndedEvent();
-            attackingStageStarted = false;
+            ToggleStaticAttackingEvent(false);
         }
     }
 
@@ -141,6 +135,25 @@ public class EnemyWeaponAI : MonoBehaviour
     {
         //EnablePlayer();
         enemy.weaponFiredEvent.CallWeaponFiredEvent(enemy.MeleeWeapon);
+    }
+
+    /// <summary>
+    /// Handle enemy static attack event
+    /// </summary>
+    private void ToggleStaticAttackingEvent(bool isStarting)
+    {
+        enemy.enemyMovementAI.enabled = !isStarting;
+        if (isStarting)
+        {
+            rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
+            enemy.staticAttackingStartedEvent.CallStaticAttackingStartedEvent();
+        }
+        else
+        {
+            rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
+            enemy.staticAttackingEndedEvent.CallStaticAttackingEndedEvent();
+        }
+        attackingStageStarted = isStarting;
     }
 
     /// <summary>
