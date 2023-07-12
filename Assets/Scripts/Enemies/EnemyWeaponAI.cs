@@ -75,10 +75,12 @@ public class EnemyWeaponAI : MonoBehaviour
                     enemy.setActiveWeaponEvent.CallSetActiveWeaponEvent(enemy.RangedWeapon);
                     holdsRangedWeapon = true;
                 }
-
+                
                 if (enemy.staticAttackingStartedEvent != null && !attackingStageStarted)
                 {
-                    GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+                    //GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+                    GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+
                     GetComponent<EnemyMovementAI>().enabled = false;
                     enemy.staticAttackingStartedEvent.CallStaticAttackingStartedEvent();
                     attackingStageStarted = true;
@@ -107,7 +109,8 @@ public class EnemyWeaponAI : MonoBehaviour
         }
         if (enemy.staticAttackingEndedEvent != null && attackingStageStarted && Vector3.Distance(transform.position, playerPosition) > enemy.enemyDetails.shootDistance)
         {
-            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+            //GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
             GetComponent<EnemyMovementAI>().enabled = true;
             enemy.staticAttackingEndedEvent.CallStaticAttackingEndedEvent();
             attackingStageStarted = false;
