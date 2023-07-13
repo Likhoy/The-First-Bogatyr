@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.UIElements;
 
 public class AudioManager : MonoBehaviour
 {
@@ -9,19 +10,20 @@ public class AudioManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(PlayerPrefs.HasKey("MasterVol"))
+        if (PlayerPrefs.HasKey("MasterVol"))
         {
-            theMixer.SetFloat("MasterVol", PlayerPrefs.GetFloat("MasterVol"));
+            theMixer.SetFloat("MasterVol", Mathf.Log10(PlayerPrefs.GetFloat("MasterVol")) * 20);
         }
 
         if (PlayerPrefs.HasKey("MusicVol"))
         {
-            theMixer.SetFloat("MusicVol", PlayerPrefs.GetFloat("MusicVol"));
+            theMixer.SetFloat("MusicVol", Mathf.Log10(PlayerPrefs.GetFloat("MusicVol")) * 20);
         }
 
         if (PlayerPrefs.HasKey("SFXVol"))
         {
-            theMixer.SetFloat("SFXVol", PlayerPrefs.GetFloat("SFXVol"));
+            theMixer.SetFloat("SFXVol", Mathf.Log10(PlayerPrefs.GetFloat("SFXVol")) * 20);
         }
+
     }
 }
