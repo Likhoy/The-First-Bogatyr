@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using PixelCrushers;
 using PixelCrushers.DialogueSystem;
 using UnityEngine.UI;
@@ -17,7 +14,7 @@ public class MainMenu : MonoBehaviour
 
     private void Awake()
     {
-        if (!SaveSystem.HasSavedGameInSlot(2))
+        if (!SaveSystem.HasSavedGameInSlot(1))
             continueButton.SetActive(false);
         controller = FindObjectOfType<DialogueSystemController>();
         controller.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
@@ -42,7 +39,7 @@ public class MainMenu : MonoBehaviour
         settingsButton.GetComponent<Button>().enabled = false;
         exitButton.GetComponent<Button>().enabled = false;
 
-        SaveSystem.LoadFromSlot(2);
+        SaveSystem.LoadFromSlot(1);
 
         controller.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
         controller.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
@@ -52,7 +49,6 @@ public class MainMenu : MonoBehaviour
 
     public void StartNewGamePressed()
     {
-        SaveSystem.DeleteSavedGameInSlot(2);
         SaveSystem.DeleteSavedGameInSlot(1);
         SaveSystem.RestartGame("MainScene");
         controller.ResetDatabase();

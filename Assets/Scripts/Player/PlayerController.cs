@@ -67,8 +67,6 @@ public class PlayerController : MonoBehaviour
         if (isPlayerDashing)
             return;
 
-        Debug.Log(isPlayerDashing);
-
         // Process the player movement input
         ProcessMovementInput();
 
@@ -131,7 +129,6 @@ public class PlayerController : MonoBehaviour
             // else player dash if not cooling down
             else if (playerDashCooldownTimer <= 0f)
             {
-                Debug.Log(playerDashCooldownTimer);
                 audioSource.Stop();
                 PlayerDash((Vector3)direction);
             }
@@ -172,7 +169,6 @@ public class PlayerController : MonoBehaviour
             // yield and wait for fixed update
             yield return waitForFixedUpdate;
         }
-        Debug.Log("finished");
         isPlayerDashing = false;
         playerDashCooldownTimer = movementDetails.dashCooldownTime;
         player.transform.position = targetPosition;
