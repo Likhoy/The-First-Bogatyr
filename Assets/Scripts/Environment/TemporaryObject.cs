@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class TemporaryObject : MonoBehaviour
@@ -23,7 +21,9 @@ public class TemporaryObject : MonoBehaviour
 
         while (spriteRenderer.color.a > 0f)
         {
-            spriteRenderer.color = spriteRenderer.color.WithAlpha(spriteRenderer.color.a - alphaDecrease);
+            Color color = spriteRenderer.color;
+            color.a = color.a - alphaDecrease;
+            spriteRenderer.color = color;
             yield return alphaDecreaseCooldown;
         }
 

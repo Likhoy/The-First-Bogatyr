@@ -15,6 +15,8 @@ public class FireWeapon : MonoBehaviour
     private FireWeaponEvent fireWeaponEvent;
     private ReloadWeaponEvent reloadWeaponEvent;
     private WeaponFiredEvent weaponFiredEvent;
+    private AudioSource audioEffects;
+    [SerializeField] private AudioClip CFire;
 
     private void Awake()
     {
@@ -23,6 +25,7 @@ public class FireWeapon : MonoBehaviour
         fireWeaponEvent = GetComponent<FireWeaponEvent>();
         reloadWeaponEvent = GetComponent<ReloadWeaponEvent>();
         weaponFiredEvent = GetComponent<WeaponFiredEvent>();
+        audioEffects = GameObject.Find("AudioEffects").GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -65,6 +68,8 @@ public class FireWeapon : MonoBehaviour
             // Test if weapon is ready to fire.
             if (IsWeaponReadyToFire())
             {
+                audioEffects.PlayOneShot(CFire);
+
                 FireAmmo(fireWeaponEventArgs.aimAngle, fireWeaponEventArgs.weaponAimAngle, fireWeaponEventArgs.weaponAimDirectionVector);
 
                 ResetCoolDownTimer();

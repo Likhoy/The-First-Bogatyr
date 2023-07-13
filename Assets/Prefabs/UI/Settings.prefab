@@ -1208,10 +1208,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 935035335052164822}
   m_HandleRect: {fileID: 935035335454495531}
   m_Direction: 0
-  m_MinValue: -80
-  m_MaxValue: 20
+  m_MinValue: 0.0001
+  m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -3502,10 +3502,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 935035335133000057}
   m_HandleRect: {fileID: 935035334499153382}
   m_Direction: 0
-  m_MinValue: -80
-  m_MaxValue: 20
+  m_MinValue: 0.0001
+  m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -3753,7 +3753,7 @@ MonoBehaviour:
   mastSlider: {fileID: 935035334681251856}
   musicSlider: {fileID: 935035334975076732}
   sfxSlider: {fileID: 935035333544542771}
-  volumeOn: 0
+  volumeOn: 1
 --- !u!1 &935035334975076730
 GameObject:
   m_ObjectHideFlags: 0
@@ -3838,10 +3838,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 935035335015830134}
   m_HandleRect: {fileID: 935035335386585549}
   m_Direction: 0
-  m_MinValue: -80
-  m_MaxValue: 20
+  m_MinValue: 0.0001
+  m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
