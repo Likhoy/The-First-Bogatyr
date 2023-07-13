@@ -1,5 +1,4 @@
 using PixelCrushers;
-using PixelCrushers.DialogueSystem;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -126,13 +125,14 @@ public class Player : MonoBehaviour
 
     private void HealthEvent_OnHealthChanged2(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
     {
-        if (healthEventArgs.healthAmount <= 75f)
+        if (healthEventArgs.healthPercent <= 0.75f)
         {
             FadingOutText fadingOutText = FindObjectOfType<FadingOutText>();
-            if (fadingOutText != null && EnemySpawner.Instance.EnemiesSpawnedSoFar == 1) // bad condition - fix
+            if (fadingOutText != null && !GameProgressData.healthHintShown) 
             {
                 fadingOutText.TextToShow = "Святая вода восстанавливает здоровье...";
                 fadingOutText.ShowHint(0);
+                GameProgressData.healthHintShown = true;
             }
             healthEvent.OnHealthChanged -= HealthEvent_OnHealthChanged2;
         }

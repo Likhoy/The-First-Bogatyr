@@ -66,43 +66,42 @@ public class EnemyMovementAI : MonoBehaviour
     private void MoveEnemy()
     {
         Player player = GameManager.Instance.GetPlayer();
-        Vector3 playerPosition;
         if (player != null)
-            playerPosition = player.GetPlayerPosition();
-        else
-            playerPosition = new Vector3(0, 0);
+        {
+            Vector3 playerPosition = player.GetPlayerPosition();
 
-        // Check distance to player to see if enemy should start attacking
-        if (!chasePlayer && Vector3.Distance(transform.position, playerPosition) < enemy.enemyDetails.aggressionDistance)
-        {
-            // Check if player is in sight area 
-            // if (EnemyVisionAI.PlayerIsInSightArea())
-            ChasePlayer();
-            chasePlayer = true;
+            // Check distance to player to see if enemy should start attacking
+            if (!chasePlayer && Vector3.Distance(transform.position, playerPosition) < enemy.enemyDetails.aggressionDistance)
+            {
+                // Check if player is in sight area 
+                // if (EnemyVisionAI.PlayerIsInSightArea())
+                ChasePlayer();
+                chasePlayer = true;
 
-            if (costil && this.gameObject.tag == "Chernobog")
-            {
-                GameObject.Find("AudioManager").GetComponent<BossFightMusic>().SetBossFightMusic();
-                costil = false;
+                if (costil && this.gameObject.tag == "Chernobog")
+                {
+                    GameObject.Find("AudioManager").GetComponent<BossFightMusic>().SetBossFightMusic();
+                    costil = false;
+                }
             }
-        }
-        // Check distance to player to see if enemy should carry on chasing
-        else if (chasePlayer && Vector3.Distance(transform.position, playerPosition) < enemy.enemyDetails.chaseDistance)
-        {
-            ChasePlayer();
-        }
-        // otherwise patrol the area
-        else if (player != null)
-        {
-            if (chasePlayer)
+            // Check distance to player to see if enemy should carry on chasing
+            else if (chasePlayer && Vector3.Distance(transform.position, playerPosition) < enemy.enemyDetails.chaseDistance)
             {
-                SetRandomTargetPoint();
-                if (moveEnemyRoutine != null)
-                    StopCoroutine(moveEnemyRoutine);
-                chasePlayer = false;
+                ChasePlayer();
             }
-            PatrolTheArea();
-        }
+            // otherwise patrol the area
+            else
+            {
+                if (chasePlayer)
+                {
+                    SetRandomTargetPoint();
+                    if (moveEnemyRoutine != null)
+                        StopCoroutine(moveEnemyRoutine);
+                    chasePlayer = false;
+                }
+                PatrolTheArea();
+            }
+        } 
     }
 
     /// <summary>
