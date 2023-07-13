@@ -26,9 +26,11 @@ public class DestroyableItem : MonoBehaviour
     private HealthEvent healthEvent;
     private Health health;
     private ReceiveContactDamage receiveContactDamage;
+    private DialogueSystemTrigger dialogueSystemTrigger;
 
     private void Awake()
     {
+        dialogueSystemTrigger = GetComponent<DialogueSystemTrigger>();
         healthEvent = GetComponent<HealthEvent>();
         health = GetComponent<Health>();
         health.SetStartingHealth(startingHealthAmount);
@@ -50,6 +52,7 @@ public class DestroyableItem : MonoBehaviour
     {
         if (healthEventArgs.healthAmount <= 0f)
         {
+            dialogueSystemTrigger.OnUse();
             Destroy(gameObject);
         }
     }

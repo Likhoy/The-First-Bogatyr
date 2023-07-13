@@ -22,9 +22,17 @@ public class PlayerController : MonoBehaviour
     private bool isPlayerMovementDisabled = false;
 
     [HideInInspector] public bool isPlayerDashing = false;
+    private Vector2 direction;
 
     private float timeBetweenAttack = 0f;
 
+    private AudioSource audioSource;
+    private AudioSource audioEffects;
+    [SerializeField]
+    AudioClip CAttack;
+
+    private Vector3 before;
+    private Vector3 after;
 
     private void Awake()
     {
@@ -36,16 +44,21 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+        audioEffects = GameObject.Find("AudioEffects").GetComponent<AudioSource>();
+        audioSource.volume = 0.5f;
+
         // create waitForFixedUpdate for use in corountine
         waitForFixedUpdate = new WaitForFixedUpdate();
+
         takeItemList = new List<Item>();
         isTaking = false;
     }
 
     void Update()
     {
-        //DialogInput();
-
+        after = transform.position;
+        
         // if player movement disabled then return
         if (isPlayerMovementDisabled)
             return;
@@ -53,6 +66,8 @@ public class PlayerController : MonoBehaviour
         // if player is dashing then return
         if (isPlayerDashing)
             return;
+
+        Debug.Log(isPlayerDashing);
 
         // Process the player movement input
         ProcessMovementInput();
@@ -68,6 +83,8 @@ public class PlayerController : MonoBehaviour
 
         // collecting items by the player controller
         TakeItem();
+
+        before = after;
     }
 
     private void TakeItem()
@@ -93,7 +110,7 @@ public class PlayerController : MonoBehaviour
         bool dashButtonPressed = Input.GetKey(Settings.commandButtons[Command.Dash]);
 
         // Create a direction vector based on the input
-        Vector2 direction = new Vector2(horizontalMovement, verticalMovement);
+        direction = new Vector2(horizontalMovement, verticalMovement);
 
         // Adjust distance for diagonal movement (pythagoras approximation)
         if (horizontalMovement != 0f && verticalMovement != 0f)
@@ -108,16 +125,24 @@ public class PlayerController : MonoBehaviour
             {
                 // trigger movement event
                 player.movementByVelocityEvent.CallMovementByVelocityEvent(direction, moveSpeed);
+                if (!audioSource.isPlaying && before != after)
+                    audioSource.Play();
             }
             // else player dash if not cooling down
             else if (playerDashCooldownTimer <= 0f)
             {
+                Debug.Log(playerDashCooldownTimer);
+                audioSource.Stop();
                 PlayerDash((Vector3)direction);
             }
+
+            if (before == after)
+                audioSource.Stop();
         }
         // else trigger idle event
         else
         {
+            audioSource.Stop();
             player.idleEvent.CallIdleEvent();
         }
     }
@@ -147,6 +172,7 @@ public class PlayerController : MonoBehaviour
             // yield and wait for fixed update
             yield return waitForFixedUpdate;
         }
+        Debug.Log("finished");
         isPlayerDashing = false;
         playerDashCooldownTimer = movementDetails.dashCooldownTime;
         player.transform.position = targetPosition;
@@ -162,22 +188,24 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //if collided with something stop player dash coroutine
-        StopPlayerDashRoutine();
+        // if collided with something stop player dash coroutine
+        StopPlayerDashRoutine(true);
     }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        //if in collided with something stop player dash coroutine
-        StopPlayerDashRoutine();
+        // if in collided with something stop player dash coroutine
+        StopPlayerDashRoutine(true);
     }
 
-    private void StopPlayerDashRoutine()
+    private void StopPlayerDashRoutine(bool timerResetNeeded)
     {
         if (playerDashCoroutine != null)
         {
             StopCoroutine(playerDashCoroutine);
             isPlayerDashing = false;
+            if (timerResetNeeded)
+                playerDashCooldownTimer = movementDetails.dashCooldownTime;
         }
     }
 
@@ -195,7 +223,7 @@ public class PlayerController : MonoBehaviour
     public void DisablePlayer()
     {
         isPlayerMovementDisabled = true;
-        StopPlayerDashRoutine();
+        StopPlayerDashRoutine(true);
         player.idleEvent.CallIdleEvent();
     }
 
@@ -207,7 +235,8 @@ public class PlayerController : MonoBehaviour
             {
                 if (timeBetweenAttack <= 0)
                 {
-                    player.meleeAttackEvent.CallMeleeAttackEvent();
+                    audioEffects.PlayOneShot(CAttack, 1f);
+                    player.meleeAttackEvent.CallMeleeAttackEvent();   
                     // isPlayerMovementDisabled = true;
                     // Maybe there is a way better ?
                     Invoke("DealWithMeleeWeaponStrikedEvent", meleeWeapon.weaponDetails.weaponStrikeTime);
