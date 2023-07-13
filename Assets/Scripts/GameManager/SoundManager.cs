@@ -18,10 +18,9 @@ public class SoundManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float dist = 0f;
         if (player != null)
         {
-            dist = Vector3.Distance(transform.position, player.transform.position);
+            float dist = Vector3.Distance(transform.position, player.transform.position);
             if (dist <= 15)
                 audioSource.volume = maxVolume;
             else

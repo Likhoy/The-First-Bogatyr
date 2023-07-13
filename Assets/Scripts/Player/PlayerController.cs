@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     private bool isPlayerMovementDisabled = false;
 
     [HideInInspector] public bool isPlayerDashing = false;
+    private Vector2 direction;
 
     private float timeBetweenAttack = 0f;
 
@@ -43,19 +44,20 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        // create waitForFixedUpdate for use in corountine
         audioSource = GetComponent<AudioSource>();
         audioEffects = GameObject.Find("AudioEffects").GetComponent<AudioSource>();
+        audioSource.volume = 0.5f;
+
+        // create waitForFixedUpdate for use in corountine
         waitForFixedUpdate = new WaitForFixedUpdate();
+
         takeItemList = new List<Item>();
         isTaking = false;
-        audioSource.volume = 0.5f;
     }
 
     void Update()
     {
         after = transform.position;
-        //DialogInput();
         
         // if player movement disabled then return
         if (isPlayerMovementDisabled)
@@ -64,6 +66,8 @@ public class PlayerController : MonoBehaviour
         // if player is dashing then return
         if (isPlayerDashing)
             return;
+
+        Debug.Log(isPlayerDashing);
 
         // Process the player movement input
         ProcessMovementInput();
@@ -106,7 +110,7 @@ public class PlayerController : MonoBehaviour
         bool dashButtonPressed = Input.GetKey(Settings.commandButtons[Command.Dash]);
 
         // Create a direction vector based on the input
-        Vector2 direction = new Vector2(horizontalMovement, verticalMovement);
+        direction = new Vector2(horizontalMovement, verticalMovement);
 
         // Adjust distance for diagonal movement (pythagoras approximation)
         if (horizontalMovement != 0f && verticalMovement != 0f)
@@ -127,6 +131,7 @@ public class PlayerController : MonoBehaviour
             // else player dash if not cooling down
             else if (playerDashCooldownTimer <= 0f)
             {
+                Debug.Log(playerDashCooldownTimer);
                 audioSource.Stop();
                 PlayerDash((Vector3)direction);
             }
@@ -167,6 +172,7 @@ public class PlayerController : MonoBehaviour
             // yield and wait for fixed update
             yield return waitForFixedUpdate;
         }
+        Debug.Log("finished");
         isPlayerDashing = false;
         playerDashCooldownTimer = movementDetails.dashCooldownTime;
         player.transform.position = targetPosition;
@@ -182,22 +188,24 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //if collided with something stop player dash coroutine
-        StopPlayerDashRoutine();
+        // if collided with something stop player dash coroutine
+        StopPlayerDashRoutine(true);
     }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        //if in collided with something stop player dash coroutine
-        StopPlayerDashRoutine();
+        // if in collided with something stop player dash coroutine
+        StopPlayerDashRoutine(true);
     }
 
-    private void StopPlayerDashRoutine()
+    private void StopPlayerDashRoutine(bool timerResetNeeded)
     {
         if (playerDashCoroutine != null)
         {
             StopCoroutine(playerDashCoroutine);
             isPlayerDashing = false;
+            if (timerResetNeeded)
+                playerDashCooldownTimer = movementDetails.dashCooldownTime;
         }
     }
 
@@ -215,7 +223,7 @@ public class PlayerController : MonoBehaviour
     public void DisablePlayer()
     {
         isPlayerMovementDisabled = true;
-        StopPlayerDashRoutine();
+        StopPlayerDashRoutine(true);
         player.idleEvent.CallIdleEvent();
     }
 
