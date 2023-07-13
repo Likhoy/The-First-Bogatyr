@@ -12,7 +12,9 @@ public class EnemyWeaponAI : MonoBehaviour
     [Tooltip("Populate this with the WeaponShootPosition child gameobject transform")]
     #endregion Tooltip
     [SerializeField] private Transform weaponShootPosition;
+    
     private Enemy enemy;
+    private new Rigidbody2D rigidbody2D;
     private EnemyDetailsSO enemyDetails;
 
     private float firingIntervalTimer;
@@ -24,10 +26,14 @@ public class EnemyWeaponAI : MonoBehaviour
 
     private bool attackingStageStarted;
 
+    private AudioSource audioEffects;
+    [SerializeField] private AudioClip CMeleeAttack;
+
     private void Awake()
     {
         // Load Components
         enemy = GetComponent<Enemy>();
+        rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
     private void Start()
@@ -37,6 +43,7 @@ public class EnemyWeaponAI : MonoBehaviour
         firingIntervalTimer = WeaponShootInterval();
         firingDurationTimer = WeaponShootDuration();
         holdsRangedWeapon = enemy.activeWeapon.GetCurrentWeapon() is RangedWeapon;
+        audioEffects = GameObject.Find("AudioEffects").GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -46,74 +53,76 @@ public class EnemyWeaponAI : MonoBehaviour
 
     private void Update()
     {
-        Vector3 playerPosition = GameManager.Instance.GetPlayer().GetPlayerPosition();
+        Player player = GameManager.Instance.GetPlayer();
 
-        // if chasing player
-        if (enemy.enemyMovementAI.chasePlayer)
+        if (player != null)
         {
-            EnemyMeleeWeaponCooldownTimer();
-            
-            // if close enough use melee attack
-            if (enemy.enemyDetails.enemyMeleeWeapon != null && Vector3.Distance(transform.position, playerPosition) <= enemy.enemyDetails.strikeDistance)
+            Vector3 playerPosition = player.GetPlayerPosition();
+
+            // if chasing player
+            if (enemy.enemyMovementAI.chasePlayer)
             {
-                if (holdsRangedWeapon)
+                EnemyMeleeWeaponCooldownTimer();
+
+                // if close enough use melee attack
+                if (enemy.enemyDetails.enemyMeleeWeapon != null && Vector3.Distance(transform.position, playerPosition) <= enemy.enemyDetails.strikeDistance)
                 {
-                    enemy.setActiveWeaponEvent.CallSetActiveWeaponEvent(enemy.MeleeWeapon);
-                    holdsRangedWeapon = false;
-                }   
-                MeleeAttack();
+                    if (holdsRangedWeapon)
+                    {
+                        enemy.setActiveWeaponEvent.CallSetActiveWeaponEvent(enemy.MeleeWeapon);
+                        holdsRangedWeapon = false;
+                    }
+                    MeleeAttack();
+                }
+                // else fire if possible
+                else if (enemy.enemyDetails.enemyRangedWeapon != null && Vector3.Distance(transform.position, playerPosition) > enemy.enemyDetails.handDistance && Vector3.Distance(transform.position, playerPosition) < enemy.enemyDetails.shootDistance)
+                {
+                    if (!holdsRangedWeapon)
+                    {
+                        enemy.setActiveWeaponEvent.CallSetActiveWeaponEvent(enemy.RangedWeapon);
+                        holdsRangedWeapon = true;
+                    }
+
+                    if (enemy.staticAttackingStartedEvent != null && !attackingStageStarted)
+                    {
+                        ToggleStaticAttackingEvent(true);
+                    }
+
+                    // Update timers
+                    firingIntervalTimer -= Time.deltaTime;
+
+                    // Interval Timer
+                    if (firingIntervalTimer < 0f)
+                    {
+                        if (firingDurationTimer >= 0)
+                        {
+                            firingDurationTimer -= Time.deltaTime;
+
+                            FireWeapon();
+                        }
+                        else
+                        {
+                            // Reset timers
+                            firingIntervalTimer = WeaponShootInterval();
+                            firingDurationTimer = WeaponShootDuration();
+                        }
+                    }
+                }
             }
-            // else fire if possible
-            else if (enemy.enemyDetails.enemyRangedWeapon != null && Vector3.Distance(transform.position, playerPosition) > enemy.enemyDetails.handDistance && Vector3.Distance(transform.position, playerPosition) < enemy.enemyDetails.shootDistance)
+            if (enemy.staticAttackingEndedEvent != null && attackingStageStarted && Vector3.Distance(transform.position, playerPosition) > enemy.enemyDetails.shootDistance)
             {
-                if (!holdsRangedWeapon)
-                {
-                    enemy.setActiveWeaponEvent.CallSetActiveWeaponEvent(enemy.RangedWeapon);
-                    holdsRangedWeapon = true;
-                }
-
-                if (enemy.staticAttackingStartedEvent != null && !attackingStageStarted)
-                {
-                    GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-                    GetComponent<EnemyMovementAI>().enabled = false;
-                    enemy.staticAttackingStartedEvent.CallStaticAttackingStartedEvent();
-                    attackingStageStarted = true;
-                }
-
-                // Update timers
-                firingIntervalTimer -= Time.deltaTime;
-
-                // Interval Timer
-                if (firingIntervalTimer < 0f)
-                {
-                    if (firingDurationTimer >= 0)
-                    {
-                        firingDurationTimer -= Time.deltaTime;
-
-                        FireWeapon();
-                    }
-                    else
-                    {
-                        // Reset timers
-                        firingIntervalTimer = WeaponShootInterval();
-                        firingDurationTimer = WeaponShootDuration();
-                    }
-                }
+                ToggleStaticAttackingEvent(false);
             }
         }
-        if (enemy.staticAttackingEndedEvent != null && attackingStageStarted && Vector3.Distance(transform.position, playerPosition) > enemy.enemyDetails.shootDistance)
-        {
-            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-            GetComponent<EnemyMovementAI>().enabled = true;
-            enemy.staticAttackingEndedEvent.CallStaticAttackingEndedEvent();
-            attackingStageStarted = false;
-        }
+
+        
     }
 
     private void MeleeAttack()
     {
         if (meleeWeaponCooldownTimer <= 0)
         {
+            //audioEffects.PlayOneShot(CMeleeAttack);
             MeleeWeapon meleeWeapon = enemy.MeleeWeapon;
             enemy.meleeAttackEvent.CallMeleeAttackEvent();
             Invoke("DealWithMeleeWeaponStrikedEvent", meleeWeapon.weaponDetails.weaponStrikeTime);
@@ -133,6 +142,25 @@ public class EnemyWeaponAI : MonoBehaviour
     {
         //EnablePlayer();
         enemy.weaponFiredEvent.CallWeaponFiredEvent(enemy.MeleeWeapon);
+    }
+
+    /// <summary>
+    /// Handle enemy static attack event
+    /// </summary>
+    private void ToggleStaticAttackingEvent(bool isStarting)
+    {
+        enemy.enemyMovementAI.enabled = !isStarting;
+        if (isStarting)
+        {
+            rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
+            enemy.staticAttackingStartedEvent.CallStaticAttackingStartedEvent();
+        }
+        else
+        {
+            rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
+            enemy.staticAttackingEndedEvent.CallStaticAttackingEndedEvent();
+        }
+        attackingStageStarted = isStarting;
     }
 
     /// <summary>

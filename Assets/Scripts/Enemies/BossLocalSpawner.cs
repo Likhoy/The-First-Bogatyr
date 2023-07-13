@@ -3,8 +3,11 @@ using System;
 public class BossLocalSpawner : MonoBehaviour
 {
 
-    //private int enemiesSpawnedSoFar = EnemySpawner.Instance.EnemiesSpawnedSoFar;
     private Enemy enemy;
+    private new Rigidbody2D rigidbody2D;
+    private EnemyWeaponAI enemyWeaponAI;
+    private PolygonCollider2D polygonCollider2D;
+
     private bool[] needsToSpawn = new bool[3] { true, false, false };
     private int countCurrrentShadow = 0;
 
@@ -12,6 +15,9 @@ public class BossLocalSpawner : MonoBehaviour
     private void Awake()
     {
         enemy = GetComponent<Enemy>();
+        rigidbody2D = GetComponent<Rigidbody2D>();
+        enemyWeaponAI = GetComponent<EnemyWeaponAI>();
+        polygonCollider2D = GetComponent<PolygonCollider2D>();
     }
 
     private void OnEnable()
@@ -26,32 +32,20 @@ public class BossLocalSpawner : MonoBehaviour
             needsToSpawn[0] = false;
             needsToSpawn[1] = true;
             SpawnLittleEnemies();
-            enemy.defendingStageStartedEvent.CallDefendingStageStartedEvent();
-            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-            GetComponent<PolygonCollider2D>().enabled = false;
-            GetComponent<EnemyWeaponAI>().enabled = false;
-            GetComponent<EnemyMovementAI>().enabled = false;
+            ToggleDefendingStageEvent(true);
         }
         else if (needsToSpawn[1] && healthEventArgs.healthPercent * 100 < 50f)
         {
             needsToSpawn[1] = false;
             needsToSpawn[2] = true;
             SpawnLittleEnemies();
-            enemy.defendingStageStartedEvent.CallDefendingStageStartedEvent();
-            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-            GetComponent<PolygonCollider2D>().enabled = false;
-            GetComponent<EnemyWeaponAI>().enabled = false;
-            GetComponent<EnemyMovementAI>().enabled = false;
+            ToggleDefendingStageEvent(true);
         }
         else if (needsToSpawn[2] && healthEventArgs.healthPercent * 100 < 25f)
         {
             needsToSpawn[2] = false;
             SpawnLittleEnemies();
-            enemy.defendingStageStartedEvent.CallDefendingStageStartedEvent();
-            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-            GetComponent<PolygonCollider2D>().enabled = false;
-            GetComponent<EnemyWeaponAI>().enabled = false;
-            GetComponent<EnemyMovementAI>().enabled = false;
+            ToggleDefendingStageEvent(true);
         }
         else if (!needsToSpawn[2] && healthEventArgs.healthPercent * 100 < 25f)
             enemy.healthEvent.OnHealthChanged -= HealthEvent_OnHealthChanged;
@@ -98,11 +92,7 @@ public class BossLocalSpawner : MonoBehaviour
         --countCurrrentShadow;
         if (countCurrrentShadow == 0)
         {
-            enemy.defendingStageEndedEvent.CallDefendingStageEndedEvent();
-            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-            GetComponent<PolygonCollider2D>().enabled = true;
-            GetComponent<EnemyWeaponAI>().enabled = true;
-            GetComponent<EnemyMovementAI>().enabled = true;
+            ToggleDefendingStageEvent(false);
         }
         //if (enemy.enemyDetails.enemiesToSpawn < enemiesSpawnedSoFar)
         //{
@@ -112,24 +102,25 @@ public class BossLocalSpawner : MonoBehaviour
         //}
     }
 
-    /*private void FirstShadowLogic()
+    /// <summary>
+    /// Handle enemy defending stage event
+    /// </summary>
+    private void ToggleDefendingStageEvent(bool isStarting)
     {
-        if (currentHealth == startingHealth - 1 && FirstShadow != null)
+        polygonCollider2D.enabled = !isStarting;
+        enemy.enemyMovementAI.enabled = !isStarting;
+        enemyWeaponAI.enabled = !isStarting;
+        if (isStarting)
         {
-            FirstShadow.SetActive(true);
+            rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
+            enemy.defendingStageStartedEvent.CallDefendingStageStartedEvent();
+        }
+        else
+        {
+            rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
+            enemy.defendingStageEndedEvent.CallDefendingStageEndedEvent();
         }
     }
-    private void SecondShadowLogic()
-    {
-        if (FirstShadow != null && SecondShadow != null) return;
-        SecondShadow.SetActive(true);
-    }
-    private void ThirdShadowLogic()
-    {
-        if (SecondShadow != null && ThirdShadow != null) return;
-        SecondShadow.SetActive(true);
-    }*/
-
 
 }
 

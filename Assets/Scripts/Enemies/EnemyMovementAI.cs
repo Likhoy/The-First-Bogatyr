@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Enemy))]
@@ -30,6 +29,8 @@ public class EnemyMovementAI : MonoBehaviour
     private Vector3 cellMidPoint; // needed to adjust enemy target point when patroling
 
     private AnimateChernobog animateChernobog;
+
+    private bool costil = true;
 
     private void Awake()
     {
@@ -64,31 +65,43 @@ public class EnemyMovementAI : MonoBehaviour
     /// </summary>
     private void MoveEnemy()
     {
-        // Check distance to player to see if enemy should start attacking
-        if (!chasePlayer && Vector3.Distance(transform.position, GameManager.Instance.GetPlayer().GetPlayerPosition()) < enemy.enemyDetails.aggressionDistance)
+        Player player = GameManager.Instance.GetPlayer();
+        if (player != null)
         {
-            // Check if player is in sight area 
-            // if (EnemyVisionAI.PlayerIsInSightArea())
-            ChasePlayer();
-            chasePlayer = true;
-        }
-        // Check distance to player to see if enemy should carry on chasing
-        else if (chasePlayer && Vector3.Distance(transform.position, GameManager.Instance.GetPlayer().GetPlayerPosition()) < enemy.enemyDetails.chaseDistance)
-        {
-            ChasePlayer();
-        }
-        // otherwise patrol the area
-        else
-        {
-            if (chasePlayer)
+            Vector3 playerPosition = player.GetPlayerPosition();
+
+            // Check distance to player to see if enemy should start attacking
+            if (!chasePlayer && Vector3.Distance(transform.position, playerPosition) < enemy.enemyDetails.aggressionDistance)
             {
-                SetRandomTargetPoint();
-                if (moveEnemyRoutine != null)
-                    StopCoroutine(moveEnemyRoutine);
-                chasePlayer = false;
+                // Check if player is in sight area 
+                // if (EnemyVisionAI.PlayerIsInSightArea())
+                ChasePlayer();
+                chasePlayer = true;
+
+                if (costil && this.gameObject.tag == "Chernobog")
+                {
+                    GameObject.Find("AudioManager").GetComponent<BossFightMusic>().SetBossFightMusic();
+                    costil = false;
+                }
             }
-            PatrolTheArea();
-        }
+            // Check distance to player to see if enemy should carry on chasing
+            else if (chasePlayer && Vector3.Distance(transform.position, playerPosition) < enemy.enemyDetails.chaseDistance)
+            {
+                ChasePlayer();
+            }
+            // otherwise patrol the area
+            else
+            {
+                if (chasePlayer)
+                {
+                    SetRandomTargetPoint();
+                    if (moveEnemyRoutine != null)
+                        StopCoroutine(moveEnemyRoutine);
+                    chasePlayer = false;
+                }
+                PatrolTheArea();
+            }
+        } 
     }
 
     /// <summary>
