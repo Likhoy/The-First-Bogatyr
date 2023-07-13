@@ -48,16 +48,33 @@ public class SettingsMenu : MonoBehaviour
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
 
-        float vol = 1f;
-        theMixer.GetFloat("MasterVol", out vol);
-        mastSlider.value = vol;
+        if (PlayerPrefs.HasKey("MasterVol"))
+        {
+            mastSlider.value = PlayerPrefs.GetFloat("MasterVol");
+        }
+        else
+        {
+            mastSlider.value = 1f;
+        }
 
-        theMixer.GetFloat("MusicVol", out vol);
-        musicSlider.value = vol;
+        if (PlayerPrefs.HasKey("MusicVol"))
+        {
+            musicSlider.value = PlayerPrefs.GetFloat("MusicVol");
+        }
+        else
+        {
+            musicSlider.value = 0f;
+        }
 
-        theMixer.GetFloat("SFXVol", out vol);
-        sfxSlider.value = vol;
-
+        if (PlayerPrefs.HasKey("SFXVol"))
+        {
+            sfxSlider.value = PlayerPrefs.GetFloat("SFXVol");
+        }
+        else
+        {
+            sfxSlider.value = 0f;
+        }
+             
         mastLabel.text = Mathf.RoundToInt(mastSlider.value * 100).ToString();
         musicLabel.text = Mathf.RoundToInt(musicSlider.value * 100).ToString();
         sfxLabel.text = Mathf.RoundToInt(sfxSlider.value * 100).ToString();
@@ -75,9 +92,11 @@ public class SettingsMenu : MonoBehaviour
     {
         mastLabel.text = Mathf.RoundToInt(mastSlider.value * 100).ToString();
 
-        theMixer.SetFloat("MasterVol", Mathf.Log10( mastSlider.value) * 20);
+        theMixer.SetFloat("MasterVol", Mathf.Log10(mastSlider.value) * 20);
 
         PlayerPrefs.SetFloat("MasterVol", mastSlider.value);
+
+        PlayerPrefs.Save();
     }
 
     public void SetMusicVol()
