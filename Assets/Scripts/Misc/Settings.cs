@@ -61,8 +61,11 @@ public static class Settings
     {
         [Command.Dash] = KeyCode.LeftShift,
         [Command.Hit] = KeyCode.Mouse1,
-        [Command.TakeItem] = KeyCode.Mouse0,
-        [Command.ContinueDialog] = KeyCode.Mouse0
+        [Command.TakeItem] = KeyCode.F,
+        [Command.ContinueDialog] = KeyCode.Mouse0,
+        [Command.OpenBestiary] = KeyCode.B,
+        [Command.OpenMap] = KeyCode.M,
+        [Command.OpenPauseMenu] = KeyCode.Escape
     };
     #endregion 
 

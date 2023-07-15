@@ -27,7 +27,7 @@ public class MainMenu : MonoBehaviour
         controller.transform.GetChild(1).gameObject.SetActive(false);
     }
 
-    public void PlayPressed()
+    public void ContinueGamePressed()
     {
         Button b = continueButton.GetComponent<Button>();
         ColorBlock cb = b.colors;
