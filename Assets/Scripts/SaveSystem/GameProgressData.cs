@@ -6,6 +6,6 @@ public static class GameProgressData
     #endregion
 
     #region Saves
-    public static bool[] checkpointReached;
+    public static bool[] checkpointReached = new bool[Settings.numberOfCheckpoints];
     #endregion
 }
