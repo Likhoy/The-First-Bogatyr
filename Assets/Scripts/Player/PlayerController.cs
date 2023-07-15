@@ -22,7 +22,6 @@ public class PlayerController : MonoBehaviour
     private bool isPlayerMovementDisabled = false;
 
     [HideInInspector] public bool isPlayerDashing = false;
-    private Vector2 direction;
 
     private float timeBetweenAttack = 0f;
 
@@ -87,7 +86,7 @@ public class PlayerController : MonoBehaviour
 
     private void TakeItem()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(Settings.commandButtons[Command.TakeItem]))
             if (takeItemList.Count > 0)
             {
                 System.Random r = new System.Random();
@@ -108,7 +107,7 @@ public class PlayerController : MonoBehaviour
         bool dashButtonPressed = Input.GetKey(Settings.commandButtons[Command.Dash]);
 
         // Create a direction vector based on the input
-        direction = new Vector2(horizontalMovement, verticalMovement);
+        Vector2 direction = new Vector2(horizontalMovement, verticalMovement);
 
         // Adjust distance for diagonal movement (pythagoras approximation)
         if (horizontalMovement != 0f && verticalMovement != 0f)
@@ -232,8 +231,7 @@ public class PlayerController : MonoBehaviour
                 if (timeBetweenAttack <= 0)
                 {
                     audioEffects.PlayOneShot(CAttack, 1f);
-                    player.meleeAttackEvent.CallMeleeAttackEvent();   
-                    // isPlayerMovementDisabled = true;
+                    player.meleeAttackEvent.CallMeleeAttackEvent();
                     // Maybe there is a way better ?
                     Invoke("DealWithMeleeWeaponStrikedEvent", meleeWeapon.weaponDetails.weaponStrikeTime);
                     timeBetweenAttack = meleeWeapon.weaponDetails.weaponCooldownTime;
