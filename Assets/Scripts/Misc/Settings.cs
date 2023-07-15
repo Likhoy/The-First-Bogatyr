@@ -73,5 +73,9 @@ public static class Settings
 
     #region INVENTORY PARAMETERS
     public const int inventorySlotsCount = 5;
-    #endregion 
+    #endregion
+
+    #region GAME PROGRESS PARAMETERS
+    public const int numberOfCheckpoints = 3;
+    #endregion
 }
