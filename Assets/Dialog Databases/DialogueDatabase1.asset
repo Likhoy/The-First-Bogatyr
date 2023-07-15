@@ -1715,7 +1715,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: "ShowAlert(\"\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435...\")"
+      userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -2206,7 +2206,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: "ShowAlert(\"\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435...\")"
+      userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -2281,7 +2281,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
+    canvasScrollPosition: {x: 0, y: 5.99567}
     canvasZoom: 0.8067512
   - id: 7
     fields:
