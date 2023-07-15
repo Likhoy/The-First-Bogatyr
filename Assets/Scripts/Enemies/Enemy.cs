@@ -174,7 +174,7 @@ public class Enemy : MonoBehaviour
 
         SetEnemyStartingWeapon();
 
-        SetEnemyAnimationSpeed();
+        // SetEnemyAnimationSpeed();
 
         // Materialise enemy
         //StartCoroutine(MaterializeEnemy());
@@ -235,7 +235,7 @@ public class Enemy : MonoBehaviour
     private void SetEnemyAnimationSpeed()
     {
         // Set animator speed to match movement speed
-        //animator.speed = enemyMovementAI.moveSpeed / Settings.baseSpeedForEnemyAnimations;
+        animator.speed = enemyMovementAI.moveSpeed / Settings.baseSpeedForEnemyAnimations;
     }
 
     /*private IEnumerator MaterializeEnemy()
@@ -257,10 +257,10 @@ public class Enemy : MonoBehaviour
         polygonCollider2D.enabled = isEnabled;
 
         // Enable/Disable movement AI
-        //enemyMovementAI.enabled = isEnabled;
+        enemyMovementAI.enabled = isEnabled;
 
         // Enable / Disable Fire Weapon
-        //fireWeapon.enabled = isEnabled;
+        fireWeapon.enabled = isEnabled;
 
     }
 }
