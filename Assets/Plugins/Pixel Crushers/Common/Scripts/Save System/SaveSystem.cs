@@ -423,7 +423,7 @@ namespace PixelCrushers
         private static IEnumerator LoadSceneInternalTransitionCoroutine(string sceneName, SceneValidationMode sceneValidationMode)
         {
             m_addedScenes.Clear();
-            if (sceneName == "Purple World")
+            //if (sceneName == "Purple World")
                 yield return instance.StartCoroutine(sceneTransitionManager.LeaveScene());
             if (sceneName.StartsWith("index:"))
             {
@@ -447,7 +447,7 @@ namespace PixelCrushers
             }
             sceneTransitionManager.OnLoading(1);
             m_currentAsyncOperation = null;
-            if (sceneName == "Purple World")
+            //if (sceneName == "Purple World")
                 instance.StartCoroutine(sceneTransitionManager.EnterScene());
         }
 
