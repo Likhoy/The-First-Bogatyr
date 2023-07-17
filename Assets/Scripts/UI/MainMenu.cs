@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-
-    DialogueSystemController controller;
+    private DialogueSystemController controller;
     [SerializeField] private GameObject continueButton;
     [SerializeField] private GameObject newGameButton;
     [SerializeField] private GameObject settingsButton;
