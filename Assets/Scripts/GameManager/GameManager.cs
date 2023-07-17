@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 [DisallowMultipleComponent]
 public class GameManager : SingletonMonobehaviour<GameManager>
@@ -98,11 +99,12 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     public IEnumerator FinishGameRoutine()
     {
-        //SaveSystem.DeleteSavedGameInSlot(2);
+        SaveSystem.DeleteSavedGameInSlot(1);
         GameObject transitionImage = GameObject.FindGameObjectWithTag("transitionImage");
-        transitionImage.GetComponent<Animator>().SetTrigger("Finish");
-        yield return new WaitForSeconds(15f);
+        Animator animator = transitionImage.GetComponent<Animator>();
+        animator.SetTrigger("Finish");
         SceneManager.LoadScene("Menu");
+        yield return null; // исправить
     }
 
     /// <summary>

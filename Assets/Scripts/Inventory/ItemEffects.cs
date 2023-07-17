@@ -13,7 +13,10 @@ public static class ItemEffects
         healerEffectCount++;
         effectImage.sprite = effectSprite;
         effectImage.color = Color.white;
+
         Player player = GameManager.Instance.GetPlayer();
+        if (player == null)
+            yield break;
 
         while (healingTimer > 0f)
         {
@@ -21,6 +24,7 @@ public static class ItemEffects
             healingTimer--;
             yield return new WaitForSeconds(1f);
         }
+
         if (healerEffectCount == 1)
             effectImage.color = new Color(0, 0, 0, 0);
         healerEffectCount--;
@@ -29,15 +33,18 @@ public static class ItemEffects
     public static IEnumerator DamageEffectRoutine(float strengthTimer, Image effectImage, Sprite effectSprite)
     {
         damageEffectCount++;
-        
-        Player _player = GameManager.Instance.GetPlayer();
 
         effectImage.sprite = effectSprite;
         effectImage.color = Color.white;
+
+        Player player = GameManager.Instance.GetPlayer();
+        if (player == null)
+            yield break;
+
         if (damageEffectCount == 1)
         {
-            (_player.activeWeapon.GetCurrentWeapon() as MeleeWeapon).weaponDetails.weaponMinDamage *= 2;
-            (_player.activeWeapon.GetCurrentWeapon() as MeleeWeapon).weaponDetails.weaponMaxDamage *= 2;
+            (player.activeWeapon.GetCurrentWeapon() as MeleeWeapon).weaponDetails.weaponMinDamage *= 2;
+            (player.activeWeapon.GetCurrentWeapon() as MeleeWeapon).weaponDetails.weaponMaxDamage *= 2;
         }
 
         while (strengthTimer > 0f)
@@ -47,8 +54,8 @@ public static class ItemEffects
         }
         if (damageEffectCount == 1)
         {
-            (_player.activeWeapon.GetCurrentWeapon() as MeleeWeapon).weaponDetails.weaponMinDamage /= 2;
-            (_player.activeWeapon.GetCurrentWeapon() as MeleeWeapon).weaponDetails.weaponMaxDamage /= 2;
+            (player.activeWeapon.GetCurrentWeapon() as MeleeWeapon).weaponDetails.weaponMinDamage /= 2;
+            (player.activeWeapon.GetCurrentWeapon() as MeleeWeapon).weaponDetails.weaponMaxDamage /= 2;
         }
         if (damageEffectCount == 1)
             effectImage.color = new Color(0, 0, 0, 0);
