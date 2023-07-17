@@ -11,5 +11,8 @@ public enum Command
     Dash,
     Hit,
     TakeItem,
-    ContinueDialog
+    ContinueDialog,
+    OpenBestiary,
+    OpenMap,
+    OpenPauseMenu
 }

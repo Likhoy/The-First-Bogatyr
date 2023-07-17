@@ -1,20 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class OpenBestiariy : MonoBehaviour
+public class OpenBestiariy : MonoBehaviour // можно было обойтись и без этого скрипта, поместив логику в PlayerController
 {
-    [SerializeField]
-    GameObject bestiary;
-    [SerializeField]
-    GameObject map;
+    [SerializeField] GameObject bestiary; 
+    [SerializeField] GameObject map; // нужно убрать отсюда
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.B))
+        if (Input.GetKeyDown(Settings.commandButtons[Command.OpenBestiary]))
             bestiary.SetActive(!bestiary.activeInHierarchy);
 
-        if (Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKeyDown(Settings.commandButtons[Command.OpenMap]))
         {
             if (!map.activeInHierarchy)
                 Time.timeScale = 0;
