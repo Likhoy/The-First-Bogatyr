@@ -1,29 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    public static bool GameIsPaused = false;
+    private bool GameIsPaused = false;
 
-    public GameObject pauseMenuUI;
-    private GameObject inventory;
-    private GameObject HealthBar;
-    private GameObject Bestiary;
-    private GameObject Money;
-
-    private void Start()
-    {
-        inventory = GameObject.Find("Inventory");
-        HealthBar = GameObject.FindGameObjectWithTag("HealthBar");
-        Bestiary = GameObject.Find("BestiaryButton");
-        Money = GameObject.Find("MoneyUI");
-    }
+    [SerializeField] private GameObject pauseMenuUI;
+    [SerializeField] private GameObject inventory; // лучше использовать SerializeField в этом случае, чем GameObject.Find
+    [SerializeField] private GameObject HealthBar;
+    [SerializeField] private GameObject Bestiary;
+    [SerializeField] private GameObject Money;
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(Settings.commandButtons[Command.OpenPauseMenu]))
         {
             if (GameIsPaused)
             {
