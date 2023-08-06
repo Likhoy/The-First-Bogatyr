@@ -39,7 +39,7 @@ public static class HelperUtilities
     }
 
     /// <summary>
-    /// Get the angle in degrees from a direction vector
+    /// Get the angle in degrees from a direction vector (from -180 to 180 degrees)
     /// </summary>
     public static float GetAngleFromVector(Vector3 vector)
     {
