@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class Ammo : MonoBehaviour // IFireable
+public class Ammo : MonoBehaviour, IFireable
 {
     #region Tooltip
     [Tooltip("Populate with child TrailRenderer component")]
@@ -138,7 +138,7 @@ public class Ammo : MonoBehaviour // IFireable
     /// weaponAimDirectionVector. If this ammo is part of a pattern the ammo movement can be
     /// overriden by setting overrideAmmoMovement to true
     /// </summary>
-    public void InitialiseAmmo(AmmoDetailsSO ammoDetails, GameObject shooter, float aimAngle, float weaponAimAngle, float ammoSpeed, Vector3 weaponAimDirectionVector, bool overrideAmmoMovement = false)
+    public void InitialiseAmmo(AmmoDetailsSO ammoDetails, GameObject shooter, float aimAngle, float weaponAimAngle, float ammoSpeed, Vector3 weaponAimDirectionVector, Vector2 targetPosition, bool overrideAmmoMovement = false)
     {
         #region Ammo
 
@@ -156,8 +156,6 @@ public class Ammo : MonoBehaviour // IFireable
             ToggleVisibility(false);
         }
 
-        
-
         // Set fire direction
         SetFireDirection(ammoDetails, aimAngle, weaponAimAngle, weaponAimDirectionVector);
 
@@ -169,13 +167,13 @@ public class Ammo : MonoBehaviour // IFireable
         {
             // Set ammo charge timer
             ammoChargeTimer = ammoDetails.ammoChargeTime;
-            // SetAmmoMaterial(ammoDetails.ammoChargeMaterial);
+            SetAmmoMaterial(ammoDetails.ammoChargeMaterial);
             isAmmoMaterialSet = false;
         }
         else
         {
             ammoChargeTimer = 0f;
-            // SetAmmoMaterial(ammoDetails.ammoMaterial); materials haven't been added
+            SetAmmoMaterial(ammoDetails.ammoMaterial);
             isAmmoMaterialSet = true;
         }
 
@@ -189,7 +187,7 @@ public class Ammo : MonoBehaviour // IFireable
         this.overrideAmmoMovement = overrideAmmoMovement;
 
         // Activate ammo gameobject
-        // gameObject.SetActive(true);
+        gameObject.SetActive(true);
 
         #endregion Ammo
 

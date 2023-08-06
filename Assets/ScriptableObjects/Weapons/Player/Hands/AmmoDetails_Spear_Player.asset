@@ -10,29 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 070c0af462fb0c2479ff9dfc92a05008, type: 3}
-  m_Name: AmmoDetails_Stick_Chernobog
+  m_Name: AmmoDetails_Spear_Player
   m_EditorClassIdentifier: 
-  ammoName: Ball
-  isPlayerAmmo: 0
-  ammoSprite: {fileID: 21300000, guid: fce44e023c84ed84e861cdb1110aa8f9, type: 3}
+  ammoName: Spear
+  isPlayerAmmo: 1
+  ammoSprite: {fileID: 21300000, guid: 633de6dd42d41954fbbe25bfa1e95933, type: 3}
   ammoPrefabArray:
-  - {fileID: 1775935503117942255, guid: ed0772d7313ee38408fd084db34edb8e, type: 3}
+  - {fileID: 4428012041151076976, guid: 18a4d591c6a894e43a4c724c50802fb3, type: 3}
   ammoMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  ammoInvisibleTime: 0.5
+  ammoInvisibleTime: 0
   ammoChargeTime: 0
   ammoChargeMaterial: {fileID: 0}
-  ammoMinDamage: 15
-  ammoMaxDamage: 30
+  ammoMinDamage: 3
+  ammoMaxDamage: 5
   ammoSpeedMin: 20
   ammoSpeedMax: 20
-  ammoRange: 20
-  ammoRotationSpeed: 0
-  ammoSpreadMin: 1
-  ammoSpreadMax: 3
+  ammoRange: 15
+  ammoBaseRotationSpeed: 0
+  ammoSpreadMin: 0.2
+  ammoSpreadMax: 2
   ammoSpawnAmountMin: 1
   ammoSpawnAmountMax: 1
   ammoSpawnIntervalMin: 0
   ammoSpawnIntervalMax: 0
-  isThrowingWeaponAmmo: 0
+  isThrowingWeaponAmmo: 1
   ammoDistanceMin: 3
   ammoBaseThrowingAngle: 45
