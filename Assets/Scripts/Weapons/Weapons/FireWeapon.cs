@@ -66,11 +66,11 @@ public class FireWeapon : MonoBehaviour
         if (fireWeaponEventArgs.fire)
         {
             // Test if weapon is ready to fire.
-            if (IsWeaponReadyToFire())
+            if (IsWeaponReadyToFire(fireWeaponEventArgs.targetPosition))
             {
                 audioEffects.PlayOneShot(CFire);
 
-                FireAmmo(fireWeaponEventArgs.aimAngle, fireWeaponEventArgs.weaponAimAngle, fireWeaponEventArgs.weaponAimDirectionVector);
+                FireAmmo(fireWeaponEventArgs.aimAngle, fireWeaponEventArgs.weaponAimAngle, fireWeaponEventArgs.weaponAimDirectionVector, fireWeaponEventArgs.targetPosition);
 
                 ResetCoolDownTimer();
 
@@ -100,7 +100,7 @@ public class FireWeapon : MonoBehaviour
     /// <summary>
     /// Returns true if the weapon is ready to fire, else returns false.
     /// </summary>
-    private bool IsWeaponReadyToFire()
+    private bool IsWeaponReadyToFire(Vector2 targetPosition)
     {
         RangedWeapon currentWeapon = activeWeapon.GetCurrentWeapon() as RangedWeapon;
 
@@ -129,6 +129,13 @@ public class FireWeapon : MonoBehaviour
             return false;
         }
 
+        AmmoDetailsSO ammoDetails = currentWeapon.weaponDetails.weaponCurrentAmmo;
+        float distanceToTarget = Vector3.Distance(transform.position, targetPosition);
+
+        // if this is a throwing weapon and target is not reachable then return false
+        if (ammoDetails.isThrowingWeaponAmmo && (distanceToTarget < ammoDetails.ammoDistanceMin || distanceToTarget > ammoDetails.ammoRange))
+            return false;
+
         // weapon is ready to fire - return true
         return true;
     }
@@ -136,21 +143,21 @@ public class FireWeapon : MonoBehaviour
     /// <summary>
     /// Set up ammo using an ammo gameobject and component from the object pool.
     /// </summary>
-    private void FireAmmo(float aimAngle, float weaponAimAngle, Vector3 weaponAimDirectionVector)
+    private void FireAmmo(float aimAngle, float weaponAimAngle, Vector3 weaponAimDirectionVector, Vector2 targetPosition)
     {
         AmmoDetailsSO currentAmmo = activeWeapon.GetCurrentAmmo();
 
         if (currentAmmo != null)
         {
             // Fire ammo routine.
-            StartCoroutine(FireAmmoRoutine(currentAmmo, aimAngle, weaponAimAngle, weaponAimDirectionVector));
+            StartCoroutine(FireAmmoRoutine(currentAmmo, aimAngle, weaponAimAngle, weaponAimDirectionVector, targetPosition));
         }
     }
 
     /// <summary>
     /// Coroutine to spawn multiple ammo per shot if specified in the ammo details
     /// </summary>
-    private IEnumerator FireAmmoRoutine(AmmoDetailsSO currentAmmo, float aimAngle, float weaponAimAngle, Vector3 weaponAimDirectionVector)
+    private IEnumerator FireAmmoRoutine(AmmoDetailsSO currentAmmo, float aimAngle, float weaponAimAngle, Vector3 weaponAimDirectionVector, Vector2 targetPosition)
     {
 
         RangedWeapon currentWeapon = activeWeapon.GetCurrentWeapon() as RangedWeapon;
@@ -185,9 +192,9 @@ public class FireWeapon : MonoBehaviour
 
             GameObject ammoGameObject = Instantiate(ammoPrefab, activeWeapon.GetShootPosition(), Quaternion.identity, gameObject.transform);
 
-            Ammo ammo = ammoGameObject.GetComponent<Ammo>();
+            IFireable ammo = ammoGameObject.GetComponent<IFireable>();
 
-            ammo.InitialiseAmmo(currentAmmo, gameObject, aimAngle, weaponAimAngle, ammoSpeed, weaponAimDirectionVector);
+            ammo.InitialiseAmmo(currentAmmo, gameObject, aimAngle, weaponAimAngle, ammoSpeed, weaponAimDirectionVector, targetPosition);
 
            
             // Get Gameobject with IFireable component
