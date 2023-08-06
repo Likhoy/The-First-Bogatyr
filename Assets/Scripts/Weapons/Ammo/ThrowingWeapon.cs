@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using TreeEditor;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ThrowingWeapon : MonoBehaviour, IFireable
@@ -36,14 +32,6 @@ public class ThrowingWeapon : MonoBehaviour, IFireable
     {
         if (targetReached) return;
 
-        // Calculate tangent vector to move ammo
-        /*Vector2 tangentVector = ammoSpeed * Time.deltaTime * motionVector + (Vector2)transform.position;
-
-        float distanceToCenter = (circleCenter - tangentVector).magnitude;
-
-        // Adjust position to be on the circle
-        Vector2 newPosition = (circleCenter - tangentVector).normalized * Mathf.Sqrt(distanceToCenter - radius) + tangentVector;*/
-
         float newX = circleCenter.x + radius * Mathf.Cos(circleAngle);
         float newY = circleCenter.y + radius * Mathf.Sin(circleAngle);
 
@@ -56,11 +44,6 @@ public class ThrowingWeapon : MonoBehaviour, IFireable
         {
             transform.Rotate(new Vector3(0f, 0f, ammoDetails.ammoBaseRotationSpeed * Time.deltaTime));
         }*/
-
-        /*Vector2 centerVector = circleCenter - newPosition;
-
-        // Adjust motion vector to organize movement of the ammo in the circle
-        motionVector = new Vector2(-centerVector.y, centerVector.x).normalized;*/
 
         if (Vector3.Distance(transform.position, landingPosition) < 0.2f)
         {
@@ -79,7 +62,7 @@ public class ThrowingWeapon : MonoBehaviour, IFireable
         // Set fire direction
         SetFireDirection(ammoDetails, aimAngle, weaponAimAngle, weaponAimDirectionVector, targetPosition);
 
-        SetCircleCenter(landingPosition, relativeThrowingAngle);
+        SetCircleCenter();
 
         circleAngle = Mathf.Deg2Rad * HelperUtilities.GetAngleFromVector(transform.position - (Vector3)circleCenter);
 
@@ -105,25 +88,13 @@ public class ThrowingWeapon : MonoBehaviour, IFireable
         gameObject.SetActive(true);
     }
 
-    /*private void SetCircleCenter(Vector2 targetPosition, float ammoThrowingAngle)
+    private void SetCircleCenter()
     {
-        float chordAngle = 90f - ammoThrowingAngle;
+        float halfChordLength = (landingPosition - (Vector2)transform.position).magnitude / 2f;
 
-        float chordLength = (targetPosition - (Vector2)transform.position).magnitude;
+        radius = halfChordLength / Mathf.Sin(relativeThrowingAngle * Mathf.Deg2Rad);
 
-        radius = chordLength / (2f * Mathf.Abs(Mathf.Sin(Mathf.Deg2Rad * ammoThrowingAngle)));
-
-        Vector2 perpendicularVector = new Vector2(motionVector.y, -motionVector.x).normalized * Mathf.Sqrt(radius);
-
-        this.circleCenter = perpendicularVector + (Vector2)transform.position; 
-    }*/
-
-    private void SetCircleCenter(Vector2 targetPosition, float ammoThrowingAngle)
-    {
-        float halfChordLength = (targetPosition - (Vector2)transform.position).magnitude / 2f;
-
-        radius = halfChordLength / Mathf.Sin(ammoThrowingAngle * Mathf.Deg2Rad / 2f);
-
+        // if we are in the right area of the coordinate system then we need bigger angle and clockwise movement, otherwise - vice versa
         float realThrowingAngle;
         if (directionVector.x > 0)
         {
@@ -149,7 +120,7 @@ public class ThrowingWeapon : MonoBehaviour, IFireable
     /// </summary>
     private void SetFireDirection(AmmoDetailsSO ammoDetails, float aimAngle, float weaponAimAngle, Vector3 weaponAimDirectionVector, Vector2 targetPosition)
     {
-        float distance = (targetPosition - (Vector2)transform.position).magnitude;
+        float distance = (targetPosition - (Vector2)transform.position).magnitude - ammoDetails.ammoDistanceMin;
 
         float maxDistance = ammoDetails.ammoRange - ammoDetails.ammoDistanceMin;
 
@@ -167,8 +138,6 @@ public class ThrowingWeapon : MonoBehaviour, IFireable
 
         relativeThrowingAngle = ammoDetails.ammoBaseThrowingAngle * (Mathf.Abs(90f - Mathf.Abs(shooterToTargetDirectionAngle)) / 90f);
 
-        // Set ammo flight initial direction
-        // motionVector = ((Vector2)HelperUtilities.GetDirectionVectorFromAngle(throwingAngle) + realPosition.normalized).normalized;
     }
 
     /// <summary>
@@ -176,7 +145,7 @@ public class ThrowingWeapon : MonoBehaviour, IFireable
     /// </summary>
     private void DisableAmmo()
     {
-        Destroy(gameObject);
+        Destroy(gameObject); // for testing
     }
 
     public void SetAmmoMaterial(Material material)
