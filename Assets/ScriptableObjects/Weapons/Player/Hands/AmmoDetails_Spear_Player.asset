@@ -23,8 +23,8 @@ MonoBehaviour:
   ammoChargeMaterial: {fileID: 0}
   ammoMinDamage: 3
   ammoMaxDamage: 5
-  ammoSpeedMin: 20
-  ammoSpeedMax: 20
+  ammoSpeedMin: 13
+  ammoSpeedMax: 18
   ammoRange: 15
   ammoBaseRotationSpeed: 0
   ammoSpreadMin: 0.2
@@ -36,3 +36,4 @@ MonoBehaviour:
   isThrowingWeaponAmmo: 1
   ammoDistanceMin: 3
   ammoBaseThrowingAngle: 45
+  baseRotation: {x: 0, y: 0, z: -0.8571673, w: 0.5150381}
