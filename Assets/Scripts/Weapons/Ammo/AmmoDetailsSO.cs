@@ -132,6 +132,10 @@ public class AmmoDetailsSO : ScriptableObject
     [Tooltip("Angle beetween vector to the target and the tangent to the circle along which the ammo will fly (from 0 to 90 degrees).")]
     #endregion
     public float ammoBaseThrowingAngle = 45f;
+    #region Tooltip
+    [Tooltip("Populate with initial ammo rotation (three o'clock direction is expected)")]
+    #endregion
+    public Quaternion baseRotation;
 
     /*#region Header AMMO TRAIL DETAILS
     [Space(10)]
@@ -181,6 +185,7 @@ public class AmmoDetailsSO : ScriptableObject
         {
             HelperUtilities.ValidateCheckPositiveValue(this, nameof(ammoDistanceMin), ammoDistanceMin, true);
             HelperUtilities.ValidateCheckPositiveValue(this, nameof(ammoBaseThrowingAngle), ammoBaseThrowingAngle, true);
+            
         }
 
         /*if (isAmmoTrail)

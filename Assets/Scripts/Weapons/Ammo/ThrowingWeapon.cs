@@ -7,6 +7,7 @@ public class ThrowingWeapon : MonoBehaviour, IFireable
     private SpriteRenderer spriteRenderer;
     private float ammoSpeed;
 
+    private Vector2 weaponShootPosition;
     private Vector3 directionVector;
     private Vector2 landingPosition;
     private float relativeThrowingAngle;
@@ -37,13 +38,11 @@ public class ThrowingWeapon : MonoBehaviour, IFireable
 
         transform.position = new Vector3(newX, newY);
 
-        circleAngle += Time.deltaTime * ammoSpeed / radius * circleDirectionToggle; // calculating angular velocity
+        float angleOffset = Time.deltaTime * ammoSpeed / radius * circleDirectionToggle;
 
-        // Rotate ammo
-        /*if (ammoDetails.ammoBaseRotationSpeed > 0f)
-        {
-            transform.Rotate(new Vector3(0f, 0f, ammoDetails.ammoBaseRotationSpeed * Time.deltaTime));
-        }*/
+        circleAngle += angleOffset; // calculating angular velocity
+
+        transform.rotation *= Quaternion.Euler(0, 0, angleOffset * Mathf.Rad2Deg);
 
         if (Vector3.Distance(transform.position, landingPosition) < 0.2f)
         {
@@ -57,14 +56,16 @@ public class ThrowingWeapon : MonoBehaviour, IFireable
     {
         this.ammoDetails = ammoDetails;
 
-        this.ammoSpeed = ammoSpeed; 
+        this.ammoSpeed = ammoSpeed;
+
+        transform.rotation = ammoDetails.baseRotation;
 
         // Set fire direction
         SetFireDirection(ammoDetails, aimAngle, weaponAimAngle, weaponAimDirectionVector, targetPosition);
 
         SetCircleCenter();
 
-        circleAngle = Mathf.Deg2Rad * HelperUtilities.GetAngleFromVector(transform.position - (Vector3)circleCenter);
+        circleAngle = Mathf.Deg2Rad * HelperUtilities.GetAngleFromVector(weaponShootPosition - circleCenter);
 
         // Set ammo sprite
         spriteRenderer.sprite = ammoDetails.ammoSprite;
@@ -90,7 +91,7 @@ public class ThrowingWeapon : MonoBehaviour, IFireable
 
     private void SetCircleCenter()
     {
-        float halfChordLength = (landingPosition - (Vector2)transform.position).magnitude / 2f;
+        float halfChordLength = (landingPosition - weaponShootPosition).magnitude / 2f;
 
         radius = halfChordLength / Mathf.Sin(relativeThrowingAngle * Mathf.Deg2Rad);
 
@@ -109,9 +110,11 @@ public class ThrowingWeapon : MonoBehaviour, IFireable
 
         Vector2 motionDirection = HelperUtilities.GetDirectionVectorFromAngle(realThrowingAngle);
 
+        transform.rotation *= Quaternion.Euler(0, 0, realThrowingAngle);
+
         Vector2 perpendicularVector = new Vector2(-motionDirection.y * circleDirectionToggle, motionDirection.x * circleDirectionToggle).normalized * radius;
 
-        this.circleCenter = (Vector2)transform.position + perpendicularVector;
+        this.circleCenter = weaponShootPosition + perpendicularVector;
     }
 
     /// <summary>
@@ -120,11 +123,14 @@ public class ThrowingWeapon : MonoBehaviour, IFireable
     /// </summary>
     private void SetFireDirection(AmmoDetailsSO ammoDetails, float aimAngle, float weaponAimAngle, Vector3 weaponAimDirectionVector, Vector2 targetPosition)
     {
-        float distance = (targetPosition - (Vector2)transform.position).magnitude - ammoDetails.ammoDistanceMin;
+        // Get weapon shoot position from which the ammo will start it's flight
+        weaponShootPosition = targetPosition - (Vector2)weaponAimDirectionVector;
+
+        float distance = (targetPosition - weaponShootPosition).magnitude - ammoDetails.ammoDistanceMin;
 
         float maxDistance = ammoDetails.ammoRange - ammoDetails.ammoDistanceMin;
 
-        // calculate spread for needed distance
+        // Calculate spread for needed distance
         float spread = ammoDetails.ammoSpreadMin + (distance / maxDistance) * (ammoDetails.ammoSpreadMax - ammoDetails.ammoSpreadMin);
 
         // Get a random spread direction angle between 0 and 360 degrees
@@ -132,12 +138,12 @@ public class ThrowingWeapon : MonoBehaviour, IFireable
 
         landingPosition = targetPosition + spread * (Vector2)HelperUtilities.GetDirectionVectorFromAngle(spreadDirectionAngle);
 
-        directionVector = (Vector3)landingPosition - transform.position;
+        directionVector = landingPosition - weaponShootPosition;
 
         shooterToTargetDirectionAngle = HelperUtilities.GetAngleFromVector(directionVector); // from -180 to 180 degrees
 
         relativeThrowingAngle = ammoDetails.ammoBaseThrowingAngle * (Mathf.Abs(90f - Mathf.Abs(shooterToTargetDirectionAngle)) / 90f);
-
+        
     }
 
     /// <summary>
