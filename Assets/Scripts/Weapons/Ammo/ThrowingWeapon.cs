@@ -17,6 +17,8 @@ public class ThrowingWeapon : MonoBehaviour, IFireable
     private Vector2 circleCenter;
     private float radius;
     private float circleDirectionToggle;
+    private float xRotationAngle;
+    private float xRotationToggle; // upwards we need negative angle offset
 
     private void Awake()
     {
@@ -36,15 +38,24 @@ public class ThrowingWeapon : MonoBehaviour, IFireable
         float newX = circleCenter.x + radius * Mathf.Cos(circleAngle);
         float newY = circleCenter.y + radius * Mathf.Sin(circleAngle);
 
-        transform.position = new Vector3(newX, newY);
+        Vector3 newPosition = new Vector3(newX, newY);
+
+        // already travelled path to the landing position
+        float traveledPartOftheChord = Vector3.Project(newPosition - transform.position, directionVector).magnitude;
+
+        transform.position = newPosition;
 
         float angleOffset = Time.deltaTime * ammoSpeed / radius * circleDirectionToggle;
 
         circleAngle += angleOffset; // calculating angular velocity
 
-        transform.rotation *= Quaternion.Euler(0, 0, angleOffset * Mathf.Rad2Deg);
+        // calculating correct speed of x-axis rotation using travelled path to whole distance ratio
+        float xRotationAngleOffset = (traveledPartOftheChord / directionVector.magnitude) * 2 * xRotationAngle * -xRotationToggle;
 
-        if (Vector3.Distance(transform.position, landingPosition) < 0.2f)
+        transform.rotation *= Quaternion.Euler(0, 0, angleOffset * Mathf.Rad2Deg);
+        transform.Rotate(xRotationAngleOffset, 0, 0, Space.World);
+
+        if (Vector3.Distance(transform.position, landingPosition) < 0.1f)
         {
             targetReached = true;
             DisableAmmo();
@@ -93,6 +104,8 @@ public class ThrowingWeapon : MonoBehaviour, IFireable
     {
         float halfChordLength = (landingPosition - weaponShootPosition).magnitude / 2f;
 
+        xRotationAngle = ammoDetails.ammoBaseThrowingAngle - relativeThrowingAngle;
+
         radius = halfChordLength / Mathf.Sin(relativeThrowingAngle * Mathf.Deg2Rad);
 
         // if we are in the right area of the coordinate system then we need bigger angle and clockwise movement, otherwise - vice versa
@@ -108,9 +121,12 @@ public class ThrowingWeapon : MonoBehaviour, IFireable
             circleDirectionToggle = 1;
         }
 
+        xRotationToggle = directionVector.y > 0 ? -1 : 1;
+
         Vector2 motionDirection = HelperUtilities.GetDirectionVectorFromAngle(realThrowingAngle);
 
         transform.rotation *= Quaternion.Euler(0, 0, realThrowingAngle);
+        transform.Rotate(xRotationAngle * xRotationToggle, 0, 0, Space.World); // two step rotation and Space.World are required here
 
         Vector2 perpendicularVector = new Vector2(-motionDirection.y * circleDirectionToggle, motionDirection.x * circleDirectionToggle).normalized * radius;
 
@@ -143,7 +159,6 @@ public class ThrowingWeapon : MonoBehaviour, IFireable
         shooterToTargetDirectionAngle = HelperUtilities.GetAngleFromVector(directionVector); // from -180 to 180 degrees
 
         relativeThrowingAngle = ammoDetails.ammoBaseThrowingAngle * (Mathf.Abs(90f - Mathf.Abs(shooterToTargetDirectionAngle)) / 90f);
-        
     }
 
     /// <summary>
