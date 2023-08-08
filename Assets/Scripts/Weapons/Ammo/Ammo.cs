@@ -146,9 +146,6 @@ public class Ammo : MonoBehaviour, IFireable
 
         this.shooter = shooter;
 
-        // Initialise isColliding
-        isColliding = false;
-
         if (ammoDetails.ammoInvisibleTime > 0f)
         {
             ammoGettingVisibleTimer = ammoDetails.ammoInvisibleTime;
