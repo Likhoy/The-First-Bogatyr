@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(TemporaryObject))]
 public class ThrowingWeapon : MonoBehaviour, IFireable
 {
 
@@ -19,11 +20,19 @@ public class ThrowingWeapon : MonoBehaviour, IFireable
     private float circleDirectionToggle;
     private float xRotationAngle;
     private float xRotationToggle; // upwards we need negative angle offset
+    private const float xRotationAngleCoefficient = 1.5f;
+
+    private bool isColliding = false;
+    private GameObject shooter;
+
+    private PolygonCollider2D polygonCollider;
+    private TemporaryObject temporaryObjectComponent; // for fading out when not reaching any collider
 
     private void Awake()
     {
-        // cache sprite renderer
         spriteRenderer = GetComponent<SpriteRenderer>();
+        polygonCollider = GetComponent<PolygonCollider2D>();
+        temporaryObjectComponent = GetComponent<TemporaryObject>();
     }
 
     public GameObject GetGameObject()
@@ -58,14 +67,64 @@ public class ThrowingWeapon : MonoBehaviour, IFireable
         if (Vector3.Distance(transform.position, landingPosition) < 0.1f)
         {
             targetReached = true;
-            DisableAmmo();
+            DisableWeapon();
         }
 
+    }
+
+    /// <summary>
+    /// Disable weapon when not reaching anything
+    /// </summary>
+    private void DisableWeapon()
+    {
+        temporaryObjectComponent.StartCoroutine("FadingOutRoutine");
+        
+        Vector3 scale = transform.lossyScale;
+
+        // losing parent to be independent
+        transform.SetParent(null);
+        
+        // return global scale 
+        transform.localScale = scale;
+        
+        Destroy(polygonCollider);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // If already colliding with something return
+        if (isColliding) return;
+
+        // handle shooter hitting themselves
+        if (collision.gameObject == shooter) return;
+
+        // Deal Damage To Collision Object
+        DealDamage(collision);
+
+        // Show ammo hit effect
+        // AmmoHitEffect();
+
+        DestroyWeapon();
+    }
+
+    private void DealDamage(Collider2D collision)
+    {
+        Health health = collision.GetComponent<Health>();
+
+        if (health != null)
+        {
+            // Set isColliding to prevent ammo dealing damage multiple times
+            isColliding = true;
+
+            health.TakeDamage(ammoDetails.GetAmmoDamage());
+        }
     }
 
     public void InitialiseAmmo(AmmoDetailsSO ammoDetails, GameObject shooter, float aimAngle, float weaponAimAngle, float ammoSpeed, Vector3 weaponAimDirectionVector, Vector2 targetPosition, bool overrideAmmoMovement = false)
     {
         this.ammoDetails = ammoDetails;
+
+        this.shooter = shooter;
 
         this.ammoSpeed = ammoSpeed;
 
@@ -104,7 +163,7 @@ public class ThrowingWeapon : MonoBehaviour, IFireable
     {
         float halfChordLength = (landingPosition - weaponShootPosition).magnitude / 2f;
 
-        xRotationAngle = ammoDetails.ammoBaseThrowingAngle - relativeThrowingAngle;
+        xRotationAngle = (ammoDetails.ammoBaseThrowingAngle - relativeThrowingAngle) * xRotationAngleCoefficient;
 
         radius = halfChordLength / Mathf.Sin(relativeThrowingAngle * Mathf.Deg2Rad);
 
@@ -162,11 +221,11 @@ public class ThrowingWeapon : MonoBehaviour, IFireable
     }
 
     /// <summary>
-    /// Destroy the ammo
+    /// Destroy the ammo completely when reaching anything
     /// </summary>
-    private void DisableAmmo()
+    private void DestroyWeapon()
     {
-        Destroy(gameObject); // for testing
+        Destroy(gameObject);
     }
 
     public void SetAmmoMaterial(Material material)
