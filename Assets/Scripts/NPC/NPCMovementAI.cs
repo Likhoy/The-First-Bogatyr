@@ -70,12 +70,12 @@ public class NPCMovementAI : MonoBehaviour
     /// </summary>
     private void CreatePath(int positionIndex)
     {
-        Grid grid = LocationInfo.Grid;
+        Grid grid = MainLocationInfo.Grid;
 
         // Get next position on the grid
         Vector3 nextPosition = npc.npcDetails.pointsToMove[positionIndex];
 
-        Vector3Int nextGridPosition = LocationInfo.Grid.WorldToCell(nextPosition);
+        Vector3Int nextGridPosition = MainLocationInfo.Grid.WorldToCell(nextPosition);
 
         // Get npc position on the grid
         Vector3Int npcGridPosition = grid.WorldToCell(transform.position);
