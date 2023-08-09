@@ -80,13 +80,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         player.Initialize(playerDetails);
     }
 
-    /// <summary>
-    /// Wrapper needed for access to dialogue system controller - stop active conversation from anywhere
-    /// </summary>
-    public void StopActiveConversation()
+    public void LetShowSceneTransitionImage()
     {
-        //dialogueSystemController.StopConversation();
-        dialogueSystemController.dialogueUI.Close();
+        dialogueSystemController.GetComponent<CustomSceneTransitionManager>().areScenesCorrect = true;
     }
 
     public void GiveWeaponToPlayer(string weaponName)
