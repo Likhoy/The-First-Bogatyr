@@ -5,13 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class CustomSceneTransitionManager : StandardSceneTransitionManager
 {
-    [SerializeField] private string leavingSceneName;
-    [SerializeField] private string enteringSceneName;
+    /*[SerializeField] private string leavingSceneName;
+    [SerializeField] private string enteringSceneName;*/
 
-    private string previousSceneName;
-    private bool areScenesCorrect;
+    //private string previousSceneName;
+    public bool areScenesCorrect = false;
 
-    private void OnEnable()
+    /*private void OnEnable()
     {
         SceneManager.sceneUnloaded += SceneManager_sceneUnloaded;
         SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
@@ -36,7 +36,7 @@ public class CustomSceneTransitionManager : StandardSceneTransitionManager
         }
         else
             areScenesCorrect = false;
-    }
+    }*/
 
     public override IEnumerator LeaveScene()
     {
@@ -50,5 +50,7 @@ public class CustomSceneTransitionManager : StandardSceneTransitionManager
         if (areScenesCorrect)
             yield return base.EnterScene();
         yield return null;
+
+        areScenesCorrect = false;
     }
 }
