@@ -61,8 +61,7 @@ public class ThrowingWeapon : MonoBehaviour, IFireable
         // calculating correct speed of x-axis rotation using travelled path to whole distance ratio
         float xRotationAngleOffset = (traveledPartOftheChord / directionVector.magnitude) * 2 * xRotationAngle * -xRotationToggle;
 
-        transform.rotation *= Quaternion.Euler(0, 0, angleOffset * Mathf.Rad2Deg);
-        transform.Rotate(xRotationAngleOffset, 0, 0, Space.World);
+        transform.Rotate(xRotationAngleOffset, 0, angleOffset * Mathf.Rad2Deg, Space.World); // World axes orientation is required here
 
         if (Vector3.Distance(transform.position, landingPosition) < 0.1f)
         {
@@ -184,8 +183,7 @@ public class ThrowingWeapon : MonoBehaviour, IFireable
 
         Vector2 motionDirection = HelperUtilities.GetDirectionVectorFromAngle(realThrowingAngle);
 
-        transform.rotation *= Quaternion.Euler(0, 0, realThrowingAngle);
-        transform.Rotate(xRotationAngle * xRotationToggle, 0, 0, Space.World); // two step rotation and Space.World are required here
+        transform.Rotate(xRotationAngle * xRotationToggle, 0, realThrowingAngle, Space.World);
 
         Vector2 perpendicularVector = new Vector2(-motionDirection.y * circleDirectionToggle, motionDirection.x * circleDirectionToggle).normalized * radius;
 
