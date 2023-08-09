@@ -19,7 +19,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private PlayerDetailsSO playerDetails;
     private Player player;
 
-    DialogueSystemController controller;
+    private DialogueSystemController dialogueSystemController;
 
     protected override void Awake()
     {
@@ -32,17 +32,17 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         // Instantiate player
         InstantiatePlayer();
 
-        controller = FindObjectOfType<DialogueSystemController>();
+        dialogueSystemController = FindObjectOfType<DialogueSystemController>();
         Invoke("SetQuestUIActive", 9);
         
     }
 
     private void SetQuestUIActive()
     {
-        controller.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
-        controller.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
-        controller.transform.GetChild(0).GetChild(3).gameObject.SetActive(true);
-        controller.transform.GetChild(1).gameObject.SetActive(true);
+        dialogueSystemController.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
+        dialogueSystemController.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
+        dialogueSystemController.transform.GetChild(0).GetChild(3).gameObject.SetActive(true);
+        dialogueSystemController.transform.GetChild(1).gameObject.SetActive(true);
     }
 
     private void OnEnable()
@@ -76,6 +76,15 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         player = playerGameObject.GetComponent<Player>();
 
         player.Initialize(playerDetails);
+    }
+
+    /// <summary>
+    /// Wrapper needed for access to dialogue system controller - stop active conversation from anywhere
+    /// </summary>
+    public void StopActiveConversation()
+    {
+        //dialogueSystemController.StopConversation();
+        dialogueSystemController.dialogueUI.Close();
     }
 
     public void GiveWeaponToPlayer(string weaponName)
