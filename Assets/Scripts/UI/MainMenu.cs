@@ -2,6 +2,7 @@ using UnityEngine;
 using PixelCrushers;
 using PixelCrushers.DialogueSystem;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {

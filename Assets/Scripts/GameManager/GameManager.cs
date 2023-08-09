@@ -1,11 +1,8 @@
 using PixelCrushers;
 using PixelCrushers.DialogueSystem;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 [DisallowMultipleComponent]
 public class GameManager : SingletonMonobehaviour<GameManager>
@@ -21,6 +18,11 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     private DialogueSystemController dialogueSystemController;
 
+    #region Tooltip
+    [Tooltip("Populate in the order of scenes appearing in the game")]
+    #endregion
+    public LocationDetailsSO[] allLocationsDetails;
+
     protected override void Awake()
     {
         // Call base class
@@ -33,8 +35,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         InstantiatePlayer();
 
         dialogueSystemController = FindObjectOfType<DialogueSystemController>();
-        Invoke("SetQuestUIActive", 9);
-        
+
+        SetQuestUIActive();
     }
 
     private void SetQuestUIActive()
@@ -112,7 +114,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         GameObject transitionImage = GameObject.FindGameObjectWithTag("transitionImage");
         Animator animator = transitionImage.GetComponent<Animator>();
         animator.SetTrigger("Finish");
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene(allLocationsDetails[0].sceneName);
         yield return null; // исправить
     }
 
