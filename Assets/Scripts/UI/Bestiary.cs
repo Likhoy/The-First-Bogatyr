@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
+using System.Linq;
 
 public class Bestiary : MonoBehaviour
 {  
@@ -15,6 +15,9 @@ public class Bestiary : MonoBehaviour
 
     public Image leftImage;
     public Image rightImage;
+
+    public GameObject ButtonNext;
+    public GameObject ButtonPrev;
 
     private int currentIndex = 0;
 
@@ -47,6 +50,22 @@ public class Bestiary : MonoBehaviour
 
     void UpdateDisplay()
     {
+        if (currentIndex == 0.0)
+        {
+            ButtonPrev.SetActive(false);
+            ButtonNext.SetActive(true);
+        }
+        else if (currentIndex == (int)(mobImages.Length / 2 - 1))
+        {
+            ButtonPrev.SetActive(true);
+            ButtonNext.SetActive(false);
+        }
+        else
+        {
+            ButtonPrev.SetActive(true);
+            ButtonNext.SetActive(true);
+        }
+
         leftImage.sprite = mobImages[currentIndex * 2];
         rightImage.sprite = mobImages[currentIndex * 2 + 1];
         leftText.text = mobDescriptions[currentIndex * 2];
