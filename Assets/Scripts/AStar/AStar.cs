@@ -12,8 +12,8 @@ public static class AStar
     public static Stack<Vector3> BuildPath(Vector3Int startGridPosition, Vector3Int endGridPosition)
     {
         // Adjust positions by lower bounds
-        startGridPosition -= (Vector3Int)LocationInfo.locationLowerBounds;
-        endGridPosition -= (Vector3Int)LocationInfo.locationLowerBounds;
+        startGridPosition -= (Vector3Int)MainLocationInfo.locationLowerBounds;
+        endGridPosition -= (Vector3Int)MainLocationInfo.locationLowerBounds;
 
         // Create open list and closed hashset
         PriorityQueue<Node, int> openNodeQueue = new PriorityQueue<Node, int>();
@@ -23,8 +23,8 @@ public static class AStar
 
         // Create gridnodes for path finding
         //GridNodes gridNodes = new GridNodes(LocationInfo.locationUpperBounds.x - LocationInfo.locationLowerBounds.x + 1, LocationInfo.locationUpperBounds.y - LocationInfo.locationLowerBounds.y + 1);
-        GridNodes gridNodes = LocationInfo.GridNodes;
-        LocationInfo.ClearGridNodes();
+        GridNodes gridNodes = MainLocationInfo.GridNodes;
+        MainLocationInfo.ClearGridNodes();
         /*Debug.Log(startGridPosition.x);
         Debug.Log(startGridPosition.y);
 
@@ -60,12 +60,12 @@ public static class AStar
             Node currentNode = openNodeQueue.Dequeue();
             openNodeHashSet.Remove(currentNode);
 
-            LocationInfo.spoiledNodes.Add(currentNode);
+            MainLocationInfo.spoiledNodes.Add(currentNode);
 
             // if the current node = target node then finish
             if (currentNode == targetNode)
             {
-                LocationInfo.spoiledNodes.AddRange(openNodeHashSet);
+                MainLocationInfo.spoiledNodes.AddRange(openNodeHashSet);
                 return currentNode;
             }
 
@@ -91,13 +91,13 @@ public static class AStar
         Node nextNode = targetNode;
 
         // Get mid point of cell
-        Vector3 cellMidPoint = LocationInfo.Grid.cellSize * 0.5f;
+        Vector3 cellMidPoint = MainLocationInfo.Grid.cellSize * 0.5f;
         cellMidPoint.z = 0f;
 
         while (nextNode != null)
         {
             // Convert grid position to world position
-            Vector3 worldPosition = LocationInfo.Grid.CellToWorld(new Vector3Int(nextNode.gridPosition.x + LocationInfo.locationLowerBounds.x, nextNode.gridPosition.y + LocationInfo.locationLowerBounds.y, 0));
+            Vector3 worldPosition = MainLocationInfo.Grid.CellToWorld(new Vector3Int(nextNode.gridPosition.x + MainLocationInfo.locationLowerBounds.x, nextNode.gridPosition.y + MainLocationInfo.locationLowerBounds.y, 0));
 
             // Set the world position to the middle of the grid cell
             worldPosition += cellMidPoint;
@@ -137,7 +137,7 @@ public static class AStar
                     // Get the movement penalty
                     // Unwalkable paths have a value of 0. Default movement penalty is set in
                     // Settings and applies to other grid squares.
-                    int movementPenaltyForGridSpace = LocationInfo.AStarMovementPenalty[validNeighbourNode.gridPosition.x, validNeighbourNode.gridPosition.y];
+                    int movementPenaltyForGridSpace = MainLocationInfo.AStarMovementPenalty[validNeighbourNode.gridPosition.x, validNeighbourNode.gridPosition.y];
 
                     newCostToNeighbour = currentNode.gCost + GetDistance(currentNode, validNeighbourNode) + movementPenaltyForGridSpace;
 
@@ -191,7 +191,7 @@ public static class AStar
 
         // check for obstacle at that position
         //int movementPenaltyForGridSpace = instantiatedRoom.aStarMovementPenalty[neighbourNodeXPosition, neighbourNodeYPosition];
-        int movementPenaltyForGridSpace = LocationInfo.AStarMovementPenalty[neighbourNodeXPosition, neighbourNodeYPosition];
+        int movementPenaltyForGridSpace = MainLocationInfo.AStarMovementPenalty[neighbourNodeXPosition, neighbourNodeYPosition];
 
         // check for moveable obstacle at that position
         //int itemObstacleForGridSpace = instantiatedRoom.aStarItemObstacles[neighbourNodeXPosition, neighbourNodeYPosition];
