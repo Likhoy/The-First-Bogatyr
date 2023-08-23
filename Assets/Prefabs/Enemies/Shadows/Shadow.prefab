@@ -43,7 +43,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 1.7812617}
@@ -890,7 +890,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8265982038236108386, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
       propertyPath: m_Mass
-      value: 4.8514967
+      value: 1.246012
       objectReference: {fileID: 0}
     - target: {fileID: 8265982038236108386, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
       propertyPath: m_UseAutoMass

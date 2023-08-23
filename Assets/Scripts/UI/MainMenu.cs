@@ -2,6 +2,7 @@ using UnityEngine;
 using PixelCrushers;
 using PixelCrushers.DialogueSystem;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject newGameButton;
     [SerializeField] private GameObject settingsButton;
     [SerializeField] private GameObject exitButton;
+
+    private GameObject[] allButtons; // auxiliary container
 
     private void Awake()
     {
@@ -21,6 +24,8 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
+        allButtons = new GameObject[4] { continueButton, newGameButton, settingsButton, exitButton };
+
         controller.transform.GetChild(0).GetChild(2).gameObject.SetActive(false);
         controller.transform.GetChild(0).GetChild(3).gameObject.SetActive(false);
         controller.transform.GetChild(1).gameObject.SetActive(false);
@@ -28,15 +33,7 @@ public class MainMenu : MonoBehaviour
 
     public void ContinueGamePressed()
     {
-        Button b = continueButton.GetComponent<Button>();
-        ColorBlock cb = b.colors;
-        cb.normalColor = new Color(115, 115, 115);
-        b.colors = cb;
-        b.interactable = false;
-
-        newGameButton.GetComponent<Button>().enabled = false;
-        settingsButton.GetComponent<Button>().enabled = false;
-        exitButton.GetComponent<Button>().enabled = false;
+        DeactivateButtonsAfterClick(continueButton);
 
         SaveSystem.LoadFromSlot(1);
 
@@ -48,9 +45,28 @@ public class MainMenu : MonoBehaviour
 
     public void StartNewGamePressed()
     {
+        DeactivateButtonsAfterClick(newGameButton);
+
         SaveSystem.DeleteSavedGameInSlot(1);
         SaveSystem.RestartGame("MainScene");
         controller.ResetDatabase();
+    }
+
+    private void DeactivateButtonsAfterClick(GameObject buttonPressed)
+    {
+        Button button = buttonPressed.GetComponent<Button>();
+        ColorBlock cb = button.colors;
+        cb.normalColor = new Color(115, 115, 115);
+        button.colors = cb;
+        button.interactable = false;
+
+        foreach (GameObject anotherButton in allButtons)
+        {
+            if (anotherButton != buttonPressed)
+            {
+                anotherButton.GetComponent<Button>().enabled = false;
+            }
+        }
     }
 
     public void ExitPressed()

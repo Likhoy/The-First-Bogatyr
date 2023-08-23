@@ -16,7 +16,7 @@ public class PlayerMapPosition : MonoBehaviour
     private void OnEnable()
     {
         Vector3 playerPosition = GameManager.Instance.GetPlayer().GetPlayerPosition();
-        transform.localPosition = new Vector3(playerPosition.x * mapWidth / LocationInfo.realLocationWidth, playerPosition.y * mapHeight / LocationInfo.realLocationHeight, 0);
+        transform.localPosition = new Vector3(playerPosition.x * mapWidth / MainLocationInfo.realLocationWidth, playerPosition.y * mapHeight / MainLocationInfo.realLocationHeight, 0);
     }
 
     
