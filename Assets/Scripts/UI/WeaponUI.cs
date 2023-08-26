@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.U2D;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,7 +24,14 @@ public class WeaponUI : MonoBehaviour
     {
         if (setActiveWeaponEventArgs.weapon != null)
         {
-            weaponImage.sprite = setActiveWeaponEventArgs.weapon.weaponDetails.weaponSprite;
+            if (setActiveWeaponEventArgs.isWeaponRanged)
+            {
+                weaponImage.sprite = (setActiveWeaponEventArgs.weapon as RangedWeapon).weaponDetails.weaponSprite;
+            }
+            else
+            {
+                weaponImage.sprite = (setActiveWeaponEventArgs.weapon as MeleeWeapon).weaponDetails.weaponSprite;
+            }
         }
     }
 
