@@ -23,11 +23,6 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void AddItems(Item item, int count)
-    {
-        for (int i = 0; i < count; i++)
-            AddItem(item);
-    }
 
     public void AddItem(Item item)
     {

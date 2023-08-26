@@ -1,5 +1,4 @@
 using PixelCrushers;
-using PixelCrushers.DialogueSystem;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -91,7 +90,7 @@ public class Player : MonoBehaviour
         this.playerDetails = playerDetails;
 
         // Create player starting weapons
-        //CreatePlayerStartingWeapon();
+        // CreatePlayerStartingWeapon();
 
         // Set player starting health
         SetPlayerHealth();
@@ -119,21 +118,21 @@ public class Player : MonoBehaviour
         // If player has died
         if (healthEventArgs.healthAmount <= 0f)
         {
-            /*destroyedEvent.CallDestroyedEvent(true, 0);
-            Destroy(this);*/
-            SaveSystem.LoadFromSlot(2);
+            SaveSystem.LoadFromSlot(1);
+            Destroy(gameObject);
         }
     }
 
     private void HealthEvent_OnHealthChanged2(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
     {
-        if (healthEventArgs.healthAmount <= 75f)
+        if (healthEventArgs.healthPercent <= 0.75f)
         {
             FadingOutText fadingOutText = FindObjectOfType<FadingOutText>();
-            if (fadingOutText != null && EnemySpawner.Instance.EnemiesSpawnedSoFar == 1) // bad condition - fix
+            if (fadingOutText != null && !GameProgressData.healthHintShown) 
             {
-                fadingOutText.TextToShow = "Святая вода восстанавличает здоровье...";
+                fadingOutText.TextToShow = "РЎРІСЏС‚Р°СЏ РІРѕРґР° РІРѕСЃСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ Р·РґРѕСЂРѕРІСЊРµ...";
                 fadingOutText.ShowHint(0);
+                GameProgressData.healthHintShown = true;
             }
             healthEvent.OnHealthChanged -= HealthEvent_OnHealthChanged2;
         }
