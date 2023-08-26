@@ -61,6 +61,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     private void Start()
     {
+        // Initialize Player
+        player.Initialize(playerDetails);
+
         // Spawn enemies (maybe this will be placed in enemy controller class)
         EnemySpawner.Instance.SpawnEnemies();
     }
@@ -74,10 +77,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         // Instantiate player
         GameObject playerGameObject = Instantiate(playerDetails.playerPrefab);
 
-        // Initialize Player
+        // Get Player
         player = playerGameObject.GetComponent<Player>();
-
-        player.Initialize(playerDetails);
     }
 
     public void LetShowSceneTransitionImage()
