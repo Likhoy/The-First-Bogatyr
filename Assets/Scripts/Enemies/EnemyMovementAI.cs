@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Enemy))]
@@ -31,6 +30,8 @@ public class EnemyMovementAI : MonoBehaviour
 
     private AnimateChernobog animateChernobog;
 
+    private bool costil = true;
+
     private void Awake()
     {
         // Load components
@@ -49,7 +50,7 @@ public class EnemyMovementAI : MonoBehaviour
         // Reset player reference position
         playerReferencePosition = GameManager.Instance.GetPlayer().GetPlayerPosition();
 
-        cellMidPoint = new Vector3(LocationInfo.Grid.cellSize.x * 0.5f, LocationInfo.Grid.cellSize.y * 0.5f, 0f);
+        cellMidPoint = new Vector3(MainLocationInfo.Grid.cellSize.x * 0.5f, MainLocationInfo.Grid.cellSize.y * 0.5f, 0f);
 
         SetRandomTargetPoint();
     }
@@ -64,31 +65,43 @@ public class EnemyMovementAI : MonoBehaviour
     /// </summary>
     private void MoveEnemy()
     {
-        // Check distance to player to see if enemy should start attacking
-        if (!chasePlayer && Vector3.Distance(transform.position, GameManager.Instance.GetPlayer().GetPlayerPosition()) < enemy.enemyDetails.aggressionDistance)
+        Player player = GameManager.Instance.GetPlayer();
+        if (player != null)
         {
-            // Check if player is in sight area 
-            // if (EnemyVisionAI.PlayerIsInSightArea())
-            ChasePlayer();
-            chasePlayer = true;
-        }
-        // Check distance to player to see if enemy should carry on chasing
-        else if (chasePlayer && Vector3.Distance(transform.position, GameManager.Instance.GetPlayer().GetPlayerPosition()) < enemy.enemyDetails.chaseDistance)
-        {
-            ChasePlayer();
-        }
-        // otherwise patrol the area
-        else
-        {
-            if (chasePlayer)
+            Vector3 playerPosition = player.GetPlayerPosition();
+
+            // Check distance to player to see if enemy should start attacking
+            if (!chasePlayer && Vector3.Distance(transform.position, playerPosition) < enemy.enemyDetails.aggressionDistance)
             {
-                SetRandomTargetPoint();
-                if (moveEnemyRoutine != null)
-                    StopCoroutine(moveEnemyRoutine);
-                chasePlayer = false;
+                // Check if player is in sight area 
+                // if (EnemyVisionAI.PlayerIsInSightArea())
+                ChasePlayer();
+                chasePlayer = true;
+
+                if (costil && this.gameObject.tag == "Chernobog")
+                {
+                    GameObject.Find("AudioManager").GetComponent<BossFightMusic>().SetBossFightMusic();
+                    costil = false;
+                }
             }
-            PatrolTheArea();
-        }
+            // Check distance to player to see if enemy should carry on chasing
+            else if (chasePlayer && Vector3.Distance(transform.position, playerPosition) < enemy.enemyDetails.chaseDistance)
+            {
+                ChasePlayer();
+            }
+            // otherwise patrol the area
+            else
+            {
+                if (chasePlayer)
+                {
+                    SetRandomTargetPoint();
+                    if (moveEnemyRoutine != null)
+                        StopCoroutine(moveEnemyRoutine);
+                    chasePlayer = false;
+                }
+                PatrolTheArea();
+            }
+        } 
     }
 
     /// <summary>
@@ -132,7 +145,7 @@ public class EnemyMovementAI : MonoBehaviour
         do {
             randomPosition = new Vector3(Random.Range(movementDetails.patrolingAreaLeftBottom.x, movementDetails.patrolingAreaRightTop.x), 
                 Random.Range(movementDetails.patrolingAreaLeftBottom.y, movementDetails.patrolingAreaRightTop.y), 0); // рандомный выбор позиции
-            randomPosition = LocationInfo.Grid.CellToWorld(GetNearestNonObstaclePlayerPosition()) + cellMidPoint;
+            randomPosition = MainLocationInfo.Grid.CellToWorld(GetNearestNonObstaclePlayerPosition()) + cellMidPoint;
         } 
         while (Vector2.Distance(transform.position, randomPosition) < 3f || randomPosition == Vector3Int.zero);
         
@@ -212,7 +225,7 @@ public class EnemyMovementAI : MonoBehaviour
     /// </summary>
     private void CreatePath()
     {
-        Grid grid = LocationInfo.Grid;
+        Grid grid = MainLocationInfo.Grid;
 
         // Get players position on the grid
         Vector3Int playerGridPosition = GetNearestNonObstaclePlayerPosition();
@@ -250,12 +263,12 @@ public class EnemyMovementAI : MonoBehaviour
     {
         Vector3 playerPosition = chasePlayer ? GameManager.Instance.GetPlayer().GetPlayerPosition() : randomPosition;
 
-        Vector3Int playerCellPosition = LocationInfo.Grid.WorldToCell(playerPosition);
+        Vector3Int playerCellPosition = MainLocationInfo.Grid.WorldToCell(playerPosition);
 
-        Vector2Int adjustedPlayerCellPositon = new Vector2Int(playerCellPosition.x + LocationInfo.locationUpperBounds.x, playerCellPosition.y + LocationInfo.locationUpperBounds.y);
+        Vector2Int adjustedPlayerCellPositon = new Vector2Int(playerCellPosition.x + MainLocationInfo.locationUpperBounds.x, playerCellPosition.y + MainLocationInfo.locationUpperBounds.y);
 
         //int obstacle = Mathf.Min(SceneInfo.aStarMovementPenalty[adjustedPlayerCellPositon.x, adjustedPlayerCellPositon.y], currentRoom.instantiatedRoom.aStarItemObstacles[adjustedPlayerCellPositon.x, adjustedPlayerCellPositon.y]);
-        int obstacle = LocationInfo.AStarMovementPenalty[adjustedPlayerCellPositon.x, adjustedPlayerCellPositon.y];
+        int obstacle = MainLocationInfo.AStarMovementPenalty[adjustedPlayerCellPositon.x, adjustedPlayerCellPositon.y];
 
         // if the player isn't on a cell square marked as an obstacle then return that position
         if (obstacle != 0)
@@ -291,7 +304,7 @@ public class EnemyMovementAI : MonoBehaviour
                 try
                 {
                     //obstacle = Mathf.Min(currentRoom.instantiatedRoom.aStarMovementPenalty[adjustedPlayerCellPositon.x + surroundingPositionList[index].x, adjustedPlayerCellPositon.y + surroundingPositionList[index].y], currentRoom.instantiatedRoom.aStarItemObstacles[adjustedPlayerCellPositon.x + surroundingPositionList[index].x, adjustedPlayerCellPositon.y + surroundingPositionList[index].y]);
-                    obstacle = LocationInfo.AStarMovementPenalty[adjustedPlayerCellPositon.x + surroundingPositionList[index].x, adjustedPlayerCellPositon.y + surroundingPositionList[index].y];
+                    obstacle = MainLocationInfo.AStarMovementPenalty[adjustedPlayerCellPositon.x + surroundingPositionList[index].x, adjustedPlayerCellPositon.y + surroundingPositionList[index].y];
 
                     // If no obstacle return the cell position to navigate to
                     if (obstacle != 0)

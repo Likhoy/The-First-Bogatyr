@@ -7,10 +7,12 @@ public class PlayerResources : MonoBehaviour
 {
     private Player player;
     private Inventory inventory;
-    private int playerMoney;
-    public int PlayerMoney { get => playerMoney; }
+    public int PlayerMoney { get; set; }
 
     [HideInInspector] public MoneyIncreasedEvent moneyIncreasedEvent;
+
+    private AudioSource audioEffects;
+    [SerializeField] private AudioClip[] CMoney;
 
     private void Awake()
     {
@@ -21,33 +23,28 @@ public class PlayerResources : MonoBehaviour
     private void Start()
     {
         player = GameManager.Instance.GetPlayer();
-        playerMoney = player.playerDetails.initialPlayerMoneyAmount;
+        PlayerMoney = player.playerDetails.initialPlayerMoneyAmount;
+        audioEffects = GameObject.Find("AudioEffects").GetComponent<AudioSource>();
     }
 
     private bool SpendMoney(int moneySpent)
     {
-        if (playerMoney >= moneySpent)
+        if (PlayerMoney >= moneySpent)
         {
-            playerMoney -= moneySpent;
+            PlayerMoney -= moneySpent;
             return true;
         }
         return false;    
     }
 
-    public void TryBuyProduct(Product product)
+    public void TryBuyProduct(Product product) // Монеточки
     {
         if (SpendMoney(product.price))
         {
-            Inventory inventory = FindObjectOfType<Inventory>();
-            if (inventory.ContainsItem(product.itemPrefab.GetComponent<Item>().itemID) >= 1)
-                inventory.AddItem(product.itemPrefab.GetComponent<Item>());
-            else
-            {
-                GameObject item = Instantiate(product.itemPrefab, player.transform);
-                item.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
-                inventory.AddItem(item.GetComponent<Item>());
-            }
-            player.productBoughtEvent.CallProductBoughtEvent(playerMoney);
+            System.Random rand = new System.Random();
+            audioEffects.PlayOneShot(CMoney[rand.Next(CMoney.Length)]);
+            GameManager.Instance.GiveItem(product.itemPrefab);
+            player.productBoughtEvent.CallProductBoughtEvent(PlayerMoney);
         }
         else
         {
@@ -58,6 +55,6 @@ public class PlayerResources : MonoBehaviour
     internal void AddMoney(int moneyAmount)
     {
         if (moneyAmount > 0)
-            playerMoney += moneyAmount;
+            PlayerMoney += moneyAmount;
     }
 }
