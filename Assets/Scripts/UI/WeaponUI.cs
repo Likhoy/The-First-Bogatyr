@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class WeaponUI : MonoBehaviour
 {
-    public Image weaponImage;
-    //private SetActiveWeaponEvent weaponEvent;
+    [SerializeField] private Image weaponImage;
+    //private SetActiveWeaponEvent weaponEvent; // он в классе Player
 
     void Update()
     {
@@ -18,7 +18,10 @@ public class WeaponUI : MonoBehaviour
     {
         if (GameManager.Instance.GetPlayer().activeWeapon.GetCurrentWeapon() != null)
         {
-            weaponImage.overrideSprite = GameManager.Instance.GetPlayer().activeWeapon.GetCurrentWeapon().weaponDetails.weaponSprite;
+            Weapon weapon = GameManager.Instance.GetPlayer().activeWeapon.GetCurrentWeapon();
+            Debug.Log(weapon.weaponDetails == null);
+            Debug.Log(weapon.weaponListPosition);
+            weaponImage.sprite = GameManager.Instance.GetPlayer().activeWeapon.GetCurrentWeapon().weaponDetails.weaponSprite;
         }
     }
 
