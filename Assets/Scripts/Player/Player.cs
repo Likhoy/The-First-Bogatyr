@@ -156,10 +156,14 @@ public class Player : MonoBehaviour
     public Weapon AddWeaponToPlayer(WeaponDetailsSO weaponDetails)
     {
         Weapon weapon;
+        bool isWeaponRanged = false;
         if (weaponDetails is MeleeWeaponDetailsSO meleeWeaponDetails)
             weapon = new MeleeWeapon() { weaponDetails = meleeWeaponDetails };
         else
+        {
             weapon = new RangedWeapon() { weaponDetails = weaponDetails as RangedWeaponDetailsSO };
+            isWeaponRanged = true;
+        }
 
         // Add the weapon to the list
         weaponList.Add(weapon);
@@ -168,7 +172,7 @@ public class Player : MonoBehaviour
         weapon.weaponListPosition = weaponList.Count;
 
         // Set the added weapon as active
-        setActiveWeaponEvent.CallSetActiveWeaponEvent(weapon);
+        setActiveWeaponEvent.CallSetActiveWeaponEvent(weapon, isWeaponRanged);
 
         return weapon;
     }
