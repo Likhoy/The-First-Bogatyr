@@ -7,21 +7,27 @@ using UnityEngine.UI;
 public class WeaponUI : MonoBehaviour
 {
     [SerializeField] private Image weaponImage;
-    //private SetActiveWeaponEvent weaponEvent; // он в классе Player
 
-    void Update()
+    private void OnEnable()
     {
-        ShowWeaponSprite();
+        GameManager.Instance.GetPlayer().setActiveWeaponEvent.OnSetActiveWeapon += WeaponEvent_OnWeaponChanged;         
     }
 
-    private void ShowWeaponSprite()
+    private void OnDisable()
     {
-        if (GameManager.Instance.GetPlayer().activeWeapon.GetCurrentWeapon() != null)
+        GameManager.Instance.GetPlayer().setActiveWeaponEvent.OnSetActiveWeapon -= WeaponEvent_OnWeaponChanged;
+    }
+
+    private void WeaponEvent_OnWeaponChanged(SetActiveWeaponEvent setActiveWeaponEvent, SetActiveWeaponEventArgs setActiveWeaponEventArgs)
+    {
+        ShowWeaponSprite(setActiveWeaponEventArgs);
+    }
+
+    private void ShowWeaponSprite(SetActiveWeaponEventArgs setActiveWeaponEventArgs)
+    {
+        if (setActiveWeaponEventArgs.weapon != null)
         {
-            Weapon weapon = GameManager.Instance.GetPlayer().activeWeapon.GetCurrentWeapon();
-            Debug.Log(weapon.weaponDetails == null);
-            Debug.Log(weapon.weaponListPosition);
-            weaponImage.sprite = GameManager.Instance.GetPlayer().activeWeapon.GetCurrentWeapon().weaponDetails.weaponSprite;
+            weaponImage.sprite = setActiveWeaponEventArgs.weapon.weaponDetails.weaponSprite;
         }
     }
 
