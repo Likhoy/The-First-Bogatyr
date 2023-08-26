@@ -97,13 +97,17 @@ public class AnimateChernobog : MonoBehaviour
 
     private IEnumerator LookDirectionWatchRoutine()
     {
+        Player player = GameManager.Instance.GetPlayer();
         while (true)
         {
             enemy.animator.SetBool(Settings.isMoving, false);
             InitializeLookAnimationParameters();
-            float angleToPlayer = HelperUtilities.GetAngleFromVector((GameManager.Instance.GetPlayer().transform.position - transform.position).normalized);
-            LookDirection lookDirection = HelperUtilities.GetLookDirectionLR(angleToPlayer);
-            SetLookAnimationParameters(lookDirection);
+            if (player != null)
+            {
+                float angleToPlayer = HelperUtilities.GetAngleFromVector((player.transform.position - transform.position).normalized);
+                LookDirection lookDirection = HelperUtilities.GetLookDirectionLR(angleToPlayer);
+                SetLookAnimationParameters(lookDirection);
+            }
             yield return waitForFixedUpdate;
         }
     }

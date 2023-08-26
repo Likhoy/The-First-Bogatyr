@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Linq;
-using Unity.VisualScripting;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
@@ -60,12 +56,22 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public StaticAttackingStartedEvent staticAttackingStartedEvent;
     [HideInInspector] public StaticAttackingEndedEvent staticAttackingEndedEvent;
 
+    private AudioSource audioSource;
+    private AudioSource audioEffects;
+    [SerializeField] private AudioClip CGetDamage;
+    [SerializeField] private AudioClip[] CMoney;
+    private Vector3 before;
+    private Vector3 after;
+    private bool costil = true;
+
     public MeleeWeapon MeleeWeapon { get; private set; }
     public RangedWeapon RangedWeapon { get; private set; }
 
     private void Awake()
     {
         // Load components
+        audioSource = GetComponent<AudioSource>();
+        audioEffects = GameObject.Find("AudioEffects").GetComponent<AudioSource>();
         healthEvent = GetComponent<HealthEvent>();
         health = GetComponent<Health>();
         //aimWeaponEvent = GetComponent<AimWeaponEvent>();
@@ -87,6 +93,22 @@ public class Enemy : MonoBehaviour
         defendingStageEndedEvent = GetComponent<DefendingStageEndedEvent>();
         staticAttackingStartedEvent = GetComponent<StaticAttackingStartedEvent>(); 
         staticAttackingEndedEvent = GetComponent<StaticAttackingEndedEvent>();
+        before = transform.position;
+    }
+
+    private void Update()
+    {
+        after = transform.position;
+
+        if (before != after)
+        {
+            if (!audioSource.isPlaying)
+                audioSource.Play();
+        }
+        else
+            audioSource.Stop();
+
+        before = after;
     }
 
     private void OnEnable()
@@ -106,8 +128,12 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void HealthEvent_OnHealthLost(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
     {
+        if (costil) costil = false;
+        else audioEffects.PlayOneShot(CGetDamage, 0.7f);
+
         if (healthEventArgs.healthAmount <= 0)
         {
+            audioEffects.PlayOneShot(CGetDamage, 0.7f);
             EnemyDestroyed();
         }
     }
@@ -120,7 +146,7 @@ public class Enemy : MonoBehaviour
         DestroyedEvent destroyedEvent = GetComponent<DestroyedEvent>();
         destroyedEvent.CallDestroyedEvent(false, health.GetStartingHealth());
 
-        if (enemyDetails.moneyReward > 0 && SceneManager.GetActiveScene().name != "Purple World")
+        if (enemyDetails.moneyReward > 0 && SceneManager.GetActiveScene().name != GameManager.Instance.allLocationsDetails[2].sceneName)
         {
             for (int i = 0; i < enemyDetails.moneyReward / 100; i++) // needed to add another money values
             {
@@ -128,6 +154,8 @@ public class Enemy : MonoBehaviour
                 float yMaxOffset = Mathf.Sqrt(enemyDetails.moneyDropRadius * enemyDetails.moneyDropRadius - positionXOffset * positionXOffset);
                 float positionYOffset = Random.Range(-yMaxOffset, yMaxOffset);
                 Instantiate(GameResources.Instance.coins[0], transform.position + new Vector3(positionYOffset, positionYOffset), Quaternion.identity);
+                System.Random rand = new System.Random();
+                audioEffects.PlayOneShot(CMoney[rand.Next(CMoney.Length)]);
             }
         }
     }
@@ -146,7 +174,7 @@ public class Enemy : MonoBehaviour
 
         SetEnemyStartingWeapon();
 
-        SetEnemyAnimationSpeed();
+        // SetEnemyAnimationSpeed();
 
         // Materialise enemy
         //StartCoroutine(MaterializeEnemy());
@@ -207,7 +235,7 @@ public class Enemy : MonoBehaviour
     private void SetEnemyAnimationSpeed()
     {
         // Set animator speed to match movement speed
-        //animator.speed = enemyMovementAI.moveSpeed / Settings.baseSpeedForEnemyAnimations;
+        animator.speed = enemyMovementAI.moveSpeed / Settings.baseSpeedForEnemyAnimations;
     }
 
     /*private IEnumerator MaterializeEnemy()
@@ -229,10 +257,10 @@ public class Enemy : MonoBehaviour
         polygonCollider2D.enabled = isEnabled;
 
         // Enable/Disable movement AI
-        //enemyMovementAI.enabled = isEnabled;
+        enemyMovementAI.enabled = isEnabled;
 
         // Enable / Disable Fire Weapon
-        //fireWeapon.enabled = isEnabled;
+        fireWeapon.enabled = isEnabled;
 
     }
 }

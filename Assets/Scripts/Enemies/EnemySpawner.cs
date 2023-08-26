@@ -1,7 +1,8 @@
 using PixelCrushers.DialogueSystem;
-using System.Collections;
+using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [DisallowMultipleComponent]
 public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
@@ -9,7 +10,6 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
     private int enemiesToSpawn;
     private int currentEnemyCount;
     public int EnemiesSpawnedSoFar { get; set; }
-    [SerializeField] private LocationDetailsSO locationDetails;
     private Grid grid;
     
     private void OnEnable()
@@ -41,8 +41,19 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
             GameManager.Instance.gameState = GameState.engagingEnemies;
         }*/
 
-        grid = LocationInfo.Grid;
-        enemiesToSpawn = locationDetails.enemiesToSpawnImmediately.Length;
+        LocationDetailsSO currentLocationDetails = null;
+        foreach (LocationDetailsSO locationDetails in GameManager.Instance.allLocationsDetails)
+        {
+            if (SceneManager.GetActiveScene().name == locationDetails.sceneName)
+                currentLocationDetails = locationDetails;
+        }
+
+        if (currentLocationDetails == null)
+            throw new NullReferenceException("Не найдена нужная сцена в общем списке сцен.");
+            
+
+        grid = MainLocationInfo.Grid;
+        enemiesToSpawn = currentLocationDetails.enemiesToSpawnImmediately.Length;
 
         // Check we have somewhere to spawn the enemies
         if (enemiesToSpawn > 0)
@@ -50,9 +61,9 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
             // Loop through to create all the enemeies
             for (int i = 0; i < enemiesToSpawn; i++)
             {
-                EnemyDetailsSO enemyDetails = locationDetails.enemiesToSpawnImmediately[EnemiesSpawnedSoFar].enemyDetails;
+                EnemyDetailsSO enemyDetails = currentLocationDetails.enemiesToSpawnImmediately[EnemiesSpawnedSoFar].enemyDetails;
 
-                Vector3Int cellPosition = (Vector3Int)locationDetails.enemiesToSpawnImmediately[EnemiesSpawnedSoFar].spawnPosition;
+                Vector3Int cellPosition = (Vector3Int)currentLocationDetails.enemiesToSpawnImmediately[EnemiesSpawnedSoFar].spawnPosition;
 
                 // Create Enemy - Get next enemy type to spawn 
                 CreateEnemy(enemyDetails, grid.CellToWorld(cellPosition));
