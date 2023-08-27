@@ -78,7 +78,7 @@ public class AmmoDetailsSO : ScriptableObject
     #region Tooltip
     [Tooltip("The rotation speed in degrees per second of the ammo pattern")]
     #endregion
-    public float ammoRotationSpeed = 1f;
+    public float ammoBaseRotationSpeed = 0f;
 
     public int GetAmmoDamage() => Random.Range(ammoMinDamage, ammoMaxDamage);
 
@@ -116,6 +116,26 @@ public class AmmoDetailsSO : ScriptableObject
     #endregion
     public float ammoSpawnIntervalMax = 0f;
 
+    #region Header THROWING WEAPON DETAILS
+    [Space(10)]
+    [Header("THROWING WEAPON DETAILS")]
+    #endregion
+    #region Tooltip
+    [Tooltip("Mark here if this is the ammo for a throwing weapon.")]
+    #endregion
+    public bool isThrowingWeaponAmmo = false;
+    #region Tooltip
+    [Tooltip("The min distance of the ammo flight to be allowed (for throwing weapons)")]
+    #endregion
+    public float ammoDistanceMin = 3f;
+    #region Tooltip
+    [Tooltip("Angle beetween vector to the target and the tangent to the circle along which the ammo will fly (from 0 to 90 degrees).")]
+    #endregion
+    public float ammoBaseThrowingAngle = 45f;
+    #region Tooltip
+    [Tooltip("Populate with initial ammo rotation (three o'clock direction is expected)")]
+    #endregion
+    public Quaternion baseRotation;
 
     /*#region Header AMMO TRAIL DETAILS
     [Space(10)]
@@ -160,6 +180,14 @@ public class AmmoDetailsSO : ScriptableObject
         HelperUtilities.ValidateCheckPositiveRange(this, nameof(ammoSpreadMin), ammoSpreadMin, nameof(ammoSpreadMax), ammoSpreadMax, true);
         HelperUtilities.ValidateCheckPositiveRange(this, nameof(ammoSpawnAmountMin), ammoSpawnAmountMin, nameof(ammoSpawnAmountMax), ammoSpawnAmountMax, false);
         HelperUtilities.ValidateCheckPositiveRange(this, nameof(ammoSpawnIntervalMin), ammoSpawnIntervalMin, nameof(ammoSpawnIntervalMax), ammoSpawnIntervalMax, true);
+        
+        if (isThrowingWeaponAmmo)
+        {
+            HelperUtilities.ValidateCheckPositiveValue(this, nameof(ammoDistanceMin), ammoDistanceMin, true);
+            HelperUtilities.ValidateCheckPositiveValue(this, nameof(ammoBaseThrowingAngle), ammoBaseThrowingAngle, true);
+            
+        }
+
         /*if (isAmmoTrail)
         {
             HelperUtilities.ValidateCheckPositiveValue(this, nameof(ammoTrailTime), ammoTrailTime, false);
