@@ -151,9 +151,9 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// Add a weapon to the player weapon dictionary 
+    /// Add a weapon to the player weapon list 
     /// </summary>
-    public Weapon AddWeaponToPlayer(WeaponDetailsSO weaponDetails)
+    public Weapon AddWeaponToPlayer(WeaponDetailsSO weaponDetails, int weaponAmmoAmount = 0)
     {
         Weapon weapon;
         bool isWeaponRanged = false;
@@ -161,7 +161,13 @@ public class Player : MonoBehaviour
             weapon = new MeleeWeapon() { weaponDetails = meleeWeaponDetails };
         else
         {
-            weapon = new RangedWeapon() { weaponDetails = weaponDetails as RangedWeaponDetailsSO };
+            RangedWeaponDetailsSO rangedWeaponDetails = weaponDetails as RangedWeaponDetailsSO;
+
+            int weaponRemainingAmmo = Mathf.Clamp(weaponAmmoAmount, 0, rangedWeaponDetails.weaponAmmoCapacity);
+            weapon = new RangedWeapon() { weaponDetails = rangedWeaponDetails, 
+                weaponRemainingAmmo = weaponRemainingAmmo,
+                weaponClipRemainingAmmo = weaponRemainingAmmo >= rangedWeaponDetails.weaponClipAmmoCapacity ? rangedWeaponDetails.weaponClipAmmoCapacity : weaponRemainingAmmo };
+            
             isWeaponRanged = true;
         }
 

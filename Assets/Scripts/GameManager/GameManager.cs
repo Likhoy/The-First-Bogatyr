@@ -49,7 +49,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     private void OnEnable()
     {
-        Lua.RegisterFunction("GiveWeaponToPlayer", this, SymbolExtensions.GetMethodInfo(() => GiveWeaponToPlayer(string.Empty)));
+        Lua.RegisterFunction("GiveWeaponToPlayer", this, SymbolExtensions.GetMethodInfo(() => GiveWeaponToPlayer(string.Empty, 0.0)));
         Lua.RegisterFunction("GiveChanceToAvoidDamageToCreature", this, SymbolExtensions.GetMethodInfo(() => GiveChanceToAvoidDamageToCreature(string.Empty, 0.0)));
     }
 
@@ -86,12 +86,14 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         dialogueSystemController.GetComponent<CustomSceneTransitionManager>().areScenesCorrect = true;
     }
 
-    public void GiveWeaponToPlayer(string weaponName)
+    public void GiveWeaponToPlayer(string weaponName, double weaponAmmoAmount)
     {
         foreach (WeaponDetailsSO weaponDetails in GameResources.Instance.weaponDetailsList)
         {
             if (weaponDetails.weaponName == weaponName)
-                player.AddWeaponToPlayer(weaponDetails);
+            {
+                player.AddWeaponToPlayer(weaponDetails, (int)weaponAmmoAmount);
+            }  
         }
     }
 

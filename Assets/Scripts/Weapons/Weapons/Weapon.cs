@@ -8,7 +8,7 @@ public class MeleeWeapon : Weapon
     public MeleeWeaponDetailsSO weaponDetails;
 }
 
-public class RangedWeapon : Weapon
+public class RangedWeapon : Weapon 
 {
     public RangedWeaponDetailsSO weaponDetails;
     public float weaponReloadTimer;
