@@ -90,7 +90,7 @@ public class Player : MonoBehaviour
         this.playerDetails = playerDetails;
 
         // Create player starting weapons
-        // CreatePlayerStartingWeapon();
+        CreatePlayerStartingWeapon();
 
         // Set player starting health
         SetPlayerHealth();
@@ -159,7 +159,13 @@ public class Player : MonoBehaviour
         if (weaponDetails is MeleeWeaponDetailsSO meleeWeaponDetails)
             weapon = new MeleeWeapon() { weaponDetails = meleeWeaponDetails };
         else
-            weapon = new RangedWeapon() { weaponDetails = weaponDetails as RangedWeaponDetailsSO };
+        {
+            RangedWeaponDetailsSO rangedWeaponDetails = weaponDetails as RangedWeaponDetailsSO;
+            
+            weapon = new RangedWeapon() { weaponDetails = rangedWeaponDetails, weaponReloadTimer = 0f, 
+                weaponClipRemainingAmmo = rangedWeaponDetails.weaponClipAmmoCapacity, 
+                weaponRemainingAmmo = rangedWeaponDetails.weaponAmmoCapacity, isWeaponReloading = false };
+        }
 
         // Add the weapon to the list
         weaponList.Add(weapon);
