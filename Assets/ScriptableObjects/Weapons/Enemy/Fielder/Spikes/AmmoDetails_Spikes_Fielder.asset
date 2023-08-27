@@ -17,7 +17,7 @@ MonoBehaviour:
   ammoSprite: {fileID: 21300000, guid: da2d8b6443cef014e8c141b4be1fbedb, type: 3}
   ammoPrefabArray:
   - {fileID: 769429740093453056, guid: a259640d7b02aa94c852951fd75fddda, type: 3}
-  ammoMaterial: {fileID: 0}
+  ammoMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   ammoInvisibleTime: 0.1
   ammoChargeTime: 0
   ammoChargeMaterial: {fileID: 0}
@@ -33,3 +33,6 @@ MonoBehaviour:
   ammoSpawnAmountMax: 1
   ammoSpawnIntervalMin: 0
   ammoSpawnIntervalMax: 0
+  isThrowingWeaponAmmo: 0
+  ammoDistanceMin: 3
+  ammoBaseThrowingAngle: 45
