@@ -10,6 +10,7 @@ public enum Command
 {
     Dash,
     Hit,
+    SwitchWeapon,
     TakeItem,
     ContinueDialog,
     OpenBestiary,
