@@ -23,6 +23,8 @@ public class NPCDetailsSO : ScriptableObject
 
     public List<Product> products;
 
+    public List<WeaponProduct> weaponProducts;
+
     public float moveSpeed;
 
     public bool movesRandomly;

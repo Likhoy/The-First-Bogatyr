@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -20,10 +19,14 @@ public class TradingUI : MonoBehaviour
     }
 
 
+    // maximum ten ordinary products and then weapons
     public void ShowTradingWindow(NPC npc)
     {
-        int i = 0;
+        
         this.gameObject.SetActive(true);
+
+        // ordinary products
+        int i = 0;
         foreach (Product product in npc.npcDetails.products)
         {
             prices[i].text = product.itemName + "\n" + product.price;
@@ -33,7 +36,21 @@ public class TradingUI : MonoBehaviour
             this.transform.GetChild(i).gameObject.SetActive(true);
             i++;
         }
+        if (i > 10)
+            Debug.Log("Больше 10 обычных продуктов не поддерживается.");
         
+        // weapons
+        i = 10;
+        foreach (WeaponProduct weaponProduct in npc.npcDetails.weaponProducts)
+        {
+            string weaponAmmoAmount = weaponProduct.weaponAmmoAmount > 0 ? weaponProduct.weaponAmmoAmount.ToString() + " шт." : "";
+            prices[i].text = $"{weaponProduct.weaponDetails.weaponName} {weaponAmmoAmount}\n{weaponProduct.price}";
+            images[i + 1].sprite = weaponProduct.weaponDetails.weaponSprite;
+            buttons[i].onClick.RemoveAllListeners();
+            buttons[i].onClick.AddListener(delegate { GameManager.Instance.GetPlayer().playerResources.TryBuyWeapon(weaponProduct); });
+            this.transform.GetChild(i).gameObject.SetActive(true);
+            i++;
+        }
     }
 
     
