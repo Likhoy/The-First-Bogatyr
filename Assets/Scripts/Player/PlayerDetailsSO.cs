@@ -19,7 +19,7 @@ public class PlayerDetailsSO : ScriptableObject
     #region Tooltip
     [Tooltip("Player  initial starting weapon (ranged weapon is not implied here)")]
     #endregion
-    public MeleeWeaponDetailsSO startingWeapon;
+    public WeaponDetailsSO startingWeapon;
 
     #region Header HEALTH
     [Space(10)]

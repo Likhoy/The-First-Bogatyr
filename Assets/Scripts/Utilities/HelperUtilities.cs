@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public static class HelperUtilities
 {
@@ -12,7 +13,8 @@ public static class HelperUtilities
     {
         if (mainCamera == null) mainCamera = Camera.main;
 
-        Vector3 mouseScreenPosition = Input.mousePosition;
+        //Vector3 mouseScreenPosition = Input.mousePosition;
+        Vector3 mouseScreenPosition = Mouse.current.position.ReadValue();
 
         // Clamp mouse position to screen size
         mouseScreenPosition.x = Mathf.Clamp(mouseScreenPosition.x, 0f, Screen.width);
@@ -39,7 +41,7 @@ public static class HelperUtilities
     }
 
     /// <summary>
-    /// Get the angle in degrees from a direction vector
+    /// Get the angle in degrees from a direction vector (from -180 to 180 degrees)
     /// </summary>
     public static float GetAngleFromVector(Vector3 vector)
     {

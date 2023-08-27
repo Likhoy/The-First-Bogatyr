@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class TemporaryObject : MonoBehaviour
 {
+    [SerializeField] private bool fadeOutOnAwake = true;
     [SerializeField] private float lifeDuration;
     private SpriteRenderer spriteRenderer;
 
@@ -12,7 +13,8 @@ public class TemporaryObject : MonoBehaviour
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        StartCoroutine(FadingOutRoutine());
+        if (fadeOutOnAwake)
+            StartCoroutine(FadingOutRoutine());
     }
 
     private IEnumerator FadingOutRoutine()
