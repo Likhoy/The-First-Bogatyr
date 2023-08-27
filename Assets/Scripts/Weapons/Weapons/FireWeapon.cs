@@ -208,8 +208,8 @@ public class FireWeapon : MonoBehaviour
         if (!currentWeapon.weaponDetails.hasInfiniteClipCapacity)
         {
             currentWeapon.weaponClipRemainingAmmo--;
-            currentWeapon.weaponRemainingAmmo--;
         }
+        currentWeapon.weaponRemainingAmmo--;
 
         // Call weapon fired event
         weaponFiredEvent.CallWeaponFiredEvent(currentWeapon);
