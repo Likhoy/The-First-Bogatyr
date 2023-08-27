@@ -11,6 +11,12 @@ public class PlayerController : MonoBehaviour
 
     #endregion Tooltip
     [SerializeField] private MovementDetailsSO movementDetails;
+    #region Tooltip 
+
+    [Tooltip("The player WeaponShootPosition gameobject in the hieracrchy")]
+
+    #endregion Tooltip
+    [SerializeField] private Transform weaponShootPosition;
 
     [HideInInspector] public List<Item> takeItemList;
     [HideInInspector] public bool isTaking;
@@ -241,6 +247,21 @@ public class PlayerController : MonoBehaviour
             else
             {
                 RangedWeapon rangedWeapon = player.activeWeapon.GetCurrentWeapon() as RangedWeapon;
+                Vector3 targetPosition = HelperUtilities.GetMouseWorldPosition();
+
+                // Target distance
+                Vector3 targetDirectionVector = targetPosition - transform.position;
+
+                // Calculate direction vector of target from weapon shoot position
+                Vector3 weaponDirection = (targetPosition - weaponShootPosition.position);
+
+                // Get weapon to target angle
+                float weaponAngleDegrees = HelperUtilities.GetAngleFromVector(weaponDirection);
+
+                // Get player to target angle
+                float targetAngleDegrees = HelperUtilities.GetAngleFromVector(targetDirectionVector);
+
+                player.fireWeaponEvent.CallFireWeaponEvent(true, true, targetAngleDegrees, weaponAngleDegrees, weaponDirection, targetPosition.x, targetPosition.y);
             }
         }
         // Switching weapon
