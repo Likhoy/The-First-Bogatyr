@@ -178,6 +178,15 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
+    /// Get next weapon from the weapon list - without validating zero number
+    /// </summary>
+    public Weapon GetNextWeapon()
+    {
+        Weapon currentWeapon = activeWeapon.GetCurrentWeapon();
+        return currentWeapon.weaponListPosition == weaponList.Count ? weaponList[0] : weaponList[currentWeapon.weaponListPosition];
+    }
+
+    /// <summary>
     /// Returns the player position
     /// </summary>
     public Vector3 GetPlayerPosition()
