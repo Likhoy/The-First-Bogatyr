@@ -31,7 +31,7 @@ public class WeaponUI : MonoBehaviour
             if (setActiveWeaponEventArgs.isWeaponRanged)
             {
                 weaponImage.sprite = (setActiveWeaponEventArgs.weapon as RangedWeapon).weaponDetails.weaponSprite;
-                countItems.text = "" + (setActiveWeaponEventArgs.weapon as RangedWeapon).weaponClipRemainingAmmo;
+                countItems.text = "" + (setActiveWeaponEventArgs.weapon as RangedWeapon).weaponRemainingAmmo;
             }
             else
             {

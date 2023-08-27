@@ -166,7 +166,8 @@ public class Player : MonoBehaviour
             int weaponRemainingAmmo = Mathf.Clamp(weaponAmmoAmount, 0, rangedWeaponDetails.weaponAmmoCapacity);
             weapon = new RangedWeapon() { weaponDetails = rangedWeaponDetails, 
                 weaponRemainingAmmo = weaponRemainingAmmo,
-                weaponClipRemainingAmmo = weaponRemainingAmmo >= rangedWeaponDetails.weaponClipAmmoCapacity ? rangedWeaponDetails.weaponClipAmmoCapacity : weaponRemainingAmmo };
+                weaponClipRemainingAmmo = weaponRemainingAmmo < rangedWeaponDetails.weaponClipAmmoCapacity || rangedWeaponDetails.hasInfiniteClipCapacity ? 
+                weaponRemainingAmmo : rangedWeaponDetails.weaponClipAmmoCapacity };
             
             isWeaponRanged = true;
         }
