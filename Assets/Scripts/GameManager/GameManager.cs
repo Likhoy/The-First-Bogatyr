@@ -1,11 +1,8 @@
 using PixelCrushers;
 using PixelCrushers.DialogueSystem;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 [DisallowMultipleComponent]
 public class GameManager : SingletonMonobehaviour<GameManager>
@@ -19,7 +16,12 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private PlayerDetailsSO playerDetails;
     private Player player;
 
-    DialogueSystemController controller;
+    private DialogueSystemController dialogueSystemController;
+
+    #region Tooltip
+    [Tooltip("Populate in the order of scenes appearing in the game")]
+    #endregion
+    public LocationDetailsSO[] allLocationsDetails;
 
     protected override void Awake()
     {
@@ -32,17 +34,17 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         // Instantiate player
         InstantiatePlayer();
 
-        controller = FindObjectOfType<DialogueSystemController>();
-        Invoke("SetQuestUIActive", 9);
-        
+        dialogueSystemController = FindObjectOfType<DialogueSystemController>();
+
+        SetQuestUIActive();
     }
 
     private void SetQuestUIActive()
     {
-        controller.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
-        controller.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
-        controller.transform.GetChild(0).GetChild(3).gameObject.SetActive(true);
-        controller.transform.GetChild(1).gameObject.SetActive(true);
+        dialogueSystemController.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
+        dialogueSystemController.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
+        dialogueSystemController.transform.GetChild(0).GetChild(3).gameObject.SetActive(true);
+        dialogueSystemController.transform.GetChild(1).gameObject.SetActive(true);
     }
 
     private void OnEnable()
@@ -78,6 +80,11 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         player.Initialize(playerDetails);
     }
 
+    public void LetShowSceneTransitionImage()
+    {
+        dialogueSystemController.GetComponent<CustomSceneTransitionManager>().areScenesCorrect = true;
+    }
+
     public void GiveWeaponToPlayer(string weaponName)
     {
         foreach (WeaponDetailsSO weaponDetails in GameResources.Instance.weaponDetailsList)
@@ -103,7 +110,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         GameObject transitionImage = GameObject.FindGameObjectWithTag("transitionImage");
         Animator animator = transitionImage.GetComponent<Animator>();
         animator.SetTrigger("Finish");
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene(allLocationsDetails[0].sceneName);
         yield return null; // исправить
     }
 

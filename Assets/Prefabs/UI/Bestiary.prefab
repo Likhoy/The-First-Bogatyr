@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5897598191771207988}
   m_Layer: 5
   m_Name: ButtonPrev
-  m_TagString: Untagged
+  m_TagString: ButtonPrev
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -358,7 +358,7 @@ GameObject:
   - component: {fileID: 5897598192778927028}
   m_Layer: 5
   m_Name: ButtonBack
-  m_TagString: Untagged
+  m_TagString: Undefined
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -491,7 +491,7 @@ GameObject:
   - component: {fileID: 5897598193044387460}
   m_Layer: 5
   m_Name: ButtonNext
-  m_TagString: Untagged
+  m_TagString: ButtonNext
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -997,6 +997,8 @@ MonoBehaviour:
   rightText: {fileID: 5897598193450282418}
   leftImage: {fileID: 5897598193669203511}
   rightImage: {fileID: 5897598192010837717}
+  ButtonNext: {fileID: 5897598193044387462}
+  ButtonPrev: {fileID: 5897598191771207990}
 --- !u!1 &7154593623055068246
 GameObject:
   m_ObjectHideFlags: 0
