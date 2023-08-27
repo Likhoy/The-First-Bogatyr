@@ -61,7 +61,7 @@ public class PlayerResources : MonoBehaviour
             audioEffects.PlayOneShot(CMoney[rand.Next(CMoney.Length)]);
 
             player.AddWeaponToPlayer(weaponProduct.weaponDetails, weaponProduct.weaponAmmoAmount);
-            
+            player.productBoughtEvent.CallProductBoughtEvent(PlayerMoney);
         }
     }
 
