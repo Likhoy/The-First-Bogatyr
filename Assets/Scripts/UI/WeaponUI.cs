@@ -9,7 +9,7 @@ public class WeaponUI : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.Instance.GetPlayer().setActiveWeaponEvent.OnSetActiveWeapon += WeaponEvent_OnWeaponChanged;         
+        GameManager.Instance.GetPlayer().setActiveWeaponEvent.OnSetActiveWeapon += WeaponEvent_OnWeaponChanged;
     }
 
     private void OnDisable()
