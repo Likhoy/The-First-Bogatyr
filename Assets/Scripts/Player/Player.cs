@@ -1,5 +1,6 @@
 using PixelCrushers;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 #region REQUIRE COMPONENTS
@@ -185,12 +186,45 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
+    /// Delete player weapon when out of ammo or in other cases
+    /// </summary>
+    public void DeletePlayerWeapon(int weaponListPosition)
+    {
+        if (weaponList.Count == 0)
+        {
+            // here should be the message of deleting last weapon
+
+            return;
+        }
+
+        Weapon previousWeapon = GetPreviousWeapon(weaponListPosition);
+
+        // Set previous weapon as active if there is one
+        setActiveWeaponEvent.CallSetActiveWeaponEvent(previousWeapon, previousWeapon is RangedWeapon);
+
+        // Remove weapon from the list
+        weaponList.RemoveAt(weaponListPosition - 1);
+
+        // Correct weapon list positions
+        foreach (Weapon weapon in weaponList.Skip(weaponListPosition - 1))
+            weapon.weaponListPosition--;
+    }
+
+    /// <summary>
     /// Get next weapon from the weapon list - without validating zero number
     /// </summary>
-    public Weapon GetNextWeapon()
+    public Weapon GetNextWeaponAfterCurrent()
     {
         Weapon currentWeapon = activeWeapon.GetCurrentWeapon();
         return currentWeapon.weaponListPosition == weaponList.Count ? weaponList[0] : weaponList[currentWeapon.weaponListPosition];
+    }
+
+    /// <summary>
+    /// Get previous weapon from the weapon list - without validating zero number
+    /// </summary>
+    public Weapon GetPreviousWeapon(int weaponListPosition)
+    {
+        return weaponListPosition == 0 ? weaponList.Last() : weaponList[weaponListPosition - 2];
     }
 
     /// <summary>

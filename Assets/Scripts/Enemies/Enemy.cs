@@ -223,7 +223,7 @@ public class Enemy : MonoBehaviour
         }
         if (enemyDetails.enemyMeleeWeapon != null)
         {
-            MeleeWeapon = new MeleeWeapon() { weaponDetails = enemyDetails.enemyMeleeWeapon, weaponListPosition = 0 };
+            MeleeWeapon = new MeleeWeapon() { weaponDetails = enemyDetails.enemyMeleeWeapon, weaponListPosition = 1 };
             if (activeWeapon.GetCurrentWeapon() == null)
                 setActiveWeaponEvent.CallSetActiveWeaponEvent(MeleeWeapon, false);
         }
