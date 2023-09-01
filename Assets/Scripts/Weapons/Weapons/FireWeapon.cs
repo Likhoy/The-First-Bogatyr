@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 [RequireComponent(typeof(ActiveWeapon))]
 [RequireComponent(typeof(FireWeaponEvent))]
@@ -110,7 +109,9 @@ public class FireWeapon : MonoBehaviour
 
         // if there is no ammo and weapon doesn't have infinite ammo then return false.
         if (currentWeapon.weaponRemainingAmmo <= 0 && !currentWeapon.weaponDetails.hasInfiniteAmmo)
+        {
             return false;
+        } 
 
         // if the weapon is reloading then return false.
         if (currentWeapon.isWeaponReloading)
@@ -210,6 +211,10 @@ public class FireWeapon : MonoBehaviour
             currentWeapon.weaponClipRemainingAmmo--;
         }
         currentWeapon.weaponRemainingAmmo--;
+
+        // if player weapon has run out of ammo than delete player weapon (maybe we'll need an event here)
+        if (currentWeapon.weaponRemainingAmmo <= 0 && currentWeapon.weaponDetails.weaponCurrentAmmo.isPlayerAmmo)
+            GameManager.Instance.GetPlayer().DeletePlayerWeapon(currentWeapon.weaponListPosition);
 
         // Call weapon fired event
         weaponFiredEvent.CallWeaponFiredEvent(currentWeapon);
