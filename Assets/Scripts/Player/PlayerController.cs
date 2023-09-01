@@ -231,7 +231,7 @@ public class PlayerController : MonoBehaviour
     private void ProcessWeaponInput()
     {
         // Hitting someone or something :)
-        if (Input.GetKeyDown(Settings.commandButtons[Command.Hit]))
+        if (Input.GetKey(Settings.commandButtons[Command.Hit]))
         {
             if (player.activeWeapon.GetCurrentWeapon() is MeleeWeapon meleeWeapon)
             {
@@ -269,7 +269,7 @@ public class PlayerController : MonoBehaviour
         {
             if (player.weaponList.Count == 0 || player.weaponList.Count == 1)
                 return;
-            Weapon nextWeapon = player.GetNextWeapon();
+            Weapon nextWeapon = player.GetNextWeaponAfterCurrent();
             player.setActiveWeaponEvent.CallSetActiveWeaponEvent(nextWeapon, nextWeapon is RangedWeapon);
         }
     }
