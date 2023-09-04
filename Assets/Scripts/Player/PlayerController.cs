@@ -230,6 +230,7 @@ public class PlayerController : MonoBehaviour
 
     private void ProcessWeaponInput()
     {
+        // Hitting someone or something :)
         if (Input.GetKey(Settings.commandButtons[Command.Hit]))
         {
             if (player.activeWeapon.GetCurrentWeapon() is MeleeWeapon meleeWeapon)
@@ -260,6 +261,14 @@ public class PlayerController : MonoBehaviour
 
                 player.fireWeaponEvent.CallFireWeaponEvent(true, true, targetAngleDegrees, weaponAngleDegrees, weaponDirection, targetPosition.x, targetPosition.y);
             }
+        }
+        // Switching weapon
+        else if (Input.GetKeyDown(Settings.commandButtons[Command.SwitchWeapon]))
+        {
+            if (player.weaponList.Count == 0 || player.weaponList.Count == 1)
+                return;
+            Weapon nextWeapon = player.GetNextWeaponAfterCurrent();
+            player.setActiveWeaponEvent.CallSetActiveWeaponEvent(nextWeapon, nextWeapon is RangedWeapon);
         }
     }
 

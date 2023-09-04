@@ -34,7 +34,7 @@ public class PlayerResources : MonoBehaviour
             PlayerMoney -= moneySpent;
             return true;
         }
-        return false;    
+        return false;
     }
 
     public void TryBuyProduct(Product product) // Монеточки
@@ -43,12 +43,25 @@ public class PlayerResources : MonoBehaviour
         {
             System.Random rand = new System.Random();
             audioEffects.PlayOneShot(CMoney[rand.Next(CMoney.Length)]);
+
             GameManager.Instance.GiveItem(product.itemPrefab);
             player.productBoughtEvent.CallProductBoughtEvent(PlayerMoney);
         }
         else
         {
             // send error message
+        }
+    }
+
+    public void TryBuyWeapon(WeaponProduct weaponProduct)
+    {
+        if (SpendMoney(weaponProduct.price))
+        {
+            System.Random rand = new System.Random();
+            audioEffects.PlayOneShot(CMoney[rand.Next(CMoney.Length)]);
+
+            player.AddWeaponToPlayer(weaponProduct.weaponDetails, weaponProduct.weaponAmmoAmount);
+            player.productBoughtEvent.CallProductBoughtEvent(PlayerMoney);
         }
     }
 
