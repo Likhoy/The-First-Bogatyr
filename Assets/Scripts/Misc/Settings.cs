@@ -61,6 +61,7 @@ public static class Settings
     {
         [Command.Dash] = KeyCode.LeftShift,
         [Command.Hit] = KeyCode.Mouse1,
+        [Command.SwitchWeapon] = KeyCode.Q,
         [Command.TakeItem] = KeyCode.F,
         [Command.ContinueDialog] = KeyCode.Mouse0,
         [Command.OpenBestiary] = KeyCode.B,

@@ -69,7 +69,7 @@ public class EnemyWeaponAI : MonoBehaviour
                 {
                     if (holdsRangedWeapon)
                     {
-                        enemy.setActiveWeaponEvent.CallSetActiveWeaponEvent(enemy.MeleeWeapon);
+                        enemy.setActiveWeaponEvent.CallSetActiveWeaponEvent(enemy.MeleeWeapon, false);
                         holdsRangedWeapon = false;
                     }
                     MeleeAttack();
@@ -79,7 +79,7 @@ public class EnemyWeaponAI : MonoBehaviour
                 {
                     if (!holdsRangedWeapon)
                     {
-                        enemy.setActiveWeaponEvent.CallSetActiveWeaponEvent(enemy.RangedWeapon);
+                        enemy.setActiveWeaponEvent.CallSetActiveWeaponEvent(enemy.RangedWeapon, true);
                         holdsRangedWeapon = true;
                     }
 

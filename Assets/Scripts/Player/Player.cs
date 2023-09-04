@@ -1,5 +1,6 @@
 using PixelCrushers;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 #region REQUIRE COMPONENTS
@@ -151,20 +152,25 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// Add a weapon to the player weapon dictionary 
+    /// Add a weapon to the player weapon list 
     /// </summary>
-    public Weapon AddWeaponToPlayer(WeaponDetailsSO weaponDetails)
+    public Weapon AddWeaponToPlayer(WeaponDetailsSO weaponDetails, int weaponAmmoAmount = 0)
     {
         Weapon weapon;
+        bool isWeaponRanged = false;
         if (weaponDetails is MeleeWeaponDetailsSO meleeWeaponDetails)
             weapon = new MeleeWeapon() { weaponDetails = meleeWeaponDetails };
         else
         {
             RangedWeaponDetailsSO rangedWeaponDetails = weaponDetails as RangedWeaponDetailsSO;
+
+            int weaponRemainingAmmo = Mathf.Clamp(weaponAmmoAmount, 0, rangedWeaponDetails.weaponAmmoCapacity);
+            weapon = new RangedWeapon() { weaponDetails = rangedWeaponDetails, 
+                weaponRemainingAmmo = weaponRemainingAmmo,
+                weaponClipRemainingAmmo = weaponRemainingAmmo < rangedWeaponDetails.weaponClipAmmoCapacity || rangedWeaponDetails.hasInfiniteClipCapacity ? 
+                weaponRemainingAmmo : rangedWeaponDetails.weaponClipAmmoCapacity };
             
-            weapon = new RangedWeapon() { weaponDetails = rangedWeaponDetails, weaponReloadTimer = 0f, 
-                weaponClipRemainingAmmo = rangedWeaponDetails.weaponClipAmmoCapacity, 
-                weaponRemainingAmmo = rangedWeaponDetails.weaponAmmoCapacity, isWeaponReloading = false };
+            isWeaponRanged = true;
         }
 
         // Add the weapon to the list
@@ -174,9 +180,51 @@ public class Player : MonoBehaviour
         weapon.weaponListPosition = weaponList.Count;
 
         // Set the added weapon as active
-        setActiveWeaponEvent.CallSetActiveWeaponEvent(weapon);
+        setActiveWeaponEvent.CallSetActiveWeaponEvent(weapon, isWeaponRanged);
 
         return weapon;
+    }
+
+    /// <summary>
+    /// Delete player weapon when out of ammo or in other cases
+    /// </summary>
+    public void DeletePlayerWeapon(int weaponListPosition)
+    {
+        if (weaponList.Count == 0)
+        {
+            // here should be the message of deleting last weapon
+
+            return;
+        }
+
+        Weapon previousWeapon = GetPreviousWeapon(weaponListPosition);
+
+        // Set previous weapon as active if there is one
+        setActiveWeaponEvent.CallSetActiveWeaponEvent(previousWeapon, previousWeapon is RangedWeapon);
+
+        // Remove weapon from the list
+        weaponList.RemoveAt(weaponListPosition - 1);
+
+        // Correct weapon list positions
+        foreach (Weapon weapon in weaponList.Skip(weaponListPosition - 1))
+            weapon.weaponListPosition--;
+    }
+
+    /// <summary>
+    /// Get next weapon from the weapon list - without validating zero number
+    /// </summary>
+    public Weapon GetNextWeaponAfterCurrent()
+    {
+        Weapon currentWeapon = activeWeapon.GetCurrentWeapon();
+        return currentWeapon.weaponListPosition == weaponList.Count ? weaponList[0] : weaponList[currentWeapon.weaponListPosition];
+    }
+
+    /// <summary>
+    /// Get previous weapon from the weapon list - without validating zero number
+    /// </summary>
+    public Weapon GetPreviousWeapon(int weaponListPosition)
+    {
+        return weaponListPosition == 0 ? weaponList.Last() : weaponList[weaponListPosition - 2];
     }
 
     /// <summary>

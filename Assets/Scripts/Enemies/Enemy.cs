@@ -217,15 +217,15 @@ public class Enemy : MonoBehaviour
         {
             RangedWeapon weapon = new RangedWeapon() { weaponDetails = enemyDetails.enemyRangedWeapon, weaponReloadTimer = 0f, weaponClipRemainingAmmo = enemyDetails.enemyRangedWeapon.weaponClipAmmoCapacity, weaponRemainingAmmo = enemyDetails.enemyRangedWeapon.weaponAmmoCapacity, isWeaponReloading = false };
 
-            //Set weapon for enemy
-            setActiveWeaponEvent.CallSetActiveWeaponEvent(weapon);
+            // Set weapon for enemy
+            setActiveWeaponEvent.CallSetActiveWeaponEvent(weapon, true);
             RangedWeapon = weapon;
         }
         if (enemyDetails.enemyMeleeWeapon != null)
         {
-            MeleeWeapon = new MeleeWeapon() { weaponDetails = enemyDetails.enemyMeleeWeapon, weaponListPosition = 0 };
+            MeleeWeapon = new MeleeWeapon() { weaponDetails = enemyDetails.enemyMeleeWeapon, weaponListPosition = 1 };
             if (activeWeapon.GetCurrentWeapon() == null)
-                setActiveWeaponEvent.CallSetActiveWeaponEvent(MeleeWeapon);
+                setActiveWeaponEvent.CallSetActiveWeaponEvent(MeleeWeapon, false);
         }
     }
 
