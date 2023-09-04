@@ -20,6 +20,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject EffectsImage;
     [SerializeField] private GameObject SettingsUI;
     [SerializeField] private GameObject SettingsControlUI;
+    [SerializeField] private GameObject WeaponSlot;
     
 
 
@@ -64,6 +65,7 @@ public class PauseMenu : MonoBehaviour
         EffectsImage.SetActive(true);
         SettingsUI.SetActive(false);
         SettingsControlUI.SetActive(false);
+        WeaponSlot.SetActive(true);
 
         //controller.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
         //controller.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
@@ -87,6 +89,8 @@ public class PauseMenu : MonoBehaviour
         TradingUI.SetActive(false);
         ButtonsHelper.SetActive(false);
         EffectsImage.SetActive(false);
+        SettingsUI.SetActive(false);
+        WeaponSlot.SetActive(false);
 
         //controller.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
         //controller.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
