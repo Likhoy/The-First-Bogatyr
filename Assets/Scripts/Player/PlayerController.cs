@@ -238,8 +238,6 @@ public class PlayerController : MonoBehaviour
                 {
                     audioEffects.PlayOneShot(CAttack, 1f);
                     player.meleeAttackEvent.CallMeleeAttackEvent();
-                    // Maybe there is a way better ?
-                    Invoke("DealWithMeleeWeaponStrikedEvent", meleeWeapon.weaponDetails.weaponStrikeTime);
                     timeBetweenAttack = meleeWeapon.weaponDetails.weaponCooldownTime;
                 }
             }
