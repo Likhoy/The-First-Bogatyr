@@ -16,13 +16,16 @@ public class EnemyEM_MovementAI : BaseEnemyMovementAI
     protected override void MoveEnemy()
     {
         playerReferencePosition = GameManager.Instance.GetPlayer().GetPlayerPosition();
-        if (Vector3.Distance(transform.position, playerReferencePosition) < Vector3.Distance(transform.position, gatewayPosition))
+        float distanceToPlayer = Vector3.Distance(transform.position, playerReferencePosition);
+        if (distanceToPlayer < Vector3.Distance(transform.position, gatewayPosition) && distanceToPlayer < enemy.enemyDetails.aggressionDistance)
         {
+            chasePlayer = true;
             ChasePlayer();
             pathRebuildNeeded = true;
         }
         else
         {
+            chasePlayer = false;
             MoveTowardsGateway();
         }
     }

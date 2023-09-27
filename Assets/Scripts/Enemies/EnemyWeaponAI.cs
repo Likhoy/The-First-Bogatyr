@@ -60,7 +60,7 @@ public class EnemyWeaponAI : MonoBehaviour
             Vector3 playerPosition = player.GetPlayerPosition();
 
             // if chasing player
-            if (enemy.enemyMovementAI.chasePlayer)
+            if (enemy.enemyMovementAI.chasePlayer) // maybe need to make a special event for this
             {
                 EnemyMeleeWeaponCooldownTimer();
 
