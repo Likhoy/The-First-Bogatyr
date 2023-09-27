@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: EnemyDetails_Chernobog
   m_EditorClassIdentifier: 
   enemyName: Chernobog
-  enemyPrefab: {fileID: 8309658863052230953, guid: d2e27e4a9ca2a2440b3dedf2b97c7066, type: 3}
+  enemyPrefabs:
+  - {fileID: 8309658863052230953, guid: d2e27e4a9ca2a2440b3dedf2b97c7066, type: 3}
   aggressionDistance: 15
   chaseDistance: 25
   shootDistance: 15

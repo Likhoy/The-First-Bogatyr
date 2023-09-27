@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -81,5 +80,18 @@ public static class Settings
 
     #region GAME PROGRESS PARAMETERS
     public const int numberOfCheckpoints = 3;
+    #endregion
+
+    #region ENDLESS MODE PARAMETERS
+    public static readonly Vector2Int[] enemySpawnPossiblePositions = new Vector2Int[]
+    {
+        new Vector2Int(55, 30),
+        new Vector2Int(43, -25),
+        new Vector2Int(-39, -37),
+        new Vector2Int(-64, -16),
+        new Vector2Int(-63, 33),
+        new Vector2Int(-7, 50)
+    };
+    public static readonly Vector3 gatewayPosition = Vector3.zero;
     #endregion
 }

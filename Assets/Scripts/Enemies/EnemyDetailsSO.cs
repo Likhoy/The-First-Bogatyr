@@ -14,9 +14,9 @@ public class EnemyDetailsSO : ScriptableObject
     public string enemyName;
 
     #region Tooltip
-    [Tooltip("The prefab for the enemy")]
+    [Tooltip("Prefabs for the enemy (first for storyline, second for endless mode)")]
     #endregion
-    public GameObject enemyPrefab;
+    public GameObject[] enemyPrefabs;
 
     #region Tooltip
     [Tooltip("Distance to the player maximum for the enemy to start attacking him")]
@@ -150,7 +150,7 @@ public class EnemyDetailsSO : ScriptableObject
     private void OnValidate()
     {
         HelperUtilities.ValidateCheckEmptyString(this, nameof(enemyName), enemyName);
-        HelperUtilities.ValidateCheckNullValue(this, nameof(enemyPrefab), enemyPrefab);
+        HelperUtilities.ValidateCheckEnumerableValues(this, nameof(enemyPrefabs), enemyPrefabs);
         HelperUtilities.ValidateCheckPositiveValue(this, nameof(aggressionDistance), aggressionDistance, false);
         HelperUtilities.ValidateCheckPositiveValue(this, nameof(chaseDistance), chaseDistance, false);
         //HelperUtilities.ValidateCheckNullValue(this, nameof(enemyStandardMaterial), enemyStandardMaterial);
