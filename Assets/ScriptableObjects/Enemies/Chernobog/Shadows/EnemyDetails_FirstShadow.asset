@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: EnemyDetails_FirstShadow
   m_EditorClassIdentifier: 
   enemyName: Shadow1
-  enemyPrefab: {fileID: 1174784082978343962, guid: ce9130059c9a5944b9dd70e6f509b2eb, type: 3}
+  enemyPrefabs:
+  - {fileID: 1174784082978343962, guid: ce9130059c9a5944b9dd70e6f509b2eb, type: 3}
   aggressionDistance: 30
   chaseDistance: 50
+  shootDistance: 0
   handDistance: 0
   strikeDistance: 1
   enemyMeleeWeapon: {fileID: 0}
@@ -29,6 +31,8 @@ MonoBehaviour:
   hasHitEffect: 1
   hitEffectTime: 0.66
   isHealthBarDisplayed: 1
+  moneyReward: 0
+  moneyDropRadius: 5
   isBoss: 0
   spawningImmediately: 0
   littleEnemySpawnDatas: []

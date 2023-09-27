@@ -1,6 +1,8 @@
 using PixelCrushers;
 using PixelCrushers.DialogueSystem;
+using static RandomExtensions;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -23,6 +25,13 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     #endregion
     public LocationDetailsSO[] allLocationsDetails;
 
+    #region Tooltip
+    [Tooltip("Populate with all waves of endless mode")]
+    #endregion
+    [SerializeField] private WaveDetailsSO[] allWaveDetails;
+
+    private int currentWaveNumber = 1;
+
     protected override void Awake()
     {
         // Call base class
@@ -38,6 +47,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
         // for testing endless mode
         Destroy(dialogueSystemController.gameObject);
+        Invoke("SetUpAndStartEndlessMode", 10);
         //SetQuestUIActive();
     }
 
@@ -53,12 +63,14 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         Lua.RegisterFunction("GiveWeaponToPlayer", this, SymbolExtensions.GetMethodInfo(() => GiveWeaponToPlayer(string.Empty, 0.0)));
         Lua.RegisterFunction("GiveChanceToAvoidDamageToCreature", this, SymbolExtensions.GetMethodInfo(() => GiveChanceToAvoidDamageToCreature(string.Empty, 0.0)));
+        player.destroyedEvent.OnDestroyed += PlayerDestroyedEvent_OnDestroyed;
     }
 
     private void OnDisable()
     {
         Lua.UnregisterFunction("GiveWeaponToPlayer");
         Lua.UnregisterFunction("GiveChanceToAvoidDamageToCreature");
+        player.destroyedEvent.OnDestroyed -= PlayerDestroyedEvent_OnDestroyed;
     }
 
     private void Start()
@@ -81,6 +93,13 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
         // Get Player
         player = playerGameObject.GetComponent<Player>();
+    }
+
+    private void PlayerDestroyedEvent_OnDestroyed(DestroyedEvent destroyedEvent, DestroyedEventArgs destroyedEventArgs)
+    {
+        StopAllCoroutines();
+        // should be expanded
+        SceneManager.LoadScene("Menu");
     }
 
     public void LetShowSceneTransitionImage()
@@ -107,6 +126,50 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         {
             // TODO
         }
+    }
+
+    private void SetUpAndStartEndlessMode()
+    {
+        StartCoroutine(LaunchWave());
+    }
+
+    public void TryLaunchNextWave()
+    {
+        if (currentWaveNumber < allWaveDetails.Length)
+        {
+            currentWaveNumber++;
+            LaunchWave(currentWaveNumber);
+        }
+    }
+
+    private IEnumerator LaunchWave(int waveNumber = 1)
+    {
+        WaveDetailsSO currentWaveDetails = allWaveDetails[waveNumber - 1];
+        for (int i = 0; i < currentWaveDetails.enemyGroupsSpawnDatas.Count; i++)
+        {
+            EnemiesGroupWaveSpawnData groupSpawnData = currentWaveDetails.enemyGroupsSpawnDatas[i];
+            yield return new WaitForSeconds(groupSpawnData.delayAfterPreviousSpawn);
+            
+            Vector2Int[] spawnPositions = ChooseRandomSpawnPositions(groupSpawnData.amountOfEnemiesToSpawn);
+            for (int j = 0; j < groupSpawnData.enemiesBaseData.Length; j++)
+            {
+                EnemySpawner.Instance.SpawnEnemy(groupSpawnData.enemiesBaseData[j], spawnPositions[j]);
+            }
+        }
+    }
+
+    private Vector2Int[] ChooseRandomSpawnPositions(int positionsNumber)
+    {
+        int[] possibleSpawnPositionsNums = Enumerable.Range(0, Settings.enemySpawnPossiblePositions.Length - 1).ToArray();
+        System.Random r = new System.Random();
+        r.Shuffle(possibleSpawnPositionsNums);
+        
+        Vector2Int[] possibleSpawnPositions = new Vector2Int[positionsNumber];
+        for (int i = 0; i < positionsNumber; i++)
+        {
+            possibleSpawnPositions[i] = Settings.enemySpawnPossiblePositions[possibleSpawnPositionsNums[i]];
+        }
+        return possibleSpawnPositions;
     }
 
     public IEnumerator FinishGameRoutine()

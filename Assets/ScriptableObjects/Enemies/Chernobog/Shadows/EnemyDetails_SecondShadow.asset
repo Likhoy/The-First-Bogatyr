@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: EnemyDetails_SecondShadow
   m_EditorClassIdentifier: 
   enemyName: Shadow2
-  enemyPrefab: {fileID: 1174784082978343962, guid: ce9130059c9a5944b9dd70e6f509b2eb, type: 3}
+  enemyPrefabs:
+  - {fileID: 1174784082978343962, guid: ce9130059c9a5944b9dd70e6f509b2eb, type: 3}
   aggressionDistance: 25
   chaseDistance: 50
   shootDistance: 0
