@@ -47,7 +47,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
         // for testing endless mode
         Destroy(dialogueSystemController.gameObject);
-        Invoke("SetUpAndStartEndlessMode", 10);
+        SetUpAndStartEndlessMode();
         //SetQuestUIActive();
     }
 

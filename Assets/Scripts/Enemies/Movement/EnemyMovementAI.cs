@@ -46,7 +46,7 @@ public class EnemyMovementAI : BaseEnemyMovementAI
                 ChasePlayer();
                 chasePlayer = true;
 
-                if (costil && this.gameObject.tag == "Chernobog")
+                if (costil && gameObject.tag == "Chernobog")
                 {
                     GameObject.Find("AudioManager").GetComponent<BossFightMusic>().SetBossFightMusic();
                     costil = false;
