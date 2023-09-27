@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    private DialogueSystemController controller;
+    private DialogueSystemController dialogSystemController;
     [SerializeField] private GameObject continueButton;
     [SerializeField] private GameObject newGameButton;
     [SerializeField] private GameObject settingsButton;
@@ -18,17 +18,17 @@ public class MainMenu : MonoBehaviour
     {
         if (!SaveSystem.HasSavedGameInSlot(1))
             continueButton.SetActive(false);
-        controller = FindObjectOfType<DialogueSystemController>();
-        controller.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+        dialogSystemController = FindObjectOfType<DialogueSystemController>();
+        dialogSystemController.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
     }
 
     private void Start()
     {
         allButtons = new GameObject[4] { continueButton, newGameButton, settingsButton, exitButton };
 
-        controller.transform.GetChild(0).GetChild(2).gameObject.SetActive(false);
-        controller.transform.GetChild(0).GetChild(3).gameObject.SetActive(false);
-        controller.transform.GetChild(1).gameObject.SetActive(false);
+        dialogSystemController.transform.GetChild(0).GetChild(2).gameObject.SetActive(false);
+        dialogSystemController.transform.GetChild(0).GetChild(3).gameObject.SetActive(false);
+        dialogSystemController.transform.GetChild(1).gameObject.SetActive(false);
     }
 
     public void ContinueGamePressed()
@@ -37,20 +37,31 @@ public class MainMenu : MonoBehaviour
 
         SaveSystem.LoadFromSlot(1);
 
-        controller.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
-        controller.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
-        controller.transform.GetChild(0).GetChild(3).gameObject.SetActive(true);
-        controller.transform.GetChild(1).gameObject.SetActive(true);
+        dialogSystemController.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
+        dialogSystemController.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
+        dialogSystemController.transform.GetChild(0).GetChild(3).gameObject.SetActive(true);
+        dialogSystemController.transform.GetChild(1).gameObject.SetActive(true);
     }
 
+    /// <summary>
+    /// Special method for testing endless mode 
+    /// </summary>
     public void StartNewGamePressed()
+    {
+        DeactivateButtonsAfterClick(newGameButton);
+
+        SaveSystem.RestartGame("MainScene");
+    }
+
+    // original method
+    /*public void StartNewGamePressed()
     {
         DeactivateButtonsAfterClick(newGameButton);
 
         SaveSystem.DeleteSavedGameInSlot(1);
         SaveSystem.RestartGame("MainScene");
-        controller.ResetDatabase();
-    }
+        dialogSystemController.ResetDatabase();
+    }*/
 
     private void DeactivateButtonsAfterClick(GameObject buttonPressed)
     {

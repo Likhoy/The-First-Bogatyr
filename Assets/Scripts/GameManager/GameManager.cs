@@ -36,7 +36,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
         dialogueSystemController = FindObjectOfType<DialogueSystemController>();
 
-        SetQuestUIActive();
+        // for testing endless mode
+        Destroy(dialogueSystemController.gameObject);
+        //SetQuestUIActive();
     }
 
     private void SetQuestUIActive()
