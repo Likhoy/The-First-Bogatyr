@@ -11,7 +11,7 @@ public abstract class BaseEnemyMovementAI : MonoBehaviour
     protected Enemy enemy;
     protected Stack<Vector3> movementSteps = new Stack<Vector3>();
     protected Coroutine moveEnemyRoutine;
-    protected Vector3 playerReferencePosition;
+    protected Vector3 playerReferencePosition; // for reference to previous player position
     private float currentEnemyPathRebuildCooldown;
     protected WaitForFixedUpdate waitForFixedUpdate;
     [HideInInspector] public int updateFrameNumber = 1; // default value. This is set by the enemy spawner.
@@ -25,6 +25,12 @@ public abstract class BaseEnemyMovementAI : MonoBehaviour
         enemy = GetComponent<Enemy>();
 
         moveSpeed = movementDetails.GetMoveSpeed();
+    }
+
+    protected virtual void Start()
+    {
+        // Reset player reference position
+        playerReferencePosition = GameManager.Instance.GetPlayer().GetPlayerPosition();
     }
 
     protected virtual void Update()
