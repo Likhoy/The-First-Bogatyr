@@ -5,19 +5,19 @@ public class EnemyEM_MovementAI : BaseEnemyMovementAI
     private bool pathRebuildNeeded = true;
     private Vector3 gatewayPosition;
 
-    private void Start()
+    protected override void Start()
     {
-        // Reset player reference position
-        playerReferencePosition = GameManager.Instance.GetPlayer().GetPlayerPosition();
+        base.Start();
 
         gatewayPosition = Settings.gatewayPosition;
     }
 
     protected override void MoveEnemy()
     {
-        playerReferencePosition = GameManager.Instance.GetPlayer().GetPlayerPosition();
-        float distanceToPlayer = Vector3.Distance(transform.position, playerReferencePosition);
-        if (distanceToPlayer < Vector3.Distance(transform.position, gatewayPosition) && distanceToPlayer < enemy.enemyDetails.aggressionDistance)
+        Vector2 playerPosition = GameManager.Instance.GetPlayer().GetPlayerPosition();
+        float distanceToPlayer = Vector3.Distance(transform.position, playerPosition);
+        
+        if (distanceToPlayer < Vector3.Distance(transform.position, gatewayPosition) && distanceToPlayer < enemy.enemyDetails.chaseDistance)
         {
             chasePlayer = true;
             ChasePlayer();

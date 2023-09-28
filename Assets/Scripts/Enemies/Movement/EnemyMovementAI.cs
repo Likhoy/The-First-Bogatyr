@@ -15,13 +15,12 @@ public class EnemyMovementAI : BaseEnemyMovementAI
 
     private bool costil = true;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+
         // Create waitforfixed update for use in coroutine
         waitForFixedUpdate = new WaitForFixedUpdate();
-
-        // Reset player reference position
-        playerReferencePosition = GameManager.Instance.GetPlayer().GetPlayerPosition();
 
         cellMidPoint = new Vector3(MainLocationInfo.Grid.cellSize.x * 0.5f, MainLocationInfo.Grid.cellSize.y * 0.5f, 0f);
 
@@ -38,7 +37,7 @@ public class EnemyMovementAI : BaseEnemyMovementAI
         {
             Vector3 playerPosition = player.GetPlayerPosition();
 
-            // Check distance to player to see if enemy should start attacking
+            // Check distance to player to see if enemy should start attacking for the first time
             if (!chasePlayer && Vector3.Distance(transform.position, playerPosition) < enemy.enemyDetails.aggressionDistance)
             {
                 // Check if player is in sight area 
