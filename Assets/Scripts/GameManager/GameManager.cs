@@ -138,7 +138,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         if (currentWaveNumber < allWaveDetails.Length)
         {
             currentWaveNumber++;
-            LaunchWave(currentWaveNumber);
+            StartCoroutine(LaunchWave(currentWaveNumber));
         }
     }
 
@@ -151,7 +151,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
             yield return new WaitForSeconds(groupSpawnData.delayAfterPreviousSpawn);
             
             Vector2Int[] spawnPositions = ChooseRandomSpawnPositions(groupSpawnData.amountOfEnemiesToSpawn);
-            for (int j = 0; j < groupSpawnData.enemiesBaseData.Length; j++)
+            for (int j = 0; j < groupSpawnData.amountOfEnemiesToSpawn; j++)
             {
                 EnemySpawner.Instance.SpawnEnemy(groupSpawnData.enemiesBaseData[j], spawnPositions[j]);
             }

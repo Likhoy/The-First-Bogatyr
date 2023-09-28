@@ -125,8 +125,8 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
         destroyedEvent.OnDestroyed -= Enemy_OnDestroyed;
 
         // TODO - adjust architecture (for the first quest)
-        if (EnemiesSpawnedSoFar == 1)
-            GetComponent<DialogueSystemTrigger>().OnUse();
+        /*if (EnemiesSpawnedSoFar == 1)
+            GetComponent<DialogueSystemTrigger>().OnUse();*/ // needs to be returned in the main branch ! ! !
 
         // reduce current enemy count
         currentEnemyCount--;
