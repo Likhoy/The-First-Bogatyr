@@ -18,6 +18,7 @@ public abstract class BaseEnemyMovementAI : MonoBehaviour
     [HideInInspector] public bool chasePlayer = false;
     [HideInInspector] public float moveSpeed;
     private List<Vector2Int> surroundingPositionList = new List<Vector2Int>();
+    protected bool pathRebuildNeeded = true; // for rebuilding path when necessary
 
     private void Awake()
     {
