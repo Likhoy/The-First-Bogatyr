@@ -77,7 +77,7 @@ public class BossLocalSpawner : MonoBehaviour
     {
         Vector2 spawnPosition = new Vector2(UnityEngine.Random.Range(transform.position.x - enemy.enemyDetails.spawnRadius, transform.position.x + enemy.enemyDetails.spawnRadius),
                                             UnityEngine.Random.Range(transform.position.y - enemy.enemyDetails.spawnRadius, transform.position.y + enemy.enemyDetails.spawnRadius));
-        GameObject littleEnemy = Instantiate(enemyDetails.enemyPrefabs[0], spawnPosition, Quaternion.identity, transform); // handle enemy prefabs
+        GameObject littleEnemy = Instantiate(enemyDetails.enemyPrefabs[0], spawnPosition, Quaternion.identity, transform.parent); // handle enemy prefabs
         littleEnemy.GetComponent<Enemy>().EnemyInitialization(enemyDetails, EnemySpawner.Instance.EnemiesSpawnedSoFar);
         ++countCurrrentShadow;
         ++EnemySpawner.Instance.EnemiesSpawnedSoFar;
