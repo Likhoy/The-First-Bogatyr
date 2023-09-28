@@ -2,13 +2,12 @@ using UnityEngine;
 
 public class EnemyEM_MovementAI : BaseEnemyMovementAI
 {
-    private bool pathRebuildNeeded = true;
+    private bool gatewayReached = false; // for updating pathRebuildNeeded
     private Vector3 gatewayPosition;
 
     protected override void Start()
     {
         base.Start();
-
         gatewayPosition = Settings.gatewayPosition;
     }
 
@@ -17,6 +16,7 @@ public class EnemyEM_MovementAI : BaseEnemyMovementAI
         Vector2 playerPosition = GameManager.Instance.GetPlayer().GetPlayerPosition();
         float distanceToPlayer = Vector3.Distance(transform.position, playerPosition);
         
+        // if player is closer than gate then start chasing player
         if (distanceToPlayer < Vector3.Distance(transform.position, gatewayPosition) && distanceToPlayer < enemy.enemyDetails.chaseDistance)
         {
             chasePlayer = true;
@@ -26,6 +26,15 @@ public class EnemyEM_MovementAI : BaseEnemyMovementAI
         else
         {
             chasePlayer = false;
+            if (Vector3.Distance(transform.position, gatewayPosition) <= 2) // gateway reached
+            {
+                gatewayReached = true;
+            }
+            if (gatewayReached && Vector3.Distance(transform.position, gatewayPosition) > 2) // if enemy got pushed away from the gateway then we should rebuild path
+            {
+                gatewayReached = false;
+                pathRebuildNeeded = true;
+            }
             MoveTowardsGateway();
         }
     }

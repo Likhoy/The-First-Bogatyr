@@ -9,7 +9,6 @@ public class EnemyMovementAI : BaseEnemyMovementAI
 {
     private Vector3 randomPosition; // for choosing patroling path
     private bool isSetTargetPoint = false; // patroling path has been chosen
-    private bool pathRebuildNeeded = true; // for building path while patroling
 
     private Vector3 cellMidPoint; // needed to adjust enemy target point when patroling
 
