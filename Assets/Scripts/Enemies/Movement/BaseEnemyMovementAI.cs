@@ -66,7 +66,7 @@ public abstract class BaseEnemyMovementAI : MonoBehaviour
             CreatePath(playerReferencePosition);
 
             // If a path has been found move the enemy
-            if (movementSteps != null)
+            if (movementSteps != null && movementSteps.Count > 0)
             {
                 if (moveEnemyRoutine != null)
                 {
@@ -105,8 +105,7 @@ public abstract class BaseEnemyMovementAI : MonoBehaviour
         }
 
         // End of path steps - trigger the enemy idle event
-        if (!chasePlayer)
-            enemy.idleEvent.CallIdleEvent();
+        enemy.idleEvent.CallIdleEvent();
     }
 
     /// <summary>

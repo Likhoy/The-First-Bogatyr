@@ -4,6 +4,7 @@ public class EnemyEM_MovementAI : BaseEnemyMovementAI
 {
     private bool gatewayReached = false; // for updating pathRebuildNeeded
     private Vector3 gatewayPosition;
+    private Vector3 enemyReferencePosition; // for storing previous position
 
     protected override void Start()
     {
@@ -29,8 +30,9 @@ public class EnemyEM_MovementAI : BaseEnemyMovementAI
             if (Vector3.Distance(transform.position, gatewayPosition) <= 2) // gateway reached
             {
                 gatewayReached = true;
+                enemyReferencePosition = transform.position;
             }
-            if (gatewayReached && Vector3.Distance(transform.position, gatewayPosition) > 2) // if enemy got pushed away from the gateway then we should rebuild path
+            if (gatewayReached && Vector3.Distance(transform.position, enemyReferencePosition) > 2) // if enemy got pushed away from the gateway then we should rebuild path
             {
                 gatewayReached = false;
                 pathRebuildNeeded = true;
