@@ -133,7 +133,24 @@ public class EnemyDetailsSO : ScriptableObject
 
     public float moneyDropRadius = 5f;
 
+    #region Header ENDLESS MODE
     [Space(10)]
+    [Header("ENDLESS MODE")]
+    #endregion // maybe will be placed in a different SO
+
+    #region Tooltip
+    [Tooltip("Percent of enemy health growth each 3 waves")]
+    #endregion
+    public float baseHealthModifier = 0f;
+    #region Tooltip
+    [Tooltip("Percent of enemy damage growth each 3 waves")]
+    #endregion
+    public float baseDamageModifier = 0f;
+
+    #region Header BOSS SETTINGS
+    [Space(10)]
+    [Header("BOSS SETTINGS")]
+    #endregion
 
     public bool isBoss = false;
 
