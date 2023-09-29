@@ -163,13 +163,17 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// Initialise the enemy
     /// </summary>
-    public void EnemyInitialization(EnemyDetailsSO enemyDetails, int enemySpawnNumber)
+    public void EnemyInitialization(EnemyDetailsSO enemyDetails, int enemySpawnNumber, EnemyModifiers enemyModifiers = null)
     {
         this.enemyDetails = enemyDetails;
 
         SetEnemyMovementUpdateFrame(enemySpawnNumber);
 
-        SetEnemyStartingHealth(); // here should be a parameter to get correct health for enemy
+        if (enemyModifiers != null)
+        {
+            SetEnemyStartingHealth(enemyModifiers.healthModifierEffect);
+        }
+        SetEnemyStartingHealth();
 
         SetEnemyStartingWeapon();
 
@@ -192,7 +196,7 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// Set the starting health for the enemy
     /// </summary>
-    private void SetEnemyStartingHealth()
+    private void SetEnemyStartingHealth(int modifierEffect = 0)
     {
         // Get the enemy health for the dungeon level
         /*foreach (EnemyHealthDetails enemyHealthDetails in enemyDetails.enemyHealthDetailsArray)
@@ -203,7 +207,7 @@ public class Enemy : MonoBehaviour
                 return;
             }
         }*/
-        health.SetStartingHealth(enemyDetails.startingHealthAmount);
+        health.SetStartingHealth(enemyDetails.startingHealthAmount + modifierEffect);
     }
 
     /// <summary>

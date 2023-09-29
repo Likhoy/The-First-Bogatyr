@@ -88,16 +88,16 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
     /// <summary>
     /// spawn enemy variation for usage in the endless mode
     /// </summary>
-    public void SpawnEnemy(EnemyDetailsSO enemyDetails, Vector2Int spawnPosition)
+    public void SpawnEnemy(EnemyDetailsSO enemyDetails, Vector2Int spawnPosition, EnemyModifiers enemyModifiers = null)
     {
-        CreateEnemy(enemyDetails, 2, grid.CellToWorld((Vector3Int)spawnPosition));
+        CreateEnemy(enemyDetails, 2, grid.CellToWorld((Vector3Int)spawnPosition), enemyModifiers);
     }
 
 
     /// <summary>
     /// Create an enemy in the specified position
     /// </summary>
-    private void CreateEnemy(EnemyDetailsSO enemyDetails, int enemyPrefabNum, Vector3 position)
+    private void CreateEnemy(EnemyDetailsSO enemyDetails, int enemyPrefabNum, Vector3 position, EnemyModifiers enemyModifiers = null)
     {
         // keep track of the number of enemies spawned so far 
         EnemiesSpawnedSoFar++;
@@ -109,7 +109,7 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
         GameObject enemy = Instantiate(enemyDetails.enemyPrefabs[enemyPrefabNum - 1], position, Quaternion.identity, transform);
 
         // Initialize Enemy
-        enemy.GetComponent<Enemy>().EnemyInitialization(enemyDetails, EnemiesSpawnedSoFar);
+        enemy.GetComponent<Enemy>().EnemyInitialization(enemyDetails, EnemiesSpawnedSoFar, enemyModifiers);
 
         // subscribe to enemy destroyed event
         enemy.GetComponent<DestroyedEvent>().OnDestroyed += Enemy_OnDestroyed;
