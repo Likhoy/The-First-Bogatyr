@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public static class Settings
@@ -93,5 +94,6 @@ public static class Settings
         new Vector2Int(-7, 50)
     };
     public static readonly Vector3 gatewayPosition = Vector3.zero;
+    public const int waveAmountBetweenModifiers = 3;
     #endregion
 }

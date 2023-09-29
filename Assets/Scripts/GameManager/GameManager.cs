@@ -145,6 +145,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private IEnumerator LaunchWave(int waveNumber = 1)
     {
         WaveDetailsSO currentWaveDetails = allWaveDetails[waveNumber - 1];
+
         for (int i = 0; i < currentWaveDetails.enemyGroupsSpawnDatas.Count; i++)
         {
             EnemiesGroupWaveSpawnData groupSpawnData = currentWaveDetails.enemyGroupsSpawnDatas[i];
@@ -153,9 +154,25 @@ public class GameManager : SingletonMonobehaviour<GameManager>
             Vector2Int[] spawnPositions = ChooseRandomSpawnPositions(groupSpawnData.amountOfEnemiesToSpawn);
             for (int j = 0; j < groupSpawnData.amountOfEnemiesToSpawn; j++)
             {
-                EnemySpawner.Instance.SpawnEnemy(groupSpawnData.enemiesBaseData[j], spawnPositions[j]);
+                EnemyModifiers enemyModifiers = CalculateEnemyModifiers(groupSpawnData.enemiesBaseData[j]); // get enemy modifiers
+                EnemySpawner.Instance.SpawnEnemy(groupSpawnData.enemiesBaseData[j], spawnPositions[j], enemyModifiers);
             }
         }
+    }
+
+    private EnemyModifiers CalculateEnemyModifiers(EnemyDetailsSO enemyDetails)
+    {
+        if (currentWaveNumber % Settings.waveAmountBetweenModifiers == 0)
+        {
+            int multiplier = currentWaveNumber / Settings.waveAmountBetweenModifiers;
+            int healthModifierEffect = Mathf.RoundToInt(enemyDetails.baseHealthModifier / 100 * enemyDetails.startingHealthAmount);
+            int damageModifierEffect = 0; // Mathf.RoundToInt(enemyDetails.baseDamageModifier / 100 * ...);
+
+            EnemyModifiers enemyModifiers = new EnemyModifiers() { healthModifierEffect = healthModifierEffect * multiplier, 
+                damageModifierEffect = damageModifierEffect * multiplier };
+            return enemyModifiers;
+        }
+        return null;
     }
 
     private Vector2Int[] ChooseRandomSpawnPositions(int positionsNumber)
