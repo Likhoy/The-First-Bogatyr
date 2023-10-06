@@ -125,7 +125,6 @@ public class EnemyWeaponAI : MonoBehaviour
             //audioEffects.PlayOneShot(CMeleeAttack);
             MeleeWeapon meleeWeapon = enemy.MeleeWeapon;
             enemy.meleeAttackEvent.CallMeleeAttackEvent();
-            Invoke("DealWithMeleeWeaponStrikedEvent", meleeWeapon.weaponDetails.weaponStrikeTime);
             meleeWeaponCooldownTimer = meleeWeapon.weaponDetails.weaponCooldownTime;
         }
     }
