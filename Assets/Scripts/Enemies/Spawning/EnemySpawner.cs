@@ -23,7 +23,7 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
     }
 
     /// <summary>
-    /// Spawn the enemies
+    /// Spawn the enemies - for usage in the main story line
     /// </summary>
     public void SpawnEnemies()
     {
@@ -66,11 +66,14 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
                 Vector3Int cellPosition = (Vector3Int)currentLocationDetails.enemiesToSpawnImmediately[EnemiesSpawnedSoFar].spawnPosition;
 
                 // Create Enemy - Get next enemy type to spawn 
-                CreateEnemy(enemyDetails, 1, grid.CellToWorld(cellPosition));
+                CreateEnemy(enemyDetails, EnemyPrefabType.MainStoryLine, grid.CellToWorld(cellPosition));
             }
         }
     }
 
+    /// <summary>
+    /// Spawn enemy by it's name at position passed as string in the following format - "{coord_x} {coord_y} {coord_z}"
+    /// </summary>
     public void SpawnEnemy(string enemyName, string spawnPosition)
     {
         int[] coords = spawnPosition.Split(" ").Select(coord => int.Parse(coord)).ToArray();
@@ -79,25 +82,25 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
         {
             if (enemyDetails.enemyName == enemyName)
             {
-                CreateEnemy(enemyDetails, 1, grid.CellToWorld(spawnPositionVect));
+                CreateEnemy(enemyDetails, EnemyPrefabType.MainStoryLine, grid.CellToWorld(spawnPositionVect));
             }
                 
         }
     }
 
     /// <summary>
-    /// spawn enemy variation for usage in the endless mode
+    /// Spawn enemy variation for usage in the endless mode
     /// </summary>
     public void SpawnEnemy(EnemyDetailsSO enemyDetails, Vector2Int spawnPosition, EnemyModifiers enemyModifiers = null)
     {
-        CreateEnemy(enemyDetails, 2, grid.CellToWorld((Vector3Int)spawnPosition), enemyModifiers);
+        CreateEnemy(enemyDetails, EnemyPrefabType.EndlessMode, grid.CellToWorld((Vector3Int)spawnPosition), enemyModifiers);
     }
 
 
     /// <summary>
     /// Create an enemy in the specified position
     /// </summary>
-    private void CreateEnemy(EnemyDetailsSO enemyDetails, int enemyPrefabNum, Vector3 position, EnemyModifiers enemyModifiers = null)
+    private void CreateEnemy(EnemyDetailsSO enemyDetails, EnemyPrefabType enemyPrefabType, Vector3 position, EnemyModifiers enemyModifiers = null)
     {
         // keep track of the number of enemies spawned so far 
         EnemiesSpawnedSoFar++;
@@ -106,7 +109,7 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
         currentEnemyCount++;
 
         // Instantiate enemy
-        GameObject enemy = Instantiate(enemyDetails.enemyPrefabs[enemyPrefabNum - 1], position, Quaternion.identity, transform);
+        GameObject enemy = Instantiate(enemyDetails.enemyPrefabs[(int)enemyPrefabType], position, Quaternion.identity, transform);
 
         // Initialize Enemy
         enemy.GetComponent<Enemy>().EnemyInitialization(enemyDetails, EnemiesSpawnedSoFar, enemyModifiers);
