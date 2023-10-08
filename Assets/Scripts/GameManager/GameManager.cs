@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [DisallowMultipleComponent]
+
 public class GameManager : SingletonMonobehaviour<GameManager>
 {
     #region Header GAMEOBJECT REFERENCES
@@ -14,11 +15,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     [Header("GAMEOBJECT REFERENCES")]
     #endregion Header GAMEOBJECT REFERENCES
 
-
-    private PlayerDetailsSO playerDetails;
-    private Player player;
-
-    private DialogueSystemController dialogueSystemController;
+    [SerializeField] private DialogueSystemController dialogueSystemController;
 
     #region Tooltip
     [Tooltip("Populate in the order of scenes appearing in the game")]
@@ -34,23 +31,35 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     public GameState gameState { get; set; }
 
-    protected override void Awake()
+    protected override void Awake() 
     {
         // Call base class
         base.Awake();
 
-        // Set player details - saved in current player scriptable object from the main menu
-        playerDetails = GameResources.Instance.playerDetailsList[0]; // now we have only one player
+        Lua.RegisterFunction("GiveWeaponToPlayer", this, SymbolExtensions.GetMethodInfo(() => GiveWeaponToPlayer(string.Empty, 0.0)));
+        Lua.RegisterFunction("GiveChanceToAvoidDamageToCreature", this, SymbolExtensions.GetMethodInfo(() => GiveChanceToAvoidDamageToCreature(string.Empty, 0.0)));
+    }
 
-        // Instantiate player
-        InstantiatePlayer();
+    public void PrepareMainStoryLine()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded_StartMainStoryLine;
+    }
 
-        dialogueSystemController = FindObjectOfType<DialogueSystemController>();
+    public void PrepareEndlessMode()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded_StartEndlessMode;
+    }
 
-        // for testing endless mode
-        Destroy(dialogueSystemController.gameObject);
-        SetUpAndStartEndlessMode();
-        //SetQuestUIActive();
+    private void OnSceneLoaded_StartEndlessMode(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        StartEndlessMode();
+        SceneManager.sceneLoaded -= OnSceneLoaded_StartEndlessMode;
+    }
+
+    private void OnSceneLoaded_StartMainStoryLine(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        StartMainStoryLine();
+        SceneManager.sceneLoaded -= OnSceneLoaded_StartMainStoryLine;
     }
 
     private void SetQuestUIActive()
@@ -61,47 +70,28 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         dialogueSystemController.transform.GetChild(1).gameObject.SetActive(true);
     }
 
-    private void OnEnable()
+    private void StartMainStoryLine()
     {
-        Lua.RegisterFunction("GiveWeaponToPlayer", this, SymbolExtensions.GetMethodInfo(() => GiveWeaponToPlayer(string.Empty, 0.0)));
-        Lua.RegisterFunction("GiveChanceToAvoidDamageToCreature", this, SymbolExtensions.GetMethodInfo(() => GiveChanceToAvoidDamageToCreature(string.Empty, 0.0)));
-        player.destroyedEvent.OnDestroyed += PlayerDestroyedEvent_OnDestroyed;
-    }
-
-    private void OnDisable()
-    {
-        Lua.UnregisterFunction("GiveWeaponToPlayer");
-        Lua.UnregisterFunction("GiveChanceToAvoidDamageToCreature");
-        player.destroyedEvent.OnDestroyed -= PlayerDestroyedEvent_OnDestroyed;
-    }
-
-    private void Start()
-    {
-        // Initialize Player
-        player.Initialize(playerDetails);
+        gameState = GameState.MainStoryLine;
 
         // Spawn enemies (maybe this will be placed in enemy controller class)
         EnemySpawner.Instance.SpawnEnemies();
+
+        SetQuestUIActive();
     }
 
-
-    /// <summary>
-    /// Create player in scene at position
-    /// </summary>
-    private void InstantiatePlayer()
+    private void OnDestroy()
     {
-        // Instantiate player
-        GameObject playerGameObject = Instantiate(playerDetails.playerPrefab);
-
-        // Get Player
-        player = playerGameObject.GetComponent<Player>();
+        Lua.UnregisterFunction("GiveWeaponToPlayer");
+        Lua.UnregisterFunction("GiveChanceToAvoidDamageToCreature");
     }
 
-    private void PlayerDestroyedEvent_OnDestroyed(DestroyedEvent destroyedEvent, DestroyedEventArgs destroyedEventArgs)
+    public void PlayerDestroyedEvent_OnDestroyed(DestroyedEvent destroyedEvent, DestroyedEventArgs destroyedEventArgs)
     {
         StopAllCoroutines();
         // should be expanded
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene(Settings.menuSceneName);
+        GetPlayer().destroyedEvent.OnDestroyed -= PlayerDestroyedEvent_OnDestroyed;
     }
 
     public void LetShowSceneTransitionImage()
@@ -115,7 +105,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         {
             if (weaponDetails.weaponName == weaponName)
             {
-                player.AddWeaponToPlayer(weaponDetails, (int)weaponAmmoAmount);
+                GetPlayer().AddWeaponToPlayer(weaponDetails, (int)weaponAmmoAmount);
             }  
         }
     }
@@ -123,15 +113,19 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     public void GiveChanceToAvoidDamageToCreature(string creatureTag, double percent)
     {
         if (creatureTag == "Player")
-            player.health.SetChanceToAvoidDamage((int)percent);
+            GetPlayer().health.SetChanceToAvoidDamage((int)percent);
         else
         {
             // TODO
         }
     }
 
-    private void SetUpAndStartEndlessMode()
+    private void StartEndlessMode()
     {
+        // for testing endless mode
+        Destroy(dialogueSystemController.gameObject);
+
+        gameState = GameState.EndlessMode;
         StartCoroutine(LaunchWave());
     }
 
@@ -209,7 +203,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     /// </summary>
     public Player GetPlayer()
     {
-        return player;
+        return PlayerSpawner.Instance.GetPlayer();
     }
 
     public void GiveItem(GameObject itemPrefab)
@@ -219,7 +213,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
             inventory.AddItem(itemPrefab.GetComponent<Item>());
         else
         {
-            GameObject item = Instantiate(itemPrefab, player.transform);
+            GameObject item = Instantiate(itemPrefab, GetPlayer().transform);
             item.GetComponent<CircleCollider2D>().enabled = false;
             item.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
             inventory.AddItem(item.GetComponent<Item>());
