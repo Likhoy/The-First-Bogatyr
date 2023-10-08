@@ -1,10 +1,13 @@
 using PixelCrushers;
 using PixelCrushers.DialogueSystem;
+using static RandomExtensions;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [DisallowMultipleComponent]
+
 public class GameManager : SingletonMonobehaviour<GameManager>
 {
     #region Header GAMEOBJECT REFERENCES
@@ -12,31 +15,51 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     [Header("GAMEOBJECT REFERENCES")]
     #endregion Header GAMEOBJECT REFERENCES
 
-
-    private PlayerDetailsSO playerDetails;
-    private Player player;
-
-    private DialogueSystemController dialogueSystemController;
+    [SerializeField] private DialogueSystemController dialogueSystemController;
 
     #region Tooltip
     [Tooltip("Populate in the order of scenes appearing in the game")]
     #endregion
     public LocationDetailsSO[] allLocationsDetails;
 
-    protected override void Awake()
+    #region Tooltip
+    [Tooltip("Populate with all waves of endless mode")]
+    #endregion
+    [SerializeField] private WaveDetailsSO[] allWaveDetails;
+
+    private int currentWaveNumber = 1;
+
+    public GameState gameState { get; set; }
+
+    protected override void Awake() 
     {
         // Call base class
         base.Awake();
 
-        // Set player details - saved in current player scriptable object from the main menu
-        playerDetails = GameResources.Instance.playerDetailsList[0]; // now we have only one player
+        Lua.RegisterFunction("GiveWeaponToPlayer", this, SymbolExtensions.GetMethodInfo(() => GiveWeaponToPlayer(string.Empty, 0.0)));
+        Lua.RegisterFunction("GiveChanceToAvoidDamageToCreature", this, SymbolExtensions.GetMethodInfo(() => GiveChanceToAvoidDamageToCreature(string.Empty, 0.0)));
+    }
 
-        // Instantiate player
-        InstantiatePlayer();
+    public void PrepareMainStoryLine()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded_StartMainStoryLine;
+    }
 
-        dialogueSystemController = FindObjectOfType<DialogueSystemController>();
+    public void PrepareEndlessMode()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded_StartEndlessMode;
+    }
 
-        SetQuestUIActive();
+    private void OnSceneLoaded_StartEndlessMode(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        StartEndlessMode();
+        SceneManager.sceneLoaded -= OnSceneLoaded_StartEndlessMode;
+    }
+
+    private void OnSceneLoaded_StartMainStoryLine(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        StartMainStoryLine();
+        SceneManager.sceneLoaded -= OnSceneLoaded_StartMainStoryLine;
     }
 
     private void SetQuestUIActive()
@@ -47,38 +70,28 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         dialogueSystemController.transform.GetChild(1).gameObject.SetActive(true);
     }
 
-    private void OnEnable()
+    private void StartMainStoryLine()
     {
-        Lua.RegisterFunction("GiveWeaponToPlayer", this, SymbolExtensions.GetMethodInfo(() => GiveWeaponToPlayer(string.Empty, 0.0)));
-        Lua.RegisterFunction("GiveChanceToAvoidDamageToCreature", this, SymbolExtensions.GetMethodInfo(() => GiveChanceToAvoidDamageToCreature(string.Empty, 0.0)));
+        gameState = GameState.MainStoryLine;
+
+        // Spawn enemies (maybe this will be placed in enemy controller class)
+        EnemySpawner.Instance.SpawnEnemies();
+
+        SetQuestUIActive();
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         Lua.UnregisterFunction("GiveWeaponToPlayer");
         Lua.UnregisterFunction("GiveChanceToAvoidDamageToCreature");
     }
 
-    private void Start()
+    public void PlayerDestroyedEvent_OnDestroyed(DestroyedEvent destroyedEvent, DestroyedEventArgs destroyedEventArgs)
     {
-        // Initialize Player
-        player.Initialize(playerDetails);
-
-        // Spawn enemies (maybe this will be placed in enemy controller class)
-        EnemySpawner.Instance.SpawnEnemies();
-    }
-
-
-    /// <summary>
-    /// Create player in scene at position
-    /// </summary>
-    private void InstantiatePlayer()
-    {
-        // Instantiate player
-        GameObject playerGameObject = Instantiate(playerDetails.playerPrefab);
-
-        // Get Player
-        player = playerGameObject.GetComponent<Player>();
+        StopAllCoroutines();
+        // should be expanded
+        SceneManager.LoadScene(Settings.menuSceneName);
+        GetPlayer().destroyedEvent.OnDestroyed -= PlayerDestroyedEvent_OnDestroyed;
     }
 
     public void LetShowSceneTransitionImage()
@@ -92,7 +105,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         {
             if (weaponDetails.weaponName == weaponName)
             {
-                player.AddWeaponToPlayer(weaponDetails, (int)weaponAmmoAmount);
+                GetPlayer().AddWeaponToPlayer(weaponDetails, (int)weaponAmmoAmount);
             }  
         }
     }
@@ -100,11 +113,79 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     public void GiveChanceToAvoidDamageToCreature(string creatureTag, double percent)
     {
         if (creatureTag == "Player")
-            player.health.SetChanceToAvoidDamage((int)percent);
+            GetPlayer().health.SetChanceToAvoidDamage((int)percent);
         else
         {
             // TODO
         }
+    }
+
+    private void StartEndlessMode()
+    {
+        // for testing endless mode
+        Destroy(dialogueSystemController.gameObject);
+
+        gameState = GameState.EndlessMode;
+        StartCoroutine(LaunchWave());
+    }
+
+    public void TryLaunchNextWave()
+    {
+        if (currentWaveNumber < allWaveDetails.Length)
+        {
+            currentWaveNumber++;
+            StartCoroutine(LaunchWave(currentWaveNumber));
+        }
+    }
+
+    private IEnumerator LaunchWave(int waveNumber = 1)
+    {
+        WaveDetailsSO currentWaveDetails = allWaveDetails[waveNumber - 1];
+
+        for (int i = 0; i < currentWaveDetails.enemyGroupsSpawnDatas.Count; i++)
+        {
+            EnemiesGroupWaveSpawnData groupSpawnData = currentWaveDetails.enemyGroupsSpawnDatas[i];
+            yield return new WaitForSeconds(groupSpawnData.delayAfterPreviousSpawn);
+            
+            Vector2Int[] spawnPositions = ChooseRandomSpawnPositions(groupSpawnData.amountOfEnemiesToSpawn);
+            for (int j = 0; j < groupSpawnData.amountOfEnemiesToSpawn; j++)
+            {
+                EnemyModifiers enemyModifiers = CalculateEnemyModifiers(groupSpawnData.enemiesBaseData[j]); // get enemy modifiers
+                EnemySpawner.Instance.SpawnEnemy(groupSpawnData.enemiesBaseData[j], spawnPositions[j], enemyModifiers);
+            }
+        }
+    }
+
+    private EnemyModifiers CalculateEnemyModifiers(EnemyDetailsSO enemyDetails)
+    {
+        if (currentWaveNumber % Settings.waveAmountBetweenModifiers == 0)
+        {
+            int multiplier = currentWaveNumber / Settings.waveAmountBetweenModifiers;
+            int healthModifierEffect = Mathf.RoundToInt(enemyDetails.baseHealthModifier / 100 * enemyDetails.startingHealthAmount);
+            int damageModifierEffect = 0; // Mathf.RoundToInt(enemyDetails.baseDamageModifier / 100 * ...);
+
+            EnemyModifiers enemyModifiers = new EnemyModifiers() { healthModifierEffect = healthModifierEffect * multiplier, 
+                damageModifierEffect = damageModifierEffect * multiplier };
+            return enemyModifiers;
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// Choose needed number of spawn positions for spawning enemies in the endless mode
+    /// </summary>
+    private Vector2Int[] ChooseRandomSpawnPositions(int positionsNumber)
+    {
+        int[] possibleSpawnPositionsNums = Enumerable.Range(0, Settings.enemySpawnPossiblePositions.Length - 1).ToArray();
+        System.Random r = new System.Random();
+        r.Shuffle(possibleSpawnPositionsNums);
+        
+        Vector2Int[] possibleSpawnPositions = new Vector2Int[positionsNumber];
+        for (int i = 0; i < positionsNumber; i++)
+        {
+            possibleSpawnPositions[i] = Settings.enemySpawnPossiblePositions[possibleSpawnPositionsNums[i]];
+        }
+        return possibleSpawnPositions;
     }
 
     public IEnumerator FinishGameRoutine()
@@ -122,7 +203,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     /// </summary>
     public Player GetPlayer()
     {
-        return player;
+        return PlayerSpawner.Instance.GetPlayer();
     }
 
     public void GiveItem(GameObject itemPrefab)
@@ -132,7 +213,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
             inventory.AddItem(itemPrefab.GetComponent<Item>());
         else
         {
-            GameObject item = Instantiate(itemPrefab, player.transform);
+            GameObject item = Instantiate(itemPrefab, GetPlayer().transform);
             item.GetComponent<CircleCollider2D>().enabled = false;
             item.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
             inventory.AddItem(item.GetComponent<Item>());
