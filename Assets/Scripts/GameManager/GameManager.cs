@@ -32,6 +32,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     private int currentWaveNumber = 1;
 
+    public GameState gameState { get; set; }
+
     protected override void Awake()
     {
         // Call base class
@@ -175,6 +177,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         return null;
     }
 
+    /// <summary>
+    /// Choose needed number of spawn positions for spawning enemies in the endless mode
+    /// </summary>
     private Vector2Int[] ChooseRandomSpawnPositions(int positionsNumber)
     {
         int[] possibleSpawnPositionsNums = Enumerable.Range(0, Settings.enemySpawnPossiblePositions.Length - 1).ToArray();
