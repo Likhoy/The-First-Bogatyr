@@ -11,7 +11,12 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
     private int currentEnemyCount;
     public int EnemiesSpawnedSoFar { get; set; }
     private Grid grid;
-    
+
+    private void Start()
+    {
+        grid = MainLocationInfo.Grid;
+    }
+
     private void OnEnable()
     {
         Lua.RegisterFunction("SpawnEnemy", this, SymbolExtensions.GetMethodInfo(() => SpawnEnemy(string.Empty, string.Empty)));
@@ -52,7 +57,7 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
             throw new NullReferenceException("Не найдена нужная сцена в общем списке сцен.");
             
 
-        grid = MainLocationInfo.Grid;
+        //grid = MainLocationInfo.Grid;
         enemiesToSpawn = currentLocationDetails.enemiesToSpawnImmediately.Length;
 
         // Check we have somewhere to spawn the enemies
@@ -128,8 +133,8 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
         destroyedEvent.OnDestroyed -= Enemy_OnDestroyed;
 
         // TODO - adjust architecture (for the first quest)
-        /*if (EnemiesSpawnedSoFar == 1)
-            GetComponent<DialogueSystemTrigger>().OnUse();*/ // needs to be returned in the main branch ! ! !
+        if (EnemiesSpawnedSoFar == 1)
+            GetComponent<DialogueSystemTrigger>().OnUse();
 
         // reduce current enemy count
         currentEnemyCount--;
@@ -137,7 +142,11 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
         if (currentEnemyCount <= 0)
         {
 
-            GameManager.Instance.TryLaunchNextWave();
+            if (GameManager.Instance.gameState == GameState.EndlessMode)
+            {
+                GameManager.Instance.TryLaunchNextWave();
+            }
+                
 
             // Set game state
             /*if (GameManager.Instance.gameState == GameState.engagingEnemies)

@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour
     private DialogueSystemController dialogSystemController;
     [SerializeField] private GameObject continueButton;
     [SerializeField] private GameObject newGameButton;
+    [SerializeField] private GameObject endlessModeGameButton;
     [SerializeField] private GameObject settingsButton;
     [SerializeField] private GameObject exitButton;
 
@@ -44,24 +45,29 @@ public class MainMenu : MonoBehaviour
     }
 
     /// <summary>
-    /// Special method for testing endless mode 
+    /// Start endless mode 
+    /// </summary>
+    public void StartEndlessModePressed()
+    {
+        DeactivateButtonsAfterClick(endlessModeGameButton);
+
+        GameManager.Instance.PrepareEndlessMode();
+        SaveSystem.RestartGame(Settings.mainSceneName); 
+    }
+
+    /// <summary>
+    /// Start main story line
     /// </summary>
     public void StartNewGamePressed()
     {
         DeactivateButtonsAfterClick(newGameButton);
 
-        SaveSystem.RestartGame("MainScene");
-    }
-
-    // original method
-    /*public void StartNewGamePressed()
-    {
-        DeactivateButtonsAfterClick(newGameButton);
-
         SaveSystem.DeleteSavedGameInSlot(1);
-        SaveSystem.RestartGame("MainScene");
+
+        GameManager.Instance.PrepareMainStoryLine(); // preparations of game states are obligatory
+        SaveSystem.RestartGame(Settings.mainSceneName);
         dialogSystemController.ResetDatabase();
-    }*/
+    }
 
     private void DeactivateButtonsAfterClick(GameObject buttonPressed)
     {

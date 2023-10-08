@@ -34,6 +34,7 @@ public static class Settings
     public const string playerWeapon = "playerWeapon";
     public const string NPCTag = "NPC";
     public const string enemyWeaponTag = "enemyWeapon";
+    public const string dialogueManager = "dialogueManager";
     #endregion
 
     #region FIRING CONTROL
@@ -81,6 +82,12 @@ public static class Settings
 
     #region GAME PROGRESS PARAMETERS
     public const int numberOfCheckpoints = 3;
+    #endregion
+
+    #region SCENES PARAMETERS
+    public const string menuSceneName = "Menu";
+    public const string mainSceneName = "MainScene";
+    public const string purpleWorldSceneName = "PurpleWorld";
     #endregion
 
     #region ENDLESS MODE PARAMETERS
