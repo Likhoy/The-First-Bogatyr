@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: EnemyDetails_Fielder
   m_EditorClassIdentifier: 
   enemyName: Fielder
-  enemyPrefab: {fileID: 4987181280448245761, guid: c750791c7b3a68043b16a56c14efa1c6, type: 3}
+  enemyPrefabs:
+  - {fileID: 4987181280448245761, guid: c750791c7b3a68043b16a56c14efa1c6, type: 3}
+  - {fileID: 5437217350701796861, guid: 0decf7b3b1751b5408d34958b17261b5, type: 3}
   aggressionDistance: 10
   chaseDistance: 20
   shootDistance: 12
@@ -32,6 +34,8 @@ MonoBehaviour:
   isHealthBarDisplayed: 1
   moneyReward: 200
   moneyDropRadius: 1
+  baseHealthModifier: 10
+  baseDamageModifier: 0
   isBoss: 0
   spawningImmediately: 0
   littleEnemySpawnDatas: []
