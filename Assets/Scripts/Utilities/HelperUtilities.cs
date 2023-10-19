@@ -128,7 +128,16 @@ public static class HelperUtilities
         return Mathf.Log10((float)linear / linearScaleRange) * 20f;
     }
 
-
+    public static bool AddValueToPercentage(ref int initialPercent, int addedValue)
+    {
+        if (initialPercent == 100) return false;
+        
+        if (initialPercent + addedValue > 100)
+            initialPercent = 100;
+        else
+            initialPercent += addedValue;
+        return true;
+    }
 
     /// <summary>
     /// Empty string debug check
