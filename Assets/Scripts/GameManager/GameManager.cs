@@ -1,6 +1,5 @@
 using PixelCrushers;
 using PixelCrushers.DialogueSystem;
-using static RandomExtensions;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -25,7 +24,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     #region Tooltip
     [Tooltip("Populate with all waves of endless mode")]
     #endregion
-    [SerializeField] private WaveDetailsSO[] allWaveDetails;
+    public WaveDetailsSO[] allWavesDetails;
 
     private int currentWaveNumber = 1;
 
@@ -113,7 +112,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     public void GiveChanceToAvoidDamageToCreature(string creatureTag, double percent)
     {
         if (creatureTag == "Player")
-            GetPlayer().health.SetChanceToAvoidDamage((int)percent);
+            GetPlayer().health.AddChanceToAvoidDamage((int)percent);
         else
         {
             // TODO
@@ -131,7 +130,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     public void TryLaunchNextWave()
     {
-        if (currentWaveNumber < allWaveDetails.Length)
+        if (currentWaveNumber < allWavesDetails.Length)
         {
             currentWaveNumber++;
             StartCoroutine(LaunchWave(currentWaveNumber));
@@ -140,7 +139,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     private IEnumerator LaunchWave(int waveNumber = 1)
     {
-        WaveDetailsSO currentWaveDetails = allWaveDetails[waveNumber - 1];
+        WaveDetailsSO currentWaveDetails = allWavesDetails[waveNumber - 1];
 
         for (int i = 0; i < currentWaveDetails.enemyGroupsSpawnDatas.Count; i++)
         {
@@ -198,6 +197,27 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         yield return null; // исправить
     }
 
+    public void HandlePlayerDeath()
+    {
+        if (gameState == GameState.MainStoryLine)
+        {
+            SaveSystem.LoadFromSlot(1);
+            Destroy(GetPlayer().gameObject);
+        }
+        else if (gameState == GameState.EndlessMode)
+        {
+            if (GetPlayer().health.UseExtraLive())
+            {
+                // do something
+            }
+            // TODO: else pause game and show statistics instead of this
+            else
+            {
+                SceneManager.LoadScene(Settings.menuSceneName);
+            }
+        }
+    }
+
     /// <summary>
     /// Get the player
     /// </summary>
@@ -208,16 +228,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     public void GiveItem(GameObject itemPrefab)
     {
-        Inventory inventory = FindObjectOfType<Inventory>();
-        if (inventory.ContainsItem(itemPrefab.GetComponent<Item>().itemID) >= 1)
-            inventory.AddItem(itemPrefab.GetComponent<Item>());
-        else
-        {
-            GameObject item = Instantiate(itemPrefab, GetPlayer().transform);
-            item.GetComponent<CircleCollider2D>().enabled = false;
-            item.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
-            inventory.AddItem(item.GetComponent<Item>());
-        }
+        GetPlayer().playerResources.SaveItem(itemPrefab);
     }
 
 }
