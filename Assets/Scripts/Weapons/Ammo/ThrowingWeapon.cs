@@ -77,15 +77,15 @@ public class ThrowingWeapon : MonoBehaviour, IFireable
     private void DisableWeapon()
     {
         temporaryObjectComponent.StartCoroutine("FadingOutRoutine");
-        
+
         Vector3 scale = transform.lossyScale;
 
         // losing parent to be independent
         transform.SetParent(null);
-        
+
         // return global scale 
         transform.localScale = scale;
-        
+
         Destroy(polygonCollider);
     }
 
