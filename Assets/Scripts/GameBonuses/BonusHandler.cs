@@ -1,12 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
-[DisallowMultipleComponent]
-public class BonusManager : SingletonMonobehaviour<BonusManager>
+public static class BonusHandler
 {
-    public List<BonusDetailsSO> GetRandomBonusesForWave(int waveNumber)
+    public static List<BonusDetailsSO> GetRandomBonusesForWave(int waveNumber)
     {
         WaveDetailsSO currentWaveDetails = GameManager.Instance.allWavesDetails[waveNumber - 1];
 
@@ -22,7 +19,7 @@ public class BonusManager : SingletonMonobehaviour<BonusManager>
         return chosenBonusDetails;
     }
 
-    public bool ApplyBonus(BonusDetailsSO bonusDetails)
+    public static bool ApplyBonus(BonusDetailsSO bonusDetails)
     {
         switch (bonusDetails)
         {
@@ -39,12 +36,12 @@ public class BonusManager : SingletonMonobehaviour<BonusManager>
         }
     }
 
-    private bool ApplyResurrectorBonus(ResurrectorBonusDetailsSO bonusDetails)
+    private static bool ApplyResurrectorBonus(ResurrectorBonusDetailsSO bonusDetails)
     {
         return GameManager.Instance.GetPlayer().health.AddExtraLives(bonusDetails.livesReserve);
     }
 
-    private bool ApplyPowerBonus(PowerBonusDetailsSO bonusDetails)
+    private static bool ApplyPowerBonus(PowerBonusDetailsSO bonusDetails)
     {
         switch (bonusDetails.bonusType)
         {
@@ -61,7 +58,7 @@ public class BonusManager : SingletonMonobehaviour<BonusManager>
         }
     }
 
-    private bool ApplyItemBonus(ItemBonusDetailsSO bonusDetails)
+    private static bool ApplyItemBonus(ItemBonusDetailsSO bonusDetails)
     {
         for (int i = 0; i < bonusDetails.itemNumber; i++)
         {
