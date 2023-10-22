@@ -60,7 +60,7 @@ public static class Settings
     public static Dictionary<Command, KeyCode> commandButtons = new Dictionary<Command, KeyCode>()
     {
         [Command.Dash] = KeyCode.LeftShift,
-        [Command.Hit] = KeyCode.Mouse1,
+        [Command.Hit] = KeyCode.Space,
         [Command.SwitchWeapon] = KeyCode.Q,
         [Command.TakeItem] = KeyCode.F,
         [Command.ContinueDialog] = KeyCode.Mouse0,
