@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponDetailsSO : ScriptableObject
+public abstract class WeaponDetailsSO : ScriptableObject
 {
     #region Header WEAPON BASE DETAILS
     [Space(10)]

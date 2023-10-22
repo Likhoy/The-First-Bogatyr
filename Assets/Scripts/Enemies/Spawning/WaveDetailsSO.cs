@@ -13,4 +13,6 @@ public class WaveDetailsSO : ScriptableObject
     [Tooltip("Populate with enemies to spawn during the wave considering the order (one list element might contain several enemies to be spawned simultaneously)")]
     #endregion
     public List<EnemiesGroupWaveSpawnData> enemyGroupsSpawnDatas;
+
+    public List<BonusDetailsSO> possibleBonuses;
 }
