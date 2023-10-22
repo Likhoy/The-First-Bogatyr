@@ -119,8 +119,7 @@ public class Player : MonoBehaviour
         // If player has died
         if (healthEventArgs.healthAmount <= 0f)
         {
-            SaveSystem.LoadFromSlot(1);
-            Destroy(gameObject);
+            GameManager.Instance.HandlePlayerDeath();
         }
     }
 
