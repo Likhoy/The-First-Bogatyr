@@ -3,7 +3,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(HealthEvent))]
 [DisallowMultipleComponent]
-public class Health : MonoBehaviour
+public class Health : MonoBehaviour // player and other health types need to be divided
 {
     #region Header References
     [Space(10)]
@@ -13,7 +13,9 @@ public class Health : MonoBehaviour
     [Tooltip("Populate with the HealthBar component on the HealthBar gameobject")]
     #endregion
     [SerializeField] private HealthBar healthBar;
-    private int startingHealth;
+    private int extraLives;
+    private int maxHealth;
+    private int initialHealth;
     public int currentHealth;
     internal HealthEvent healthEvent;
     private Player player;
@@ -28,6 +30,7 @@ public class Health : MonoBehaviour
     [HideInInspector] public Enemy enemy;
 
     private int chanceToAvoidDamage = 0;
+    private int armorProtectionTotalPercent = 0;
 
     private void Awake()
     {
@@ -94,12 +97,11 @@ public class Health : MonoBehaviour
 
         if (isDamageable && !isDashing)
         {
-            if (chanceToAvoidDamage > 0)
-            {
-                int value = Random.Range(1, 101);
-                if (value <= chanceToAvoidDamage)
-                    return;
-            }
+            int processedDamage = ProcessRawDamage(damageAmount);
+            
+            if (processedDamage == 0)
+                return;
+
             currentHealth -= damageAmount;
             CallHealthEvent(damageAmount);
 
@@ -109,15 +111,62 @@ public class Health : MonoBehaviour
             // Set health bar as the percentage of health remaining
             if (healthBar != null)
             {
-                healthBar.SetHealthBarValue((float)currentHealth / (float)startingHealth);
+                healthBar.SetHealthBarValue((float)currentHealth / (float)maxHealth);
             }
         }
 
     }
 
-    public void SetChanceToAvoidDamage(int new_value)
+    private int ProcessRawDamage(int rawDamage)
     {
-        chanceToAvoidDamage = new_value;
+        // check chance to avoid damage first
+        if (chanceToAvoidDamage > 0)
+        {
+            int value = Random.Range(1, 101);
+            if (value <= chanceToAvoidDamage)
+                return 0;
+        }
+
+        // apply armor effect
+        if (armorProtectionTotalPercent > 0)
+        {
+            rawDamage -= Mathf.RoundToInt((float)armorProtectionTotalPercent / 100 * rawDamage);
+        }
+
+        return rawDamage;
+    }
+
+    public bool AddChanceToAvoidDamage(int chancePercentToAdd)
+    {
+        return HelperUtilities.AddValueToPercentage(ref chanceToAvoidDamage, chancePercentToAdd);
+    }
+
+    public bool AddArmorProtectionPercent(int protectionPercentToAdd)
+    {
+        return HelperUtilities.AddValueToPercentage(ref armorProtectionTotalPercent, protectionPercentToAdd);
+    }
+
+    public bool IncreaseMaxHealth(int healthPercentToAdd)
+    {
+        maxHealth += Mathf.RoundToInt((float)healthPercentToAdd / 100 * initialHealth);
+        return true;
+    }
+
+    public bool AddExtraLives(int extraLivesToAdd)
+    {
+        extraLives += extraLivesToAdd;
+        return true;
+    }
+
+    public bool UseExtraLive()
+    {
+        if (extraLives < 0)
+            return false;
+        
+        extraLives--;
+        // TODO: play resurrection animation and only then return player max health value
+        currentHealth = maxHealth;
+        return true;
     }
 
     /// <summary>
@@ -171,7 +220,7 @@ public class Health : MonoBehaviour
     private void CallHealthEvent(int damageAmount)
     {
         // Trigger health event
-        healthEvent.CallHealthChangedEvent((float)currentHealth / (float)startingHealth, currentHealth, damageAmount);
+        healthEvent.CallHealthChangedEvent((float)currentHealth / (float)maxHealth, currentHealth, damageAmount);
     }
 
 
@@ -180,7 +229,8 @@ public class Health : MonoBehaviour
     /// </summary>
     public void SetStartingHealth(int startingHealth)
     {
-        this.startingHealth = startingHealth;
+        maxHealth = startingHealth;
+        initialHealth = startingHealth;
         currentHealth = startingHealth;
     }
 
@@ -189,7 +239,7 @@ public class Health : MonoBehaviour
     /// </summary>
     public int GetStartingHealth()
     {
-        return startingHealth;
+        return maxHealth;
     }
 
     /// <summary>
@@ -197,13 +247,13 @@ public class Health : MonoBehaviour
     /// </summary>
     public void AddHealth(float healthPercent)
     {
-        int healthIncrease = Mathf.RoundToInt((startingHealth * healthPercent) / 100f);
+        int healthIncrease = Mathf.RoundToInt((maxHealth * healthPercent) / 100f);
 
         int totalHealth = currentHealth + healthIncrease;
 
-        if (totalHealth > startingHealth)
+        if (totalHealth > maxHealth)
         {
-            currentHealth = startingHealth;
+            currentHealth = maxHealth;
         }
         else
         {
@@ -220,9 +270,9 @@ public class Health : MonoBehaviour
     {
         int totalHealth = currentHealth + healthBoost;
 
-        if (totalHealth > startingHealth)
+        if (totalHealth > maxHealth)
         {
-            currentHealth = startingHealth;
+            currentHealth = maxHealth;
         }
         else
         {

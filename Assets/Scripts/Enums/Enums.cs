@@ -29,3 +29,10 @@ public enum GameState
     MainStoryLine,
     EndlessMode
 }
+
+public enum PowerBonusType
+{
+    HealthBoost,
+    Armor,
+    DamageReflector
+}

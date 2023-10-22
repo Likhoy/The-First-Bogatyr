@@ -100,7 +100,11 @@ public static class Settings
         new Vector2Int(-63, 33),
         new Vector2Int(-7, 50)
     };
+    
     public static readonly Vector3 gatewayPosition = Vector3.zero;
+    
     public const int waveAmountBetweenModifiers = 3;
+
+    public const int waveBonusesNumber = 3;
     #endregion
 }
