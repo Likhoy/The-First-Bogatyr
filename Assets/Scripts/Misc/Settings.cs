@@ -1,5 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public static class Settings
@@ -34,6 +34,7 @@ public static class Settings
     public const string playerWeapon = "playerWeapon";
     public const string NPCTag = "NPC";
     public const string enemyWeaponTag = "enemyWeapon";
+    public const string dialogueManager = "dialogueManager";
     #endregion
 
     #region FIRING CONTROL
@@ -81,5 +82,29 @@ public static class Settings
 
     #region GAME PROGRESS PARAMETERS
     public const int numberOfCheckpoints = 3;
+    #endregion
+
+    #region SCENES PARAMETERS
+    public const string menuSceneName = "Menu";
+    public const string mainSceneName = "MainScene";
+    public const string purpleWorldSceneName = "PurpleWorld";
+    #endregion
+
+    #region ENDLESS MODE PARAMETERS
+    public static readonly Vector2Int[] enemySpawnPossiblePositions = new Vector2Int[]
+    {
+        new Vector2Int(55, 30),
+        new Vector2Int(43, -25),
+        new Vector2Int(-39, -37),
+        new Vector2Int(-64, -16),
+        new Vector2Int(-63, 33),
+        new Vector2Int(-7, 50)
+    };
+    
+    public static readonly Vector3 gatewayPosition = Vector3.zero;
+    
+    public const int waveAmountBetweenModifiers = 3;
+
+    public const int waveBonusesNumber = 3;
     #endregion
 }
