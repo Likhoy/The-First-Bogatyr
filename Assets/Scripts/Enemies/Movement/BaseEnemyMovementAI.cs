@@ -2,160 +2,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Enemy))]
-[DisallowMultipleComponent]
-
-public class EnemyMovementAI : MonoBehaviour
+public abstract class BaseEnemyMovementAI : MonoBehaviour
 {
     #region Tooltip
     [Tooltip("MovementDetailsSO scriptable object containing movement details such as speed")]
     #endregion Tooltip
-    [SerializeField] private MovementDetailsSO movementDetails;
-    private Enemy enemy;
-    private Stack<Vector3> movementSteps = new Stack<Vector3>();
-    private Vector3 playerReferencePosition;
-    private Coroutine moveEnemyRoutine;
+    [SerializeField] protected MovementDetailsSO movementDetails;
+    protected Enemy enemy;
+    protected Stack<Vector3> movementSteps = new Stack<Vector3>();
+    protected Coroutine moveEnemyRoutine;
+    protected Vector3 playerReferencePosition; // for reference to previous player position
     private float currentEnemyPathRebuildCooldown;
-    private WaitForFixedUpdate waitForFixedUpdate;
-    [HideInInspector] public float moveSpeed;
+    protected WaitForFixedUpdate waitForFixedUpdate;
+    [HideInInspector] public int updateFrameNumber = 1; // default value. This is set by the enemy spawner.
     [HideInInspector] public bool chasePlayer = false;
-    [HideInInspector] public int updateFrameNumber = 1; // default value.  This is set by the enemy spawner.
+    [HideInInspector] public float moveSpeed;
     private List<Vector2Int> surroundingPositionList = new List<Vector2Int>();
-
-    private Vector3 randomPosition; // for choosing patroling path
-    private bool isSetTargetPoint = false; // patroling path has been chosen
-    private bool pathRebuildNeeded = true; // for building path while patroling
-
-    private Vector3 cellMidPoint; // needed to adjust enemy target point when patroling
-
-    private AnimateChernobog animateChernobog;
-
-    private bool costil = true;
+    protected bool pathRebuildNeeded = true; // for rebuilding path when necessary
 
     private void Awake()
     {
         // Load components
         enemy = GetComponent<Enemy>();
 
-        animateChernobog = GetComponent<AnimateChernobog>();
-
         moveSpeed = movementDetails.GetMoveSpeed();
     }
 
-    private void Start()
+    protected virtual void Start()
     {
-        // Create waitforfixed update for use in coroutine
-        waitForFixedUpdate = new WaitForFixedUpdate();
-
         // Reset player reference position
         playerReferencePosition = GameManager.Instance.GetPlayer().GetPlayerPosition();
-
-        cellMidPoint = new Vector3(MainLocationInfo.Grid.cellSize.x * 0.5f, MainLocationInfo.Grid.cellSize.y * 0.5f, 0f);
-
-        SetRandomTargetPoint();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         MoveEnemy();
     }
 
-    /// <summary>
-    /// Handle enemy movement, while enemy is alive
-    /// </summary>
-    private void MoveEnemy()
-    {
-        Player player = GameManager.Instance.GetPlayer();
-        if (player != null)
-        {
-            Vector3 playerPosition = player.GetPlayerPosition();
-
-            // Check distance to player to see if enemy should start attacking
-            if (!chasePlayer && Vector3.Distance(transform.position, playerPosition) < enemy.enemyDetails.aggressionDistance)
-            {
-                // Check if player is in sight area 
-                // if (EnemyVisionAI.PlayerIsInSightArea())
-                ChasePlayer();
-                chasePlayer = true;
-
-                if (costil && this.gameObject.tag == "Chernobog")
-                {
-                    GameObject.Find("AudioManager").GetComponent<BossFightMusic>().SetBossFightMusic();
-                    costil = false;
-                }
-            }
-            // Check distance to player to see if enemy should carry on chasing
-            else if (chasePlayer && Vector3.Distance(transform.position, playerPosition) < enemy.enemyDetails.chaseDistance)
-            {
-                ChasePlayer();
-            }
-            // otherwise patrol the area
-            else
-            {
-                if (chasePlayer)
-                {
-                    SetRandomTargetPoint();
-                    if (moveEnemyRoutine != null)
-                        StopCoroutine(moveEnemyRoutine);
-                    chasePlayer = false;
-                }
-                PatrolTheArea();
-            }
-        } 
-    }
-
-    /// <summary>
-    /// Patrol specific area to find their player - if enemy is outside this area and it isn't chasing the player return to area
-    /// </summary>
-    private void PatrolTheArea()
-    {
-        if (isSetTargetPoint && pathRebuildNeeded)
-        {
-            CreatePath();
-
-            // If a path has been found move the enemy
-            if (movementSteps != null)
-            {
-                if (moveEnemyRoutine != null)
-                {
-                    // Trigger idle event
-                    enemy.idleEvent.CallIdleEvent();
-                    StopCoroutine(moveEnemyRoutine);
-                }
-
-                // Move enemy along the path using a coroutine
-                moveEnemyRoutine = StartCoroutine(MoveEnemyRoutine(movementSteps));
-
-                pathRebuildNeeded = false;
-            }
-        }   
-        else if (!isSetTargetPoint)
-            enemy.idleEvent.CallIdleEvent();
-        if (isSetTargetPoint && Vector2.Distance(transform.position, randomPosition) < 0.2f)
-        {
-            isSetTargetPoint = false;
-            pathRebuildNeeded = true;
-            Invoke(nameof(SetRandomTargetPoint), 3);
-        }
-    }
-
-
-    private void SetRandomTargetPoint()
-    {
-        do {
-            randomPosition = new Vector3(Random.Range(movementDetails.patrolingAreaLeftBottom.x, movementDetails.patrolingAreaRightTop.x), 
-                Random.Range(movementDetails.patrolingAreaLeftBottom.y, movementDetails.patrolingAreaRightTop.y), 0); // рандомный выбор позиции
-            randomPosition = MainLocationInfo.Grid.CellToWorld(GetNearestNonObstaclePlayerPosition()) + cellMidPoint;
-        } 
-        while (Vector2.Distance(transform.position, randomPosition) < 3f || randomPosition == Vector3Int.zero);
-        
-        isSetTargetPoint = true;
-    }
+    protected abstract void MoveEnemy();
 
     /// <summary>
     /// Use AStar pathfinding to build a path to the player - and then move the enemy to each grid location on the path
     /// </summary>
-    private void ChasePlayer()
+    protected void ChasePlayer()
     {
         // Movement cooldown timer
         currentEnemyPathRebuildCooldown -= Time.deltaTime;
@@ -174,10 +63,10 @@ public class EnemyMovementAI : MonoBehaviour
             playerReferencePosition = GameManager.Instance.GetPlayer().GetPlayerPosition();
 
             // Move the enemy using AStar pathfinding - Trigger rebuild of path to player
-            CreatePath();
+            CreatePath(playerReferencePosition);
 
             // If a path has been found move the enemy
-            if (movementSteps != null)
+            if (movementSteps != null && movementSteps.Count > 0)
             {
                 if (moveEnemyRoutine != null)
                 {
@@ -197,12 +86,12 @@ public class EnemyMovementAI : MonoBehaviour
     /// <summary>
     /// Coroutine to move the enemy to the next location on the path
     /// </summary>
-    private IEnumerator MoveEnemyRoutine(Stack<Vector3> movementSteps)
+    protected IEnumerator MoveEnemyRoutine(Stack<Vector3> movementSteps)
     {
         while (movementSteps.Count > 0)
         {
             Vector3 nextPosition = movementSteps.Pop();
-            
+
             // while not very close continue to move - when close move onto the next step
             while (Vector3.Distance(nextPosition, transform.position) > 0.2f)
             {
@@ -216,25 +105,24 @@ public class EnemyMovementAI : MonoBehaviour
         }
 
         // End of path steps - trigger the enemy idle event
-        if (!chasePlayer)
-            enemy.idleEvent.CallIdleEvent();
+        enemy.idleEvent.CallIdleEvent();
     }
 
     /// <summary>
     /// Use the AStar static class to create a path for the enemy
     /// </summary>
-    private void CreatePath()
+    protected void CreatePath(Vector3 destination)
     {
         Grid grid = MainLocationInfo.Grid;
 
         // Get players position on the grid
-        Vector3Int playerGridPosition = GetNearestNonObstaclePlayerPosition();
+        Vector3Int adjustedGridPosition = GetNearestNonObstaclePosition(destination);
 
         // Get enemy position on the grid
         Vector3Int enemyGridPosition = grid.WorldToCell(transform.position);
 
         // Build a path for the enemy to move on
-        movementSteps = AStar.BuildPath(enemyGridPosition, playerGridPosition);
+        movementSteps = AStar.BuildPath(enemyGridPosition, adjustedGridPosition);
 
         // Take off first step on path - this is the grid square the enemy is already on
         if (movementSteps != null)
@@ -259,11 +147,10 @@ public class EnemyMovementAI : MonoBehaviour
     /// <summary>
     /// Get the nearest position to the player that isn't on an obstacle
     /// </summary>
-    private Vector3Int GetNearestNonObstaclePlayerPosition()
+    protected Vector3Int GetNearestNonObstaclePosition(Vector3 initialPosition)
     {
-        Vector3 playerPosition = chasePlayer ? GameManager.Instance.GetPlayer().GetPlayerPosition() : randomPosition;
 
-        Vector3Int playerCellPosition = MainLocationInfo.Grid.WorldToCell(playerPosition);
+        Vector3Int playerCellPosition = MainLocationInfo.Grid.WorldToCell(initialPosition);
 
         Vector2Int adjustedPlayerCellPositon = new Vector2Int(playerCellPosition.x + MainLocationInfo.locationUpperBounds.x, playerCellPosition.y + MainLocationInfo.locationUpperBounds.y);
 
@@ -329,7 +216,6 @@ public class EnemyMovementAI : MonoBehaviour
             return Vector3Int.zero; // for testing
         }
     }
-
 
     #region Validation
 

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 #region REQUIRE COMPONENTS
@@ -17,7 +16,7 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(ReloadWeaponEvent))]
 [RequireComponent(typeof(ReloadWeapon))]
 [RequireComponent(typeof(WeaponReloadedEvent))]
-[RequireComponent(typeof(EnemyMovementAI))]
+[RequireComponent(typeof(BaseEnemyMovementAI))]
 [RequireComponent(typeof(MovementToPositionEvent))]
 [RequireComponent(typeof(MovementToPosition))]
 [RequireComponent(typeof(IdleEvent))]
@@ -40,7 +39,7 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public FireWeaponEvent fireWeaponEvent;
     private FireWeapon fireWeapon;
     [HideInInspector] public SetActiveWeaponEvent setActiveWeaponEvent;
-    [HideInInspector] public EnemyMovementAI enemyMovementAI;
+    [HideInInspector] public BaseEnemyMovementAI enemyMovementAI;
     [HideInInspector] public MovementToPositionEvent movementToPositionEvent;
     [HideInInspector] public IdleEvent idleEvent;
     // private MaterializeEffect materializeEffect;
@@ -78,7 +77,7 @@ public class Enemy : MonoBehaviour
         fireWeaponEvent = GetComponent<FireWeaponEvent>();
         fireWeapon = GetComponent<FireWeapon>();
         setActiveWeaponEvent = GetComponent<SetActiveWeaponEvent>();
-        enemyMovementAI = GetComponent<EnemyMovementAI>();
+        enemyMovementAI = GetComponent<BaseEnemyMovementAI>();
         movementToPositionEvent = GetComponent<MovementToPositionEvent>();
         idleEvent = GetComponent<IdleEvent>();
         // materializeEffect = GetComponent<MaterializeEffect>();
@@ -164,13 +163,17 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// Initialise the enemy
     /// </summary>
-    public void EnemyInitialization(EnemyDetailsSO enemyDetails, int enemySpawnNumber)
+    public void EnemyInitialization(EnemyDetailsSO enemyDetails, int enemySpawnNumber, EnemyModifiers enemyModifiers = null)
     {
         this.enemyDetails = enemyDetails;
 
         SetEnemyMovementUpdateFrame(enemySpawnNumber);
 
-        SetEnemyStartingHealth(); // here should be a parameter to get correct health for enemy
+        if (enemyModifiers != null)
+        {
+            SetEnemyStartingHealth(enemyModifiers.healthModifierEffect);
+        }
+        SetEnemyStartingHealth();
 
         SetEnemyStartingWeapon();
 
@@ -193,7 +196,7 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// Set the starting health for the enemy
     /// </summary>
-    private void SetEnemyStartingHealth()
+    private void SetEnemyStartingHealth(int modifierEffect = 0)
     {
         // Get the enemy health for the dungeon level
         /*foreach (EnemyHealthDetails enemyHealthDetails in enemyDetails.enemyHealthDetailsArray)
@@ -204,7 +207,7 @@ public class Enemy : MonoBehaviour
                 return;
             }
         }*/
-        health.SetStartingHealth(enemyDetails.startingHealthAmount);
+        health.SetStartingHealth(enemyDetails.startingHealthAmount + modifierEffect);
     }
 
     /// <summary>
