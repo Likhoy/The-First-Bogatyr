@@ -37,6 +37,19 @@ public class PlayerResources : MonoBehaviour
         return false;
     }
 
+    public void SaveItem(GameObject itemPrefab)
+    {
+        if (inventory.ContainsItem(itemPrefab.GetComponent<Item>().itemID) >= 1)
+            inventory.AddItem(itemPrefab.GetComponent<Item>());
+        else
+        {
+            GameObject item = Instantiate(itemPrefab, transform);
+            item.GetComponent<CircleCollider2D>().enabled = false;
+            item.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
+            inventory.AddItem(item.GetComponent<Item>());
+        }
+    }
+
     public void TryBuyProduct(Product product) // Монеточки
     {
         if (SpendMoney(product.price))
@@ -44,7 +57,7 @@ public class PlayerResources : MonoBehaviour
             System.Random rand = new System.Random();
             audioEffects.PlayOneShot(CMoney[rand.Next(CMoney.Length)]);
 
-            GameManager.Instance.GiveItem(product.itemPrefab);
+            SaveItem(product.itemPrefab);
             player.productBoughtEvent.CallProductBoughtEvent(PlayerMoney);
         }
         else
