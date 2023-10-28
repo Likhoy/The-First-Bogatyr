@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 #region REQUIRE COMPONENTS
 [RequireComponent(typeof(HealthEvent))]
-[RequireComponent(typeof(Health))]
+[RequireComponent(typeof(EnemyHealth))]
 [RequireComponent(typeof(FireWeaponEvent))]
 [RequireComponent(typeof(DestroyedEvent))]
 [RequireComponent(typeof(Destroyed))]
@@ -34,7 +34,7 @@ public class Enemy : MonoBehaviour
 {
     [HideInInspector] public EnemyDetailsSO enemyDetails;
     [HideInInspector] public HealthEvent healthEvent;
-    private Health health;
+    private EnemyHealth health;
     //[HideInInspector] public AimWeaponEvent aimWeaponEvent;
     [HideInInspector] public FireWeaponEvent fireWeaponEvent;
     private FireWeapon fireWeapon;
@@ -72,7 +72,7 @@ public class Enemy : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         audioEffects = GameObject.Find("AudioEffects").GetComponent<AudioSource>();
         healthEvent = GetComponent<HealthEvent>();
-        health = GetComponent<Health>();
+        health = GetComponent<EnemyHealth>();
         //aimWeaponEvent = GetComponent<AimWeaponEvent>();
         fireWeaponEvent = GetComponent<FireWeaponEvent>();
         fireWeapon = GetComponent<FireWeapon>();
@@ -143,7 +143,7 @@ public class Enemy : MonoBehaviour
     private void EnemyDestroyed()
     {
         DestroyedEvent destroyedEvent = GetComponent<DestroyedEvent>();
-        destroyedEvent.CallDestroyedEvent(false, health.GetStartingHealth());
+        destroyedEvent.CallDestroyedEvent(false, health.GetMaxHealth());
 
         if (enemyDetails.moneyReward > 0 && SceneManager.GetActiveScene().name != GameManager.Instance.allLocationsDetails[2].sceneName)
         {

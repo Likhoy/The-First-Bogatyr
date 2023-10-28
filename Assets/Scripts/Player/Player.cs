@@ -6,7 +6,7 @@ using UnityEngine;
 #region REQUIRE COMPONENTS
 [RequireComponent(typeof(PlayerResources))]
 [RequireComponent(typeof(HealthEvent))]
-[RequireComponent(typeof(Health))]
+[RequireComponent(typeof(PlayerHealth))]
 [RequireComponent(typeof(ReceiveContactDamage))]
 [RequireComponent(typeof(DestroyedEvent))]
 [RequireComponent(typeof(Destroyed))]
@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public PlayerDetailsSO playerDetails;
     [HideInInspector] public PlayerResources playerResources;
     [HideInInspector] public HealthEvent healthEvent;
-    [HideInInspector] public Health health;
+    [HideInInspector] public PlayerHealth health;
     [HideInInspector] public DestroyedEvent destroyedEvent;
     [HideInInspector] public MovementByVelocityEvent movementByVelocityEvent;
     [HideInInspector] public MovementToPositionEvent movementToPositionEvent;
@@ -64,7 +64,7 @@ public class Player : MonoBehaviour
         // Load components
         playerResources = GetComponent<PlayerResources>();
         healthEvent = GetComponent<HealthEvent>();
-        health = GetComponent<Health>();
+        health = GetComponent<PlayerHealth>();
         destroyedEvent = GetComponent<DestroyedEvent>();
         movementByVelocityEvent = GetComponent<MovementByVelocityEvent>();
         movementToPositionEvent = GetComponent<MovementToPositionEvent>();
