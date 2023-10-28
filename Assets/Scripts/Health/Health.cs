@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(HealthEvent))]
@@ -24,13 +25,12 @@ public class Health : MonoBehaviour // player and other health types need to be 
     private float effectTime = 0f;
     private SpriteRenderer spriteRenderer = null;
     private const float spriteFlashInterval = 0.33f;
-    private WaitForSeconds WaitForSecondsSpriteFlashInterval = new WaitForSeconds(spriteFlashInterval);
+    private WaitForSeconds waitForSecondsSpriteFlashInterval = new WaitForSeconds(spriteFlashInterval);
 
     [HideInInspector] public bool isDamageable = true;
     [HideInInspector] public Enemy enemy;
 
-    private int chanceToAvoidDamage = 0;
-    private int armorProtectionTotalPercent = 0;
+    public List<Protection> currentProtections = new List<Protection>();
 
     private void Awake()
     {
@@ -119,48 +119,25 @@ public class Health : MonoBehaviour // player and other health types need to be 
 
     private int ProcessRawDamage(int rawDamage)
     {
-        // check chance to avoid damage first
-        if (chanceToAvoidDamage > 0)
-        {
-            int value = Random.Range(1, 101);
-            if (value <= chanceToAvoidDamage)
-                return 0;
-        }
-
-        // apply armor effect
-        if (armorProtectionTotalPercent > 0)
-        {
-            rawDamage -= Mathf.RoundToInt((float)armorProtectionTotalPercent / 100 * rawDamage);
-        }
+        foreach (Protection protection in currentProtections)
+            protection.ApplyEffect(ref rawDamage);
 
         return rawDamage;
     }
 
-    public bool AddChanceToAvoidDamage(int chancePercentToAdd)
-    {
-        return HelperUtilities.AddValueToPercentage(ref chanceToAvoidDamage, chancePercentToAdd);
-    }
-
-    public bool AddArmorProtectionPercent(int protectionPercentToAdd)
-    {
-        return HelperUtilities.AddValueToPercentage(ref armorProtectionTotalPercent, protectionPercentToAdd);
-    }
-
-    public bool IncreaseMaxHealth(int healthPercentToAdd)
+    public void IncreaseMaxHealth(int healthPercentToAdd)
     {
         maxHealth += Mathf.RoundToInt((float)healthPercentToAdd / 100 * initialHealth);
-        return true;
     }
 
-    public bool AddExtraLives(int extraLivesToAdd)
+    public void AddExtraLives(int extraLivesToAdd)
     {
         extraLives += extraLivesToAdd;
-        return true;
     }
 
     public bool UseExtraLive()
     {
-        if (extraLives < 0)
+        if (extraLives <= 0)
             return false;
         
         extraLives--;
@@ -203,11 +180,11 @@ public class Health : MonoBehaviour // player and other health types need to be 
         {
             spriteRenderer.color = Color.red;
 
-            yield return WaitForSecondsSpriteFlashInterval;
+            yield return waitForSecondsSpriteFlashInterval;
 
             spriteRenderer.color = Color.white;
 
-            yield return WaitForSecondsSpriteFlashInterval;
+            yield return waitForSecondsSpriteFlashInterval;
 
             iterations--;
 
