@@ -34,9 +34,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         // Call base class
         base.Awake();
-
+        Lua.RegisterFunction("GiveItemToPlayer", this, SymbolExtensions.GetMethodInfo(() => GiveItemToPlayer(string.Empty, 0.0)));
         Lua.RegisterFunction("GiveWeaponToPlayer", this, SymbolExtensions.GetMethodInfo(() => GiveWeaponToPlayer(string.Empty, 0.0)));
-        Lua.RegisterFunction("GiveChanceToAvoidDamageToCreature", this, SymbolExtensions.GetMethodInfo(() => GiveChanceToAvoidDamageToCreature(string.Empty, 0.0)));
+        Lua.RegisterFunction("IncreaseChanceToAvoidDamageOfCharacter", this, SymbolExtensions.GetMethodInfo(() => IncreaseChanceToAvoidDamageOfCharacter(string.Empty, 0.0)));
     }
 
     public void PrepareMainStoryLine()
@@ -81,8 +81,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     private void OnDestroy()
     {
+        Lua.UnregisterFunction("GiveItemToPlayer");
         Lua.UnregisterFunction("GiveWeaponToPlayer");
-        Lua.UnregisterFunction("GiveChanceToAvoidDamageToCreature");
+        Lua.UnregisterFunction("IncreaseChanceToAvoidDamageOfCharacter");
     }
 
     public void PlayerDestroyedEvent_OnDestroyed(DestroyedEvent destroyedEvent, DestroyedEventArgs destroyedEventArgs)
@@ -109,10 +110,10 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         }
     }
 
-    public void GiveChanceToAvoidDamageToCreature(string creatureTag, double percent)
+    public void IncreaseChanceToAvoidDamageOfCharacter(string creatureTag, double percent)
     {
         if (creatureTag == "Player")
-            GetPlayer().health.AddChanceToAvoidDamage((int)percent);
+            Protection.IncreaseEffect<DamageReflector>(GetPlayer().health, (int)percent);
         else
         {
             // TODO
@@ -224,6 +225,21 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     public Player GetPlayer()
     {
         return PlayerSpawner.Instance.GetPlayer();
+    }
+
+    // bad realisation - needs refactoring
+    public void GiveItemToPlayer(string itemName, double itemCount)
+    {
+        foreach (GameObject itemPrefab in GameResources.Instance.items)
+        {
+            if (itemPrefab.GetComponent<Item>().itemName == itemName)
+            {
+                for (int i = 0; i < (int)itemCount; i++)
+                {
+                    GiveItem(itemPrefab);
+                }
+            }
+        }
     }
 
     public void GiveItem(GameObject itemPrefab)
