@@ -33,6 +33,6 @@ public enum GameState
 public enum PowerBonusType
 {
     HealthBoost,
-    Armor,
+    Armour,
     DamageReflector
 }
