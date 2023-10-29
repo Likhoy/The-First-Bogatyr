@@ -1,10 +1,13 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Health))]
-
-[DisallowMultipleComponent]
 public class DamageReflector : Protection
 {
+
+    public DamageReflector()
+    {
+        effectPriority = 0;
+    }
+
     public override void ApplyEffect(ref int damage)
     {
         if (totalEffectPercent > 0)

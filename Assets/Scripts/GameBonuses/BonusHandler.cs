@@ -49,19 +49,26 @@ public static class BonusHandler
         switch (bonusDetails.bonusType)
         {
             case PowerBonusType.Armour:
-                Protection.IncreaseEffect<Armour>(GameManager.Instance.GetPlayer().health, bonusDetails.bonusPercent);
+                Protection.AddProtection<Armour>(GameManager.Instance.GetPlayer().health, 
+                    bonusDetails);
                 break;
             
             case PowerBonusType.DamageReflector:
-                Protection.IncreaseEffect<DamageReflector>(GameManager.Instance.GetPlayer().health, bonusDetails.bonusPercent);
+                Protection.AddProtection<DamageReflector>(GameManager.Instance.GetPlayer().health,
+                    bonusDetails);
                 break;
 
             case PowerBonusType.HealthBoost:
-                GameManager.Instance.GetPlayer().health.IncreaseMaxHealth(bonusDetails.bonusPercent);
+                GameManager.Instance.GetPlayer().health.IncreaseMaxHealth(GetFullBonusEffectConsideringLevel(bonusDetails));
                 break;
 
             default: break;
         }
+    }
+
+    private static int GetFullBonusEffectConsideringLevel(PowerBonusDetailsSO bonusDetails)
+    {
+        return bonusDetails.bonusPercent + ((int)bonusDetails.bonusLevel - 1) * bonusDetails.levelRaisePercent;
     }
 
     private static void ApplyItemBonus(ItemBonusDetailsSO bonusDetails)

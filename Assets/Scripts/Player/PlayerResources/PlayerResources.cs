@@ -21,6 +21,7 @@ public class PlayerResources : MonoBehaviour
     {
         inventory = FindObjectOfType<Inventory>();
         moneyIncreasedEvent = GetComponent<MoneyIncreasedEvent>();
+        experienceIncreasedEvent = GetComponent<ExperienceIncreasedEvent>();
     }
 
     private void Start()
