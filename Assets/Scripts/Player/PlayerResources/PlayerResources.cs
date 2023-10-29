@@ -21,6 +21,7 @@ public class PlayerResources : MonoBehaviour
     {
         inventory = FindObjectOfType<Inventory>();
         moneyIncreasedEvent = GetComponent<MoneyIncreasedEvent>();
+        experienceIncreasedEvent = GetComponent<ExperienceIncreasedEvent>();
     }
 
     private void Start()
@@ -28,6 +29,7 @@ public class PlayerResources : MonoBehaviour
         player = GameManager.Instance.GetPlayer();
         PlayerMoney = player.playerDetails.initialPlayerMoneyAmount;
         PlayerExperience = player.playerDetails.initialPlayerExperienceAmount;
+        experienceIncreasedEvent.CallExperienceIncreasedEvent(PlayerExperience);
         audioEffects = GameObject.Find("AudioEffects").GetComponent<AudioSource>();
     }
 
