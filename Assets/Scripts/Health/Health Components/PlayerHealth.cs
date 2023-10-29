@@ -21,7 +21,9 @@ public class PlayerHealth : Health
 
     public void IncreaseMaxHealth(int healthPercentToAdd)
     {
+        maxHealth = initialHealth;
         maxHealth += Mathf.RoundToInt((float)healthPercentToAdd / 100 * initialHealth);
+        CallHealthEvent(0);
     }
 
     public void AddExtraLives(int extraLivesToAdd)

@@ -9,8 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b8a8b0ab623ee945bdc2ab3f85a8092, type: 3}
-  m_Name: LocationDetails_Menu
+  m_Script: {fileID: 11500000, guid: d71c76811d7982048b078e7f84f59aa3, type: 3}
+  m_Name: PowerBonusDetails_ClawAmulet_3
   m_EditorClassIdentifier: 
-  sceneName: Menu
-  enemiesToSpawnImmediately: []
+  bonusName: Claw amulet
+  bonusSprite: {fileID: 0}
+  bonusPercent: 30
+  bonusType: 1
+  bonusLevel: 3
