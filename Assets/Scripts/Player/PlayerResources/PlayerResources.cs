@@ -8,8 +8,8 @@ public class PlayerResources : MonoBehaviour
 {
     private Player player;
     private Inventory inventory;
-    public int PlayerMoney { get; set; }
-    public int PlayerExperience { get; set; }
+    public int PlayerMoney { get; private set; }
+    public int PlayerExperience { get; private set; }
 
     [HideInInspector] public MoneyIncreasedEvent moneyIncreasedEvent;
     [HideInInspector] public ExperienceIncreasedEvent experienceIncreasedEvent;
@@ -92,6 +92,18 @@ public class PlayerResources : MonoBehaviour
             player.AddWeaponToPlayer(weaponProduct.weaponDetails, weaponProduct.weaponAmmoAmount);
             player.productBoughtEvent.CallProductBoughtEvent(PlayerMoney);
         }
+    }
+
+    public void SetMoney(int newMoneyAmount)
+    {
+        PlayerMoney = 0;
+        AddMoney(newMoneyAmount);
+    }
+
+    public void SetExperience(int newExperienceAmount)
+    {
+        PlayerExperience = 0;
+        AddExperience(newExperienceAmount);
     }
 
     public void AddMoney(int moneyAmount)

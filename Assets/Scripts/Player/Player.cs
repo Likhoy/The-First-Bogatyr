@@ -234,11 +234,6 @@ public class Player : MonoBehaviour
         return transform.position;
     }
 
-    public int GetPlayerMoney()
-    {
-        return playerResources.PlayerMoney;
-    }
-
     /// <summary>
     /// Set player health from playerDetails SO
     /// </summary>
