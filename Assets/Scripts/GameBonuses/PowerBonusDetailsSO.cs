@@ -15,8 +15,4 @@ public class PowerBonusDetailsSO : BonusDetailsSO
     [Tooltip("Bonus level - higher level makes bonus effect more powerful")]
     #endregion
     public BonusLevel bonusLevel;
-    #region Tooltip
-    [Tooltip("Each level increases bonusPercent that much")]
-    #endregion
-    public int levelRaisePercent;
 }
