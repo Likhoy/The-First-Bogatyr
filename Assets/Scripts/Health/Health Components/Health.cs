@@ -57,7 +57,11 @@ public class Health : MonoBehaviour
     private int ProcessRawDamage(int rawDamage)
     {
         foreach (Protection protection in currentProtections)
+        {
             protection.ApplyEffect(ref rawDamage);
+            if (rawDamage <= 0)
+                return 0;
+        }  
 
         return rawDamage;
     }
@@ -130,6 +134,11 @@ public class Health : MonoBehaviour
     /// Get the starting health
     /// </summary>
     public virtual int GetMaxHealth()
+    {
+        return initialHealth;
+    }
+
+    public int GetInitialHealth()
     {
         return initialHealth;
     }
