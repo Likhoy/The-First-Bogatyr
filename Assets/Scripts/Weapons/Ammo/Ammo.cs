@@ -99,35 +99,12 @@ public class Ammo : MonoBehaviour, IFireable
     {
         Health health = collision.GetComponent<Health>();
 
-        bool enemyHit = false;
-
         if (health != null)
         {
             // Set isColliding to prevent ammo dealing damage multiple times
             isColliding = true;
 
             health.TakeDamage(ammoDetails.GetAmmoDamage());
-
-            // Enemy hit
-            if (health.enemy != null)
-            {
-                enemyHit = true;
-            }
-        }
-
-        // If player ammo then update multiplier
-        if (ammoDetails.isPlayerAmmo)
-        {
-            if (enemyHit)
-            {
-                // multiplier
-                // StaticEventHandler.CallMultiplierEvent(true);
-            }
-            else
-            {
-                // no multiplier
-                // StaticEventHandler.CallMultiplierEvent(false);
-            }
         }
 
     }

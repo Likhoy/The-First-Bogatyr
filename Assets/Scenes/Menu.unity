@@ -2842,6 +2842,22 @@ PrefabInstance:
       propertyPath: dialogueSystemController
       value: 
       objectReference: {fileID: 1463023450}
+    - target: {fileID: 5537331503463961375, guid: e017cf295557c1e4681ea5807cb048fd, type: 3}
+      propertyPath: allWavesDetails.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5537331503463961375, guid: e017cf295557c1e4681ea5807cb048fd, type: 3}
+      propertyPath: allWavesDetails.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: e587c5fc94bc87f4993f2a8084886d68, type: 2}
+    - target: {fileID: 5537331503463961375, guid: e017cf295557c1e4681ea5807cb048fd, type: 3}
+      propertyPath: allWavesDetails.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 46cec544c5b4d32499060ef983313161, type: 2}
+    - target: {fileID: 5537331503463961375, guid: e017cf295557c1e4681ea5807cb048fd, type: 3}
+      propertyPath: allWavesDetails.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: be2615d35a5e87d42abb272057ef7dea, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e017cf295557c1e4681ea5807cb048fd, type: 3}
 --- !u!1001 &1463023449
