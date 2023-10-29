@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2728140617652107613}
   - component: {fileID: -4214787580597539890}
-  - component: {fileID: 1565809306720401064}
   - component: {fileID: 5358803689109666157}
   - component: {fileID: 8507868538882372317}
   - component: {fileID: 8384540713984364262}
@@ -37,6 +36,7 @@ GameObject:
   - component: {fileID: 5557371132118945120}
   - component: {fileID: 1147905809240725422}
   - component: {fileID: 7110743881509623731}
+  - component: {fileID: 4642396104358660822}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
@@ -73,22 +73,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fc45f8cc11a0d4781a1718159a3575, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1565809306720401064
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1767373786716691614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b94e09870caf5fc4ba9b80a68cf80c08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthBar: {fileID: 1120854384145898019}
-  currentHealth: 0
-  isDamageable: 1
-  enemy: {fileID: 0}
 --- !u!114 &5358803689109666157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,9 +310,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementDetails: {fileID: 0}
-  moveSpeed: 0
-  chasePlayer: 0
   updateFrameNumber: 1
+  chasePlayer: 0
+  moveSpeed: 0
 --- !u!114 &6615954395596170959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -816,6 +800,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVolume: 0.6
+--- !u!114 &4642396104358660822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1767373786716691614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e1045d1c43bab34e82b7018d02a9737, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 0
+  healthEvent: {fileID: 0}
+  isDamageable: 1
+  currentProtections: []
+  healthBar: {fileID: 1120854384145898019}
+  enemy: {fileID: 0}
 --- !u!1 &4752275437848715928
 GameObject:
   m_ObjectHideFlags: 0

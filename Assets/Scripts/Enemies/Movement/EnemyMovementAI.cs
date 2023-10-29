@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Enemy))]
 [DisallowMultipleComponent]
 
-public class EnemyMovementAI : BaseEnemyMovementAI
+public class EnemyMovementAI : BaseEnemyMovementAI // maybe should use strategy pattern instead of inheritance !
 {
     private Vector3 randomPosition; // for choosing patroling path
     private bool isSetTargetPoint = false; // patroling path has been chosen
