@@ -96,7 +96,7 @@ public class PlayerResources : MonoBehaviour
     {
         if (moneyAmount > 0)
         {
-            PlayerExperience += moneyAmount;
+            PlayerMoney += moneyAmount;
             moneyIncreasedEvent.CallMoneyIncreasedEvent(PlayerMoney);
         }
     }
