@@ -3,13 +3,16 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(MoneyIncreasedEvent))]
+[RequireComponent(typeof(ExperienceIncreasedEvent))]
 public class PlayerResources : MonoBehaviour
 {
     private Player player;
     private Inventory inventory;
     public int PlayerMoney { get; set; }
+    public int PlayerExperience { get; set; }
 
     [HideInInspector] public MoneyIncreasedEvent moneyIncreasedEvent;
+    [HideInInspector] public ExperienceIncreasedEvent experienceIncreasedEvent;
 
     private AudioSource audioEffects;
     [SerializeField] private AudioClip[] CMoney;
@@ -24,6 +27,7 @@ public class PlayerResources : MonoBehaviour
     {
         player = GameManager.Instance.GetPlayer();
         PlayerMoney = player.playerDetails.initialPlayerMoneyAmount;
+        PlayerExperience = player.playerDetails.initialPlayerExperienceAmount;
         audioEffects = GameObject.Find("AudioEffects").GetComponent<AudioSource>();
     }
 
@@ -32,6 +36,16 @@ public class PlayerResources : MonoBehaviour
         if (PlayerMoney >= moneySpent)
         {
             PlayerMoney -= moneySpent;
+            return true;
+        }
+        return false;
+    }
+    
+    private bool SpendExperience(int experienceSpent)
+    {
+        if (PlayerExperience >= experienceSpent)
+        {
+            PlayerExperience -= experienceSpent;
             return true;
         }
         return false;
@@ -78,9 +92,21 @@ public class PlayerResources : MonoBehaviour
         }
     }
 
-    internal void AddMoney(int moneyAmount)
+    public void AddMoney(int moneyAmount)
     {
         if (moneyAmount > 0)
-            PlayerMoney += moneyAmount;
+        {
+            PlayerExperience += moneyAmount;
+            moneyIncreasedEvent.CallMoneyIncreasedEvent(PlayerMoney);
+        }
+    }
+    
+    public void AddExperience(int experienceAmount)
+    {
+        if (experienceAmount > 0)
+        {
+            PlayerExperience += experienceAmount;
+            experienceIncreasedEvent.CallExperienceIncreasedEvent(PlayerExperience);
+        }
     }
 }
