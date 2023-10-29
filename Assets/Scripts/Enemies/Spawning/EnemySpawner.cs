@@ -139,6 +139,11 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
         // reduce current enemy count
         currentEnemyCount--;
 
+        // add player experience
+        var player = GameManager.Instance.GetPlayer();
+        player.playerResources.PlayerExperience += destroyedEventArgs.experience;
+        
+        
         if (currentEnemyCount <= 0)
         {
 

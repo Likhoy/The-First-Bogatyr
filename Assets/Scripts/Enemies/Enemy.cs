@@ -143,7 +143,7 @@ public class Enemy : MonoBehaviour
     private void EnemyDestroyed()
     {
         DestroyedEvent destroyedEvent = GetComponent<DestroyedEvent>();
-        destroyedEvent.CallDestroyedEvent(false, health.GetMaxHealth());
+        destroyedEvent.CallDestroyedEvent(false, enemyDetails.experienceDrop);
 
         if (enemyDetails.moneyReward > 0 && SceneManager.GetActiveScene().name != GameManager.Instance.allLocationsDetails[2].sceneName)
         {
