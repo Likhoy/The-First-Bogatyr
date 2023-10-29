@@ -52,7 +52,12 @@ public static class BonusHandler
                 Protection.AddProtection<Armour>(GameManager.Instance.GetPlayer().health, 
                     bonusDetails);
                 break;
-            
+
+            case PowerBonusType.VirtualArmour:
+                Protection.AddProtection<VirtualArmour>(GameManager.Instance.GetPlayer().health,
+                    bonusDetails);
+                break;
+
             case PowerBonusType.DamageReflector:
                 Protection.AddProtection<DamageReflector>(GameManager.Instance.GetPlayer().health,
                     bonusDetails);
