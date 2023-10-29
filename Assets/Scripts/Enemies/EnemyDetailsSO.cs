@@ -160,6 +160,11 @@ public class EnemyDetailsSO : ScriptableObject
 
     public float spawnRadius;
 
+    
+    #region Header BOSS SETTINGS
+    [Space(10)]
+    [Header("DROP SETTINGS")]
+    #endregion
     #region Tooltip
     [Tooltip("Count of experience that drops after death")]
     #endregion
