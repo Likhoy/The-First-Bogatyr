@@ -47,5 +47,9 @@ public class PlayerDetailsSO : ScriptableObject
     [Tooltip("Player starting money amount")]
     #endregion
     public int initialPlayerMoneyAmount;
+    #region Tooltip
+    [Tooltip("Player starting experience amount")]
+    #endregion
+    public int initialPlayerExperienceAmount;
 }
 

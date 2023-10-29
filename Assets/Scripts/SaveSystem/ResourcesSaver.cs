@@ -11,6 +11,7 @@ public class ResourcesSaver : Saver
     public class Data
     {
         public int moneyAmount;
+        public int experienceAmount;
     }
 
     private Data m_data = new Data();
@@ -18,6 +19,7 @@ public class ResourcesSaver : Saver
     public override string RecordData()
     {
         m_data.moneyAmount = GetComponent<PlayerResources>().PlayerMoney;
+        m_data.moneyAmount = GetComponent<PlayerResources>().PlayerExperience;
         return SaveSystem.Serialize(m_data);
     }
 
@@ -29,7 +31,8 @@ public class ResourcesSaver : Saver
 
         PlayerResources playerResources = GetComponent<PlayerResources>();
         playerResources.PlayerMoney = 0;
+        playerResources.PlayerExperience = 0;
         playerResources.AddMoney(m_data.moneyAmount);
-        playerResources.moneyIncreasedEvent.CallMoneyIncreasedEvent(playerResources.PlayerMoney);
+        playerResources.AddExperience(m_data.experienceAmount);
     }
 }

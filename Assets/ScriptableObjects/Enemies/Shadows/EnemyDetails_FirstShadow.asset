@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7d1a9b688697024d82a57e72924549e, type: 3}
+  m_Name: EnemyDetails_FirstShadow
+  m_EditorClassIdentifier: 
+  enemyName: Shadow1
+  enemyPrefabs:
+  - {fileID: 1174784082978343962, guid: ce9130059c9a5944b9dd70e6f509b2eb, type: 3}
+  aggressionDistance: 30
+  chaseDistance: 50
+  shootDistance: 0
+  handDistance: 0
+  strikeDistance: 1
+  enemyMeleeWeapon: {fileID: 0}
+  enemyRangedWeapon: {fileID: 11400000, guid: 1c6979bf14d4b7648a85c524e18c4f3b, type: 2}
+  firingIntervalMin: 0.1
+  firingIntervalMax: 1
+  firingDurationMin: 12
+  firingDurationMax: 12
+  firingLineOfSightRequired: 0
+  startingHealthAmount: 10
+  hasHitEffect: 1
+  hitEffectTime: 0.66
+  isHealthBarDisplayed: 1
+  moneyReward: 0
+  moneyDropRadius: 5
+  isBoss: 0
+  spawningImmediately: 0
+  littleEnemySpawnDatas: []
+  spawnRadius: 0
