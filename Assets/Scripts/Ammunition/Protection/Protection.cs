@@ -20,19 +20,18 @@ public abstract class Protection : IRollBackable, IComparable<Protection>
         {
             if (bonusDetails.bonusLevel > protection.protectionLevel)
             {
-                int effectRise = (protection.protectionLevel - bonusDetails.bonusLevel) * bonusDetails.levelRaisePercent;
-
-                protection.totalEffectPercent += effectRise;
+                protection.totalEffectPercent = bonusDetails.bonusPercent;
                 protection.protectionLevel = bonusDetails.bonusLevel;
             }
         }
         else
         {
             T newProtection = new T();
-            newProtection.totalEffectPercent = bonusDetails.bonusPercent + ((int)bonusDetails.bonusLevel - 1) * bonusDetails.levelRaisePercent;
+            newProtection.totalEffectPercent = bonusDetails.bonusPercent;
             newProtection.protectionLevel = bonusDetails.bonusLevel;
-            characterHealth.currentProtections.AddSorted(newProtection);
             newProtection.parentHealthReference = characterHealth;
+
+            characterHealth.currentProtections.AddSorted(newProtection);
         }
     }
 

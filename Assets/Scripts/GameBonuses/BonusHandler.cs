@@ -59,16 +59,11 @@ public static class BonusHandler
                 break;
 
             case PowerBonusType.HealthBoost:
-                GameManager.Instance.GetPlayer().health.IncreaseMaxHealth(GetFullBonusEffectConsideringLevel(bonusDetails));
+                GameManager.Instance.GetPlayer().health.IncreaseMaxHealth(bonusDetails.bonusPercent);
                 break;
 
             default: break;
         }
-    }
-
-    private static int GetFullBonusEffectConsideringLevel(PowerBonusDetailsSO bonusDetails)
-    {
-        return bonusDetails.bonusPercent + ((int)bonusDetails.bonusLevel - 1) * bonusDetails.levelRaisePercent;
     }
 
     private static void ApplyItemBonus(ItemBonusDetailsSO bonusDetails)

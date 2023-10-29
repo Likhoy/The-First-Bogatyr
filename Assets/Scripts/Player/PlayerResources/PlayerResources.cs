@@ -29,6 +29,7 @@ public class PlayerResources : MonoBehaviour
         player = GameManager.Instance.GetPlayer();
         PlayerMoney = player.playerDetails.initialPlayerMoneyAmount;
         PlayerExperience = player.playerDetails.initialPlayerExperienceAmount;
+        experienceIncreasedEvent.CallExperienceIncreasedEvent(PlayerExperience);
         audioEffects = GameObject.Find("AudioEffects").GetComponent<AudioSource>();
     }
 
