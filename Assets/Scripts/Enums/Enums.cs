@@ -34,6 +34,7 @@ public enum PowerBonusType
 {
     HealthBoost,
     Armour,
+    VirtualArmour,
     DamageReflector
 }
 
