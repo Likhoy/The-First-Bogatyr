@@ -160,7 +160,11 @@ public class EnemyDetailsSO : ScriptableObject
 
     public float spawnRadius;
 
-
+    #region Tooltip
+    [Tooltip("Count of experience that drops after death")]
+    #endregion
+    public int experienceDrop = 0;
+    
     #region Validation
 #if UNITY_EDITOR
     // Validate the scriptable object details entered
