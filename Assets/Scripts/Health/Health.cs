@@ -113,7 +113,7 @@ public class Health : MonoBehaviour
     private void CallHealthEvent(int damageAmount)
     {
         // Trigger health event
-        healthEvent.CallHealthChangedEvent((float)currentHealth / (float)GetMaxHealth(), currentHealth, damageAmount);
+        healthEvent.CallHealthChangedEvent((float)currentHealth / (float)GetMaxHealth(), currentHealth, GetMaxHealth(), damageAmount);
     }
 
 
