@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,8 @@ using UnityEngine.UI;
 public class ExperienceUI : MonoBehaviour
 {
     [SerializeField] private Image experienceBar;
+    [SerializeField] private TMP_Text experienceText;
+
 
     private void OnEnable()
     {
@@ -25,6 +28,7 @@ public class ExperienceUI : MonoBehaviour
 
     private void SetExperienceUI(ExperienceIncreasedEventArgs experienceEventArgs)
     {
-           experienceBar.fillAmount = (experienceEventArgs.playerExperience % 1000)/ 1000f;
+        experienceBar.fillAmount = (experienceEventArgs.playerExperience % 1000)/ 1000f;
+        experienceText.text = (experienceEventArgs.playerExperience).ToString() + "/" + ((experienceEventArgs.playerExperience / 1000 + 1) * 1000).ToString();
     }
 }
