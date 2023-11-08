@@ -49,11 +49,18 @@ public static class BonusHandler
         switch (bonusDetails.bonusType)
         {
             case PowerBonusType.Armour:
-                Protection.IncreaseEffect<Armour>(GameManager.Instance.GetPlayer().health, bonusDetails.bonusPercent);
+                Protection.AddProtection<Armour>(GameManager.Instance.GetPlayer().health, 
+                    bonusDetails);
                 break;
-            
+
+            case PowerBonusType.VirtualArmour:
+                Protection.AddProtection<VirtualArmour>(GameManager.Instance.GetPlayer().health,
+                    bonusDetails);
+                break;
+
             case PowerBonusType.DamageReflector:
-                Protection.IncreaseEffect<DamageReflector>(GameManager.Instance.GetPlayer().health, bonusDetails.bonusPercent);
+                Protection.AddProtection<DamageReflector>(GameManager.Instance.GetPlayer().health,
+                    bonusDetails);
                 break;
 
             case PowerBonusType.HealthBoost:

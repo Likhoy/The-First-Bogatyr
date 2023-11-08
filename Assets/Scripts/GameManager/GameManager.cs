@@ -113,7 +113,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     public void IncreaseChanceToAvoidDamageOfCharacter(string creatureTag, double percent)
     {
         if (creatureTag == "Player")
-            Protection.IncreaseEffect<DamageReflector>(GetPlayer().health, (int)percent);
+        {
+            //Protection.AddProtection<DamageReflector>(GetPlayer().health, (int)percent);
+        }
         else
         {
             // TODO
@@ -129,9 +131,14 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         StartCoroutine(LaunchWave());
     }
 
+    public int GetCurrentWaveNumber()
+    {
+        return currentWaveNumber;
+    }
+
     public void TryLaunchNextWave()
     {
-        if (currentWaveNumber < allWavesDetails.Length)
+        if (currentWaveNumber < allWavesDetails.Length - 1)
         {
             currentWaveNumber++;
             StartCoroutine(LaunchWave(currentWaveNumber));
