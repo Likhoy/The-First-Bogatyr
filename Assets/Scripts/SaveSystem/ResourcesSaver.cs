@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using PixelCrushers;
 using System;
@@ -30,9 +28,7 @@ public class ResourcesSaver : Saver
         m_data = data;
 
         PlayerResources playerResources = GetComponent<PlayerResources>();
-        playerResources.PlayerMoney = 0;
-        playerResources.PlayerExperience = 0;
-        playerResources.AddMoney(m_data.moneyAmount);
-        playerResources.AddExperience(m_data.experienceAmount);
+        playerResources.SetMoney(m_data.moneyAmount);
+        playerResources.SetExperience(m_data.experienceAmount);
     }
 }
