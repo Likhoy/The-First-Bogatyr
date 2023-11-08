@@ -13,8 +13,4 @@ MonoBehaviour:
   m_Name: LocationDetails_MainScene
   m_EditorClassIdentifier: 
   sceneName: MainScene
-  enemiesToSpawnImmediately:
-  - enemyDetails: {fileID: 11400000, guid: 4829fcddfb78ec649ae56ed9bc7ab1b3, type: 2}
-    spawnPosition: {x: 0, y: 0}
-  - enemyDetails: {fileID: 11400000, guid: 65f5ad3025f99d745878348b70cf71a9, type: 2}
-    spawnPosition: {x: 0, y: 0}
+  enemiesToSpawnImmediately: []

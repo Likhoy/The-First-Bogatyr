@@ -149,6 +149,9 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
 
             if (GameManager.Instance.gameState == GameState.EndlessMode)
             {
+                // wave finished
+                StaticEventHandler.CallWaveFinishedEvent(GameManager.Instance.GetCurrentWaveNumber());
+                // launch next if possible
                 GameManager.Instance.TryLaunchNextWave();
             }
                 
