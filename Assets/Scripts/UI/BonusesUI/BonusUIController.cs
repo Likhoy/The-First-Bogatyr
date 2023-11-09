@@ -28,18 +28,22 @@ public class BonusUIController : MonoBehaviour
 
         for (int i = 0; i < bonusButtons.Length; i++)
         {
-            bonusButtons[i].onClick.AddListener(() => ActivateBonus(i));
+            int index = i;
+            bonusButtons[i].onClick.AddListener(() => ActivateBonus(index));
             bonusButtons[i].image.overrideSprite = randomBonuses[i].bonusSprite;
         }
 
         bonusPanel.SetActive(true);
     }
 
+
     private void ActivateBonus(int index)
     {
         BonusDetailsSO bonusDetails = randomBonuses[index];
         BonusHandler.ApplyBonus(bonusDetails);
         Debug.Log("Activated bonus: " + bonusDetails.bonusName);
+
+        bonusPanel.SetActive(false);
     }
 
     public void OnButtonHover(int index)
