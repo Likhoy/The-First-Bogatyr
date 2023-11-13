@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d71c76811d7982048b078e7f84f59aa3, type: 3}
   m_Name: PowerBonusDetails_NativeSoil_4
   m_EditorClassIdentifier: 
-  bonusName: Native soil
-  bonusSprite: {fileID: 21300000, guid: db9eb07f1e4b5794591fd63399e9f9eb, type: 3}
+  bonusName: "\u0420\u043E\u0434\u043D\u0430\u044F \u0437\u0435\u043C\u043B\u044F"
+  bonusDescription: "\u0423\u0432\u0435\u043B\u0438\u0447\u0435\u043D\u0438\u0435
+    \u043C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u043E\u0433\u043E
+    \u0437\u0434\u043E\u0440\u043E\u0432\u044C\u044F \u043D\u0430 85%"
+  bonusSprite: {fileID: 21300000, guid: ad52993ed2e4a744ba42a37a1227221a, type: 3}
   bonusPercent: 85
   bonusType: 0
   bonusLevel: 4

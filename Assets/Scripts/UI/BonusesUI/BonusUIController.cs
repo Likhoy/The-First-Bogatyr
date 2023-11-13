@@ -33,6 +33,7 @@ public class BonusUIController : MonoBehaviour
             bonusButtons[i].image.overrideSprite = randomBonuses[i].bonusSprite;
         }
 
+        Time.timeScale = 0f;
         bonusPanel.SetActive(true);
     }
 
@@ -41,9 +42,10 @@ public class BonusUIController : MonoBehaviour
     {
         BonusDetailsSO bonusDetails = randomBonuses[index];
         BonusHandler.ApplyBonus(bonusDetails);
-        Debug.Log("Activated bonus: " + bonusDetails.bonusName);
+        //Debug.Log("Activated bonus: " + bonusDetails.bonusName);
 
         bonusPanel.SetActive(false);
+        Time.timeScale = 1f;
     }
 
     public void OnButtonHover(int index)
@@ -51,7 +53,7 @@ public class BonusUIController : MonoBehaviour
         bonusDescription.SetActive(true);
 
         BonusDetailsSO bonusDetails = randomBonuses[index];
-        bonusDescription.GetComponentInChildren<TMP_Text>().text = bonusDetails.bonusName;
+        bonusDescription.GetComponentInChildren<TMP_Text>().text = bonusDetails.bonusName + "\n" + bonusDetails.bonusDescription;
     }
 
     public void OnButtonHoverExit()
