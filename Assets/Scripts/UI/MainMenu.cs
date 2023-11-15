@@ -25,7 +25,7 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
-        allButtons = new GameObject[4] { continueButton, newGameButton, settingsButton, exitButton };
+        allButtons = new GameObject[5] { continueButton, newGameButton, endlessModeGameButton, settingsButton, exitButton };
 
         dialogSystemController.transform.GetChild(0).GetChild(2).gameObject.SetActive(false);
         dialogSystemController.transform.GetChild(0).GetChild(3).gameObject.SetActive(false);
