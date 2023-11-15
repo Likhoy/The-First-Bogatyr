@@ -11,6 +11,8 @@ public abstract class Protection : IRollBackable, IComparable<Protection>
 
     protected BonusLevel protectionLevel;
 
+    protected int durability;
+
     public abstract void ApplyEffect(ref int damage);
 
     public static void AddProtection<T>(Health characterHealth, PowerBonusDetailsSO bonusDetails) where T : Protection, new()
@@ -30,6 +32,7 @@ public abstract class Protection : IRollBackable, IComparable<Protection>
             newProtection.totalEffectPercent = bonusDetails.bonusPercent;
             newProtection.protectionLevel = bonusDetails.bonusLevel;
             newProtection.parentHealthReference = characterHealth;
+            newProtection.durability = bonusDetails.durability;
 
             characterHealth.currentProtections.AddSorted(newProtection);
         }
