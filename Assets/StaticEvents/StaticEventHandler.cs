@@ -8,6 +8,18 @@ public static class StaticEventHandler
     {
         OnWaveFinished?.Invoke(new WaveFinishedEventArgs() { waveNumber = waveNumber });
     }
+
+    public static event Action<WaveLaunchedEventArgs> OnWaveLaunched;
+
+    public static void CallWaveLaunchedEvent(int waveNumber)
+    {
+        OnWaveLaunched?.Invoke(new WaveLaunchedEventArgs() { waveNumber = waveNumber });
+    }
+}
+
+public class WaveLaunchedEventArgs
+{
+    public int waveNumber;
 }
 
 public class WaveFinishedEventArgs
