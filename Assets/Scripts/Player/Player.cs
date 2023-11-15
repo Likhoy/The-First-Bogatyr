@@ -158,13 +158,16 @@ public class Player : MonoBehaviour
         Weapon weapon;
         bool isWeaponRanged = false;
         if (weaponDetails is MeleeWeaponDetailsSO meleeWeaponDetails)
-            weapon = new MeleeWeapon() { weaponDetails = meleeWeaponDetails };
+            weapon = new MeleeWeapon() { weaponDetails = meleeWeaponDetails, weaponCurrentMinDamage = weaponDetails.GetWeaponMinDamage(),
+                                            weaponCurrentMaxDamage = weaponDetails.GetWeaponMaxDamage()};
         else
         {
             RangedWeaponDetailsSO rangedWeaponDetails = weaponDetails as RangedWeaponDetailsSO;
 
             int weaponRemainingAmmo = Mathf.Clamp(weaponAmmoAmount, 0, rangedWeaponDetails.weaponAmmoCapacity);
-            weapon = new RangedWeapon() { weaponDetails = rangedWeaponDetails, 
+            weapon = new RangedWeapon() { weaponDetails = rangedWeaponDetails,
+                weaponCurrentMinDamage = weaponDetails.GetWeaponMinDamage(),
+                weaponCurrentMaxDamage = weaponDetails.GetWeaponMaxDamage(),
                 weaponRemainingAmmo = weaponRemainingAmmo,
                 weaponClipRemainingAmmo = weaponRemainingAmmo < rangedWeaponDetails.weaponClipAmmoCapacity || rangedWeaponDetails.hasInfiniteClipCapacity ? 
                 weaponRemainingAmmo : rangedWeaponDetails.weaponClipAmmoCapacity };

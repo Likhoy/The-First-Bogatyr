@@ -14,4 +14,8 @@ public abstract class WeaponDetailsSO : ScriptableObject
     [Tooltip("The sprite for the weapon - the sprite should have the 'generate physics shape' option selected ")]
     #endregion Tooltip
     public Sprite weaponSprite;
+
+    public abstract int GetWeaponMinDamage();
+
+    public abstract int GetWeaponMaxDamage();
 }
