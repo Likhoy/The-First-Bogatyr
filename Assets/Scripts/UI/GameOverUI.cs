@@ -7,27 +7,33 @@ using UnityEngine.SceneManagement;
 
 public class GameOverUI : MonoBehaviour
 {
-    //public GameObject panel;
-    //public TMP_Text statisticsText;
+    public GameObject panel;
+    public TMP_Text nameText;
+    public TMP_Text statisticsText;
 
-    //private void OnEnable()
-    //{
-    //    GameManager.Instance.GetPlayer().destroyedEvent.OnDestroyed += ShowGameOverPanel;
-    //}
-  
-    //private void OnDisable()
-    //{
-    //    GameManager.Instance.GetPlayer().destroyedEvent.OnDestroyed -= ShowGameOverPanel;
-    //}
+    private void OnEnable()
+    {
+        StaticEventHandler.OnWaveFinished += ShowGameOverPanel;
+    }  
 
-    //private void ShowGameOverPanel(DestroyedEvent @event, DestroyedEventArgs args)
-    //{
-    //    Time.timeScale = 0f;
+    private void OnDisable()
+    {
+        StaticEventHandler.OnWaveFinished -= ShowGameOverPanel;
+    }
 
-    //    panel.SetActive(true);
+    private void ShowGameOverPanel(WaveFinishedEventArgs args)
+    {
+        if(args.waveNumber == 3)
+        {
+            Time.timeScale = 0f;
 
-    //    statisticsText.text = "Вы упорно сражались, но злые силы победили";
-    //}
+            panel.SetActive(true);
+
+            nameText.text = "Победа";
+            statisticsText.text = "Вы победили всех монстров";
+        }
+        
+    }
 
     public void LoadMenu()
     {
