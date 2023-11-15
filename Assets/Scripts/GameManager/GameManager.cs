@@ -10,12 +10,6 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class GameManager : SingletonMonobehaviour<GameManager>
 {
-    #region Header GAMEOBJECT REFERENCES
-    [Space(10)]
-    [Header("GAMEOBJECT REFERENCES")]
-    #endregion Header GAMEOBJECT REFERENCES
-
-    [SerializeField] private DialogueSystemController dialogueSystemController;
 
     #region Tooltip
     [Tooltip("Populate in the order of scenes appearing in the game")]
@@ -64,10 +58,10 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     private void SetQuestUIActive()
     {
-        dialogueSystemController.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
-        dialogueSystemController.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
-        dialogueSystemController.transform.GetChild(0).GetChild(3).gameObject.SetActive(true);
-        dialogueSystemController.transform.GetChild(1).gameObject.SetActive(true);
+        DialogueManager.Instance.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
+        DialogueManager.Instance.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
+        DialogueManager.Instance.transform.GetChild(0).GetChild(3).gameObject.SetActive(true);
+        DialogueManager.Instance.transform.GetChild(1).gameObject.SetActive(true);
     }
 
     private void StartMainStoryLine()
@@ -97,7 +91,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     public void LetShowSceneTransitionImage()
     {
-        dialogueSystemController.GetComponent<CustomSceneTransitionManager>().areScenesCorrect = true;
+        DialogueManager.Instance.GetComponent<CustomSceneTransitionManager>().areScenesCorrect = true;
     }
 
     public void GiveWeaponToPlayer(string weaponName, double weaponAmmoAmount)
@@ -125,9 +119,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     private void StartEndlessMode()
     {
-        // for testing endless mode
-        Destroy(dialogueSystemController.gameObject);
-
+        Destroy(GetPlayer().GetComponent<BarkOnIdle>()); // for no errors
         gameState = GameState.EndlessMode;
         TryLaunchNextWave();
     }
