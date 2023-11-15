@@ -43,8 +43,8 @@ public static class ItemEffects
 
         if (damageEffectCount == 1)
         {
-            (player.activeWeapon.GetCurrentWeapon() as MeleeWeapon).weaponDetails.weaponMinDamage *= 2;
-            (player.activeWeapon.GetCurrentWeapon() as MeleeWeapon).weaponDetails.weaponMaxDamage *= 2;
+            player.activeWeapon.GetCurrentWeapon().weaponCurrentMinDamage *= 2;
+            player.activeWeapon.GetCurrentWeapon().weaponCurrentMaxDamage *= 2;
         }
 
         while (strengthTimer > 0f)
@@ -54,8 +54,8 @@ public static class ItemEffects
         }
         if (damageEffectCount == 1)
         {
-            (player.activeWeapon.GetCurrentWeapon() as MeleeWeapon).weaponDetails.weaponMinDamage /= 2;
-            (player.activeWeapon.GetCurrentWeapon() as MeleeWeapon).weaponDetails.weaponMaxDamage /= 2;
+            player.activeWeapon.GetCurrentWeapon().weaponCurrentMinDamage /= 2;
+            player.activeWeapon.GetCurrentWeapon().weaponCurrentMaxDamage /= 2;
         }
         if (damageEffectCount == 1)
             effectImage.color = new Color(0, 0, 0, 0);

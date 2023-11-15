@@ -7,6 +7,10 @@ public static class BonusHandler
     {
         WaveDetailsSO currentWaveDetails = GameManager.Instance.allWavesDetails[waveNumber - 1];
 
+        // if no bonuses
+        if (currentWaveDetails.possibleBonuses.Count == 0)
+            return null;
+
         System.Random r = new System.Random();
         int[] bonusesNums = Enumerable.Range(0, currentWaveDetails.possibleBonuses.Count - 1).ToArray();
         r.Shuffle(bonusesNums);

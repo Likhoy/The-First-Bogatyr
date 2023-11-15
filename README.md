@@ -1,3 +1,5 @@
+<img width="564" alt="image" src="https://github.com/Apetrosia/The-First-Bogatyr/assets/58879656/5d6d45cf-553d-4cf4-b611-4ecbf94ec350">
+
 # Первый Богатырь
 
 ## Участники
