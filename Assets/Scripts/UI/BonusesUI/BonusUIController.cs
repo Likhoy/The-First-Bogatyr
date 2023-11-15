@@ -26,6 +26,9 @@ public class BonusUIController : MonoBehaviour
     {
         randomBonuses = BonusHandler.GetRandomBonusesForWave(obj.waveNumber);
 
+        if (randomBonuses == null)
+            return;
+
         for (int i = 0; i < bonusButtons.Length; i++)
         {
             int index = i;
