@@ -14,6 +14,7 @@ public class Ammo : MonoBehaviour, IFireable
     private float fireDirectionAngle;
     private SpriteRenderer spriteRenderer;
     private AmmoDetailsSO ammoDetails;
+    private RangedWeapon currentWeaponRef;
     private float ammoChargeTimer;
     private float ammoGettingVisibleTimer;
     private bool isAmmoVisible = true;
@@ -99,35 +100,12 @@ public class Ammo : MonoBehaviour, IFireable
     {
         Health health = collision.GetComponent<Health>();
 
-        bool enemyHit = false;
-
         if (health != null)
         {
             // Set isColliding to prevent ammo dealing damage multiple times
             isColliding = true;
 
-            health.TakeDamage(ammoDetails.GetAmmoDamage());
-
-            // Enemy hit
-            if (health.enemy != null)
-            {
-                enemyHit = true;
-            }
-        }
-
-        // If player ammo then update multiplier
-        if (ammoDetails.isPlayerAmmo)
-        {
-            if (enemyHit)
-            {
-                // multiplier
-                // StaticEventHandler.CallMultiplierEvent(true);
-            }
-            else
-            {
-                // no multiplier
-                // StaticEventHandler.CallMultiplierEvent(false);
-            }
+            health.TakeDamage(currentWeaponRef.GetWeaponDamage()); // TODO: think about this method
         }
 
     }
@@ -143,6 +121,8 @@ public class Ammo : MonoBehaviour, IFireable
         #region Ammo
 
         this.ammoDetails = ammoDetails;
+
+        currentWeaponRef = shooter.GetComponent<ActiveWeapon>().GetCurrentWeapon() as RangedWeapon;
 
         this.shooter = shooter;
 
