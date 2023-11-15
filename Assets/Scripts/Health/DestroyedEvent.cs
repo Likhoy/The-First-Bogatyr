@@ -6,15 +6,21 @@ public class DestroyedEvent : MonoBehaviour
 {
     public event Action<DestroyedEvent, DestroyedEventArgs> OnDestroyed;
 
-    public void CallDestroyedEvent(bool playerDied, int points)
+    public void CallDestroyedEvent(bool playerDied, int exp)
     {
-        OnDestroyed?.Invoke(this, new DestroyedEventArgs() { playerDied = playerDied });
+        OnDestroyed?.Invoke(
+            this, 
+            new DestroyedEventArgs()
+            {
+                playerDied = playerDied,
+                experience = exp
+            });
     }
 }
 
 public class DestroyedEventArgs : EventArgs
 {
     public bool playerDied;
-    // public int points; here goes something given for killing enemy
+    public int experience; // here goes something given for killing enemy
 }
 
