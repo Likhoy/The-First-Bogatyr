@@ -120,8 +120,14 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private void StartEndlessMode()
     {
         Destroy(GetPlayer().GetComponent<BarkOnIdle>()); // for no errors
+        Invoke("DisableDialogueManager", 1);
         gameState = GameState.EndlessMode;
         TryLaunchNextWave();
+    }
+
+    private void DisableDialogueManager()
+    {
+        DialogueManager.Instance.gameObject.SetActive(false);
     }
 
     public int GetCurrentWaveNumber()
