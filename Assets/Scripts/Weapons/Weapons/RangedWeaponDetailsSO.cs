@@ -60,6 +60,16 @@ public class RangedWeaponDetailsSO : WeaponDetailsSO
     #endregion Tooltip
     public float weaponReloadTime = 0f;
 
+    public override int GetWeaponMinDamage()
+    {
+        return weaponCurrentAmmo.ammoMinDamage;
+    }
+
+    public override int GetWeaponMaxDamage()
+    {
+        return weaponCurrentAmmo.ammoMaxDamage;
+    }
+
     #region Validation
 #if UNITY_EDITOR
 

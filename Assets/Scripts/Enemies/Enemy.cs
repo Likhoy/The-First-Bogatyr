@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 #region REQUIRE COMPONENTS
 [RequireComponent(typeof(HealthEvent))]
-[RequireComponent(typeof(Health))]
+[RequireComponent(typeof(EnemyHealth))]
 [RequireComponent(typeof(FireWeaponEvent))]
 [RequireComponent(typeof(DestroyedEvent))]
 [RequireComponent(typeof(Destroyed))]
@@ -34,7 +34,7 @@ public class Enemy : MonoBehaviour
 {
     [HideInInspector] public EnemyDetailsSO enemyDetails;
     [HideInInspector] public HealthEvent healthEvent;
-    private Health health;
+    private EnemyHealth health;
     //[HideInInspector] public AimWeaponEvent aimWeaponEvent;
     [HideInInspector] public FireWeaponEvent fireWeaponEvent;
     private FireWeapon fireWeapon;
@@ -72,7 +72,7 @@ public class Enemy : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         audioEffects = GameObject.Find("AudioEffects").GetComponent<AudioSource>();
         healthEvent = GetComponent<HealthEvent>();
-        health = GetComponent<Health>();
+        health = GetComponent<EnemyHealth>();
         //aimWeaponEvent = GetComponent<AimWeaponEvent>();
         fireWeaponEvent = GetComponent<FireWeaponEvent>();
         fireWeapon = GetComponent<FireWeapon>();
@@ -143,7 +143,7 @@ public class Enemy : MonoBehaviour
     private void EnemyDestroyed()
     {
         DestroyedEvent destroyedEvent = GetComponent<DestroyedEvent>();
-        destroyedEvent.CallDestroyedEvent(false, health.GetStartingHealth());
+        destroyedEvent.CallDestroyedEvent(false, enemyDetails.experienceDrop);
 
         if (enemyDetails.moneyReward > 0 && SceneManager.GetActiveScene().name != GameManager.Instance.allLocationsDetails[2].sceneName)
         {
@@ -218,15 +218,26 @@ public class Enemy : MonoBehaviour
         // Process if enemy has a weapon
         if (enemyDetails.enemyRangedWeapon != null)
         {
-            RangedWeapon weapon = new RangedWeapon() { weaponDetails = enemyDetails.enemyRangedWeapon, weaponReloadTimer = 0f, weaponClipRemainingAmmo = enemyDetails.enemyRangedWeapon.weaponClipAmmoCapacity, weaponRemainingAmmo = enemyDetails.enemyRangedWeapon.weaponAmmoCapacity, isWeaponReloading = false };
+            RangedWeapon weapon = new RangedWeapon() { weaponDetails = enemyDetails.enemyRangedWeapon, 
+                weaponCurrentMinDamage = enemyDetails.enemyRangedWeapon.GetWeaponMinDamage(),
+                weaponCurrentMaxDamage = enemyDetails.enemyRangedWeapon.GetWeaponMaxDamage(),
+                weaponReloadTimer = 0f, 
+                weaponClipRemainingAmmo = enemyDetails.enemyRangedWeapon.weaponClipAmmoCapacity, 
+                weaponRemainingAmmo = enemyDetails.enemyRangedWeapon.weaponAmmoCapacity, 
+                isWeaponReloading = false };
 
             // Set weapon for enemy
             setActiveWeaponEvent.CallSetActiveWeaponEvent(weapon, true);
             RangedWeapon = weapon;
         }
+        
         if (enemyDetails.enemyMeleeWeapon != null)
         {
-            MeleeWeapon = new MeleeWeapon() { weaponDetails = enemyDetails.enemyMeleeWeapon, weaponListPosition = 1 };
+            MeleeWeapon = new MeleeWeapon() { weaponDetails = enemyDetails.enemyMeleeWeapon,
+                weaponCurrentMinDamage = enemyDetails.enemyMeleeWeapon.GetWeaponMinDamage(),
+                weaponCurrentMaxDamage = enemyDetails.enemyMeleeWeapon.GetWeaponMaxDamage(),
+                weaponListPosition = 1 };
+            
             if (activeWeapon.GetCurrentWeapon() == null)
                 setActiveWeaponEvent.CallSetActiveWeaponEvent(MeleeWeapon, false);
         }

@@ -139,11 +139,19 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
         // reduce current enemy count
         currentEnemyCount--;
 
+        // add player experience
+        var player = GameManager.Instance.GetPlayer();
+        player.playerResources.AddExperience(destroyedEventArgs.experience);
+        
+        
         if (currentEnemyCount <= 0)
         {
 
             if (GameManager.Instance.gameState == GameState.EndlessMode)
             {
+                // wave finished
+                StaticEventHandler.CallWaveFinishedEvent(GameManager.Instance.GetCurrentWaveNumber());
+                // launch next if possible
                 GameManager.Instance.TryLaunchNextWave();
             }
                 

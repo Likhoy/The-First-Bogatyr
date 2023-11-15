@@ -264,7 +264,6 @@ GameObject:
   - component: {fileID: 3688367546688098190}
   - component: {fileID: 4978338112912550753}
   - component: {fileID: 7058569525465512800}
-  - component: {fileID: 903016447245790926}
   - component: {fileID: 393971044450647451}
   - component: {fileID: 2990024150162726066}
   - component: {fileID: 6004049457526313521}
@@ -294,6 +293,7 @@ GameObject:
   - component: {fileID: 5157490540917725417}
   - component: {fileID: -8038907786833961648}
   - component: {fileID: 4890622985833527882}
+  - component: {fileID: 309556796147259791}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -547,22 +547,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fc45f8cc11a0d4781a1718159a3575, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &903016447245790926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6461650756046700630}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b94e09870caf5fc4ba9b80a68cf80c08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthBar: {fileID: 0}
-  currentHealth: 0
-  isDamageable: 1
-  enemy: {fileID: 0}
 --- !u!114 &393971044450647451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1244,6 +1228,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &309556796147259791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6461650756046700630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d257c9a3834a9ab45bf7151f583e0511, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 0
+  healthEvent: {fileID: 7058569525465512800}
+  isDamageable: 1
+  currentProtections: []
 --- !u!1 &7890496247401995338
 GameObject:
   m_ObjectHideFlags: 0
