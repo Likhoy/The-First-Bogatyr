@@ -11,6 +11,10 @@ public abstract class BonusDetailsSO : ScriptableObject
     #endregion Tooltip
     public string bonusName;
     #region Tooltip
+    [Tooltip("Bonus description")]
+    #endregion Tooltip
+    public string bonusDescription;
+    #region Tooltip
     [Tooltip("The sprite for the bonus")]
     #endregion Tooltip
     public Sprite bonusSprite;
