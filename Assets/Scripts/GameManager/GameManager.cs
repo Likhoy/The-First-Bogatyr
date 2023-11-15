@@ -4,6 +4,7 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEngine.Rendering.DebugUI;
 
 [DisallowMultipleComponent]
 
@@ -221,7 +222,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
             // TODO: else pause game and show statistics instead of this
             else
             {
-                SceneManager.LoadScene(Settings.menuSceneName);
+                GameObject.FindGameObjectWithTag("GameOverPanel").transform.Find("Panel").gameObject.SetActive(true);
+                Time.timeScale = 0f;
             }
         }
     }
