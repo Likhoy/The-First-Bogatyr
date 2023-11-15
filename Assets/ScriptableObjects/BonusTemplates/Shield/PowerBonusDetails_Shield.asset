@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d71c76811d7982048b078e7f84f59aa3, type: 3}
   m_Name: PowerBonusDetails_Shield
   m_EditorClassIdentifier: 
-  bonusName: Leather Armour
-  bonusSprite: {fileID: 0}
+  bonusName: "\u0411\u0440\u043E\u043D\u044F"
+  bonusDescription: "\u0423\u043C\u0435\u043D\u044C\u0448\u0430\u0435\u0442 \u043F\u043E\u043B\u0443\u0447\u0430\u0435\u043C\u044B\u0439
+    \u0443\u0440\u043E\u043D \u043D\u0430 30%"
+  bonusSprite: {fileID: 21300000, guid: e7e6d9815847bff46bd93a0423f9ec47, type: 3}
   bonusPercent: 30
   bonusType: 1
   bonusLevel: 1

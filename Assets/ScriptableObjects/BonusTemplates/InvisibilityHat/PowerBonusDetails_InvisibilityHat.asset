@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d71c76811d7982048b078e7f84f59aa3, type: 3}
   m_Name: PowerBonusDetails_InvisibilityHat
   m_EditorClassIdentifier: 
-  bonusName: Invisibility hat
-  bonusSprite: {fileID: 0}
+  bonusName: "\u0428\u0430\u043F\u043A\u0430-\u043D\u0435\u0432\u0438\u0434\u0438\u043C\u043A\u0430"
+  bonusDescription: "\u0414\u0430\u0435\u0442 20% \u0448\u0430\u043D\u0441 \u043D\u0435
+    \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u044C \u0443\u0440\u043E\u043D"
+  bonusSprite: {fileID: 21300000, guid: f1bf57c035624f942af3e4fa0fc527a0, type: 3}
   bonusPercent: 20
   bonusType: 2
   bonusLevel: 1
