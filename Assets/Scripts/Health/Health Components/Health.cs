@@ -18,6 +18,8 @@ public class Health : MonoBehaviour
 
     [HideInInspector] public bool isDamageable = true;
     [HideInInspector] public List<Protection> currentProtections = new List<Protection>();
+    // list of expired protections
+    [HideInInspector] public List<Protection> protectionsToDelete = new List<Protection>();
 
     private void Awake()
     {
@@ -56,13 +58,16 @@ public class Health : MonoBehaviour
 
     private int ProcessRawDamage(int rawDamage)
     {
+        protectionsToDelete.ForEach(protection => protection.Rollback());
+        protectionsToDelete.Clear();
+        
         foreach (Protection protection in currentProtections)
         {
             protection.ApplyEffect(ref rawDamage);
             if (rawDamage <= 0)
                 return 0;
-        }  
-
+        }
+        
         return rawDamage;
     }
 

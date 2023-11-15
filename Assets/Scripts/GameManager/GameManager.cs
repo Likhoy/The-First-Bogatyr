@@ -184,7 +184,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     /// </summary>
     private Vector2Int[] ChooseRandomSpawnPositions(int positionsNumber)
     {
-        int[] possibleSpawnPositionsNums = Enumerable.Range(0, Settings.enemySpawnPossiblePositions.Length - 1).ToArray();
+        int[] possibleSpawnPositionsNums = Enumerable.Range(0, Settings.enemySpawnPossiblePositions.Length).ToArray();
         System.Random r = new System.Random();
         r.Shuffle(possibleSpawnPositionsNums);
         
