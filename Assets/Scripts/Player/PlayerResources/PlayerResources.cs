@@ -1,5 +1,3 @@
-using PixelCrushers.DialogueSystem;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(MoneyIncreasedEvent))]
