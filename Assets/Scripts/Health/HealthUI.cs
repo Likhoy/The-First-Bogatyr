@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class HealthUI : MonoBehaviour
 {
     [SerializeField] private Image healthBar;
+    [SerializeField] private TMP_Text healthText;
 
     private void Awake()
     {
@@ -29,6 +30,7 @@ public class HealthUI : MonoBehaviour
 
     private void SetHealthUI(HealthEventArgs healthEventArgs)
     {
-        healthBar.fillAmount = healthEventArgs.healthAmount / 100f;
+        healthBar.fillAmount = healthEventArgs.healthPercent;
+        healthText.text = healthEventArgs.healthAmount.ToString() + "/" + healthEventArgs.maxHealthAmount.ToString();
     }
 }

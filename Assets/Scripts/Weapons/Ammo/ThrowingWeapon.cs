@@ -5,6 +5,7 @@ public class ThrowingWeapon : MonoBehaviour, IFireable
 {
 
     private AmmoDetailsSO ammoDetails;
+    private RangedWeapon currentWeaponRef;
     private SpriteRenderer spriteRenderer;
     private float ammoSpeed;
 
@@ -115,7 +116,7 @@ public class ThrowingWeapon : MonoBehaviour, IFireable
             // Set isColliding to prevent ammo dealing damage multiple times
             isColliding = true;
 
-            health.TakeDamage(ammoDetails.GetAmmoDamage());
+            health.TakeDamage(currentWeaponRef.GetWeaponDamage());
         }
     }
 
@@ -124,6 +125,8 @@ public class ThrowingWeapon : MonoBehaviour, IFireable
         this.ammoDetails = ammoDetails;
 
         this.shooter = shooter;
+
+        currentWeaponRef = shooter.GetComponent<ActiveWeapon>().GetCurrentWeapon() as RangedWeapon;
 
         this.ammoSpeed = ammoSpeed;
 

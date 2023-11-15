@@ -7,8 +7,12 @@ public static class BonusHandler
     {
         WaveDetailsSO currentWaveDetails = GameManager.Instance.allWavesDetails[waveNumber - 1];
 
+        // if no bonuses
+        if (currentWaveDetails.possibleBonuses.Count == 0)
+            return null;
+
         System.Random r = new System.Random();
-        int[] bonusesNums = Enumerable.Range(0, currentWaveDetails.possibleBonuses.Count - 1).ToArray();
+        int[] bonusesNums = Enumerable.Range(0, currentWaveDetails.possibleBonuses.Count).ToArray();
         r.Shuffle(bonusesNums);
 
         var chosenBonusDetails = new List<BonusDetailsSO>();
@@ -19,51 +23,63 @@ public static class BonusHandler
         return chosenBonusDetails;
     }
 
-    public static bool ApplyBonus(BonusDetailsSO bonusDetails)
+    public static void ApplyBonus(BonusDetailsSO bonusDetails)
     {
         switch (bonusDetails)
         {
             case ItemBonusDetailsSO itemBonusDetails: 
-                return ApplyItemBonus(itemBonusDetails);
+                ApplyItemBonus(itemBonusDetails);
+                break;
 
             case PowerBonusDetailsSO powerBonusDetails: 
-                return ApplyPowerBonus(powerBonusDetails);
+                ApplyPowerBonus(powerBonusDetails);
+                break;
 
             case ResurrectorBonusDetailsSO resurrectorBonusDetails:
-                return ApplyResurrectorBonus(resurrectorBonusDetails);
-
-            default: return false;
+                ApplyResurrectorBonus(resurrectorBonusDetails);
+                break;
+            
+            default: break;
         }
     }
 
-    private static bool ApplyResurrectorBonus(ResurrectorBonusDetailsSO bonusDetails)
+    private static void ApplyResurrectorBonus(ResurrectorBonusDetailsSO bonusDetails)
     {
-        return GameManager.Instance.GetPlayer().health.AddExtraLives(bonusDetails.livesReserve);
+        GameManager.Instance.GetPlayer().health.AddExtraLives(bonusDetails.livesReserve);
     }
 
-    private static bool ApplyPowerBonus(PowerBonusDetailsSO bonusDetails)
+    private static void ApplyPowerBonus(PowerBonusDetailsSO bonusDetails)
     {
         switch (bonusDetails.bonusType)
         {
-            case PowerBonusType.Armor:
-                return GameManager.Instance.GetPlayer().health.AddArmorProtectionPercent(bonusDetails.bonusPercent);
-            
+            case PowerBonusType.Armour:
+                Protection.AddProtection<Armour>(GameManager.Instance.GetPlayer().health, 
+                    bonusDetails);
+                break;
+
+            case PowerBonusType.VirtualArmour:
+                Protection.AddProtection<VirtualArmour>(GameManager.Instance.GetPlayer().health,
+                    bonusDetails);
+                break;
+
             case PowerBonusType.DamageReflector:
-                return GameManager.Instance.GetPlayer().health.AddChanceToAvoidDamage(bonusDetails.bonusPercent);
+                Protection.AddProtection<DamageReflector>(GameManager.Instance.GetPlayer().health,
+                    bonusDetails);
+                break;
 
             case PowerBonusType.HealthBoost:
-                return GameManager.Instance.GetPlayer().health.IncreaseMaxHealth(bonusDetails.bonusPercent);
+                GameManager.Instance.GetPlayer().health.IncreaseMaxHealth(bonusDetails.bonusPercent);
+                break;
 
-            default: return false;
+            default: break;
         }
     }
 
-    private static bool ApplyItemBonus(ItemBonusDetailsSO bonusDetails)
+    private static void ApplyItemBonus(ItemBonusDetailsSO bonusDetails)
     {
         for (int i = 0; i < bonusDetails.itemNumber; i++)
         {
             GameManager.Instance.GiveItem(bonusDetails.itemGiven);
         }
-        return true;
     }
 }
