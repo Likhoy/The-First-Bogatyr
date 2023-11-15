@@ -3,7 +3,6 @@ using PixelCrushers;
 using PixelCrushers.DialogueSystem;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using PixelCrushers.DialogueSystem.Wrappers;
 
 public class MainMenu : MonoBehaviour
 {
@@ -49,7 +48,6 @@ public class MainMenu : MonoBehaviour
     /// </summary>
     public void StartEndlessModePressed()
     {
-        DialogueManager.Instance.gameObject.SetActive(false);
         DeactivateButtonsAfterClick(endlessModeGameButton);
 
         GameManager.Instance.PrepareEndlessMode();
