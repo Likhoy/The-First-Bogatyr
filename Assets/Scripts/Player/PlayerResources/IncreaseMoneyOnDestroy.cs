@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class IncreaseMoneyOnDestroy : MonoBehaviour
@@ -10,6 +8,5 @@ public class IncreaseMoneyOnDestroy : MonoBehaviour
     {
         Player player = GameManager.Instance.GetPlayer();
         player.playerResources.AddMoney(moneyAmount);
-        player.playerResources.moneyIncreasedEvent.CallMoneyIncreasedEvent(player.GetPlayerMoney());
     }
 }

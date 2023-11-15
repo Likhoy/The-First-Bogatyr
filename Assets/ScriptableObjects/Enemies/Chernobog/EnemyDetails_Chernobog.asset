@@ -33,6 +33,8 @@ MonoBehaviour:
   isHealthBarDisplayed: 1
   moneyReward: 0
   moneyDropRadius: 5
+  baseHealthModifier: 0
+  baseDamageModifier: 0
   isBoss: 1
   spawningImmediately: 1
   littleEnemySpawnDatas:
@@ -41,3 +43,4 @@ MonoBehaviour:
   - enemyDetails: {fileID: 11400000, guid: 65f5ad3025f99d745878348b70cf71a9, type: 2}
     CountEnemies: 2
   spawnRadius: 12
+  experienceDrop: 100

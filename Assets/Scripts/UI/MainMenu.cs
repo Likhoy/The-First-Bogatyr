@@ -3,10 +3,10 @@ using PixelCrushers;
 using PixelCrushers.DialogueSystem;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using PixelCrushers.DialogueSystem.Wrappers;
 
 public class MainMenu : MonoBehaviour
 {
-    private DialogueSystemController dialogSystemController;
     [SerializeField] private GameObject continueButton;
     [SerializeField] private GameObject newGameButton;
     [SerializeField] private GameObject endlessModeGameButton;
@@ -19,17 +19,17 @@ public class MainMenu : MonoBehaviour
     {
         if (!SaveSystem.HasSavedGameInSlot(1))
             continueButton.SetActive(false);
-        dialogSystemController = FindObjectOfType<DialogueSystemController>();
-        dialogSystemController.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+        DialogueManager.Instance.gameObject.SetActive(true); // might be disabled in endless mode
+        DialogueManager.Instance.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
     }
 
     private void Start()
     {
-        allButtons = new GameObject[4] { continueButton, newGameButton, settingsButton, exitButton };
+        allButtons = new GameObject[5] { continueButton, newGameButton, endlessModeGameButton, settingsButton, exitButton };
 
-        dialogSystemController.transform.GetChild(0).GetChild(2).gameObject.SetActive(false);
-        dialogSystemController.transform.GetChild(0).GetChild(3).gameObject.SetActive(false);
-        dialogSystemController.transform.GetChild(1).gameObject.SetActive(false);
+        DialogueManager.Instance.transform.GetChild(0).GetChild(2).gameObject.SetActive(false);
+        DialogueManager.Instance.transform.GetChild(0).GetChild(3).gameObject.SetActive(false);
+        DialogueManager.Instance.transform.GetChild(1).gameObject.SetActive(false);
     }
 
     public void ContinueGamePressed()
@@ -38,10 +38,10 @@ public class MainMenu : MonoBehaviour
 
         SaveSystem.LoadFromSlot(1);
 
-        dialogSystemController.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
-        dialogSystemController.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
-        dialogSystemController.transform.GetChild(0).GetChild(3).gameObject.SetActive(true);
-        dialogSystemController.transform.GetChild(1).gameObject.SetActive(true);
+        DialogueManager.Instance.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
+        DialogueManager.Instance.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
+        DialogueManager.Instance.transform.GetChild(0).GetChild(3).gameObject.SetActive(true);
+        DialogueManager.Instance.transform.GetChild(1).gameObject.SetActive(true);
     }
 
     /// <summary>
@@ -49,10 +49,12 @@ public class MainMenu : MonoBehaviour
     /// </summary>
     public void StartEndlessModePressed()
     {
+        DialogueManager.Instance.gameObject.SetActive(false);
         DeactivateButtonsAfterClick(endlessModeGameButton);
 
         GameManager.Instance.PrepareEndlessMode();
-        SaveSystem.RestartGame(Settings.mainSceneName); 
+        //SaveSystem.RestartGame(Settings.mainSceneName); 
+        SceneManager.LoadScene(Settings.mainSceneName);
     }
 
     /// <summary>
@@ -66,7 +68,7 @@ public class MainMenu : MonoBehaviour
 
         GameManager.Instance.PrepareMainStoryLine(); // preparations of game states are obligatory
         SaveSystem.RestartGame(Settings.mainSceneName);
-        dialogSystemController.ResetDatabase();
+        DialogueManager.Instance.ResetDatabase();
     }
 
     private void DeactivateButtonsAfterClick(GameObject buttonPressed)
