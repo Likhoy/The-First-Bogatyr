@@ -24,20 +24,22 @@ public class BonusUIController : MonoBehaviour
 
     private void ShowBonusPanel(WaveFinishedEventArgs obj)
     {   
-        randomBonuses = BonusHandler.GetRandomBonusesForWave(obj.waveNumber);
-
-        if (randomBonuses == null)
-            return;
-
-        for (int i = 0; i < bonusButtons.Length; i++)
+        if(obj.waveNumber != 3)
         {
-            int index = i;
-            bonusButtons[i].onClick.AddListener(() => ActivateBonus(index));
-            bonusButtons[i].image.overrideSprite = randomBonuses[i].bonusSprite;
-        }
+            randomBonuses = BonusHandler.GetRandomBonusesForWave(obj.waveNumber);
 
+            if (randomBonuses == null)
+                return;
 
-        StartCoroutine(ShowBonusPanelWithDelay());
+            for (int i = 0; i < bonusButtons.Length; i++)
+            {
+                int index = i;
+                bonusButtons[i].onClick.AddListener(() => ActivateBonus(index));
+                bonusButtons[i].image.overrideSprite = randomBonuses[i].bonusSprite;
+            }
+
+            StartCoroutine(ShowBonusPanelWithDelay());
+        }      
     }
 
     private IEnumerator ShowBonusPanelWithDelay()
