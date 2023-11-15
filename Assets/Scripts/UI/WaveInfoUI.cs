@@ -22,7 +22,7 @@ public class WaveInfoUI : MonoBehaviour
     }
 
     private void ShowInfoPanel(WaveLaunchedEventArgs args)
-    {
+    {      
         waveInfoText.text = "Волна номер " + args.waveNumber.ToString();
 
         StartCoroutine(FadeInAndOut());
