@@ -90,7 +90,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         StopAllCoroutines();
         // should be expanded
-        SceneManager.LoadScene(Settings.menuSceneName);
+        // SceneManager.LoadScene(Settings.menuSceneName);
         GetPlayer().destroyedEvent.OnDestroyed -= PlayerDestroyedEvent_OnDestroyed;
     }
 
