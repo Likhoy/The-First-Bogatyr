@@ -90,7 +90,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         StopAllCoroutines();
         // should be expanded
-        SceneManager.LoadScene(Settings.menuSceneName);
+        // SceneManager.LoadScene(Settings.menuSceneName);
         GetPlayer().destroyedEvent.OnDestroyed -= PlayerDestroyedEvent_OnDestroyed;
     }
 
@@ -138,7 +138,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     public void TryLaunchNextWave()
     {
-        if (currentWaveNumber < allWavesDetails.Length - 1)
+        if (currentWaveNumber < allWavesDetails.Length)
         {
             currentWaveNumber++;
             StartCoroutine(LaunchWave(currentWaveNumber));

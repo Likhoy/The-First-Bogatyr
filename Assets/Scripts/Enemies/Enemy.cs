@@ -218,15 +218,26 @@ public class Enemy : MonoBehaviour
         // Process if enemy has a weapon
         if (enemyDetails.enemyRangedWeapon != null)
         {
-            RangedWeapon weapon = new RangedWeapon() { weaponDetails = enemyDetails.enemyRangedWeapon, weaponReloadTimer = 0f, weaponClipRemainingAmmo = enemyDetails.enemyRangedWeapon.weaponClipAmmoCapacity, weaponRemainingAmmo = enemyDetails.enemyRangedWeapon.weaponAmmoCapacity, isWeaponReloading = false };
+            RangedWeapon weapon = new RangedWeapon() { weaponDetails = enemyDetails.enemyRangedWeapon, 
+                weaponCurrentMinDamage = enemyDetails.enemyRangedWeapon.GetWeaponMinDamage(),
+                weaponCurrentMaxDamage = enemyDetails.enemyRangedWeapon.GetWeaponMaxDamage(),
+                weaponReloadTimer = 0f, 
+                weaponClipRemainingAmmo = enemyDetails.enemyRangedWeapon.weaponClipAmmoCapacity, 
+                weaponRemainingAmmo = enemyDetails.enemyRangedWeapon.weaponAmmoCapacity, 
+                isWeaponReloading = false };
 
             // Set weapon for enemy
             setActiveWeaponEvent.CallSetActiveWeaponEvent(weapon, true);
             RangedWeapon = weapon;
         }
+        
         if (enemyDetails.enemyMeleeWeapon != null)
         {
-            MeleeWeapon = new MeleeWeapon() { weaponDetails = enemyDetails.enemyMeleeWeapon, weaponListPosition = 1 };
+            MeleeWeapon = new MeleeWeapon() { weaponDetails = enemyDetails.enemyMeleeWeapon,
+                weaponCurrentMinDamage = enemyDetails.enemyMeleeWeapon.GetWeaponMinDamage(),
+                weaponCurrentMaxDamage = enemyDetails.enemyMeleeWeapon.GetWeaponMaxDamage(),
+                weaponListPosition = 1 };
+            
             if (activeWeapon.GetCurrentWeapon() == null)
                 setActiveWeaponEvent.CallSetActiveWeaponEvent(MeleeWeapon, false);
         }
