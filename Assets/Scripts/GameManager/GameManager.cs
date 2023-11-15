@@ -138,7 +138,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     public void TryLaunchNextWave()
     {
-        if (currentWaveNumber < allWavesDetails.Length - 1)
+        if (currentWaveNumber < allWavesDetails.Length)
         {
             currentWaveNumber++;
             StartCoroutine(LaunchWave(currentWaveNumber));
