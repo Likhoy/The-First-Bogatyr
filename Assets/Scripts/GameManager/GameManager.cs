@@ -4,17 +4,12 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEngine.Rendering.DebugUI;
 
 [DisallowMultipleComponent]
 
 public class GameManager : SingletonMonobehaviour<GameManager>
 {
-    #region Header GAMEOBJECT REFERENCES
-    [Space(10)]
-    [Header("GAMEOBJECT REFERENCES")]
-    #endregion Header GAMEOBJECT REFERENCES
-
-    [SerializeField] private DialogueSystemController dialogueSystemController;
 
     #region Tooltip
     [Tooltip("Populate in the order of scenes appearing in the game")]
@@ -26,7 +21,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     #endregion
     public WaveDetailsSO[] allWavesDetails;
 
-    private int currentWaveNumber = 1;
+    private int currentWaveNumber = 0;
 
     public GameState gameState { get; set; }
 
@@ -34,9 +29,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         // Call base class
         base.Awake();
-
+        Lua.RegisterFunction("GiveItemToPlayer", this, SymbolExtensions.GetMethodInfo(() => GiveItemToPlayer(string.Empty, 0.0)));
         Lua.RegisterFunction("GiveWeaponToPlayer", this, SymbolExtensions.GetMethodInfo(() => GiveWeaponToPlayer(string.Empty, 0.0)));
-        Lua.RegisterFunction("GiveChanceToAvoidDamageToCreature", this, SymbolExtensions.GetMethodInfo(() => GiveChanceToAvoidDamageToCreature(string.Empty, 0.0)));
+        Lua.RegisterFunction("IncreaseChanceToAvoidDamageOfCharacter", this, SymbolExtensions.GetMethodInfo(() => IncreaseChanceToAvoidDamageOfCharacter(string.Empty, 0.0)));
     }
 
     public void PrepareMainStoryLine()
@@ -63,10 +58,10 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     private void SetQuestUIActive()
     {
-        dialogueSystemController.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
-        dialogueSystemController.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
-        dialogueSystemController.transform.GetChild(0).GetChild(3).gameObject.SetActive(true);
-        dialogueSystemController.transform.GetChild(1).gameObject.SetActive(true);
+        DialogueManager.Instance.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
+        DialogueManager.Instance.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
+        DialogueManager.Instance.transform.GetChild(0).GetChild(3).gameObject.SetActive(true);
+        DialogueManager.Instance.transform.GetChild(1).gameObject.SetActive(true);
     }
 
     private void StartMainStoryLine()
@@ -81,21 +76,22 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     private void OnDestroy()
     {
+        Lua.UnregisterFunction("GiveItemToPlayer");
         Lua.UnregisterFunction("GiveWeaponToPlayer");
-        Lua.UnregisterFunction("GiveChanceToAvoidDamageToCreature");
+        Lua.UnregisterFunction("IncreaseChanceToAvoidDamageOfCharacter");
     }
 
     public void PlayerDestroyedEvent_OnDestroyed(DestroyedEvent destroyedEvent, DestroyedEventArgs destroyedEventArgs)
     {
         StopAllCoroutines();
         // should be expanded
-        SceneManager.LoadScene(Settings.menuSceneName);
+        // SceneManager.LoadScene(Settings.menuSceneName);
         GetPlayer().destroyedEvent.OnDestroyed -= PlayerDestroyedEvent_OnDestroyed;
     }
 
     public void LetShowSceneTransitionImage()
     {
-        dialogueSystemController.GetComponent<CustomSceneTransitionManager>().areScenesCorrect = true;
+        DialogueManager.Instance.GetComponent<CustomSceneTransitionManager>().areScenesCorrect = true;
     }
 
     public void GiveWeaponToPlayer(string weaponName, double weaponAmmoAmount)
@@ -109,10 +105,12 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         }
     }
 
-    public void GiveChanceToAvoidDamageToCreature(string creatureTag, double percent)
+    public void IncreaseChanceToAvoidDamageOfCharacter(string creatureTag, double percent)
     {
         if (creatureTag == "Player")
-            GetPlayer().health.AddChanceToAvoidDamage((int)percent);
+        {
+            //Protection.AddProtection<DamageReflector>(GetPlayer().health, (int)percent);
+        }
         else
         {
             // TODO
@@ -121,11 +119,14 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     private void StartEndlessMode()
     {
-        // for testing endless mode
-        Destroy(dialogueSystemController.gameObject);
-
+        Destroy(GetPlayer().GetComponent<BarkOnIdle>()); // for no errors
         gameState = GameState.EndlessMode;
-        StartCoroutine(LaunchWave());
+        TryLaunchNextWave();
+    }
+
+    public int GetCurrentWaveNumber()
+    {
+        return currentWaveNumber;
     }
 
     public void TryLaunchNextWave()
@@ -134,6 +135,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         {
             currentWaveNumber++;
             StartCoroutine(LaunchWave(currentWaveNumber));
+            StaticEventHandler.CallWaveLaunchedEvent(currentWaveNumber);
         }
     }
 
@@ -175,7 +177,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     /// </summary>
     private Vector2Int[] ChooseRandomSpawnPositions(int positionsNumber)
     {
-        int[] possibleSpawnPositionsNums = Enumerable.Range(0, Settings.enemySpawnPossiblePositions.Length - 1).ToArray();
+        int[] possibleSpawnPositionsNums = Enumerable.Range(0, Settings.enemySpawnPossiblePositions.Length).ToArray();
         System.Random r = new System.Random();
         r.Shuffle(possibleSpawnPositionsNums);
         
@@ -213,7 +215,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
             // TODO: else pause game and show statistics instead of this
             else
             {
-                SceneManager.LoadScene(Settings.menuSceneName);
+                GameObject.FindGameObjectWithTag("GameOverPanel").transform.Find("Panel").gameObject.SetActive(true);
+                Time.timeScale = 0f;
             }
         }
     }
@@ -224,6 +227,21 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     public Player GetPlayer()
     {
         return PlayerSpawner.Instance.GetPlayer();
+    }
+
+    // bad realisation - needs refactoring
+    public void GiveItemToPlayer(string itemName, double itemCount)
+    {
+        foreach (GameObject itemPrefab in GameResources.Instance.items)
+        {
+            if (itemPrefab.GetComponent<Item>().itemName == itemName)
+            {
+                for (int i = 0; i < (int)itemCount; i++)
+                {
+                    GiveItem(itemPrefab);
+                }
+            }
+        }
     }
 
     public void GiveItem(GameObject itemPrefab)

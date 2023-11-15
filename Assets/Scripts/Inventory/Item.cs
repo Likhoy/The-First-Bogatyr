@@ -15,7 +15,7 @@ public abstract class Item : MonoBehaviour, IUseable
         2 - weapon/tool
         3 - consumables
     */
-
+    public string itemName;
     public int itemID;
     public bool isStackable = false;
     public bool isDisposable = false;

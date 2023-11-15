@@ -24,7 +24,7 @@ public class DestroyableItem : MonoBehaviour
     private Animator animator;
     private BoxCollider2D boxCollider2D;*/
     private HealthEvent healthEvent;
-    private Health health;
+    private ItemHealth health;
     private ReceiveContactDamage receiveContactDamage;
     private DialogueSystemTrigger dialogueSystemTrigger;
 
@@ -32,7 +32,7 @@ public class DestroyableItem : MonoBehaviour
     {
         dialogueSystemTrigger = GetComponent<DialogueSystemTrigger>();
         healthEvent = GetComponent<HealthEvent>();
-        health = GetComponent<Health>();
+        health = GetComponent<ItemHealth>();
         health.SetStartingHealth(startingHealthAmount);
         //receiveContactDamage = GetComponent<ReceiveContactDamage>();
     }
