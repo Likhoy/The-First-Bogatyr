@@ -1,5 +1,3 @@
-using System;
-using System.Diagnostics;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -55,7 +53,7 @@ public class DealContactDamage : MonoBehaviour
     private void SetContactDamageAmount()
     {
         // Set contact damage amount matching weaponDamage if character is holding a melee weapon
-        contactDamageAmount = weapon?.weaponDetails.GetWeaponDamage() ?? contactDamageAmount;
+        contactDamageAmount = weapon?.GetWeaponDamage() ?? contactDamageAmount;
     }
 
 
