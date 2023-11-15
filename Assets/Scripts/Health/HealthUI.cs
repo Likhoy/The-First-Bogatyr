@@ -30,7 +30,7 @@ public class HealthUI : MonoBehaviour
 
     private void SetHealthUI(HealthEventArgs healthEventArgs)
     {
-        healthBar.fillAmount = healthEventArgs.healthAmount / 100f;
+        healthBar.fillAmount = healthEventArgs.healthPercent;
         healthText.text = healthEventArgs.healthAmount.ToString() + "/" + healthEventArgs.maxHealthAmount.ToString();
     }
 }
