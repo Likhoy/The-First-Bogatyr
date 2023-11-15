@@ -19,13 +19,14 @@ public class MainMenu : MonoBehaviour
         if (!SaveSystem.HasSavedGameInSlot(1))
             continueButton.SetActive(false);
         DialogueManager.Instance.gameObject.SetActive(true); // might be disabled in endless mode
-        DialogueManager.Instance.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+        //DialogueManager.Instance.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
     }
 
     private void Start()
     {
         allButtons = new GameObject[5] { continueButton, newGameButton, endlessModeGameButton, settingsButton, exitButton };
-
+        
+        DialogueManager.Instance.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
         DialogueManager.Instance.transform.GetChild(0).GetChild(2).gameObject.SetActive(false);
         DialogueManager.Instance.transform.GetChild(0).GetChild(3).gameObject.SetActive(false);
         DialogueManager.Instance.transform.GetChild(1).gameObject.SetActive(false);
