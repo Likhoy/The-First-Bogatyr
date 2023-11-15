@@ -55,6 +55,8 @@ public class BonusUIController : MonoBehaviour
         //Debug.Log("Activated bonus: " + bonusDetails.bonusName);
 
         bonusPanel.SetActive(false);
+        bonusDescription.SetActive(false);
+
         Time.timeScale = 1f;
     }
 
