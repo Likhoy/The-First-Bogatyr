@@ -27,7 +27,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     #endregion
     public WaveDetailsSO[] allWavesDetails;
 
-    private int currentWaveNumber = 1;
+    private int currentWaveNumber = 0;
 
     public GameState gameState { get; set; }
 
@@ -129,7 +129,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         Destroy(dialogueSystemController.gameObject);
 
         gameState = GameState.EndlessMode;
-        StartCoroutine(LaunchWave());
+        TryLaunchNextWave();
     }
 
     public int GetCurrentWaveNumber()
@@ -143,6 +143,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         {
             currentWaveNumber++;
             StartCoroutine(LaunchWave(currentWaveNumber));
+            StaticEventHandler.CallWaveLaunchedEvent(currentWaveNumber);
         }
     }
 
