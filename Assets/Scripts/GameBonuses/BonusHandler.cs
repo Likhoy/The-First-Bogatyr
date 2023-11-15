@@ -12,7 +12,7 @@ public static class BonusHandler
             return null;
 
         System.Random r = new System.Random();
-        int[] bonusesNums = Enumerable.Range(0, currentWaveDetails.possibleBonuses.Count - 1).ToArray();
+        int[] bonusesNums = Enumerable.Range(0, currentWaveDetails.possibleBonuses.Count).ToArray();
         r.Shuffle(bonusesNums);
 
         var chosenBonusDetails = new List<BonusDetailsSO>();
