@@ -91,7 +91,10 @@ public class Player : MonoBehaviour
         this.playerDetails = playerDetails;
 
         // Create player starting weapons
-        CreatePlayerStartingWeapon();
+        if (GameManager.Instance.gameState == GameState.EndlessMode)
+        {
+            CreatePlayerStartingWeapon();
+        }
 
         // Set player starting health
         SetPlayerHealth();
