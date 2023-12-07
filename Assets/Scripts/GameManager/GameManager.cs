@@ -109,7 +109,11 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         if (creatureTag == "Player")
         {
-            //Protection.AddProtection<DamageReflector>(GetPlayer().health, (int)percent);
+            PowerBonusDetailsSO bonusDetails = ScriptableObject.CreateInstance(typeof(PowerBonusDetailsSO)) as PowerBonusDetailsSO;
+            bonusDetails.bonusPercent = (int)percent;
+            bonusDetails.bonusType = PowerBonusType.DamageReflector;
+
+            Protection.AddProtection<DamageReflector>(GetPlayer().health, bonusDetails);
         }
         else
         {

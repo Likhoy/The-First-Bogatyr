@@ -104,6 +104,8 @@ public class Player : MonoBehaviour
         healthEvent.OnHealthChanged += HealthEvent_OnHealthChanged2; // for button helper
     }
 
+    
+
     private void OnDisable()
     {
         // Unsubscribe from player health event
@@ -125,7 +127,7 @@ public class Player : MonoBehaviour
 
     private void HealthEvent_OnHealthChanged2(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
     {
-        if (healthEventArgs.healthPercent <= 0.75f)
+        if (healthEventArgs.healthPercent <= 0.75f && healthEventArgs.damageAmount > 0)
         {
             FadingOutText fadingOutText = FindObjectOfType<FadingOutText>();
             if (fadingOutText != null && !GameProgressData.healthHintShown) 
