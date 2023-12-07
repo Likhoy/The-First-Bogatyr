@@ -38,12 +38,9 @@ public class MainMenu : MonoBehaviour
     {
         DeactivateButtonsAfterClick(continueButton);
 
-        SaveSystem.LoadFromSlot(1);
+        GameManager.Instance.PrepareMainStoryLine();
 
-        DialogueManager.Instance.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
-        DialogueManager.Instance.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
-        DialogueManager.Instance.transform.GetChild(0).GetChild(3).gameObject.SetActive(true);
-        DialogueManager.Instance.transform.GetChild(1).gameObject.SetActive(true);
+        SaveSystem.LoadFromSlot(1);
     }
 
     /// <summary>
