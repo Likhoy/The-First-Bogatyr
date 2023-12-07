@@ -120,8 +120,13 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private void StartEndlessMode()
     {
         Destroy(GetPlayer().GetComponent<BarkOnIdle>()); // for no errors
+        // disable button guides
+        Destroy(GameObject.Find("/UI/MainUI/AspectRatioFitter/MainScreenUI/ButtonsHelper"));
+        // disable dialogue manager
         Invoke("DisableDialogueManager", 1);
+        
         gameState = GameState.EndlessMode;
+        currentWaveNumber = 0;
         TryLaunchNextWave();
     }
 

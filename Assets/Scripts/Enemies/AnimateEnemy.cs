@@ -176,7 +176,7 @@ public class AnimateEnemy : MonoBehaviour
     /// </summary>
     private void SetLookAnimationParameters(LookDirection lookDirection)
     {
-        // Set aim direction
+        // Set look direction
         switch (lookDirection)
         {
             case LookDirection.Up:
