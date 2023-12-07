@@ -2070,7 +2070,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53ec2a2fd50fb3f4da010bc0391d255b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueManager: {fileID: 935405465274256625, guid: 21c02c39c5ff12846b9b2b1af0add31e, type: 3}
   continueButton: {fileID: 1231228659}
   newGameButton: {fileID: 572768599}
   endlessModeGameButton: {fileID: 1484750237}
@@ -2504,30 +2503,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5537331503463961373, guid: e017cf295557c1e4681ea5807cb048fd, type: 3}
+      propertyPath: m_restoreStateOnStart
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5537331503463961374, guid: e017cf295557c1e4681ea5807cb048fd, type: 3}
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    - target: {fileID: 5537331503463961375, guid: e017cf295557c1e4681ea5807cb048fd, type: 3}
-      propertyPath: dialogueSystemController
-      value: 
-      objectReference: {fileID: 1469951553}
-    - target: {fileID: 5537331503463961375, guid: e017cf295557c1e4681ea5807cb048fd, type: 3}
-      propertyPath: allWavesDetails.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5537331503463961375, guid: e017cf295557c1e4681ea5807cb048fd, type: 3}
-      propertyPath: allWavesDetails.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: e587c5fc94bc87f4993f2a8084886d68, type: 2}
-    - target: {fileID: 5537331503463961375, guid: e017cf295557c1e4681ea5807cb048fd, type: 3}
-      propertyPath: allWavesDetails.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: 46cec544c5b4d32499060ef983313161, type: 2}
-    - target: {fileID: 5537331503463961375, guid: e017cf295557c1e4681ea5807cb048fd, type: 3}
-      propertyPath: allWavesDetails.Array.data[2]
-      value: 
-      objectReference: {fileID: 11400000, guid: be2615d35a5e87d42abb272057ef7dea, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e017cf295557c1e4681ea5807cb048fd, type: 3}
 --- !u!1 &1462901955 stripped
@@ -2535,17 +2518,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 935405465274256631, guid: 21c02c39c5ff12846b9b2b1af0add31e, type: 3}
   m_PrefabInstance: {fileID: 935405466531631156}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1469951553 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 935405465264602741, guid: 21c02c39c5ff12846b9b2b1af0add31e, type: 3}
-  m_PrefabInstance: {fileID: 935405466531631156}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab8b685e62a9aeb4a9472b30ec2d86d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1484750237
 GameObject:
   m_ObjectHideFlags: 0

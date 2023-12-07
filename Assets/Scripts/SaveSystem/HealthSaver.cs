@@ -30,6 +30,6 @@ public class HealthSaver : Saver
         m_data = data;
         Health health = GetComponent<Health>();
         health.currentHealth = m_data.health;
-        health.healthEvent.CallHealthChangedEvent((float)m_data.health / (float)health.GetMaxHealth(), m_data.health, health.GetMaxHealth(), health.GetMaxHealth() - m_data.health);
+        health.healthEvent.CallHealthChangedEvent((float)m_data.health / (float)health.GetMaxHealth(), m_data.health, health.GetMaxHealth(), 0);
     }
 }
