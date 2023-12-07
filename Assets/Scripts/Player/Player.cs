@@ -197,7 +197,7 @@ public class Player : MonoBehaviour
     /// </summary>
     public void DeletePlayerWeapon(int weaponListPosition)
     {
-        if (weaponList.Count == 0)
+        if (weaponList.Count == 1)
         {
             // here should be the message of deleting last weapon
 
