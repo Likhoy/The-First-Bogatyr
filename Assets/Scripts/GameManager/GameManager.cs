@@ -109,7 +109,11 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         if (creatureTag == "Player")
         {
-            //Protection.AddProtection<DamageReflector>(GetPlayer().health, (int)percent);
+            PowerBonusDetailsSO bonusDetails = ScriptableObject.CreateInstance(typeof(PowerBonusDetailsSO)) as PowerBonusDetailsSO;
+            bonusDetails.bonusPercent = (int)percent;
+            bonusDetails.bonusType = PowerBonusType.DamageReflector;
+
+            Protection.AddProtection<DamageReflector>(GetPlayer().health, bonusDetails);
         }
         else
         {
@@ -120,8 +124,19 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private void StartEndlessMode()
     {
         Destroy(GetPlayer().GetComponent<BarkOnIdle>()); // for no errors
+        // disable button guides
+        Destroy(GameObject.Find("/UI/MainUI/AspectRatioFitter/MainScreenUI/ButtonsHelper"));
+        // disable dialogue manager
+        Invoke("DisableDialogueManager", 1);
+        
         gameState = GameState.EndlessMode;
+        currentWaveNumber = 0;
         TryLaunchNextWave();
+    }
+
+    private void DisableDialogueManager()
+    {
+        DialogueManager.Instance.gameObject.SetActive(false);
     }
 
     public int GetCurrentWaveNumber()
