@@ -91,7 +91,10 @@ public class Player : MonoBehaviour
         this.playerDetails = playerDetails;
 
         // Create player starting weapons
-        CreatePlayerStartingWeapon();
+        if (GameManager.Instance.gameState == GameState.EndlessMode)
+        {
+            CreatePlayerStartingWeapon();
+        }
 
         // Set player starting health
         SetPlayerHealth();
@@ -103,6 +106,8 @@ public class Player : MonoBehaviour
         healthEvent.OnHealthChanged += HealthEvent_OnHealthChanged;
         healthEvent.OnHealthChanged += HealthEvent_OnHealthChanged2; // for button helper
     }
+
+    
 
     private void OnDisable()
     {
@@ -125,7 +130,7 @@ public class Player : MonoBehaviour
 
     private void HealthEvent_OnHealthChanged2(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
     {
-        if (healthEventArgs.healthPercent <= 0.75f)
+        if (healthEventArgs.healthPercent <= 0.75f && healthEventArgs.damageAmount > 0)
         {
             FadingOutText fadingOutText = FindObjectOfType<FadingOutText>();
             if (fadingOutText != null && !GameProgressData.healthHintShown) 
@@ -192,7 +197,7 @@ public class Player : MonoBehaviour
     /// </summary>
     public void DeletePlayerWeapon(int weaponListPosition)
     {
-        if (weaponList.Count == 0)
+        if (weaponList.Count == 1)
         {
             // here should be the message of deleting last weapon
 
