@@ -98,7 +98,7 @@ public abstract class BaseEnemyMovementAI : MonoBehaviour
                 // Trigger movement event
                 enemy.movementToPositionEvent.CallMovementToPositionEvent(nextPosition, transform.position, moveSpeed, (nextPosition - transform.position).normalized);
 
-                yield return waitForFixedUpdate;  // moving the enmy using 2D physics so wait until the next fixed update
+                yield return waitForFixedUpdate;  // moving the enemy using 2D physics so wait until the next fixed update
             }
 
             yield return waitForFixedUpdate;

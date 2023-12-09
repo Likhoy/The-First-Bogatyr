@@ -3,7 +3,6 @@ using PixelCrushers;
 using PixelCrushers.DialogueSystem;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using PixelCrushers.DialogueSystem.Wrappers;
 
 public class MainMenu : MonoBehaviour
 {
@@ -19,7 +18,9 @@ public class MainMenu : MonoBehaviour
     {
         if (!SaveSystem.HasSavedGameInSlot(1))
             continueButton.SetActive(false);
+        
         DialogueManager.Instance.gameObject.SetActive(true); // might be disabled in endless mode
+        
         DialogueManager.Instance.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
     }
 
@@ -27,6 +28,7 @@ public class MainMenu : MonoBehaviour
     {
         allButtons = new GameObject[5] { continueButton, newGameButton, endlessModeGameButton, settingsButton, exitButton };
 
+        // this way of placing disabling of dialogueManager children is intentional
         DialogueManager.Instance.transform.GetChild(0).GetChild(2).gameObject.SetActive(false);
         DialogueManager.Instance.transform.GetChild(0).GetChild(3).gameObject.SetActive(false);
         DialogueManager.Instance.transform.GetChild(1).gameObject.SetActive(false);
@@ -36,12 +38,9 @@ public class MainMenu : MonoBehaviour
     {
         DeactivateButtonsAfterClick(continueButton);
 
-        SaveSystem.LoadFromSlot(1);
+        GameManager.Instance.PrepareMainStoryLine();
 
-        DialogueManager.Instance.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
-        DialogueManager.Instance.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
-        DialogueManager.Instance.transform.GetChild(0).GetChild(3).gameObject.SetActive(true);
-        DialogueManager.Instance.transform.GetChild(1).gameObject.SetActive(true);
+        SaveSystem.LoadFromSlot(1);
     }
 
     /// <summary>
@@ -49,7 +48,6 @@ public class MainMenu : MonoBehaviour
     /// </summary>
     public void StartEndlessModePressed()
     {
-        DialogueManager.Instance.gameObject.SetActive(false);
         DeactivateButtonsAfterClick(endlessModeGameButton);
 
         GameManager.Instance.PrepareEndlessMode();
