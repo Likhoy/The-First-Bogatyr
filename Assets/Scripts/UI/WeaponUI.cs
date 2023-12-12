@@ -9,6 +9,12 @@ public class WeaponUI : MonoBehaviour
     [SerializeField] private Image weaponBackground;
     [SerializeField] private Sprite[] backgroundSprite;
 
+    private void Awake()
+    {
+        weaponImage.gameObject.SetActive(false);
+        countItems.text = "";
+    }
+
     private void OnEnable()
     {
         GameManager.Instance.GetPlayer().setActiveWeaponEvent.OnSetActiveWeapon += WeaponEvent_OnWeaponChanged;
