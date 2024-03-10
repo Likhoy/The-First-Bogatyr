@@ -63,7 +63,8 @@ public class PauseMenu : MonoBehaviour
         Map.SetActive(true);
         Money.SetActive(true);
         TradingUI.SetActive(true);
-        ButtonsHelper.SetActive(true);
+		if (ButtonsHelper != null)
+			ButtonsHelper.SetActive(true);
         EffectsImage.SetActive(true);
         SettingsUI.SetActive(false);
         SettingsControlUI.SetActive(false);
@@ -90,7 +91,8 @@ public class PauseMenu : MonoBehaviour
         Map.SetActive(false);
         Money.SetActive(false);
         TradingUI.SetActive(false);
-        ButtonsHelper.SetActive(false);
+        if (ButtonsHelper != null)
+            ButtonsHelper.SetActive(false);
         EffectsImage.SetActive(false);
         SettingsUI.SetActive(false);
         WeaponSlot.SetActive(false);
