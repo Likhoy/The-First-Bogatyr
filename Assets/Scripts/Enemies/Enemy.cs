@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
 #region REQUIRE COMPONENTS
@@ -27,6 +28,7 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(PolygonCollider2D))]
+[RequireComponent(typeof(NavMeshAgent))]
 #endregion REQUIRE COMPONENTS
 
 [DisallowMultipleComponent]
@@ -43,6 +45,7 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public MovementToPositionEvent movementToPositionEvent;
     [HideInInspector] public IdleEvent idleEvent;
     // private MaterializeEffect materializeEffect;
+    private NavMeshAgent agent;
     private BoxCollider2D boxCollider2D;
     private PolygonCollider2D polygonCollider2D;
     [HideInInspector] public SpriteRenderer[] spriteRendererArray;
@@ -93,10 +96,20 @@ public class Enemy : MonoBehaviour
         staticAttackingStartedEvent = GetComponent<StaticAttackingStartedEvent>(); 
         staticAttackingEndedEvent = GetComponent<StaticAttackingEndedEvent>();
         before = transform.position;
+
+        agent = GetComponent<NavMeshAgent>();
+    }
+
+    private void Start()
+    {
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
     }
 
     private void Update()
     {
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+
         after = transform.position;
 
         if (before != after)
