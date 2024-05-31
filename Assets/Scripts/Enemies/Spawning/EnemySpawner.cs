@@ -10,12 +10,6 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
     private int enemiesToSpawn;
     private int currentEnemyCount;
     public int EnemiesSpawnedSoFar { get; set; }
-    private Grid grid;
-
-    private void Start()
-    {
-        grid = MainLocationInfo.Grid;
-    }
 
     private void OnEnable()
     {
@@ -30,7 +24,7 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
     /// <summary>
     /// Spawn the enemies - for usage in the main story line
     /// </summary>
-    public void SpawnEnemies()
+    public void SpawnEnemiesImmediately()
     {
         // Set gamestate engaging boss
         /*if (GameManager.Instance.gameState == GameState.bossStage)
@@ -71,7 +65,7 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
                 Vector3Int cellPosition = (Vector3Int)currentLocationDetails.enemiesToSpawnImmediately[EnemiesSpawnedSoFar].spawnPosition;
 
                 // Create Enemy - Get next enemy type to spawn 
-                CreateEnemy(enemyDetails, EnemyPrefabType.MainStoryLine, grid.CellToWorld(cellPosition));
+                CreateEnemy(enemyDetails, EnemyPrefabType.MainStoryLine, MainLocationInfo.Grid.CellToWorld(cellPosition));
             }
         }
     }
@@ -87,7 +81,7 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
         {
             if (enemyDetails.enemyName == enemyName)
             {
-                CreateEnemy(enemyDetails, EnemyPrefabType.MainStoryLine, grid.CellToWorld(spawnPositionVect));
+                CreateEnemy(enemyDetails, EnemyPrefabType.MainStoryLine, MainLocationInfo.Grid.CellToWorld(spawnPositionVect));
             }
                 
         }
@@ -98,7 +92,7 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
     /// </summary>
     public void SpawnEnemy(EnemyDetailsSO enemyDetails, Vector2Int spawnPosition, EnemyModifiers enemyModifiers = null)
     {
-        CreateEnemy(enemyDetails, EnemyPrefabType.EndlessMode, grid.CellToWorld((Vector3Int)spawnPosition), enemyModifiers);
+        CreateEnemy(enemyDetails, EnemyPrefabType.EndlessMode, MainLocationInfo.Grid.CellToWorld((Vector3Int)spawnPosition), enemyModifiers);
     }
 
 

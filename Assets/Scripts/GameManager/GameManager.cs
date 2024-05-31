@@ -69,7 +69,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         gameState = GameState.MainStoryLine;
 
         // Spawn enemies (maybe this will be placed in enemy controller class)
-        EnemySpawner.Instance.SpawnEnemies();
+        EnemySpawner.Instance.SpawnEnemiesImmediately();
 
         SetQuestUIActive();
     }
