@@ -2,11 +2,18 @@ using TheKiwiCoder;
 using UnityEngine;
 
 [System.Serializable]
-public class ChasePlayer : TempMoveToPosition
+public class ChasePlayer : MoveToPosition
 {
-    public NodeProperty<float> distance;
+    private MovementToPositionEvent movementToPositionEvent;
 
     private float pathRebuildCooldown = Settings.enemyPathRebuildCooldown;
+
+    public override void OnInit()
+    {
+        base.OnInit();
+
+        movementToPositionEvent = context.gameObject.GetComponent<MovementToPositionEvent>();
+    }
 
     protected override void OnStart()
     {
@@ -36,18 +43,5 @@ public class ChasePlayer : TempMoveToPosition
                     context.agent.destination, context.transform.position, speed.Value, (context.agent.destination - context.transform.position).normalized);
 
         return base.OnUpdate();
-    }
-
-    protected override void OnStop()
-    {
-        if (context.agent.pathPending)
-        {
-            context.agent.ResetPath();
-        }
-
-        if (context.agent.remainingDistance > tolerance.Value)
-        {
-            context.agent.isStopped = true;
-        }
     }
 }
