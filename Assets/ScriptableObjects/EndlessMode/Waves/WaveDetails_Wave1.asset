@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1a4df010e5c73b488647ff05e704984, type: 3}
+  m_Name: WaveDetails_Wave1
+  m_EditorClassIdentifier: 
+  waveNumber: 1
+  enemyGroupsSpawnDatas:
+  - enemiesBaseData:
+    - {fileID: 11400000, guid: 4829fcddfb78ec649ae56ed9bc7ab1b3, type: 2}
+    amountOfEnemiesToSpawn: 1
+    delayAfterPreviousSpawn: 0
+  - enemiesBaseData:
+    - {fileID: 11400000, guid: 4829fcddfb78ec649ae56ed9bc7ab1b3, type: 2}
+    amountOfEnemiesToSpawn: 1
+    delayAfterPreviousSpawn: 10
+  possibleBonuses:
+  - {fileID: 11400000, guid: 6a7899642d841c549889039d23f87b5c, type: 2}
+  - {fileID: 11400000, guid: 4ab2d81893ed5b442aeeeff0998117bf, type: 2}
+  - {fileID: 11400000, guid: 7d03c44a4bcf6e84f94dd3b67169c977, type: 2}
+  - {fileID: 11400000, guid: ee789cf71f81a5a46a6d1a23eac2996b, type: 2}
+  - {fileID: 11400000, guid: 2a5e949f343f95045aca99ac6c5e2f3c, type: 2}

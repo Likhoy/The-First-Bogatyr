@@ -14,9 +14,9 @@ public class EnemyDetailsSO : ScriptableObject
     public string enemyName;
 
     #region Tooltip
-    [Tooltip("The prefab for the enemy")]
+    [Tooltip("Prefabs for the enemy (first for storyline, second for endless mode)")]
     #endregion
-    public GameObject enemyPrefab;
+    public GameObject[] enemyPrefabs;
 
     #region Tooltip
     [Tooltip("Distance to the player maximum for the enemy to start attacking him")]
@@ -133,7 +133,24 @@ public class EnemyDetailsSO : ScriptableObject
 
     public float moneyDropRadius = 5f;
 
+    #region Header ENDLESS MODE
     [Space(10)]
+    [Header("ENDLESS MODE")]
+    #endregion // maybe will be placed in a different SO
+
+    #region Tooltip
+    [Tooltip("Percent of enemy health growth each 3 waves")]
+    #endregion
+    public float baseHealthModifier = 0f;
+    #region Tooltip
+    [Tooltip("Percent of enemy damage growth each 3 waves")]
+    #endregion
+    public float baseDamageModifier = 0f;
+
+    #region Header BOSS SETTINGS
+    [Space(10)]
+    [Header("BOSS SETTINGS")]
+    #endregion
 
     public bool isBoss = false;
 
@@ -143,14 +160,23 @@ public class EnemyDetailsSO : ScriptableObject
 
     public float spawnRadius;
 
-
+    
+    #region Header BOSS SETTINGS
+    [Space(10)]
+    [Header("DROP SETTINGS")]
+    #endregion
+    #region Tooltip
+    [Tooltip("Count of experience that drops after death")]
+    #endregion
+    public int experienceDrop = 0;
+    
     #region Validation
 #if UNITY_EDITOR
     // Validate the scriptable object details entered
     private void OnValidate()
     {
         HelperUtilities.ValidateCheckEmptyString(this, nameof(enemyName), enemyName);
-        HelperUtilities.ValidateCheckNullValue(this, nameof(enemyPrefab), enemyPrefab);
+        HelperUtilities.ValidateCheckEnumerableValues(this, nameof(enemyPrefabs), enemyPrefabs);
         HelperUtilities.ValidateCheckPositiveValue(this, nameof(aggressionDistance), aggressionDistance, false);
         HelperUtilities.ValidateCheckPositiveValue(this, nameof(chaseDistance), chaseDistance, false);
         //HelperUtilities.ValidateCheckNullValue(this, nameof(enemyStandardMaterial), enemyStandardMaterial);

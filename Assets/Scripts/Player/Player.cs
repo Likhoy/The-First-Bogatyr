@@ -6,7 +6,7 @@ using UnityEngine;
 #region REQUIRE COMPONENTS
 [RequireComponent(typeof(PlayerResources))]
 [RequireComponent(typeof(HealthEvent))]
-[RequireComponent(typeof(Health))]
+[RequireComponent(typeof(PlayerHealth))]
 [RequireComponent(typeof(ReceiveContactDamage))]
 [RequireComponent(typeof(DestroyedEvent))]
 [RequireComponent(typeof(Destroyed))]
@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public PlayerDetailsSO playerDetails;
     [HideInInspector] public PlayerResources playerResources;
     [HideInInspector] public HealthEvent healthEvent;
-    [HideInInspector] public Health health;
+    [HideInInspector] public PlayerHealth health;
     [HideInInspector] public DestroyedEvent destroyedEvent;
     [HideInInspector] public MovementByVelocityEvent movementByVelocityEvent;
     [HideInInspector] public MovementToPositionEvent movementToPositionEvent;
@@ -64,7 +64,7 @@ public class Player : MonoBehaviour
         // Load components
         playerResources = GetComponent<PlayerResources>();
         healthEvent = GetComponent<HealthEvent>();
-        health = GetComponent<Health>();
+        health = GetComponent<PlayerHealth>();
         destroyedEvent = GetComponent<DestroyedEvent>();
         movementByVelocityEvent = GetComponent<MovementByVelocityEvent>();
         movementToPositionEvent = GetComponent<MovementToPositionEvent>();
@@ -91,7 +91,10 @@ public class Player : MonoBehaviour
         this.playerDetails = playerDetails;
 
         // Create player starting weapons
-        CreatePlayerStartingWeapon();
+        if (GameManager.Instance.gameState == GameState.EndlessMode)
+        {
+            CreatePlayerStartingWeapon();
+        }
 
         // Set player starting health
         SetPlayerHealth();
@@ -103,6 +106,8 @@ public class Player : MonoBehaviour
         healthEvent.OnHealthChanged += HealthEvent_OnHealthChanged;
         healthEvent.OnHealthChanged += HealthEvent_OnHealthChanged2; // for button helper
     }
+
+    
 
     private void OnDisable()
     {
@@ -119,14 +124,13 @@ public class Player : MonoBehaviour
         // If player has died
         if (healthEventArgs.healthAmount <= 0f)
         {
-            SaveSystem.LoadFromSlot(1);
-            Destroy(gameObject);
+            GameManager.Instance.HandlePlayerDeath();
         }
     }
 
     private void HealthEvent_OnHealthChanged2(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
     {
-        if (healthEventArgs.healthPercent <= 0.75f)
+        if (healthEventArgs.healthPercent <= 0.75f && healthEventArgs.damageAmount > 0)
         {
             FadingOutText fadingOutText = FindObjectOfType<FadingOutText>();
             if (fadingOutText != null && !GameProgressData.healthHintShown) 
@@ -159,13 +163,16 @@ public class Player : MonoBehaviour
         Weapon weapon;
         bool isWeaponRanged = false;
         if (weaponDetails is MeleeWeaponDetailsSO meleeWeaponDetails)
-            weapon = new MeleeWeapon() { weaponDetails = meleeWeaponDetails };
+            weapon = new MeleeWeapon() { weaponDetails = meleeWeaponDetails, weaponCurrentMinDamage = weaponDetails.GetWeaponMinDamage(),
+                                            weaponCurrentMaxDamage = weaponDetails.GetWeaponMaxDamage()};
         else
         {
             RangedWeaponDetailsSO rangedWeaponDetails = weaponDetails as RangedWeaponDetailsSO;
 
             int weaponRemainingAmmo = Mathf.Clamp(weaponAmmoAmount, 0, rangedWeaponDetails.weaponAmmoCapacity);
-            weapon = new RangedWeapon() { weaponDetails = rangedWeaponDetails, 
+            weapon = new RangedWeapon() { weaponDetails = rangedWeaponDetails,
+                weaponCurrentMinDamage = weaponDetails.GetWeaponMinDamage(),
+                weaponCurrentMaxDamage = weaponDetails.GetWeaponMaxDamage(),
                 weaponRemainingAmmo = weaponRemainingAmmo,
                 weaponClipRemainingAmmo = weaponRemainingAmmo < rangedWeaponDetails.weaponClipAmmoCapacity || rangedWeaponDetails.hasInfiniteClipCapacity ? 
                 weaponRemainingAmmo : rangedWeaponDetails.weaponClipAmmoCapacity };
@@ -190,7 +197,7 @@ public class Player : MonoBehaviour
     /// </summary>
     public void DeletePlayerWeapon(int weaponListPosition)
     {
-        if (weaponList.Count == 0)
+        if (weaponList.Count == 1)
         {
             // here should be the message of deleting last weapon
 
@@ -233,11 +240,6 @@ public class Player : MonoBehaviour
     public Vector3 GetPlayerPosition()
     {
         return transform.position;
-    }
-
-    public int GetPlayerMoney()
-    {
-        return playerResources.PlayerMoney;
     }
 
     /// <summary>

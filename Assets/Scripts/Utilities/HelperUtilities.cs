@@ -80,12 +80,12 @@ public static class HelperUtilities
             lookDirection = LookDirection.Up;
         }
         // Left
-        else if ((angleDegrees <= 180f && angleDegrees > 158f) || (angleDegrees >= -180 && angleDegrees <= -135f))
+        else if ((angleDegrees <= 180f && angleDegrees > 158f) || (angleDegrees >= -180 && angleDegrees < -135f))
         {
             lookDirection = LookDirection.Left;
         }
         // Down
-        else if ((angleDegrees > -135f && angleDegrees <= -45f))
+        else if ((angleDegrees >= -135f && angleDegrees <= -45f))
         {
             lookDirection = LookDirection.Down;
         }
@@ -128,7 +128,16 @@ public static class HelperUtilities
         return Mathf.Log10((float)linear / linearScaleRange) * 20f;
     }
 
-
+    public static bool AddValueToPercentage(ref int initialPercent, int addedValue)
+    {
+        if (initialPercent == 100) return false;
+        
+        if (initialPercent + addedValue > 100)
+            initialPercent = 100;
+        else
+            initialPercent += addedValue;
+        return true;
+    }
 
     /// <summary>
     /// Empty string debug check

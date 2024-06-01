@@ -16,7 +16,6 @@ public class BossFightMusic : MonoBehaviour
 
     public void SetBossFightMusic()
     {
-        Debug.Log("LJDFHULDSFHUDSFHLAD");
         audioSource.Stop();
         audioSource.clip = CFight;
         audioSource.loop = true;

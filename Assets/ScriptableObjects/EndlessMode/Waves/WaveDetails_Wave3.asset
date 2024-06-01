@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1a4df010e5c73b488647ff05e704984, type: 3}
+  m_Name: WaveDetails_Wave3
+  m_EditorClassIdentifier: 
+  waveNumber: 3
+  enemyGroupsSpawnDatas:
+  - enemiesBaseData:
+    - {fileID: 11400000, guid: 65f5ad3025f99d745878348b70cf71a9, type: 2}
+    - {fileID: 11400000, guid: 65f5ad3025f99d745878348b70cf71a9, type: 2}
+    amountOfEnemiesToSpawn: 2
+    delayAfterPreviousSpawn: 0
+  - enemiesBaseData:
+    - {fileID: 11400000, guid: 4829fcddfb78ec649ae56ed9bc7ab1b3, type: 2}
+    - {fileID: 11400000, guid: 65f5ad3025f99d745878348b70cf71a9, type: 2}
+    amountOfEnemiesToSpawn: 2
+    delayAfterPreviousSpawn: 10
+  - enemiesBaseData:
+    - {fileID: 11400000, guid: 4829fcddfb78ec649ae56ed9bc7ab1b3, type: 2}
+    - {fileID: 11400000, guid: 65f5ad3025f99d745878348b70cf71a9, type: 2}
+    - {fileID: 11400000, guid: 65f5ad3025f99d745878348b70cf71a9, type: 2}
+    - {fileID: 11400000, guid: 65f5ad3025f99d745878348b70cf71a9, type: 2}
+    amountOfEnemiesToSpawn: 4
+    delayAfterPreviousSpawn: 15
+  possibleBonuses: []

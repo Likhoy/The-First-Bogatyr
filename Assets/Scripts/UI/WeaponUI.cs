@@ -6,6 +6,14 @@ public class WeaponUI : MonoBehaviour
 {
     [SerializeField] private Image weaponImage;
     [SerializeField] private TMP_Text countItems;
+    [SerializeField] private Image weaponBackground;
+    [SerializeField] private Sprite[] backgroundSprite;
+
+    private void Awake()
+    {
+        weaponImage.gameObject.SetActive(false);
+        countItems.text = "";
+    }
 
     private void OnEnable()
     {
@@ -53,6 +61,7 @@ public class WeaponUI : MonoBehaviour
     {
         if (setActiveWeaponEventArgs.weapon != null)
         {
+            weaponBackground.sprite = backgroundSprite[0];
             weaponImage.gameObject.SetActive(true);
           
             if (setActiveWeaponEventArgs.isWeaponRanged)
@@ -68,6 +77,7 @@ public class WeaponUI : MonoBehaviour
         }
         else
         {
+            weaponBackground.sprite = backgroundSprite[1];
             weaponImage.gameObject.SetActive(false);
         }
     }

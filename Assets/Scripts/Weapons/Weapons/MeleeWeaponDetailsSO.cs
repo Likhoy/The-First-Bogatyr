@@ -16,7 +16,16 @@ public class MeleeWeaponDetailsSO : WeaponDetailsSO
     #endregion Tooltip
     public float weaponCooldownTime;
 
-    public int GetWeaponDamage() => Random.Range(weaponMinDamage, weaponMaxDamage);
+    public override int GetWeaponMinDamage()
+    {
+        return weaponMinDamage;
+    }
+
+    public override int GetWeaponMaxDamage()
+    {
+        return weaponMaxDamage;
+    }
+    
 
     #region Validation
 #if UNITY_EDITOR

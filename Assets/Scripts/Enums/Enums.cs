@@ -17,3 +17,31 @@ public enum Command
     OpenMap,
     OpenPauseMenu
 }
+
+public enum EnemyPrefabType
+{
+    MainStoryLine,
+    EndlessMode
+}
+
+public enum GameState
+{
+    MainStoryLine,
+    EndlessMode
+}
+
+public enum PowerBonusType
+{
+    HealthBoost,
+    Armour,
+    VirtualArmour,
+    DamageReflector
+}
+
+public enum BonusLevel
+{
+    One = 1,
+    Two,
+    Three,
+    Four
+}

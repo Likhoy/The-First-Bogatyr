@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponDetailsSO : ScriptableObject
+public abstract class WeaponDetailsSO : ScriptableObject
 {
     #region Header WEAPON BASE DETAILS
     [Space(10)]
@@ -16,4 +14,8 @@ public class WeaponDetailsSO : ScriptableObject
     [Tooltip("The sprite for the weapon - the sprite should have the 'generate physics shape' option selected ")]
     #endregion Tooltip
     public Sprite weaponSprite;
+
+    public abstract int GetWeaponMinDamage();
+
+    public abstract int GetWeaponMaxDamage();
 }
