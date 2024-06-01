@@ -6,25 +6,23 @@ public class ChasePlayer : MoveToPosition
 {
     private MovementToPositionEvent movementToPositionEvent;
 
-    private float pathRebuildCooldown = Settings.enemyPathRebuildCooldown;
+    private float pathRebuildCooldown = 0f;
 
     public override void OnInit()
     {
         base.OnInit();
 
         movementToPositionEvent = context.gameObject.GetComponent<MovementToPositionEvent>();
-    }
 
-    protected override void OnStart()
-    {
         context.agent.stoppingDistance = stoppingDistance.Value;
         context.agent.speed = speed.Value;
-        context.agent.destination = GameManager.Instance.GetPlayer().GetPlayerPosition();
         context.agent.acceleration = acceleration.Value;
-        context.agent.isStopped = false;
+        
+    }
 
-        movementToPositionEvent.CallMovementToPositionEvent(
-                    context.agent.destination, context.transform.position, speed.Value, (context.agent.destination - context.transform.position).normalized);
+    protected override void OnStart() 
+    {
+        context.agent.isStopped = false;
     }
 
     protected override State OnUpdate()
