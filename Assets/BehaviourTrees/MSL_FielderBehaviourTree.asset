@@ -41,19 +41,49 @@ MonoBehaviour:
   - rid: 6521141465164808277
   - rid: 6521141465164808278
   - rid: 6521141465164808279
+  - rid: 842369981355393024
+  - rid: 842369981355393025
   treeState: 0
   blackboard:
     keys:
     - rid: 6521141458905071635
     - rid: 6521141465164808197
     - rid: 6521141465164808233
-  viewPosition: {x: 525, y: 160, z: 0}
-  viewScale: {x: 0.2842624, y: 0.2842624, z: 1}
+  viewPosition: {x: 873, y: -480, z: 0}
+  viewScale: {x: 0.65751624, y: 0.65751624, z: 1}
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 842369981355393024
+      type: {class: CheckDistanceToPlayer, ns: , asm: Assembly-CSharp}
+      data:
+        state: 0
+        started: 0
+        guid: ce6a91b8d21c67846a23632a4070ca67
+        position: {x: -900, y: 1260}
+        blackboard:
+          keys: []
+        description: 
+        drawGizmos: 0
+        distance:
+          reference:
+            rid: -2
+          defaultValue: 5
+    - rid: 842369981355393025
+      type: {class: Inverter, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
+      data:
+        state: 0
+        started: 0
+        guid: e0861d6fba9fb80418fcc84706d80019
+        position: {x: -870, y: 1125}
+        blackboard:
+          keys: []
+        description: 
+        drawGizmos: 0
+        child:
+          rid: 842369981355393024
     - rid: 6521141458905071616
       type: {class: RootNode, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
       data:
@@ -432,7 +462,7 @@ MonoBehaviour:
         state: 0
         started: 0
         guid: 196a8a094a50973479673378dcdc6ac7
-        position: {x: -750, y: 1095}
+        position: {x: -585, y: 1095}
         blackboard:
           keys: []
         description: 
@@ -470,6 +500,7 @@ MonoBehaviour:
         drawGizmos: 0
         children:
         - rid: 6521141465164808274
+        - rid: 842369981355393025
         - rid: 6521141465164808271
     - rid: 6521141465164808274
       type: {class: CheckDistanceToPlayer, ns: , asm: Assembly-CSharp}
@@ -477,7 +508,7 @@ MonoBehaviour:
         state: 0
         started: 0
         guid: f4a72f3339b86144aa0b657f7e5c22f1
-        position: {x: -1035, y: 1095}
+        position: {x: -1155, y: 1095}
         blackboard:
           keys: []
         description: 
