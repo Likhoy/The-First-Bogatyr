@@ -55,8 +55,7 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public WeaponFiredEvent weaponFiredEvent;
     [HideInInspector] public DefendingStageStartedEvent defendingStageStartedEvent;
     [HideInInspector] public DefendingStageEndedEvent defendingStageEndedEvent;
-    [HideInInspector] public StaticAttackingStartedEvent staticAttackingStartedEvent;
-    [HideInInspector] public StaticAttackingEndedEvent staticAttackingEndedEvent;
+    [HideInInspector] public LookAtEvent lookAtEvent;
 
     private AudioSource audioSource;
     private AudioSource audioEffects;
@@ -93,8 +92,7 @@ public class Enemy : MonoBehaviour
         weaponFiredEvent = GetComponent<WeaponFiredEvent>();
         defendingStageStartedEvent = GetComponent<DefendingStageStartedEvent>();
         defendingStageEndedEvent = GetComponent<DefendingStageEndedEvent>();
-        staticAttackingStartedEvent = GetComponent<StaticAttackingStartedEvent>(); 
-        staticAttackingEndedEvent = GetComponent<StaticAttackingEndedEvent>();
+        lookAtEvent = GetComponent<LookAtEvent>();
         before = transform.position;
 
         agent = GetComponent<NavMeshAgent>();

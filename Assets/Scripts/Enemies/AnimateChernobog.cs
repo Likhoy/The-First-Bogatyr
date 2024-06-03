@@ -1,21 +1,17 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class AnimateChernobog : MonoBehaviour
 {
     private Enemy enemy;
 
-    private WaitForFixedUpdate waitForFixedUpdate;
+    // private WaitForFixedUpdate waitForFixedUpdate;
 
     private void Awake()
     {
         // Load components
         enemy = GetComponent<Enemy>();
 
-        waitForFixedUpdate = new WaitForFixedUpdate();
+        //waitForFixedUpdate = new WaitForFixedUpdate();
     }
 
     private void OnEnable()
@@ -33,8 +29,7 @@ public class AnimateChernobog : MonoBehaviour
         enemy.defendingStageStartedEvent.OnDefendingStageStarted += DefendingStageStartedEvent_OnDefendingStageStarted;
         enemy.defendingStageEndedEvent.OnDefendingStageEnded += DefendingStageEndedEvent_OnDefendingStageEnded;
 
-        enemy.staticAttackingStartedEvent.OnStaticAttackingStarted += StaticAttackingStartedEvent_OnStaticAttackingStarted;
-        enemy.staticAttackingEndedEvent.OnStaticAttackingEnded += StaticAttackingEndedEvent_OnStaticAttackingEnded;
+        enemy.lookAtEvent.OnLookAt += LookAtEvent_OnLookAt;
 
         // Subscribe to idle event
         enemy.idleEvent.OnIdle += IdleEvent_OnIdle;
@@ -55,8 +50,7 @@ public class AnimateChernobog : MonoBehaviour
         enemy.defendingStageStartedEvent.OnDefendingStageStarted -= DefendingStageStartedEvent_OnDefendingStageStarted;
         enemy.defendingStageEndedEvent.OnDefendingStageEnded -= DefendingStageEndedEvent_OnDefendingStageEnded;
 
-        enemy.staticAttackingStartedEvent.OnStaticAttackingStarted -= StaticAttackingStartedEvent_OnStaticAttackingStarted;
-        enemy.staticAttackingEndedEvent.OnStaticAttackingEnded -= StaticAttackingEndedEvent_OnStaticAttackingEnded;
+        enemy.lookAtEvent.OnLookAt -= LookAtEvent_OnLookAt;
 
         // Unsubscribe from idle event
         enemy.idleEvent.OnIdle -= IdleEvent_OnIdle;
@@ -73,12 +67,10 @@ public class AnimateChernobog : MonoBehaviour
         float moveAngle = HelperUtilities.GetAngleFromVector(movementToPositionArgs.moveDirection);
         LookDirection lookDirection = HelperUtilities.GetLookDirectionLR(moveAngle);
         SetLookAnimationParameters(lookDirection);
-        //SetMovementToPositionAnimationParameters();
     }
 
     private void DefendingStageStartedEvent_OnDefendingStageStarted(DefendingStageStartedEvent defendingStageStartedEvent, DefendingStageStartedEventArgs defendingStageStartedEventArgs)
     {
-        StartCoroutine(LookDirectionWatchRoutine());
         TriggerDefendingAnimation();
     }
 
@@ -95,7 +87,7 @@ public class AnimateChernobog : MonoBehaviour
         enemy.animator.SetBool("isDefending", false);
     }
 
-    private IEnumerator LookDirectionWatchRoutine()
+    /*private IEnumerator LookDirectionWatchRoutine()
     {
         Player player = GameManager.Instance.GetPlayer();
         while (true)
@@ -110,25 +102,22 @@ public class AnimateChernobog : MonoBehaviour
             }
             yield return waitForFixedUpdate;
         }
-    }
+    }*/
 
     private void DefendingStageEndedEvent_OnDefendingStageEnded(DefendingStageEndedEvent defendingStageEndedEvent, DefendingStageEndedEventArgs defendingStageEndedEventArgs)
     {
-        StopCoroutine(LookDirectionWatchRoutine());
         StopDefendingAnimation();
     }
 
-    private void StaticAttackingStartedEvent_OnStaticAttackingStarted(StaticAttackingStartedEvent obj)
+    private void LookAtEvent_OnLookAt(LookAtEvent staticAttackingStartedEvent, StaticAttackingStartedEventArgs args)
     {
         enemy.animator.SetBool(Settings.isMoving, false);
         enemy.animator.SetBool(Settings.isIdle, false);
-        enemy.animator.SetBool("isDefending", false);
-        StartCoroutine(LookDirectionWatchRoutine());
-    }
-
-    private void StaticAttackingEndedEvent_OnStaticAttackingEnded(StaticAttackingEndedEvent obj)
-    {
-        StopCoroutine(LookDirectionWatchRoutine());
+        
+        InitializeLookAnimationParameters();
+        float angleToPlayer = HelperUtilities.GetAngleFromVector((args.playerPosition - transform.position).normalized);
+        LookDirection lookDirection = HelperUtilities.GetLookDirectionLR(angleToPlayer);
+        SetLookAnimationParameters(lookDirection);
     }
 
     

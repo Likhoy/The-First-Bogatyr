@@ -83,9 +83,9 @@ public class EnemyWeaponAI : MonoBehaviour
                         holdsRangedWeapon = true;
                     }
 
-                    if (enemy.staticAttackingStartedEvent != null && !attackingStageStarted)
+                    if (enemy.lookAtEvent != null && !attackingStageStarted)
                     {
-                        ToggleStaticAttackingEvent(true);
+                        ToggleStaticAttackingEvent(true, playerPosition);
                     }
 
                     // Update timers
@@ -109,10 +109,10 @@ public class EnemyWeaponAI : MonoBehaviour
                     }
                 }
             }
-            if (enemy.staticAttackingEndedEvent != null && attackingStageStarted && Vector3.Distance(transform.position, playerPosition) > enemy.enemyDetails.shootDistance)
+            /*if (enemy.staticAttackingEndedEvent != null && attackingStageStarted && Vector3.Distance(transform.position, playerPosition) > enemy.enemyDetails.shootDistance)
             {
-                ToggleStaticAttackingEvent(false);
-            }
+                ToggleStaticAttackingEvent(false, playerPosition);
+            }*/
         }
 
         
@@ -146,18 +146,18 @@ public class EnemyWeaponAI : MonoBehaviour
     /// <summary>
     /// Handle enemy static attack event
     /// </summary>
-    private void ToggleStaticAttackingEvent(bool isStarting)
+    private void ToggleStaticAttackingEvent(bool isStarting, Vector3 playerPosition)
     {
         enemy.enemyMovementAI.enabled = !isStarting;
         if (isStarting)
         {
             rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
-            enemy.staticAttackingStartedEvent.CallStaticAttackingStartedEvent();
+            enemy.lookAtEvent.CallLookAtEvent(playerPosition);
         }
         else
         {
             rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
-            enemy.staticAttackingEndedEvent.CallStaticAttackingEndedEvent();
+            //enemy.staticAttackingEndedEvent.CallStaticAttackingEndedEvent();
         }
         attackingStageStarted = isStarting;
     }
