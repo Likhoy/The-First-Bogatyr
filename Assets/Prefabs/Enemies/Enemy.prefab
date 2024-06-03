@@ -318,8 +318,7 @@ MonoBehaviour:
   weaponFiredEvent: {fileID: 0}
   defendingStageStartedEvent: {fileID: 0}
   defendingStageEndedEvent: {fileID: 0}
-  staticAttackingStartedEvent: {fileID: 0}
-  staticAttackingEndedEvent: {fileID: 0}
+  lookAtEvent: {fileID: 0}
   CGetDamage: {fileID: 8300000, guid: 2e4895f2b57ddc747830ced2bec92b39, type: 3}
   CMoney:
   - {fileID: 8300000, guid: 4a340d141428b31478b36b6254de4e85, type: 3}
@@ -337,7 +336,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 301ac05f85e595e4ab291958b45003ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementDetails: {fileID: 0}
+  movementDetails: {fileID: 11400000, guid: e63c6d7b22d2a234abfd71153ceb17d2, type: 2}
   updateFrameNumber: 1
   chasePlayer: 0
   moveSpeed: 0

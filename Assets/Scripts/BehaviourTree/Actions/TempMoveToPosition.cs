@@ -19,7 +19,11 @@ public class TempMoveToPosition : MoveToPosition
 
     protected override void OnStart()
     {
-        base.OnStart();
+        context.agent.stoppingDistance = stoppingDistance.Value;
+        context.agent.speed = speed.Value;
+        context.agent.destination = targetPosition.Value;
+        context.agent.acceleration = acceleration.Value;
+        context.agent.isStopped = false;
 
         movementToPositionEvent.CallMovementToPositionEvent(
                     targetPosition.Value, context.transform.position, speed.Value, (targetPosition.Value - context.transform.position).normalized);

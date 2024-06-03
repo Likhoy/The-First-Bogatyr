@@ -4,7 +4,7 @@ using TheKiwiCoder;
 [System.Serializable]
 public class CheckDistanceToPlayer : ActionNode
 {
-    public NodeProperty<float> distance;
+    [SerializeField] private NodeProperty<float> distance;
 
     protected override void OnStart() { }
 

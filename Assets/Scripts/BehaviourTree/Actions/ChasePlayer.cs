@@ -20,14 +20,13 @@ public class ChasePlayer : MoveToPosition
         
     }
 
-    protected override void OnStart() 
-    {
-        context.agent.isStopped = false;
-    }
+    protected override void OnStart() { }
 
     protected override State OnUpdate()
     {
         pathRebuildCooldown -= Time.deltaTime;
+
+        context.agent.isStopped = false;
 
         if (pathRebuildCooldown < 0)
         {
