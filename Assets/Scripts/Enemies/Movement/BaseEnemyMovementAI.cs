@@ -36,7 +36,7 @@ public abstract class BaseEnemyMovementAI : MonoBehaviour
 
     protected virtual void Update()
     {
-        // MoveEnemy();
+        MoveEnemy();
     }
 
     protected abstract void MoveEnemy();

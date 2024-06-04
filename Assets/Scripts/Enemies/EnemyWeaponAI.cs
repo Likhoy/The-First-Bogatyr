@@ -51,7 +51,7 @@ public class EnemyWeaponAI : MonoBehaviour
         attackingStageStarted = false;
     }
 
-    private void Update()
+    /*private void Update()
     {
         Player player = GameManager.Instance.GetPlayer();
 
@@ -109,14 +109,14 @@ public class EnemyWeaponAI : MonoBehaviour
                     }
                 }
             }
-            /*if (enemy.staticAttackingEndedEvent != null && attackingStageStarted && Vector3.Distance(transform.position, playerPosition) > enemy.enemyDetails.shootDistance)
+            if (enemy.staticAttackingEndedEvent != null && attackingStageStarted && Vector3.Distance(transform.position, playerPosition) > enemy.enemyDetails.shootDistance)
             {
                 ToggleStaticAttackingEvent(false, playerPosition);
-            }*/
+            }
         }
 
         
-    }
+    }*/
 
     private void MeleeAttack()
     {
@@ -148,7 +148,7 @@ public class EnemyWeaponAI : MonoBehaviour
     /// </summary>
     private void ToggleStaticAttackingEvent(bool isStarting, Vector3 playerPosition)
     {
-        enemy.enemyMovementAI.enabled = !isStarting;
+        // enemy.enemyMovementAI.enabled = !isStarting;
         if (isStarting)
         {
             rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;

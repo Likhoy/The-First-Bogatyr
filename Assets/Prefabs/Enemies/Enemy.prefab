@@ -21,12 +21,10 @@ GameObject:
   - component: {fileID: 5776993828723887329}
   - component: {fileID: 944632650330016525}
   - component: {fileID: -7372112467778457580}
-  - component: {fileID: 5592646621270956941}
   - component: {fileID: 6615954395596170959}
   - component: {fileID: 4568027408979574874}
   - component: {fileID: -6739145044490972829}
   - component: {fileID: 8321381057536379527}
-  - component: {fileID: 3981597268522686200}
   - component: {fileID: 6997670445888944142}
   - component: {fileID: 2954816337224575200}
   - component: {fileID: 2444608219693346077}
@@ -38,7 +36,7 @@ GameObject:
   - component: {fileID: 7110743881509623731}
   - component: {fileID: 4642396104358660822}
   - component: {fileID: 6040734086182447942}
-  - component: {fileID: 7149086736796033614}
+  - component: {fileID: 6185453306809461705}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
@@ -308,7 +306,6 @@ MonoBehaviour:
   healthEvent: {fileID: 0}
   fireWeaponEvent: {fileID: 0}
   setActiveWeaponEvent: {fileID: 0}
-  enemyMovementAI: {fileID: 0}
   movementToPositionEvent: {fileID: 0}
   idleEvent: {fileID: 0}
   spriteRendererArray: []
@@ -324,22 +321,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4a340d141428b31478b36b6254de4e85, type: 3}
   - {fileID: 8300000, guid: 43fe0211f4c3b8f44b43b253b00821fa, type: 3}
   - {fileID: 8300000, guid: 2657c0408e982ae4ab2cf64c5b7dc647, type: 3}
---- !u!114 &5592646621270956941
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1767373786716691614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 301ac05f85e595e4ab291958b45003ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementDetails: {fileID: 11400000, guid: e63c6d7b22d2a234abfd71153ceb17d2, type: 2}
-  updateFrameNumber: 1
-  chasePlayer: 0
-  moveSpeed: 0
 --- !u!114 &6615954395596170959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -391,23 +372,6 @@ MonoBehaviour:
   weaponSpriteRenderer: {fileID: 8355200929324520382}
   weaponPolygonCollider2D: {fileID: 0}
   weaponShootPositionTransform: {fileID: 2700930149906598472}
---- !u!114 &3981597268522686200
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1767373786716691614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3265f115ee7c574428bcd4016b029e6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 392
-  weaponShootPosition: {fileID: 0}
-  CMeleeAttack: {fileID: 8300000, guid: ae63227c71f51ee43885698258e255f8, type: 3}
 --- !u!114 &6997670445888944142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -886,7 +850,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &7149086736796033614
+--- !u!114 &6185453306809461705
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -898,7 +862,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c6f9b140a52a14881ec09eaebb66eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  behaviourTree: {fileID: 0}
+  behaviourTree: {fileID: 11400000, guid: 94494329dfe26e441b16f920a7e74582, type: 2}
   validate: 1
   blackboardOverrides: []
   references:

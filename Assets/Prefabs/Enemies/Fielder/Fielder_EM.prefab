@@ -73,29 +73,5 @@ PrefabInstance:
     - {fileID: 4505384588568334033, guid: c750791c7b3a68043b16a56c14efa1c6, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4987181280448245761, guid: c750791c7b3a68043b16a56c14efa1c6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: -2029454038141732599}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c750791c7b3a68043b16a56c14efa1c6, type: 3}
---- !u!1 &5437217350701796861 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4987181280448245761, guid: c750791c7b3a68043b16a56c14efa1c6, type: 3}
-  m_PrefabInstance: {fileID: 1027637295575186940}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &-2029454038141732599
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5437217350701796861}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dec5c406af71e384ca9fe322c7a42842, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementDetails: {fileID: 11400000, guid: af7a2bcc060b2b341b5c02a8192a525a, type: 2}
-  updateFrameNumber: 1
-  chasePlayer: 0
-  moveSpeed: 0

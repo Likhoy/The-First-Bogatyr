@@ -1,3 +1,4 @@
+using TheKiwiCoder;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -8,7 +9,7 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(FireWeaponEvent))]
 [RequireComponent(typeof(DestroyedEvent))]
 [RequireComponent(typeof(Destroyed))]
-[RequireComponent(typeof(EnemyWeaponAI))]
+[RequireComponent(typeof(BehaviourTreeInstance))]
 [RequireComponent(typeof(FireWeaponEvent))]
 [RequireComponent(typeof(FireWeapon))]
 [RequireComponent(typeof(SetActiveWeaponEvent))]
@@ -17,7 +18,6 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(ReloadWeaponEvent))]
 [RequireComponent(typeof(ReloadWeapon))]
 [RequireComponent(typeof(WeaponReloadedEvent))]
-[RequireComponent(typeof(BaseEnemyMovementAI))]
 [RequireComponent(typeof(MovementToPositionEvent))]
 [RequireComponent(typeof(MovementToPosition))]
 [RequireComponent(typeof(IdleEvent))]
@@ -41,7 +41,6 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public FireWeaponEvent fireWeaponEvent;
     private FireWeapon fireWeapon;
     [HideInInspector] public SetActiveWeaponEvent setActiveWeaponEvent;
-    [HideInInspector] public BaseEnemyMovementAI enemyMovementAI;
     [HideInInspector] public MovementToPositionEvent movementToPositionEvent;
     [HideInInspector] public IdleEvent idleEvent;
     // private MaterializeEffect materializeEffect;
@@ -56,6 +55,8 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public DefendingStageStartedEvent defendingStageStartedEvent;
     [HideInInspector] public DefendingStageEndedEvent defendingStageEndedEvent;
     [HideInInspector] public LookAtEvent lookAtEvent;
+
+    private BehaviourTreeInstance behaviourTree;
 
     private AudioSource audioSource;
     private AudioSource audioEffects;
@@ -79,7 +80,6 @@ public class Enemy : MonoBehaviour
         fireWeaponEvent = GetComponent<FireWeaponEvent>();
         fireWeapon = GetComponent<FireWeapon>();
         setActiveWeaponEvent = GetComponent<SetActiveWeaponEvent>();
-        enemyMovementAI = GetComponent<BaseEnemyMovementAI>();
         movementToPositionEvent = GetComponent<MovementToPositionEvent>();
         idleEvent = GetComponent<IdleEvent>();
         // materializeEffect = GetComponent<MaterializeEffect>();
@@ -96,16 +96,19 @@ public class Enemy : MonoBehaviour
         before = transform.position;
 
         agent = GetComponent<NavMeshAgent>();
+        behaviourTree = GetComponent<BehaviourTreeInstance>();
     }
 
     private void Start()
     {
+        // в 2D это устанавливается
         agent.updateRotation = false;
         agent.updateUpAxis = false;
     }
 
     private void Update()
     {
+        // обязательно для NavMeshAgent
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 
         after = transform.position;
@@ -178,7 +181,7 @@ public class Enemy : MonoBehaviour
     {
         this.enemyDetails = enemyDetails;
 
-        SetEnemyMovementUpdateFrame(enemySpawnNumber);
+        // SetEnemyMovementUpdateFrame(enemySpawnNumber);
 
         if (enemyModifiers != null)
         {
@@ -197,11 +200,11 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// Set enemy movement update frame
     /// </summary>
-    private void SetEnemyMovementUpdateFrame(int enemySpawnNumber)
+    /*private void SetEnemyMovementUpdateFrame(int enemySpawnNumber)
     {
         // Set frame number that enemy should process it's updates
         enemyMovementAI.SetUpdateFrameNumber(enemySpawnNumber % Settings.targetFrameRateToSpreadPathfindingOver);
-    }
+    }*/
 
 
     /// <summary>
@@ -257,11 +260,11 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// Set enemy animator speed to match movement speed
     /// </summary>
-    private void SetEnemyAnimationSpeed()
+    /*private void SetEnemyAnimationSpeed()
     {
         // Set animator speed to match movement speed
         animator.speed = enemyMovementAI.moveSpeed / Settings.baseSpeedForEnemyAnimations;
-    }
+    }*/
 
     /*private IEnumerator MaterializeEnemy()
     {
@@ -281,8 +284,8 @@ public class Enemy : MonoBehaviour
         boxCollider2D.enabled = isEnabled;
         polygonCollider2D.enabled = isEnabled;
 
-        // Enable/Disable movement AI
-        enemyMovementAI.enabled = isEnabled;
+        // Enable/Disable enemy behaviour
+        behaviourTree.enabled = isEnabled;
 
         // Enable / Disable Fire Weapon
         fireWeapon.enabled = isEnabled;

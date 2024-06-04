@@ -176,6 +176,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: f326c525c6f0f3f42b862153b32bc071, type: 2}
+    - target: {fileID: 6185453306809461705, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
+      propertyPath: behaviourTree
+      value: 
+      objectReference: {fileID: 11400000, guid: 84c06cfc04d695a4c99e0b1b3f7ca6db, type: 2}
     - target: {fileID: 7149086736796033614, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
       propertyPath: behaviourTree
       value: 
@@ -4621,9 +4625,6 @@ PrefabInstance:
       addedObject: {fileID: -5123981613059059424}
     - targetCorrespondingSourceObject: {fileID: 1767373786716691614, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -2417370117758836985}
-    - targetCorrespondingSourceObject: {fileID: 1767373786716691614, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 500357299617508303}
     - targetCorrespondingSourceObject: {fileID: 1767373786716691614, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
       insertIndex: -1
@@ -4667,18 +4668,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e460c9bae4446534dabfd1b1c895ebfa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &-2417370117758836985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8309658863052230953}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebfb758c444008c49be6fd02b53bb43c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &500357299617508303

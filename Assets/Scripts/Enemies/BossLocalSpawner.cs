@@ -1,5 +1,4 @@
 using UnityEngine;
-using System;
 public class BossLocalSpawner : MonoBehaviour
 {
 
@@ -108,7 +107,7 @@ public class BossLocalSpawner : MonoBehaviour
     private void ToggleDefendingStageEvent(bool isStarting)
     {
         polygonCollider2D.enabled = !isStarting;
-        enemy.enemyMovementAI.enabled = !isStarting;
+        //enemy.enemyMovementAI.enabled = !isStarting;
         enemyWeaponAI.enabled = !isStarting;
         if (isStarting)
         {
