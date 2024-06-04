@@ -40,8 +40,8 @@ MonoBehaviour:
   blackboard:
     keys:
     - rid: 842369981355393073
-  viewPosition: {x: 479, y: 139, z: 0}
-  viewScale: {x: 0.6575162, y: 0.6575162, z: 1}
+  viewPosition: {x: 489, y: -127, z: 0}
+  viewScale: {x: 0.43232757, y: 0.43232757, z: 1}
   references:
     version: 2
     RefIds:
@@ -370,7 +370,7 @@ MonoBehaviour:
         distance:
           reference:
             rid: -2
-          defaultValue: 2
+          defaultValue: 1
     - rid: 6521141465164808277
       type: {class: MeleeAttack, ns: , asm: Assembly-CSharp}
       data:

@@ -48,8 +48,8 @@ MonoBehaviour:
     keys:
     - rid: 6521141458905071635
     - rid: 6521141465164808233
-  viewPosition: {x: 510, y: 44, z: 0}
-  viewScale: {x: 0.6575162, y: 0.6575162, z: 1}
+  viewPosition: {x: 740, y: -259, z: 0}
+  viewScale: {x: 0.57175326, y: 0.57175326, z: 1}
   references:
     version: 2
     RefIds:
@@ -149,8 +149,8 @@ MonoBehaviour:
           keys: []
         description: 
         drawGizmos: 0
-        min: {x: -20, y: -20}
-        max: {x: 20, y: 20}
+        min: {x: 32.7, y: 52}
+        max: {x: 117.2, y: 93.3}
         result:
           reference:
             rid: 6521141458905071635
@@ -529,7 +529,7 @@ MonoBehaviour:
         distance:
           reference:
             rid: -2
-          defaultValue: 2
+          defaultValue: 1
     - rid: 6521141465164808277
       type: {class: MeleeAttack, ns: , asm: Assembly-CSharp}
       data:
