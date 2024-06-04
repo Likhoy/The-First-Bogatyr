@@ -210,8 +210,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         GameObject transitionImage = GameObject.FindGameObjectWithTag("transitionImage");
         Animator animator = transitionImage.GetComponent<Animator>();
         animator.SetTrigger("Finish");
+        yield return new WaitForSeconds(15);
         SceneManager.LoadScene(allLocationsDetails[0].sceneName);
-        yield return null; // исправить
     }
 
     public void HandlePlayerDeath()
