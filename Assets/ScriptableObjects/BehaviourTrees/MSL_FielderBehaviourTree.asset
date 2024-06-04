@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d285eb63c2cdd74180de7cfceaa96ad, type: 3}
-  m_Name: MSL_ChernobogBehaviourTree
+  m_Name: MSL_FielderBehaviourTree
   m_EditorClassIdentifier: 
   rootNode:
     rid: 6521141458905071616
@@ -33,161 +33,56 @@ MonoBehaviour:
   - rid: 6521141465164808266
   - rid: 6521141465164808267
   - rid: 6521141465164808271
+  - rid: 6521141465164808272
   - rid: 6521141465164808273
   - rid: 6521141465164808274
+  - rid: 6521141465164808275
+  - rid: 6521141465164808276
+  - rid: 6521141465164808277
   - rid: 6521141465164808278
-  - rid: 842369981355393051
-  - rid: 842369981355393053
-  - rid: 842369981355393054
-  - rid: 842369981355393058
-  - rid: 842369981355393059
-  - rid: 842369981355393060
-  - rid: 842369981355393066
-  - rid: 842369981355393067
+  - rid: 6521141465164808279
+  - rid: 842369981355393024
+  - rid: 842369981355393025
   treeState: 0
   blackboard:
     keys:
     - rid: 6521141458905071635
     - rid: 6521141465164808233
-    - rid: 842369981355393055
-  viewPosition: {x: 1237, y: 239, z: 0}
-  viewScale: {x: 0.43232757, y: 0.43232757, z: 1}
+  viewPosition: {x: 510, y: 44, z: 0}
+  viewScale: {x: 0.6575162, y: 0.6575162, z: 1}
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 842369981355393051
-      type: {class: LookAtPlayer, ns: , asm: Assembly-CSharp}
+    - rid: 842369981355393024
+      type: {class: CheckDistanceToPlayer, ns: , asm: Assembly-CSharp}
       data:
         state: 0
         started: 0
-        guid: 92fae90b8b5fa2e46aaf5d974275991a
-        position: {x: -600, y: 1200}
+        guid: ce6a91b8d21c67846a23632a4070ca67
+        position: {x: -900, y: 1260}
         blackboard:
           keys: []
         description: 
         drawGizmos: 0
-    - rid: 842369981355393053
-      type: {class: Sequencer, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
-      data:
-        state: 0
-        started: 0
-        guid: 4aaa533dd8a64724a8685b29ff5bef76
-        position: {x: -1305, y: 240}
-        blackboard:
-          keys: []
-        description: "\u041D\u0430\u0447\u0430\u043B\u043E \u0441\u0442\u0430\u0434\u0438\u0438
-          \u0437\u0430\u0449\u0438\u0442\u044B"
-        drawGizmos: 0
-        children:
-        - rid: 842369981355393060
-        - rid: 842369981355393067
-        - rid: 842369981355393066
-    - rid: 842369981355393054
-      type: {class: CompareProperty, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
-      data:
-        state: 0
-        started: 0
-        guid: 606ba937f616773499eefda7a4a297ba
-        position: {x: -1980, y: 240}
-        blackboard:
-          keys: []
-        description: 
-        drawGizmos: 0
-        pair:
-          key:
-            rid: 842369981355393055
-          value:
-            rid: 842369981355393056
-    - rid: 842369981355393055
-      type: {class: BooleanKey, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
-      data:
-        name: defending
-        typeName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-        value: 0
-    - rid: 842369981355393056
-      type: {class: BooleanKey, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
-      data:
-        name: 
-        typeName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-        value: 1
-    - rid: 842369981355393058
-      type: {class: Sequencer, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
-      data:
-        state: 0
-        started: 0
-        guid: fdb7ffb1453a59f4c8253a6535995000
-        position: {x: -1800, y: 90}
-        blackboard:
-          keys: []
-        description: "\u0414\u0435\u0439\u0441\u0442\u0432\u0438\u044F \u0432\u043E
-          \u0432\u0440\u0435\u043C\u044F \u0437\u0430\u0449\u0438\u0442\u044B"
-        drawGizmos: 0
-        children:
-        - rid: 842369981355393054
-        - rid: 842369981355393059
-    - rid: 842369981355393059
-      type: {class: LookAtPlayer, ns: , asm: Assembly-CSharp}
-      data:
-        state: 0
-        started: 0
-        guid: a097e2b924616cc4cb6fd112001eeaed
-        position: {x: -1740, y: 240}
-        blackboard:
-          keys: []
-        description: 
-        drawGizmos: 0
-    - rid: 842369981355393060
-      type: {class: CompareProperty, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
-      data:
-        state: 0
-        started: 0
-        guid: 421659c49741c824cbab95361cf41104
-        position: {x: -1620, y: 420}
-        blackboard:
-          keys: []
-        description: 
-        drawGizmos: 0
-        pair:
-          key:
-            rid: 842369981355393055
-          value:
-            rid: 842369981355393061
-    - rid: 842369981355393061
-      type: {class: BooleanKey, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
-      data:
-        name: 
-        typeName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-        value: 0
-    - rid: 842369981355393066
-      type: {class: SpawnEnemiesAndShieldUp, ns: , asm: Assembly-CSharp}
-      data:
-        state: 0
-        started: 0
-        guid: f9610d601abaee64588af40bbef1cc34
-        position: {x: -1095, y: 420}
-        blackboard:
-          keys: []
-        description: 
-        drawGizmos: 0
-        enemyDetails: {fileID: 11400000, guid: efbed2dc9b20b384c9731eb6fb01ff23, type: 2}
-        defending:
+        distance:
           reference:
-            rid: 842369981355393055
-          defaultValue: 0
-    - rid: 842369981355393067
-      type: {class: CheckHealth, ns: , asm: Assembly-CSharp}
+            rid: -2
+          defaultValue: 5
+    - rid: 842369981355393025
+      type: {class: Inverter, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
       data:
         state: 0
         started: 0
-        guid: ed1d4659c3726b8438fad2ce7793b15c
-        position: {x: -1365, y: 420}
+        guid: e0861d6fba9fb80418fcc84706d80019
+        position: {x: -870, y: 1125}
         blackboard:
           keys: []
         description: 
         drawGizmos: 0
-        healthPercentsToCheck: 4b0000003200000019000000
+        child:
+          rid: 842369981355393024
     - rid: 6521141458905071616
       type: {class: RootNode, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
       data:
@@ -289,8 +184,6 @@ MonoBehaviour:
         drawGizmos: 0
         children:
         - rid: 6521141465164808265
-        - rid: 842369981355393058
-        - rid: 842369981355393053
         - rid: 6521141465164808264
         - rid: 6521141465164808229
     - rid: 6521141465164808229
@@ -321,7 +214,7 @@ MonoBehaviour:
         state: 0
         started: 0
         guid: 33ff27fd23c59c740bd085f4c2e3a3ea
-        position: {x: -1290, y: 810}
+        position: {x: -1545, y: 525}
         blackboard:
           keys: []
         description: 
@@ -343,7 +236,7 @@ MonoBehaviour:
         state: 0
         started: 0
         guid: 03e25ab79c8300f41b295c4b44795e7b
-        position: {x: -3045, y: 210}
+        position: {x: -2130, y: 255}
         blackboard:
           keys: []
         description: 
@@ -365,7 +258,7 @@ MonoBehaviour:
         state: 0
         started: 0
         guid: ef93fc4a94091644e95d8e1cdac09209
-        position: {x: -2490, y: 210}
+        position: {x: -1575, y: 255}
         blackboard:
           keys: []
         description: 
@@ -421,7 +314,7 @@ MonoBehaviour:
         state: 0
         started: 0
         guid: 9240938e8aafb89418583a5a3208b265
-        position: {x: -2790, y: 210}
+        position: {x: -1875, y: 255}
         blackboard:
           keys: []
         description: 
@@ -429,14 +322,14 @@ MonoBehaviour:
         distance:
           reference:
             rid: -2
-          defaultValue: 15
+          defaultValue: 10
     - rid: 6521141465164808256
       type: {class: CheckDistanceToPlayer, ns: , asm: Assembly-CSharp}
       data:
         state: 0
         started: 0
         guid: 5738543e2958e94439378932999687f9
-        position: {x: -990, y: 810}
+        position: {x: -1245, y: 525}
         blackboard:
           keys: []
         description: 
@@ -444,14 +337,14 @@ MonoBehaviour:
         distance:
           reference:
             rid: -2
-          defaultValue: 25
+          defaultValue: 20
     - rid: 6521141465164808264
       type: {class: SequencerNoWait, ns: , asm: Assembly-CSharp}
       data:
         state: 0
         started: 0
         guid: c8b2dea1da6be91489b9ef15a97b268c
-        position: {x: -645, y: 555}
+        position: {x: -900, y: 270}
         blackboard:
           keys: []
         description: "\u041F\u0440\u0435\u0441\u043B\u0435\u0434\u043E\u0432\u0430\u043D\u0438\u0435
@@ -467,7 +360,7 @@ MonoBehaviour:
         state: 0
         started: 0
         guid: f8f3be54df9d61c4aac2b0ddacefbf1c
-        position: {x: -2250, y: -15}
+        position: {x: -1335, y: 30}
         blackboard:
           keys: []
         description: "\u041D\u0430\u0447\u0430\u043B\u043E \u043F\u0440\u0435\u0441\u043B\u0435\u0434\u043E\u0432\u0430\u043D\u0438\u044F"
@@ -483,7 +376,7 @@ MonoBehaviour:
         state: 0
         started: 0
         guid: 8fb22cf7b652ec6489dc41901fa27e3a
-        position: {x: -300, y: 1020}
+        position: {x: -555, y: 855}
         blackboard:
           keys: []
         description: 
@@ -518,7 +411,7 @@ MonoBehaviour:
         state: 0
         started: 0
         guid: 1654d66da34549646806efb69cff6d64
-        position: {x: -2250, y: 210}
+        position: {x: -1335, y: 255}
         blackboard:
           keys: []
         description: 
@@ -553,30 +446,45 @@ MonoBehaviour:
         state: 0
         started: 0
         guid: 196a8a094a50973479673378dcdc6ac7
-        position: {x: -375, y: 1200}
+        position: {x: -585, y: 1095}
         blackboard:
           keys: []
         description: 
         drawGizmos: 0
-        enemyDetails: {fileID: 11400000, guid: efbed2dc9b20b384c9731eb6fb01ff23, type: 2}
-        weaponDetails: {fileID: 11400000, guid: e00ca533632177e49a350dbe795bd078, type: 2}
+        enemyDetails: {fileID: 11400000, guid: 4829fcddfb78ec649ae56ed9bc7ab1b3, type: 2}
+        weaponDetails: {fileID: 11400000, guid: 4ecff5c377fce9143a769b69282ce67f, type: 2}
         layerMask:
           serializedVersion: 2
           m_Bits: 392
+    - rid: 6521141465164808272
+      type: {class: SequencerNoWait, ns: , asm: Assembly-CSharp}
+      data:
+        state: 0
+        started: 0
+        guid: 776dc61f1c9cadf44a04ec41d3025c5e
+        position: {x: -645, y: 645}
+        blackboard:
+          keys: []
+        description: "\u0441\u0442\u0440\u0435\u043B\u044C\u0431\u0430 \u0438 \u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E\u0435
+          \u043F\u0440\u0435\u0441\u043B\u0435\u0434\u043E\u0432\u0430\u043D\u0438\u0435"
+        drawGizmos: 0
+        children:
+        - rid: 6521141465164808279
+        - rid: 6521141465164808266
     - rid: 6521141465164808273
       type: {class: Sequencer, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
       data:
         state: 0
         started: 0
         guid: a62ef5225bf6d7445a3d202a2c2f0f47
-        position: {x: -585, y: 1050}
+        position: {x: -870, y: 960}
         blackboard:
           keys: []
         description: 
         drawGizmos: 0
         children:
         - rid: 6521141465164808274
-        - rid: 842369981355393051
+        - rid: 842369981355393025
         - rid: 6521141465164808271
     - rid: 6521141465164808274
       type: {class: CheckDistanceToPlayer, ns: , asm: Assembly-CSharp}
@@ -584,7 +492,7 @@ MonoBehaviour:
         state: 0
         started: 0
         guid: f4a72f3339b86144aa0b657f7e5c22f1
-        position: {x: -870, y: 1200}
+        position: {x: -1155, y: 1095}
         blackboard:
           keys: []
         description: 
@@ -592,18 +500,72 @@ MonoBehaviour:
         distance:
           reference:
             rid: -2
-          defaultValue: 15
+          defaultValue: 12
+    - rid: 6521141465164808275
+      type: {class: Sequencer, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
+      data:
+        state: 0
+        started: 0
+        guid: c8aee03f98e07804db552dd4bfa32e8c
+        position: {x: -1200, y: 675}
+        blackboard:
+          keys: []
+        description: "\u0440\u0443\u043A\u043E\u043F\u0430\u0448\u043A\u0430"
+        drawGizmos: 0
+        children:
+        - rid: 6521141465164808276
+        - rid: 6521141465164808277
+    - rid: 6521141465164808276
+      type: {class: CheckDistanceToPlayer, ns: , asm: Assembly-CSharp}
+      data:
+        state: 0
+        started: 0
+        guid: 0476cb1a5be610a4f8a0a3063a761b61
+        position: {x: -1440, y: 855}
+        blackboard:
+          keys: []
+        description: 
+        drawGizmos: 0
+        distance:
+          reference:
+            rid: -2
+          defaultValue: 2
+    - rid: 6521141465164808277
+      type: {class: MeleeAttack, ns: , asm: Assembly-CSharp}
+      data:
+        state: 0
+        started: 0
+        guid: 25d8e09563084b84787de3d7561dc535
+        position: {x: -1140, y: 855}
+        blackboard:
+          keys: []
+        description: 
+        drawGizmos: 0
+        weaponDetails: {fileID: 11400000, guid: 2e1ed15583bcbba41b04dd5ca28808ab, type: 2}
     - rid: 6521141465164808278
       type: {class: InterruptSelector, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
       data:
         state: 0
         started: 0
         guid: f509e0fa2b9a5774aa0ad7d37605fd0a
-        position: {x: -510, y: 825}
+        position: {x: -870, y: 495}
         blackboard:
           keys: []
         description: 
         drawGizmos: 0
         children:
-        - rid: 6521141465164808273
-        - rid: 6521141465164808266
+        - rid: 6521141465164808275
+        - rid: 6521141465164808272
+    - rid: 6521141465164808279
+      type: {class: Succeed, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
+      data:
+        state: 0
+        started: 0
+        guid: 3e701d548667b124baaa7cb5480bdaf2
+        position: {x: -870, y: 810}
+        blackboard:
+          keys: []
+        description: 
+        drawGizmos: 0
+        child:
+          rid: 6521141465164808273
