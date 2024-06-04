@@ -4,7 +4,6 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static UnityEngine.Rendering.DebugUI;
 
 [DisallowMultipleComponent]
 
@@ -32,6 +31,21 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         Lua.RegisterFunction("GiveItemToPlayer", this, SymbolExtensions.GetMethodInfo(() => GiveItemToPlayer(string.Empty, 0.0)));
         Lua.RegisterFunction("GiveWeaponToPlayer", this, SymbolExtensions.GetMethodInfo(() => GiveWeaponToPlayer(string.Empty, 0.0)));
         Lua.RegisterFunction("IncreaseChanceToAvoidDamageOfCharacter", this, SymbolExtensions.GetMethodInfo(() => IncreaseChanceToAvoidDamageOfCharacter(string.Empty, 0.0)));
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.activeSceneChanged += OnActiveSceneChanged_Reset;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.activeSceneChanged -= OnActiveSceneChanged_Reset;
+    }
+
+    private void OnActiveSceneChanged_Reset(Scene arg0, Scene arg1)
+    {
+        StopAllCoroutines();
     }
 
     public void PrepareMainStoryLine()
@@ -210,7 +224,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         GameObject transitionImage = GameObject.FindGameObjectWithTag("transitionImage");
         Animator animator = transitionImage.GetComponent<Animator>();
         animator.SetTrigger("Finish");
-        yield return new WaitForSeconds(15);
+        yield return new WaitForSeconds(13);
         SceneManager.LoadScene(allLocationsDetails[0].sceneName);
     }
 
