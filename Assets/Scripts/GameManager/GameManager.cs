@@ -1,7 +1,6 @@
 using PixelCrushers;
 using PixelCrushers.DialogueSystem;
 using System.Collections;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,98 +8,47 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonMonobehaviour<GameManager>
 {
+    [SerializeField]
+    private Player player;
+
+    [SerializeField]
+    private GameMode gameMode;
+
+    private IGameModeStrategy gameModeStrategy;
 
     #region Tooltip
     [Tooltip("Populate in the order of scenes appearing in the game")]
     #endregion
     public LocationDetailsSO[] allLocationsDetails;
 
-    #region Tooltip
-    [Tooltip("Populate with all waves of endless mode")]
-    #endregion
-    public WaveDetailsSO[] allWavesDetails;
-
-    private int currentWaveNumber = 0;
-
-    public GameState gameState { get; set; }
-
-    protected override void Awake() 
+    private void OnEnable()
     {
-        // Call base class
-        base.Awake();
         Lua.RegisterFunction("GiveItemToPlayer", this, SymbolExtensions.GetMethodInfo(() => GiveItemToPlayer(string.Empty, 0.0)));
         Lua.RegisterFunction("GiveWeaponToPlayer", this, SymbolExtensions.GetMethodInfo(() => GiveWeaponToPlayer(string.Empty, 0.0)));
         Lua.RegisterFunction("IncreaseChanceToAvoidDamageOfCharacter", this, SymbolExtensions.GetMethodInfo(() => IncreaseChanceToAvoidDamageOfCharacter(string.Empty, 0.0)));
     }
 
-    private void OnEnable()
-    {
-        SceneManager.activeSceneChanged += OnActiveSceneChanged_Reset;
-    }
-
     private void OnDisable()
-    {
-        SceneManager.activeSceneChanged -= OnActiveSceneChanged_Reset;
-    }
-
-    private void OnActiveSceneChanged_Reset(Scene arg0, Scene arg1)
-    {
-        StopAllCoroutines();
-    }
-
-    public void PrepareMainStoryLine()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded_StartMainStoryLine;
-    }
-
-    public void PrepareEndlessMode()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded_StartEndlessMode;
-    }
-
-    private void OnSceneLoaded_StartEndlessMode(Scene scene, LoadSceneMode loadSceneMode)
-    {
-        StartEndlessMode();
-        SceneManager.sceneLoaded -= OnSceneLoaded_StartEndlessMode;
-    }
-
-    private void OnSceneLoaded_StartMainStoryLine(Scene scene, LoadSceneMode loadSceneMode)
-    {
-        StartMainStoryLine();
-        SceneManager.sceneLoaded -= OnSceneLoaded_StartMainStoryLine;
-    }
-
-    private void SetQuestUIActive()
-    {
-        DialogueManager.Instance.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
-        DialogueManager.Instance.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
-        DialogueManager.Instance.transform.GetChild(0).GetChild(3).gameObject.SetActive(true);
-        DialogueManager.Instance.transform.GetChild(1).gameObject.SetActive(true);
-    }
-
-    private void StartMainStoryLine()
-    {
-        gameState = GameState.MainStoryLine;
-
-        // Spawn enemies (maybe this will be placed in enemy controller class)
-        EnemySpawner.Instance.SpawnEnemiesImmediately();
-
-        SetQuestUIActive();
-    }
-
-    private void OnDestroy()
     {
         Lua.UnregisterFunction("GiveItemToPlayer");
         Lua.UnregisterFunction("GiveWeaponToPlayer");
         Lua.UnregisterFunction("IncreaseChanceToAvoidDamageOfCharacter");
     }
 
+
+    private void Start()
+    {
+        gameModeStrategy = GameModeFactory.CreateStrategy(gameMode);
+        gameModeStrategy.StartGame(player);
+    }
+
+    
+
     public void PlayerDestroyedEvent_OnDestroyed(DestroyedEvent destroyedEvent, DestroyedEventArgs destroyedEventArgs)
     {
-        StopAllCoroutines();
         // should be expanded
         // SceneManager.LoadScene(Settings.menuSceneName);
-        GetPlayer().destroyedEvent.OnDestroyed -= PlayerDestroyedEvent_OnDestroyed;
+        player.destroyedEvent.OnDestroyed -= PlayerDestroyedEvent_OnDestroyed;
     }
 
     public void LetShowSceneTransitionImage()
@@ -114,7 +62,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         {
             if (weaponDetails.weaponName == weaponName)
             {
-                GetPlayer().AddWeaponToPlayer(weaponDetails, (int)weaponAmmoAmount);
+                player.AddWeaponToPlayer(weaponDetails, (int)weaponAmmoAmount);
             }  
         }
     }
@@ -127,95 +75,12 @@ public class GameManager : SingletonMonobehaviour<GameManager>
             bonusDetails.bonusPercent = (int)percent;
             bonusDetails.bonusType = PowerBonusType.DamageReflector;
 
-            Protection.AddProtection<DamageReflector>(GetPlayer().health, bonusDetails);
+            Protection.AddProtection<DamageReflector>(player.health, bonusDetails);
         }
         else
         {
             // TODO
         }
-    }
-
-    private void StartEndlessMode()
-    {
-        Destroy(GetPlayer().GetComponent<BarkOnIdle>()); // for no errors
-        // disable button guides
-        Destroy(GameObject.Find("/UI/MainUI/AspectRatioFitter/MainScreenUI/ButtonsHelper"));
-        // disable dialogue manager
-        Invoke("DisableDialogueManager", 1);
-        
-        gameState = GameState.EndlessMode;
-        currentWaveNumber = 0;
-        TryLaunchNextWave();
-    }
-
-    private void DisableDialogueManager()
-    {
-        DialogueManager.Instance.gameObject.SetActive(false);
-    }
-
-    public int GetCurrentWaveNumber()
-    {
-        return currentWaveNumber;
-    }
-
-    public void TryLaunchNextWave()
-    {
-        if (currentWaveNumber < allWavesDetails.Length)
-        {
-            currentWaveNumber++;
-            StartCoroutine(LaunchWave(currentWaveNumber));
-            StaticEventHandler.CallWaveLaunchedEvent(currentWaveNumber);
-        }
-    }
-
-    private IEnumerator LaunchWave(int waveNumber = 1)
-    {
-        WaveDetailsSO currentWaveDetails = allWavesDetails[waveNumber - 1];
-
-        for (int i = 0; i < currentWaveDetails.enemyGroupsSpawnDatas.Count; i++)
-        {
-            EnemiesGroupWaveSpawnData groupSpawnData = currentWaveDetails.enemyGroupsSpawnDatas[i];
-            yield return new WaitForSeconds(groupSpawnData.delayAfterPreviousSpawn);
-            
-            Vector2Int[] spawnPositions = ChooseRandomSpawnPositions(groupSpawnData.amountOfEnemiesToSpawn);
-            for (int j = 0; j < groupSpawnData.amountOfEnemiesToSpawn; j++)
-            {
-                EnemyModifiers enemyModifiers = CalculateEnemyModifiers(groupSpawnData.enemiesBaseData[j]); // get enemy modifiers
-                EnemySpawner.Instance.SpawnEnemy(groupSpawnData.enemiesBaseData[j], spawnPositions[j], enemyModifiers);
-            }
-        }
-    }
-
-    private EnemyModifiers CalculateEnemyModifiers(EnemyDetailsSO enemyDetails)
-    {
-        if (currentWaveNumber % Settings.waveAmountBetweenModifiers == 0)
-        {
-            int multiplier = currentWaveNumber / Settings.waveAmountBetweenModifiers;
-            int healthModifierEffect = Mathf.RoundToInt(enemyDetails.baseHealthModifier / 100 * enemyDetails.startingHealthAmount);
-            int damageModifierEffect = 0; // Mathf.RoundToInt(enemyDetails.baseDamageModifier / 100 * ...);
-
-            EnemyModifiers enemyModifiers = new EnemyModifiers() { healthModifierEffect = healthModifierEffect * multiplier, 
-                damageModifierEffect = damageModifierEffect * multiplier };
-            return enemyModifiers;
-        }
-        return null;
-    }
-
-    /// <summary>
-    /// Choose needed number of spawn positions for spawning enemies in the endless mode
-    /// </summary>
-    private Vector2Int[] ChooseRandomSpawnPositions(int positionsNumber)
-    {
-        int[] possibleSpawnPositionsNums = Enumerable.Range(0, Settings.enemySpawnPossiblePositions.Length).ToArray();
-        System.Random r = new System.Random();
-        r.Shuffle(possibleSpawnPositionsNums);
-        
-        Vector2Int[] possibleSpawnPositions = new Vector2Int[positionsNumber];
-        for (int i = 0; i < positionsNumber; i++)
-        {
-            possibleSpawnPositions[i] = Settings.enemySpawnPossiblePositions[possibleSpawnPositionsNums[i]];
-        }
-        return possibleSpawnPositions;
     }
 
     public IEnumerator FinishGameRoutine()
@@ -225,29 +90,12 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         Animator animator = transitionImage.GetComponent<Animator>();
         animator.SetTrigger("Finish");
         yield return new WaitForSeconds(13);
-        SceneManager.LoadScene(allLocationsDetails[0].sceneName);
+        SceneManager.LoadScene(Settings.menuSceneName);
     }
 
     public void HandlePlayerDeath()
     {
-        if (gameState == GameState.MainStoryLine)
-        {
-            SaveSystem.LoadFromSlot(1);
-            Destroy(GetPlayer().gameObject);
-        }
-        else if (gameState == GameState.EndlessMode)
-        {
-            if (GetPlayer().health.UseExtraLive())
-            {
-                // do something
-            }
-            // TODO: else pause game and show statistics instead of this
-            else
-            {
-                GameObject.FindGameObjectWithTag("GameOverPanel").transform.Find("Panel").gameObject.SetActive(true);
-                Time.timeScale = 0f;
-            }
-        }
+        gameModeStrategy.HandlePlayerDeath(player);
     }
 
     /// <summary>
@@ -255,7 +103,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     /// </summary>
     public Player GetPlayer()
     {
-        return PlayerSpawner.Instance.GetPlayer();
+        return player;
     }
 
     // bad realisation - needs refactoring
@@ -275,7 +123,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     public void GiveItem(GameObject itemPrefab)
     {
-        GetPlayer().playerResources.SaveItem(itemPrefab);
+        player.playerResources.SaveItem(itemPrefab);
     }
 
 }

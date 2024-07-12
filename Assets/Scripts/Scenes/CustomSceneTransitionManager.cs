@@ -1,11 +1,10 @@
 using PixelCrushers;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class CustomSceneTransitionManager : StandardSceneTransitionManager
 {
-    public bool areScenesCorrect = false;
+    [HideInInspector] public bool areScenesCorrect = false;
 
     public override IEnumerator LeaveScene()
     {

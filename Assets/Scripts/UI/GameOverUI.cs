@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -23,7 +20,7 @@ public class GameOverUI : MonoBehaviour
 
     private void ShowGameOverPanel(WaveFinishedEventArgs args)
     {
-        if(args.waveNumber == 3)
+        if(args.waveNumber == Settings.wavesAmount)
         {
             Time.timeScale = 0f;
 
