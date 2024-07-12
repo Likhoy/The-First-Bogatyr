@@ -41,9 +41,9 @@ public class WeaponUI : MonoBehaviour
     {
         if(weaponFiredEventArgs.weapon != null)
         {
-            if(weaponFiredEventArgs.weapon is RangedWeapon)
+            if(weaponFiredEventArgs.weapon is RangedWeapon rangedWeapon)
             {
-                countItems.text = "" + (weaponFiredEventArgs.weapon as RangedWeapon).weaponRemainingAmmo;
+                countItems.text = "" + rangedWeapon.weaponRemainingAmmo;
             }
             else
             {
@@ -79,6 +79,7 @@ public class WeaponUI : MonoBehaviour
         {
             weaponBackground.sprite = backgroundSprite[1];
             weaponImage.gameObject.SetActive(false);
+            countItems.text = "";
         }
     }
 

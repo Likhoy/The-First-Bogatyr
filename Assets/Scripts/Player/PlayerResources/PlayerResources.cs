@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(MoneyIncreasedEvent))]
@@ -87,7 +88,26 @@ public class PlayerResources : MonoBehaviour
             System.Random rand = new System.Random();
             audioEffects.PlayOneShot(CMoney[rand.Next(CMoney.Length)]);
 
-            player.AddWeaponToPlayer(weaponProduct.weaponDetails, weaponProduct.weaponAmmoAmount);
+            Weapon weapon = player.FindWeaponByName(weaponProduct.weaponDetails.weaponName);
+
+            if (weapon != null)
+            {
+                if (weapon is RangedWeapon rangedWeapon)
+                {
+                    rangedWeapon.weaponRemainingAmmo += weaponProduct.weaponAmmoAmount;
+                }
+                else
+                {
+                    // do nothing now - found same melee weapon
+                }
+                
+                player.setActiveWeaponEvent.CallSetActiveWeaponEvent(weapon, weapon is RangedWeapon);
+            }
+            else
+            {
+                player.AddWeaponToPlayer(weaponProduct.weaponDetails, weaponProduct.weaponAmmoAmount);
+            }
+            
             player.productBoughtEvent.CallProductBoughtEvent(PlayerMoney);
         }
     }
