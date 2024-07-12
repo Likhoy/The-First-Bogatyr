@@ -24,10 +24,10 @@ public enum EnemyPrefabType
     EndlessMode
 }
 
-public enum GameState
+public enum GameMode
 {
-    MainStoryLine,
-    EndlessMode
+    MainStory,
+    Endless
 }
 
 public enum PowerBonusType

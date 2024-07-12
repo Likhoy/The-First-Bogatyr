@@ -22,11 +22,11 @@ public class BonusUIController : MonoBehaviour
         StaticEventHandler.OnWaveFinished -= ShowBonusPanel;
     }
 
-    private void ShowBonusPanel(WaveFinishedEventArgs obj)
+    private void ShowBonusPanel(WaveFinishedEventArgs args)
     {   
-        if(obj.waveNumber != 3)
+        if(args.waveNumber != Settings.wavesAmount)
         {
-            randomBonuses = BonusHandler.GetRandomBonusesForWave(obj.waveNumber);
+            randomBonuses = BonusHandler.GetRandomBonusesForWave(args.waveDetails);
 
             if (randomBonuses == null)
                 return;

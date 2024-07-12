@@ -1,4 +1,3 @@
-using PixelCrushers;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -91,10 +90,8 @@ public class Player : MonoBehaviour
         this.playerDetails = playerDetails;
 
         // Create player starting weapons
-        if (GameManager.Instance.gameState == GameState.EndlessMode)
-        {
+        if (playerDetails.startingWeapon != null)
             CreatePlayerStartingWeapon();
-        }
 
         // Set player starting health
         SetPlayerHealth();
@@ -124,6 +121,10 @@ public class Player : MonoBehaviour
         // If player has died
         if (healthEventArgs.healthAmount <= 0f)
         {
+            if (health.UseExtraLive())
+            {
+                // do something
+            }
             GameManager.Instance.HandlePlayerDeath();
         }
     }
