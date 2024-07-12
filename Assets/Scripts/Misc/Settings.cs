@@ -87,6 +87,7 @@ public static class Settings
     #region SCENES PARAMETERS
     public const string menuSceneName = "Menu";
     public const string mainSceneName = "MainScene";
+    public const string endlessModeSceneName = "EndlessModeScene";
     public const string purpleWorldSceneName = "PurpleWorld";
     #endregion
 
@@ -102,7 +103,9 @@ public static class Settings
     };
     
     public static readonly Vector3 gatewayPosition = Vector3.zero;
-    
+
+    public const int wavesAmount = 3;
+
     public const int waveAmountBetweenModifiers = 3;
 
     public const int waveBonusesNumber = 3;

@@ -159,7 +159,7 @@ public class Enemy : MonoBehaviour
         DestroyedEvent destroyedEvent = GetComponent<DestroyedEvent>();
         destroyedEvent.CallDestroyedEvent(false, enemyDetails.experienceDrop);
 
-        if (enemyDetails.moneyReward > 0 && SceneManager.GetActiveScene().name != GameManager.Instance.allLocationsDetails[2].sceneName)
+        if (enemyDetails.moneyReward > 0 && SceneManager.GetActiveScene().name != Settings.purpleWorldSceneName)
         {
             for (int i = 0; i < enemyDetails.moneyReward / 100; i++) // needed to add another money values
             {

@@ -38,8 +38,6 @@ public class MainMenu : MonoBehaviour
     {
         DeactivateButtonsAfterClick(continueButton);
 
-        GameManager.Instance.PrepareMainStoryLine();
-
         SaveSystem.LoadFromSlot(1);
     }
 
@@ -50,9 +48,7 @@ public class MainMenu : MonoBehaviour
     {
         DeactivateButtonsAfterClick(endlessModeGameButton);
 
-        GameManager.Instance.PrepareEndlessMode();
-        //SaveSystem.RestartGame(Settings.mainSceneName); 
-        SceneManager.LoadScene(Settings.mainSceneName);
+        SceneManager.LoadScene(Settings.endlessModeSceneName);
     }
 
     /// <summary>
@@ -64,7 +60,6 @@ public class MainMenu : MonoBehaviour
 
         SaveSystem.DeleteSavedGameInSlot(1);
 
-        GameManager.Instance.PrepareMainStoryLine(); // preparations of game states are obligatory
         SaveSystem.RestartGame(Settings.mainSceneName);
         DialogueManager.Instance.ResetDatabase();
     }
