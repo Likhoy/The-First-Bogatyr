@@ -200,7 +200,10 @@ public class Player : MonoBehaviour
     {
         if (weaponList.Count == 1)
         {
-            // here should be the message of deleting last weapon
+            weaponList.Clear();
+
+            // No more weapons
+            setActiveWeaponEvent.CallSetActiveWeaponEvent(null, false);
 
             return;
         }
@@ -233,6 +236,13 @@ public class Player : MonoBehaviour
     public Weapon GetPreviousWeapon(int weaponListPosition)
     {
         return weaponListPosition == 0 ? weaponList.Last() : weaponList[weaponListPosition - 2];
+    }
+
+    public Weapon FindWeaponByName(string weaponName)
+    {
+        return weaponList.Find(weapon => (weapon is MeleeWeapon meleeWeapon) ? 
+        meleeWeapon.weaponDetails.weaponName == weaponName : 
+        (weapon as RangedWeapon).weaponDetails.weaponName == weaponName);
     }
 
     /// <summary>
