@@ -118,7 +118,7 @@ public class EnemyWeaponAI : MonoBehaviour
         
     }*/
 
-    private void MeleeAttack()
+    /*private void MeleeAttack()
     {
         if (meleeWeaponCooldownTimer <= 0)
         {
@@ -127,7 +127,7 @@ public class EnemyWeaponAI : MonoBehaviour
             enemy.meleeAttackEvent.CallMeleeAttackEvent();
             meleeWeaponCooldownTimer = meleeWeapon.weaponDetails.weaponCooldownTime;
         }
-    }
+    }*/
 
     private void EnemyMeleeWeaponCooldownTimer()
     {

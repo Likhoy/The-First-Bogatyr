@@ -7,7 +7,9 @@ public class WavesManager : MonoBehaviour
     #region Tooltip
     [Tooltip("Populate with all waves of endless mode")]
     #endregion
-    public WaveDetailsSO[] allWavesDetails;
+    [SerializeField] private WaveDetailsSO[] allWavesDetails;
+
+    [SerializeField] private Transform[] enemyPossibleSpawnPositions;
 
     private int currentWaveNumber = 0;
 
@@ -35,7 +37,7 @@ public class WavesManager : MonoBehaviour
             EnemiesGroupWaveSpawnData groupSpawnData = currentWaveDetails.enemyGroupsSpawnDatas[i];
             yield return new WaitForSeconds(groupSpawnData.delayAfterPreviousSpawn);
 
-            Vector2Int[] spawnPositions = ChooseRandomSpawnPositions(groupSpawnData.amountOfEnemiesToSpawn);
+            Vector3[] spawnPositions = ChooseRandomSpawnPositions(groupSpawnData.amountOfEnemiesToSpawn);
             for (int j = 0; j < groupSpawnData.amountOfEnemiesToSpawn; j++)
             {
                 EnemyModifiers enemyModifiers = CalculateEnemyModifiers(groupSpawnData.enemiesBaseData[j]); // get enemy modifiers
@@ -65,16 +67,16 @@ public class WavesManager : MonoBehaviour
     /// <summary>
     /// Choose needed number of spawn positions for spawning enemies in the endless mode
     /// </summary>
-    private Vector2Int[] ChooseRandomSpawnPositions(int positionsNumber)
+    private Vector3[] ChooseRandomSpawnPositions(int positionsNumber)
     {
-        int[] possibleSpawnPositionsNums = Enumerable.Range(0, Settings.enemySpawnPossiblePositions.Length).ToArray();
+        int[] possibleSpawnPositionsNums = Enumerable.Range(0, enemyPossibleSpawnPositions.Length).ToArray();
         System.Random r = new System.Random();
         r.Shuffle(possibleSpawnPositionsNums);
 
-        Vector2Int[] possibleSpawnPositions = new Vector2Int[positionsNumber];
+        Vector3[] possibleSpawnPositions = new Vector3[positionsNumber];
         for (int i = 0; i < positionsNumber; i++)
         {
-            possibleSpawnPositions[i] = Settings.enemySpawnPossiblePositions[possibleSpawnPositionsNums[i]];
+            possibleSpawnPositions[i] = enemyPossibleSpawnPositions[possibleSpawnPositionsNums[i]].position;
         }
         return possibleSpawnPositions;
     }

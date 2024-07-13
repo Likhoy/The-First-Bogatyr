@@ -13,7 +13,7 @@ public class DestroyableItem : MonoBehaviour
     [Tooltip("What the starting health for this destroyable item should be")]
     #endregion Tooltip
     [SerializeField] private int startingHealthAmount = 1;
-    public float effectTime = 0.66f;
+    [SerializeField] private float effectTime = 0.66f;
     /*#region SOUND EFFECT
     [Header("SOUND EFFECT")]
     #endregion SOUND EFFECT
@@ -33,8 +33,14 @@ public class DestroyableItem : MonoBehaviour
         dialogueSystemTrigger = GetComponent<DialogueSystemTrigger>();
         healthEvent = GetComponent<HealthEvent>();
         health = GetComponent<ItemHealth>();
-        health.SetStartingHealth(startingHealthAmount);
+        health.SpriteRenderer = GetComponent<SpriteRenderer>();
         //receiveContactDamage = GetComponent<ReceiveContactDamage>();
+    }
+
+    private void Start()
+    {
+        health.SetStartingHealth(startingHealthAmount);
+        health.EffectTime = effectTime;
     }
 
     private void OnEnable()
@@ -52,7 +58,8 @@ public class DestroyableItem : MonoBehaviour
     {
         if (healthEventArgs.healthAmount <= 0f)
         {
-            dialogueSystemTrigger.OnUse();
+            if (dialogueSystemTrigger != null)
+                dialogueSystemTrigger.OnUse();
             Destroy(gameObject);
         }
     }
