@@ -95,9 +95,9 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
     /// <summary>
     /// Spawn enemy variation for usage in the endless mode
     /// </summary>
-    public void SpawnEnemy(EnemyDetailsSO enemyDetails, Vector2Int spawnPosition, EnemyModifiers enemyModifiers = null, Action<DestroyedEvent, DestroyedEventArgs> callback = null)
+    public void SpawnEnemy(EnemyDetailsSO enemyDetails, Vector3 spawnPosition, EnemyModifiers enemyModifiers = null, Action<DestroyedEvent, DestroyedEventArgs> callback = null)
     {
-        CreateEnemy(enemyDetails, EnemyPrefabType.EndlessMode, MainLocationInfo.Grid.CellToWorld((Vector3Int)spawnPosition), enemyModifiers, callback);
+        CreateEnemy(enemyDetails, EnemyPrefabType.EndlessMode, spawnPosition, enemyModifiers, callback);
     }
 
 

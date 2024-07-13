@@ -148,7 +148,7 @@ public class AnimateEnemy : MonoBehaviour
         enemy.animator.SetBool(Settings.isIdle, false);
         enemy.animator.SetBool(Settings.isMoving, false);
         InitializeLookAnimationParameters();
-        float attackAngle = HelperUtilities.GetAngleFromVector((GameManager.Instance.GetPlayer().transform.position - transform.position).normalized);
+        float attackAngle = HelperUtilities.GetAngleFromVector((meleeAttackEventArgs.targetPosition - transform.position).normalized);
         LookDirection lookDirection = HelperUtilities.GetLookDirection(attackAngle);
         SetLookAnimationParameters(lookDirection);
         EnemyMeleeAttackAnimation();

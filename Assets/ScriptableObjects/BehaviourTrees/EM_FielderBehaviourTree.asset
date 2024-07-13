@@ -34,14 +34,17 @@ MonoBehaviour:
   - rid: 842369981355393025
   - rid: 842369981355393071
   - rid: 842369981355393072
-  - rid: 842369981355393074
   - rid: 842369981355393079
+  - rid: 8229271991288594434
+  - rid: 8229271991288594435
+  - rid: 8229271991288594436
+  - rid: 8229271991288594437
   treeState: 0
   blackboard:
     keys:
     - rid: 842369981355393073
-  viewPosition: {x: 489, y: -127, z: 0}
-  viewScale: {x: 0.43232757, y: 0.43232757, z: 1}
+  viewPosition: {x: 309, y: 60, z: 0}
+  viewScale: {x: 0.49717674, y: 0.49717674, z: 1}
   references:
     version: 2
     RefIds:
@@ -116,26 +119,13 @@ MonoBehaviour:
         typeName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral,
           PublicKeyToken=null
         value: {x: 0, y: 0, z: 0}
-    - rid: 842369981355393074
-      type: {class: Sequencer, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
-      data:
-        state: 0
-        started: 0
-        guid: ed1e599da37740c40b2a4869ff98bbbf
-        position: {x: 0, y: 210}
-        blackboard:
-          keys: []
-        description: "\u0414\u0432\u0438\u0436\u0435\u043D\u0438\u0435 \u043A \u043F\u043E\u0440\u0442\u0430\u043B\u0443"
-        drawGizmos: 0
-        children:
-        - rid: 842369981355393079
     - rid: 842369981355393079
       type: {class: TempMoveToPosition, ns: , asm: Assembly-CSharp}
       data:
         state: 0
         started: 0
         guid: c09aee08a84e1344aaff163ccfd689cd
-        position: {x: -30, y: 360}
+        position: {x: 270, y: 330}
         blackboard:
           keys: []
         description: 
@@ -147,7 +137,7 @@ MonoBehaviour:
         stoppingDistance:
           reference:
             rid: -2
-          defaultValue: 0.1
+          defaultValue: 1
         updateRotation:
           reference:
             rid: -2
@@ -162,15 +152,8 @@ MonoBehaviour:
           defaultValue: 1
         targetPosition:
           reference:
-            rid: 842369981355393081
-          defaultValue: {x: 1, y: 0, z: 0}
-    - rid: 842369981355393081
-      type: {class: Vector3Key, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
-      data:
-        name: temp
-        typeName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
-        value: {x: 0, y: 0, z: 0}
+            rid: -2
+          defaultValue: {x: 0, y: 0, z: 0}
     - rid: 6521141458905071616
       type: {class: RootNode, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
       data:
@@ -213,7 +196,7 @@ MonoBehaviour:
         drawGizmos: 0
         children:
         - rid: 6521141465164808264
-        - rid: 842369981355393074
+        - rid: 8229271991288594434
     - rid: 6521141465164808256
       type: {class: CheckDistanceToPlayer, ns: , asm: Assembly-CSharp}
       data:
@@ -382,6 +365,10 @@ MonoBehaviour:
           keys: []
         description: 
         drawGizmos: 0
+        targetPosition:
+          reference:
+            rid: 842369981355393073
+          defaultValue: {x: 0, y: 0, z: 0}
         weaponDetails: {fileID: 11400000, guid: 2e1ed15583bcbba41b04dd5ca28808ab, type: 2}
     - rid: 6521141465164808278
       type: {class: InterruptSelector, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
@@ -410,3 +397,65 @@ MonoBehaviour:
         drawGizmos: 0
         child:
           rid: 6521141465164808273
+    - rid: 8229271991288594434
+      type: {class: Selector, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
+      data:
+        state: 0
+        started: 0
+        guid: 057a103b4b8718f4c8c4747be408db8c
+        position: {x: 15, y: 120}
+        blackboard:
+          keys: []
+        description: "\u041B\u0438\u0431\u043E \u0431\u0435\u0436\u0438\u043C \u043A
+          \u043F\u043E\u0440\u0442\u0430\u043B\u0443, \u043B\u0438\u0431\u043E \u0431\u044C\u0435\u043C
+          \u0435\u0433\u043E"
+        drawGizmos: 0
+        children:
+        - rid: 8229271991288594436
+        - rid: 842369981355393079
+    - rid: 8229271991288594435
+      type: {class: CheckDistanceToTarget, ns: , asm: Assembly-CSharp}
+      data:
+        state: 0
+        started: 0
+        guid: f9b22b25ff8b6064cbbd8598b7b6a41c
+        position: {x: -210, y: 450}
+        blackboard:
+          keys: []
+        description: 
+        drawGizmos: 0
+        distance:
+          reference:
+            rid: -2
+          defaultValue: 1
+        targetPosition: {x: 0, y: 0, z: 0}
+    - rid: 8229271991288594436
+      type: {class: Sequencer, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
+      data:
+        state: 0
+        started: 0
+        guid: ada1b980a104a7348acf633f121ad046
+        position: {x: -90, y: 285}
+        blackboard:
+          keys: []
+        description: 
+        drawGizmos: 0
+        children:
+        - rid: 8229271991288594435
+        - rid: 8229271991288594437
+    - rid: 8229271991288594437
+      type: {class: MeleeAttack, ns: , asm: Assembly-CSharp}
+      data:
+        state: 0
+        started: 0
+        guid: 5344fe60d9867e74aa5c883df9461fda
+        position: {x: 45, y: 450}
+        blackboard:
+          keys: []
+        description: 
+        drawGizmos: 0
+        targetPosition:
+          reference:
+            rid: -2
+          defaultValue: {x: 0, y: 0, z: 0}
+        weaponDetails: {fileID: 11400000, guid: 2e1ed15583bcbba41b04dd5ca28808ab, type: 2}
