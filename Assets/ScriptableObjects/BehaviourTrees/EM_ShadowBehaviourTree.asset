@@ -29,12 +29,15 @@ MonoBehaviour:
   - rid: 842369981355393072
   - rid: 842369981355393074
   - rid: 842369981355393079
+  - rid: 8229271991288594442
+  - rid: 8229271991288594443
+  - rid: 8229271991288594444
   treeState: 0
   blackboard:
     keys:
     - rid: 842369981355393073
-  viewPosition: {x: 564, y: 90, z: 0}
-  viewScale: {x: 0.49717674, y: 0.49717674, z: 1}
+  viewPosition: {x: 450, y: 139, z: 0}
+  viewScale: {x: 0.32690176, y: 0.32690176, z: 1}
   references:
     version: 2
     RefIds:
@@ -87,20 +90,21 @@ MonoBehaviour:
         state: 0
         started: 0
         guid: ed1e599da37740c40b2a4869ff98bbbf
-        position: {x: 0, y: 210}
+        position: {x: -195, y: 210}
         blackboard:
           keys: []
-        description: "\u0414\u0432\u0438\u0436\u0435\u043D\u0438\u0435 \u043A \u043F\u043E\u0440\u0442\u0430\u043B\u0443"
+        description: 
         drawGizmos: 0
         children:
-        - rid: 842369981355393079
+        - rid: 8229271991288594443
+        - rid: 8229271991288594444
     - rid: 842369981355393079
       type: {class: TempMoveToPosition, ns: , asm: Assembly-CSharp}
       data:
         state: 0
         started: 0
         guid: c09aee08a84e1344aaff163ccfd689cd
-        position: {x: -30, y: 360}
+        position: {x: 135, y: 225}
         blackboard:
           keys: []
         description: 
@@ -112,7 +116,7 @@ MonoBehaviour:
         stoppingDistance:
           reference:
             rid: -2
-          defaultValue: 0.1
+          defaultValue: 1
         updateRotation:
           reference:
             rid: -2
@@ -135,7 +139,7 @@ MonoBehaviour:
         state: 0
         started: 0
         guid: 6e89db46-3e6a-4ad4-804b-46e0779096c9
-        position: {x: -495, y: -300}
+        position: {x: -375, y: -435}
         blackboard:
           keys: []
         description: 
@@ -148,7 +152,7 @@ MonoBehaviour:
         state: 0
         started: 0
         guid: 7f3b44acc1e7a3c4a9ff432a355abfd8
-        position: {x: -495, y: -165}
+        position: {x: -375, y: -225}
         blackboard:
           keys: []
         description: 
@@ -164,7 +168,7 @@ MonoBehaviour:
         state: 0
         started: 0
         guid: 65ea91c3da7aeef459f1a8d3fff08122
-        position: {x: -495, y: 0}
+        position: {x: -360, y: -45}
         blackboard:
           keys: []
         description: 
@@ -172,6 +176,7 @@ MonoBehaviour:
         children:
         - rid: 6521141465164808264
         - rid: 842369981355393074
+        - rid: 8229271991288594442
     - rid: 6521141465164808256
       type: {class: CheckDistanceToPlayer, ns: , asm: Assembly-CSharp}
       data:
@@ -279,6 +284,10 @@ MonoBehaviour:
           keys: []
         description: 
         drawGizmos: 0
+        targetPosition:
+          reference:
+            rid: -2
+          defaultValue: {x: 0, y: 0, z: 0}
         weaponDetails: {fileID: 11400000, guid: ac240ae633dffbe48a25a878307c9ee6, type: 2}
     - rid: 6521141465164808278
       type: {class: InterruptSelector, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
@@ -286,7 +295,7 @@ MonoBehaviour:
         state: 0
         started: 0
         guid: f509e0fa2b9a5774aa0ad7d37605fd0a
-        position: {x: -480, y: 420}
+        position: {x: -570, y: 435}
         blackboard:
           keys: []
         description: 
@@ -294,3 +303,49 @@ MonoBehaviour:
         children:
         - rid: 6521141465164808275
         - rid: 6521141465164808266
+    - rid: 8229271991288594442
+      type: {class: Selector, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
+      data:
+        state: 0
+        started: 0
+        guid: b5039f3f267a3444583b6c7fad79fa0c
+        position: {x: 0, y: 75}
+        blackboard:
+          keys: []
+        description: 
+        drawGizmos: 0
+        children:
+        - rid: 842369981355393074
+        - rid: 842369981355393079
+    - rid: 8229271991288594443
+      type: {class: CheckDistanceToTarget, ns: , asm: Assembly-CSharp}
+      data:
+        state: 0
+        started: 0
+        guid: ee505cd32e44a3b45bba13025bca348f
+        position: {x: -300, y: 375}
+        blackboard:
+          keys: []
+        description: 
+        drawGizmos: 0
+        distance:
+          reference:
+            rid: -2
+          defaultValue: 1
+        targetPosition: {x: 0, y: 0, z: 0}
+    - rid: 8229271991288594444
+      type: {class: MeleeAttack, ns: , asm: Assembly-CSharp}
+      data:
+        state: 0
+        started: 0
+        guid: cd38cad4d7c2fc64b87252373051ed94
+        position: {x: -30, y: 375}
+        blackboard:
+          keys: []
+        description: 
+        drawGizmos: 0
+        targetPosition:
+          reference:
+            rid: -2
+          defaultValue: {x: 0, y: 0, z: 0}
+        weaponDetails: {fileID: 11400000, guid: ac240ae633dffbe48a25a878307c9ee6, type: 2}
