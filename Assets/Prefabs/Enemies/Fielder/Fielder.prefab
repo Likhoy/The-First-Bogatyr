@@ -49,7 +49,7 @@ MonoBehaviour:
   contactDamageAmount: 5
   layerMask:
     serializedVersion: 2
-    m_Bits: 136
+    m_Bits: 1160
 --- !u!58 &1648192146671412873
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -3552,7 +3552,7 @@ PrefabInstance:
       insertIndex: 28
       addedObject: {fileID: 7634689953978660055}
     - targetCorrespondingSourceObject: {fileID: 1767373786716691614, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
-      insertIndex: 30
+      insertIndex: -1
       addedObject: {fileID: 3023740316990589545}
   m_SourcePrefab: {fileID: 100100000, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
 --- !u!212 &3333610480645930785 stripped
@@ -3605,7 +3605,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 4987181280448245761}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 2.56
+  m_Radius: 1
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50

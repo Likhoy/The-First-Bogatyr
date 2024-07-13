@@ -21,8 +21,8 @@ public class EnemyHealth : Health
         if (enemy.enemyDetails.hasHitEffect)
         {
             hasHitEffect = true;
-            effectTime = enemy.enemyDetails.hitEffectTime;
-            spriteRenderer = enemy.spriteRendererArray[0];
+            EffectTime = enemy.enemyDetails.hitEffectTime;
+            SpriteRenderer = enemy.spriteRendererArray[0];
         }
 
         // Enable the health bar if required

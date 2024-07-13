@@ -11,8 +11,8 @@ public class Health : MonoBehaviour
     [HideInInspector] public HealthEvent healthEvent;
     private Coroutine effectCoroutine;
     protected bool hasHitEffect = false;
-    protected float effectTime = 0f;
-    protected SpriteRenderer spriteRenderer = null;
+    public float EffectTime { get; set; }
+    public SpriteRenderer SpriteRenderer { get; set; } = null;
     private const float spriteFlashInterval = 0.33f;
     private WaitForSeconds waitForSecondsSpriteFlashInterval = new WaitForSeconds(spriteFlashInterval);
 
@@ -84,7 +84,7 @@ public class Health : MonoBehaviour
             StopCoroutine(effectCoroutine);
 
         // flash red and give period of immunity
-        effectCoroutine = StartCoroutine(PostHitEffectRoutine(effectTime, spriteRenderer));
+        effectCoroutine = StartCoroutine(PostHitEffectRoutine(EffectTime, SpriteRenderer));
 
         /*// If there is post hit immunity then
         if (isImmuneAfterHit)

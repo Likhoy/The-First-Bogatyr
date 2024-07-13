@@ -4,6 +4,8 @@ using TheKiwiCoder;
 [System.Serializable]
 public class MeleeAttack : ActionNode
 {
+    [SerializeField] private NodeProperty<Vector3> targetPosition;
+    
     private MeleeAttackEvent meleeAttackEvent;
 
     [SerializeField] private MeleeWeaponDetailsSO weaponDetails;
@@ -47,7 +49,7 @@ public class MeleeAttack : ActionNode
     private void Attack()
     {
         //audioEffects.PlayOneShot(CMeleeAttack);
-        meleeAttackEvent.CallMeleeAttackEvent();
+        meleeAttackEvent.CallMeleeAttackEvent(targetPosition.Value);
         meleeWeaponCooldownTime = weapon.weaponDetails.weaponCooldownTime;
     }
 }
