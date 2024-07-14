@@ -36,8 +36,9 @@ MonoBehaviour:
   blackboard:
     keys:
     - rid: 842369981355393073
-  viewPosition: {x: 450, y: 139, z: 0}
-  viewScale: {x: 0.32690176, y: 0.32690176, z: 1}
+    - rid: 8229271991288594447
+  viewPosition: {x: 331, y: 198, z: 0}
+  viewScale: {x: 0.49717674, y: 0.49717674, z: 1}
   references:
     version: 2
     RefIds:
@@ -75,7 +76,7 @@ MonoBehaviour:
           defaultValue: {x: 0, y: 0, z: 0}
         target2Position:
           reference:
-            rid: -2
+            rid: 8229271991288594447
           defaultValue: {x: 0, y: 0, z: 0}
     - rid: 842369981355393073
       type: {class: Vector3Key, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
@@ -116,7 +117,7 @@ MonoBehaviour:
         stoppingDistance:
           reference:
             rid: -2
-          defaultValue: 1
+          defaultValue: 0.3
         updateRotation:
           reference:
             rid: -2
@@ -131,7 +132,7 @@ MonoBehaviour:
           defaultValue: 1
         targetPosition:
           reference:
-            rid: -2
+            rid: 8229271991288594447
           defaultValue: {x: 0, y: 0, z: 0}
     - rid: 6521141458905071616
       type: {class: RootNode, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
@@ -332,7 +333,10 @@ MonoBehaviour:
           reference:
             rid: -2
           defaultValue: 1
-        targetPosition: {x: 0, y: 0, z: 0}
+        targetPosition:
+          reference:
+            rid: 8229271991288594447
+          defaultValue: {x: 0, y: 0, z: 0}
     - rid: 8229271991288594444
       type: {class: MeleeAttack, ns: , asm: Assembly-CSharp}
       data:
@@ -346,6 +350,13 @@ MonoBehaviour:
         drawGizmos: 0
         targetPosition:
           reference:
-            rid: -2
+            rid: 8229271991288594447
           defaultValue: {x: 0, y: 0, z: 0}
         weaponDetails: {fileID: 11400000, guid: ac240ae633dffbe48a25a878307c9ee6, type: 2}
+    - rid: 8229271991288594447
+      type: {class: Vector3Key, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
+      data:
+        name: targetPosition
+        typeName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+        value: {x: 0, y: 0, z: 0}

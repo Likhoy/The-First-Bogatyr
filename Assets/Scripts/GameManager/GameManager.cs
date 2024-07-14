@@ -93,6 +93,11 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         SceneManager.LoadScene(Settings.menuSceneName);
     }
 
+    public void EndGame()
+    {
+        gameModeStrategy.EndGame();
+    }
+
     public void HandlePlayerDeath()
     {
         gameModeStrategy.HandlePlayerDeath(player);

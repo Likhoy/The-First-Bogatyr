@@ -6,7 +6,7 @@ public class CheckDistanceToTarget : ActionNode
 {
     [SerializeField] private NodeProperty<float> distance;
 
-    [SerializeField] private Vector3 targetPosition;
+    [SerializeField] private NodeProperty<Vector3> targetPosition;
 
     protected override void OnStart() { }
 
@@ -15,7 +15,7 @@ public class CheckDistanceToTarget : ActionNode
     protected override State OnUpdate()
     {
 
-        if (Vector3.Distance(targetPosition, context.transform.position) < distance.Value)
+        if (Vector3.Distance(targetPosition.Value, context.transform.position) < distance.Value)
             return State.Success;
 
         return State.Failure;

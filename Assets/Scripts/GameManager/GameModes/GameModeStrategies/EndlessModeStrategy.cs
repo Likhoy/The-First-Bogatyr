@@ -14,12 +14,12 @@ public class EndlessModeStrategy : IGameModeStrategy
 
     public void EndGame()
     {
-        //  од дл€ завершени€ бесконечного режима
+        GameObject.FindGameObjectWithTag("GameOverPanel").transform.Find("Panel").gameObject.SetActive(true);
+        Time.timeScale = 0f;
     }
 
     public void HandlePlayerDeath(Player player)
     {
-        GameObject.FindGameObjectWithTag("GameOverPanel").transform.Find("Panel").gameObject.SetActive(true);
-        Time.timeScale = 0f;
+        EndGame();
     }
 }

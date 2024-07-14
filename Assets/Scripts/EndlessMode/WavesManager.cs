@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Linq;
+using TheKiwiCoder;
 using UnityEngine;
 
 public class WavesManager : MonoBehaviour
@@ -11,12 +12,17 @@ public class WavesManager : MonoBehaviour
 
     [SerializeField] private Transform[] enemyPossibleSpawnPositions;
 
+    [SerializeField] private GameObject portal;
+
     private int currentWaveNumber = 0;
 
     private void Start()
     {
+        portal.GetComponent<DestroyedEvent>().OnDestroyed += (DestroyedEvent e, DestroyedEventArgs args) => GameManager.Instance.EndGame();
+
         TryLaunchNextWave();
     }
+
 
     public void TryLaunchNextWave()
     {
@@ -41,7 +47,9 @@ public class WavesManager : MonoBehaviour
             for (int j = 0; j < groupSpawnData.amountOfEnemiesToSpawn; j++)
             {
                 EnemyModifiers enemyModifiers = CalculateEnemyModifiers(groupSpawnData.enemiesBaseData[j]); // get enemy modifiers
-                EnemySpawner.Instance.SpawnEnemy(groupSpawnData.enemiesBaseData[j], spawnPositions[j], enemyModifiers, Enemy_OnDestroyed);
+                GameObject enemySpawned = EnemySpawner.Instance.SpawnEnemy(groupSpawnData.enemiesBaseData[j], spawnPositions[j], enemyModifiers, Enemy_OnDestroyed);
+
+                enemySpawned.GetComponent<BehaviourTreeInstance>().SetBlackboardValue("targetPosition", (Vector3)portal.GetComponent<BoxCollider2D>().ClosestPoint(enemySpawned.transform.position));
             }
         }
     }
