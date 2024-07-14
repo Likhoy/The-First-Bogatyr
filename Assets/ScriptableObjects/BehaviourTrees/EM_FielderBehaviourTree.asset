@@ -43,8 +43,9 @@ MonoBehaviour:
   blackboard:
     keys:
     - rid: 842369981355393073
-  viewPosition: {x: 464, y: 14, z: 0}
-  viewScale: {x: 0.49717674, y: 0.49717674, z: 1}
+    - rid: 8229271991288594445
+  viewPosition: {x: 271, y: -36, z: 0}
+  viewScale: {x: 0.7561437, y: 0.7561437, z: 1}
   references:
     version: 2
     RefIds:
@@ -110,7 +111,7 @@ MonoBehaviour:
           defaultValue: {x: 0, y: 0, z: 0}
         target2Position:
           reference:
-            rid: -2
+            rid: 8229271991288594445
           defaultValue: {x: 0, y: 0, z: 0}
     - rid: 842369981355393073
       type: {class: Vector3Key, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
@@ -137,7 +138,7 @@ MonoBehaviour:
         stoppingDistance:
           reference:
             rid: -2
-          defaultValue: 1
+          defaultValue: 0.7
         updateRotation:
           reference:
             rid: -2
@@ -152,7 +153,7 @@ MonoBehaviour:
           defaultValue: 1
         targetPosition:
           reference:
-            rid: -2
+            rid: 8229271991288594445
           defaultValue: {x: 0, y: 0, z: 0}
     - rid: 6521141458905071616
       type: {class: RootNode, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
@@ -428,7 +429,10 @@ MonoBehaviour:
           reference:
             rid: -2
           defaultValue: 1
-        targetPosition: {x: 0, y: 0, z: 0}
+        targetPosition:
+          reference:
+            rid: 8229271991288594445
+          defaultValue: {x: 0, y: 0, z: 0}
     - rid: 8229271991288594436
       type: {class: Sequencer, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
       data:
@@ -459,3 +463,10 @@ MonoBehaviour:
             rid: -2
           defaultValue: {x: 0, y: 0, z: 0}
         weaponDetails: {fileID: 11400000, guid: 2e1ed15583bcbba41b04dd5ca28808ab, type: 2}
+    - rid: 8229271991288594445
+      type: {class: Vector3Key, ns: TheKiwiCoder, asm: thekiwicoder.behaviourtreeeditor}
+      data:
+        name: targetPosition
+        typeName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+        value: {x: 0, y: 0, z: 0}
