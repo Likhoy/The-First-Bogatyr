@@ -125,7 +125,10 @@ public class Player : MonoBehaviour
             {
                 // do something
             }
-            GameManager.Instance.HandlePlayerDeath();
+            else
+            {
+                GameManager.Instance.HandlePlayerDeath();
+            }
         }
     }
 
