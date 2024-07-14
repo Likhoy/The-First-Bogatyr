@@ -27,6 +27,7 @@ public class DestroyableItem : MonoBehaviour
     private ItemHealth health;
     private ReceiveContactDamage receiveContactDamage;
     private DialogueSystemTrigger dialogueSystemTrigger;
+    private DestroyedEvent destroyedEvent;
 
     private void Awake()
     {
@@ -34,6 +35,7 @@ public class DestroyableItem : MonoBehaviour
         healthEvent = GetComponent<HealthEvent>();
         health = GetComponent<ItemHealth>();
         health.SpriteRenderer = GetComponent<SpriteRenderer>();
+        destroyedEvent = GetComponent<DestroyedEvent>();
         //receiveContactDamage = GetComponent<ReceiveContactDamage>();
     }
 
@@ -60,6 +62,8 @@ public class DestroyableItem : MonoBehaviour
         {
             if (dialogueSystemTrigger != null)
                 dialogueSystemTrigger.OnUse();
+            if (destroyedEvent != null)
+                destroyedEvent.CallDestroyedEvent(false, 0);
             Destroy(gameObject);
         }
     }

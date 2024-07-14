@@ -95,16 +95,16 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
     /// <summary>
     /// Spawn enemy variation for usage in the endless mode
     /// </summary>
-    public void SpawnEnemy(EnemyDetailsSO enemyDetails, Vector3 spawnPosition, EnemyModifiers enemyModifiers = null, Action<DestroyedEvent, DestroyedEventArgs> callback = null)
+    public GameObject SpawnEnemy(EnemyDetailsSO enemyDetails, Vector3 spawnPosition, EnemyModifiers enemyModifiers = null, Action<DestroyedEvent, DestroyedEventArgs> callback = null)
     {
-        CreateEnemy(enemyDetails, EnemyPrefabType.EndlessMode, spawnPosition, enemyModifiers, callback);
+        return CreateEnemy(enemyDetails, EnemyPrefabType.EndlessMode, spawnPosition, enemyModifiers, callback);
     }
 
 
     /// <summary>
     /// Create an enemy in the specified position
     /// </summary>
-    private void CreateEnemy(EnemyDetailsSO enemyDetails, EnemyPrefabType enemyPrefabType, Vector3 position, EnemyModifiers enemyModifiers = null, Action<DestroyedEvent, DestroyedEventArgs> callback = null)
+    private GameObject CreateEnemy(EnemyDetailsSO enemyDetails, EnemyPrefabType enemyPrefabType, Vector3 position, EnemyModifiers enemyModifiers = null, Action<DestroyedEvent, DestroyedEventArgs> callback = null)
     {
         // keep track of the number of enemies spawned so far 
         EnemiesSpawnedSoFar++;
@@ -128,6 +128,8 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
         {
             destroyedEvent.OnDestroyed += callback;
         }
+
+        return enemy;
     }
 
     /// <summary>
