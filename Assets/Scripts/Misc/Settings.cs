@@ -25,7 +25,9 @@ public static class Settings
     public const float baseSpeedForPlayerAnimations = 8f;
 
     // Animator parameters - Enemy
-    public static float baseSpeedForEnemyAnimations = 3f;
+    public const float baseSpeedForEnemyAnimations = 3f;
+
+    public const float enemyAnimationSpeedMultiplier = 0.2f;
 
     #endregion ANIMATOR PARAMETERS
 

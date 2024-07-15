@@ -1,5 +1,5 @@
 using TheKiwiCoder;
-using Unity.VisualScripting;
+using UnityEngine;
 
 [System.Serializable]
 public class TempMoveToPosition : MoveToPosition
@@ -25,8 +25,10 @@ public class TempMoveToPosition : MoveToPosition
         context.agent.acceleration = acceleration.Value;
         context.agent.isStopped = false;
 
+        Vector2 moveDirection = (targetPosition.Value - context.transform.position).normalized;
+
         movementToPositionEvent.CallMovementToPositionEvent(
-                    targetPosition.Value, context.transform.position, speed.Value, (targetPosition.Value - context.transform.position).normalized);
+                    targetPosition.Value, context.transform.position, speed.Value, moveDirection);
     }
 
     protected override void OnStop()

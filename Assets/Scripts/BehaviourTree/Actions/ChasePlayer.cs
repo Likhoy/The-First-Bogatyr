@@ -36,8 +36,10 @@ public class ChasePlayer : MoveToPosition
             context.agent.SetDestination(playerPosition);
         }
 
+        Vector2 moveDirection = (context.agent.destination - context.transform.position).normalized;
+
         movementToPositionEvent.CallMovementToPositionEvent(
-                    context.agent.destination, context.transform.position, speed.Value, (context.agent.destination - context.transform.position).normalized);
+                    context.agent.destination, context.transform.position, speed.Value, moveDirection);
 
         return base.OnUpdate();
     }
