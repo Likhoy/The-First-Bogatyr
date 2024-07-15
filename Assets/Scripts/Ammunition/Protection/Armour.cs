@@ -17,7 +17,7 @@ public class Armour : Protection
         }
         if (durability <= 0)
         {
-            parentHealthReference.protectionsToDelete.Add(this);
+            parentHealthReference.ProtectionsToDelete.Add(this);
         }
     }
 }

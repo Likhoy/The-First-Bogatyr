@@ -17,9 +17,9 @@ public class Health : MonoBehaviour
     private WaitForSeconds waitForSecondsSpriteFlashInterval = new WaitForSeconds(spriteFlashInterval);
 
     [HideInInspector] public bool isDamageable = true;
-    [HideInInspector] public List<Protection> currentProtections = new List<Protection>();
+    [HideInInspector] public List<Protection> CurrentProtections { get; private set; } = new List<Protection>();
     // list of expired protections
-    [HideInInspector] public List<Protection> protectionsToDelete = new List<Protection>();
+    [HideInInspector] public List<Protection> ProtectionsToDelete { get; private set; } = new List<Protection>();
 
     private void Awake()
     {
@@ -41,7 +41,7 @@ public class Health : MonoBehaviour
 
         if (isDamageable)
         {
-            int processedDamage = currentProtections.Count > 0 ? 
+            int processedDamage = CurrentProtections.Count > 0 ? 
                 ProcessRawDamage(damageAmount) : damageAmount;
             
             if (processedDamage == 0)
@@ -58,10 +58,10 @@ public class Health : MonoBehaviour
 
     private int ProcessRawDamage(int rawDamage)
     {
-        protectionsToDelete.ForEach(protection => protection.Rollback());
-        protectionsToDelete.Clear();
+        ProtectionsToDelete.ForEach(protection => protection.Rollback());
+        ProtectionsToDelete.Clear();
         
-        foreach (Protection protection in currentProtections)
+        foreach (Protection protection in CurrentProtections)
         {
             protection.ApplyEffect(ref rawDamage);
             if (rawDamage <= 0)
