@@ -21,15 +21,21 @@ public class MainMenu : MonoBehaviour
         
         DialogueManager.Instance.gameObject.SetActive(true); // might be disabled in endless mode
 
+#if UNITY_EDITOR
         DialogueManager.Instance.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+#endif
     }
 
     private void Start()
     {
         allButtons = new GameObject[5] { continueButton, newGameButton, endlessModeGameButton, settingsButton, exitButton };
 
+#if !UNITY_EDITOR
+        DialogueManager.Instance.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+#endif
+
         // this way of placing disabling of dialogueManager children is intentional
-		DialogueManager.Instance.transform.GetChild(0).GetChild(2).gameObject.SetActive(false);
+        DialogueManager.Instance.transform.GetChild(0).GetChild(2).gameObject.SetActive(false);
         DialogueManager.Instance.transform.GetChild(0).GetChild(3).gameObject.SetActive(false);
         DialogueManager.Instance.transform.GetChild(1).gameObject.SetActive(false);
     }
