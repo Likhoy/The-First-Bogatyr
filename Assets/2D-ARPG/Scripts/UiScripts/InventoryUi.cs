@@ -12,25 +12,25 @@ public class InventoryUi : MonoBehaviour {
 	public Text[] itemQty = new Text[16];
 	public Image[] equipmentIcons = new Image[16];
 	
-	public Image weaponIcons;
-	public Image subWeaponIcons;
-	public Image armorIcons;
-	public Image accIcons;
-	public Image helmIcons;
-	public Image glovesIcons;
-	public Image bootsIcons;
+	// public Image weaponIcons;
+	// public Image subWeaponIcons;
+	// public Image armorIcons;
+	// public Image accIcons;
+	// public Image helmIcons;
+	// public Image glovesIcons;
+	// public Image bootsIcons;
 	
 	public GameObject tooltip;
-	public Image tooltipIcon;
-	public Text tooltipName;
-	public Text tooltipText1;
+	// public Image tooltipIcon;
+	// public Text tooltipName;
+	// public Text tooltipText1;
 
-	public GameObject usableTab;
-	public GameObject equipmentTab;
-	public Text pageText;
+	// public GameObject usableTab;
+	// public GameObject equipmentTab;
+	// public Text pageText;
 	
-	public GameObject database;
-	private ItemData db;
+	// public GameObject database;
+	// private ItemData db;
 	
 	private int maxPage = 1;
 	private int maxPageEq = 1;
@@ -41,16 +41,19 @@ public class InventoryUi : MonoBehaviour {
 	private int eqLength = 8;
 	
 	void Start(){
-		db = database.GetComponent<ItemData>();
+		// db = database.GetComponent<ItemData>();
 		
 		//Set Max Page
 		if(!player && GlobalStatus.mainPlayer){
 			player = GlobalStatus.mainPlayer;
 		}
+		
+		/*
 		if(player){
 			itemLength = player.GetComponent<Inventory>().itemSlot.Length;
 			eqLength = player.GetComponent<Inventory>().equipment.Length;
 		}
+		*/
 		maxPage = itemLength / itemIcons.Length;
 		if(itemLength % itemIcons.Length != 0){
 			maxPage += 1;
@@ -83,6 +86,7 @@ public class InventoryUi : MonoBehaviour {
 			return;
 		}
 
+		/*
 		for(int a = 0; a < itemIcons.Length; a++){
 			if(a + cPage < itemLength){
 				itemIcons[a].GetComponent<Image>().sprite = db.usableItem[player.GetComponent<Inventory>().itemSlot[a + cPage]].icon;
@@ -90,7 +94,9 @@ public class InventoryUi : MonoBehaviour {
 				itemIcons[a].GetComponent<Image>().sprite = db.usableItem[0].icon;
 			}
 		}
+		*/
 		
+		/*
 		for(int q = 0; q < itemQty.Length; q++){
 			if(q + cPage < itemLength){
 				string qty = player.GetComponent<Inventory>().itemQuantity[q + cPage].ToString();
@@ -102,15 +108,17 @@ public class InventoryUi : MonoBehaviour {
 				itemQty[q].GetComponent<Text>().text = "";
 			}
 		}
+		*/
 		
+		/*
 		for(int b = 0; b < equipmentIcons.Length; b++){
 			if(b + ePage < eqLength){
 				equipmentIcons[b].GetComponent<Image>().sprite = db.equipment[player.GetComponent<Inventory>().equipment[b + ePage]].icon;
 			}else{
 				equipmentIcons[b].GetComponent<Image>().sprite = db.equipment[0].icon;
 			}
-		}
-		
+		}*/
+		/*
 		if(weaponIcons){
 			weaponIcons.GetComponent<Image>().sprite = db.equipment[player.GetComponent<Inventory>().weaponEquip].icon;
 		}
@@ -135,9 +143,12 @@ public class InventoryUi : MonoBehaviour {
 		if(moneyText){
 			moneyText.GetComponent<Text>().text = player.GetComponent<Inventory>().cash.ToString();
 		}
+		*/
 	}
 	
 	public void ShowItemTooltip(int slot){
+		
+		/*
 		if(!tooltip || !player || slot + cPage >= itemLength){
 			return;
 		}
@@ -145,12 +156,14 @@ public class InventoryUi : MonoBehaviour {
 		if(player.GetComponent<Inventory>().itemSlot[slot] <= 0){
 			HideTooltip();
 			return;
-		}
+		}*/
 		
+		/*
 		tooltipIcon.GetComponent<Image>().sprite = db.usableItem[player.GetComponent<Inventory>().itemSlot[slot]].icon;
 		tooltipName.GetComponent<Text>().text = db.usableItem[player.GetComponent<Inventory>().itemSlot[slot]].itemName;
 		
 		tooltipText1.GetComponent<Text>().text = db.usableItem[player.GetComponent<Inventory>().itemSlot[slot]].description;
+		*/
 
 		tooltip.SetActive(true);
 	}
@@ -165,10 +178,11 @@ public class InventoryUi : MonoBehaviour {
 			return;
 		}
 		
+		/*
 		tooltipIcon.GetComponent<Image>().sprite = db.equipment[player.GetComponent<Inventory>().equipment[slot]].icon;
 		tooltipName.GetComponent<Text>().text = db.equipment[player.GetComponent<Inventory>().equipment[slot]].itemName;
 		
-		tooltipText1.GetComponent<Text>().text = db.equipment[player.GetComponent<Inventory>().equipment[slot]].description;
+		tooltipText1.GetComponent<Text>().text = db.equipment[player.GetComponent<Inventory>().equipment[slot]].description;*/
 
 		tooltip.SetActive(true);
 	}
@@ -207,10 +221,12 @@ public class InventoryUi : MonoBehaviour {
 			return;
 		}
 		
+		/*
 		tooltipIcon.GetComponent<Image>().sprite = db.equipment[id].icon;
 		tooltipName.GetComponent<Text>().text = db.equipment[id].itemName;
 		
 		tooltipText1.GetComponent<Text>().text = db.equipment[id].description;
+		*/
 
 		tooltip.SetActive(true);
 	}
@@ -238,6 +254,7 @@ public class InventoryUi : MonoBehaviour {
 		ShowEquipmentTooltip(itemSlot + ePage);
 	}
 	
+	/*
 	public void ResetPage(){
 		page = 0;
 		cPage = 0;
@@ -246,8 +263,10 @@ public class InventoryUi : MonoBehaviour {
 			int p = page + 1;
 			pageText.GetComponent<Text>().text = p.ToString();
 		}
-	}
+	}*/
 	
+	
+	/*
 	public void NextPage(){
 		if(page < maxPage - 1){
 			page++;
@@ -257,8 +276,9 @@ public class InventoryUi : MonoBehaviour {
 			int p = page + 1;
 			pageText.GetComponent<Text>().text = p.ToString();
 		}
-	}
+	}*/
 	
+	/*
 	public void NextPageEq(){
 		if(page < maxPageEq -1){
 			page++;
@@ -268,8 +288,9 @@ public class InventoryUi : MonoBehaviour {
 			int p = page + 1;
 			pageText.GetComponent<Text>().text = p.ToString();
 		}
-	}
+	}*/
 	
+	/*
 	public void PreviousPage(){
 		if(page > 0){
 			page--;
@@ -280,8 +301,9 @@ public class InventoryUi : MonoBehaviour {
 			int p = page + 1;
 			pageText.GetComponent<Text>().text = p.ToString();
 		}
-	}
+	}*/
 	
+	/*
 	public void UnEquip(int type){
 		//0 = Weapon, 1 = Armor, 2 = Accessories
 		//3 = Headgear , 4 = Gloves , 5 = Boots
@@ -313,7 +335,9 @@ public class InventoryUi : MonoBehaviour {
 		}
 		ShowOnEquipTooltip(type);
 	}
+	*/
 	
+	/*
 	public void SwapWeapon(){
 		if(!player){
 			return;
@@ -321,7 +345,9 @@ public class InventoryUi : MonoBehaviour {
 		player.GetComponent<Inventory>().SwapWeapon();
 		ShowOnEquipTooltip(3);
 	}
+	*/
 	
+	/*
 	public void CloseMenu(){
 		Time.timeScale = 1.0f;
 		//Cursor.lockState = CursorLockMode.Locked;
@@ -330,21 +356,23 @@ public class InventoryUi : MonoBehaviour {
 		gameObject.SetActive(false);
 		/*if(draggingItemIcon){
 			draggingItemIcon.gameObject.SetActive(false);
-		}*/
+		}#1#
 		//onDiscardArea = false;
 	}
+	*/
 	
+	/*
 	public void OpenUsableTab(){
-		ResetPage();
+		ResetPage();/*
 		usableTab.SetActive(true);
-		equipmentTab.SetActive(false);
+		equipmentTab.SetActive(false);#1#
 	}
 	
 	public void OpenEquipmentTab(){
-		ResetPage();
+		ResetPage();/*
 		usableTab.SetActive(false);
-		equipmentTab.SetActive(true);
-	}
+		equipmentTab.SetActive(true);#1#
+	}*/
 	
 	
 	//public Image draggingItemIcon;
@@ -353,6 +381,7 @@ public class InventoryUi : MonoBehaviour {
 	//public GameObject discardItemConfirmation;
 	//private bool onDiscardArea = false;
 	
+	/*
 	public void OnDragItem(int itemSlot){
 		if(!player || itemSlot + cPage >= itemLength){
 			return;
@@ -368,6 +397,7 @@ public class InventoryUi : MonoBehaviour {
 
 		player.GetComponent<AttackTrigger>().PickupForShortcut(player.GetComponent<Inventory>().itemSlot[itemSlot + cPage] , 1);
 	}
+	*/
 	
 	/*public void OnDropItem(){
 		AttackTrigger atk = player.GetComponent<AttackTrigger>();
@@ -402,6 +432,7 @@ public class InventoryUi : MonoBehaviour {
 		print ("Dragging Area = " + d);
 	}*/
 
+	/*
 	public void OnDragEquipment(int itemSlot){
 		if(!player || itemSlot + ePage >= eqLength){
 			return;
@@ -416,5 +447,5 @@ public class InventoryUi : MonoBehaviour {
 		//draggingItemType = 1;
 
 		player.GetComponent<AttackTrigger>().PickupForShortcut(player.GetComponent<Inventory>().equipment[itemSlot + ePage] , 2);
-	}
+	}*/
 }
