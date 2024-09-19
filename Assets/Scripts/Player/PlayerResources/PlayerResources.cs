@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerResources : MonoBehaviour
 {
     private Player player;
-    private Inventory inventory;
+    // private Inventory inventory;
     public int PlayerMoney { get; private set; }
     public int PlayerExperience { get; private set; }
 
@@ -18,7 +18,7 @@ public class PlayerResources : MonoBehaviour
 
     private void Awake()
     {
-        inventory = FindObjectOfType<Inventory>();
+        // inventory = FindObjectOfType<Inventory>();
         moneyIncreasedEvent = GetComponent<MoneyIncreasedEvent>();
         experienceIncreasedEvent = GetComponent<ExperienceIncreasedEvent>();
     }
