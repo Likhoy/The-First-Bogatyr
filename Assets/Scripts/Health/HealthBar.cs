@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HealthBar : MonoBehaviour
+public class HealthBarOur : MonoBehaviour
 {
     #region Header GameObject References
 
