@@ -1364,7 +1364,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &114151369014188190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9362,7 +9362,6 @@ GameObject:
   - component: {fileID: 114883541818687620}
   - component: {fileID: 50213244587006962}
   - component: {fileID: 61531454672282378}
-  - component: {fileID: 114554525057913740}
   - component: {fileID: 114969633570609704}
   - component: {fileID: 114714156545513300}
   - component: {fileID: 114510749826438176}
@@ -9370,6 +9369,7 @@ GameObject:
   - component: {fileID: 82361064473011422}
   - component: {fileID: 114212888971053690}
   - component: {fileID: 4576090863135346267}
+  - component: {fileID: 7010256864863351711}
   m_Layer: 0
   m_Name: Knight-Player
   m_TagString: Untagged
@@ -9895,32 +9895,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.32, y: 0.66}
   m_EdgeRadius: 0
---- !u!114 &114554525057913740
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1322012539695564}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ef31a582ec23444ea5592db79f71e92, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  database: {fileID: 114011746680622798, guid: 1a9cf2bf4d78c4540a7a26e6a66cda69, type: 3}
-  cash: 500
-  itemSlot: 0100000002000000070000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  itemQuantity: 0500000005000000640000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  equipment: 040000000700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  weaponEquip: 1
-  allowWeaponUnequip: 0
-  subWeaponEquip: 0
-  armorEquip: 0
-  hatEquip: 0
-  glovesEquip: 0
-  bootsEquip: 0
-  accessoryEquip: 0
-  replaceAttack: 0
 --- !u!114 &114969633570609704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10108,6 +10082,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 382419a624fff7644a07f0fd8f5c1e40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7010256864863351711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1322012539695564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e532940c496527b448a852343f872338, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  database: {fileID: 0}
+  cash: 500
+  itemSlot: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  itemQuantity: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  equipment: 0000000000000000000000000000000000000000000000000000000000000000
+  weaponEquip: 0
+  allowWeaponUnequip: 0
+  subWeaponEquip: 0
+  armorEquip: 0
+  hatEquip: 0
+  glovesEquip: 0
+  bootsEquip: 0
+  accessoryEquip: 0
+  replaceAttack: 0
 --- !u!1 &1323446244242344
 GameObject:
   m_ObjectHideFlags: 0
@@ -26429,21 +26429,7 @@ MonoBehaviour:
   - {fileID: 114957324214162220}
   - {fileID: 114661449890501368}
   - {fileID: 114981453296076158}
-  weaponIcons: {fileID: 114328749691903340}
-  subWeaponIcons: {fileID: 0}
-  armorIcons: {fileID: 114380922861983948}
-  accIcons: {fileID: 114451680010053684}
-  helmIcons: {fileID: 114894797651213036}
-  glovesIcons: {fileID: 114589697723602978}
-  bootsIcons: {fileID: 114598104037804298}
   tooltip: {fileID: 1601601735611680}
-  tooltipIcon: {fileID: 114240999502283428}
-  tooltipName: {fileID: 114882400450163376}
-  tooltipText1: {fileID: 114045920444205602}
-  usableTab: {fileID: 1667438316317066}
-  equipmentTab: {fileID: 1250132387963442}
-  pageText: {fileID: 114206884564725786}
-  database: {fileID: 1772679060830740, guid: 1a9cf2bf4d78c4540a7a26e6a66cda69, type: 3}
 --- !u!1 &1779894469350388
 GameObject:
   m_ObjectHideFlags: 0
