@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof (Inventory))]
+// [RequireComponent(typeof (Inventory))]
 [RequireComponent(typeof (SkillStatus))]
 [RequireComponent(typeof (UiMaster))]
 [RequireComponent(typeof (Status))]
@@ -138,7 +138,7 @@ public class AttackTrigger : MonoBehaviour{
 		}
 		stat = GetComponent<Status>();
 		inv = GetComponent<Inventory>();
-		itemDB = GetComponent<Inventory>().database;
+		// itemDB = GetComponent<Inventory>().database;   ВЕРНУТЬ !!!!!!!!!!!!
 		skillDB = GetComponent<SkillStatus>().database;
 
 		gameObject.tag = "Player";
