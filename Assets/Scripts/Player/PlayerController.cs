@@ -22,6 +22,9 @@ public class PlayerController : MonoBehaviour
     // [HideInInspector] public List<Item> takeItemList;
     [HideInInspector] public bool isTaking;
     private Player player;
+    [SerializeField] GameObject inventory;
+    [SerializeField] GameObject bestiary;
+    [SerializeField] GameObject map;
     private float moveSpeed;
     private Coroutine playerDashCoroutine;
     private WaitForFixedUpdate waitForFixedUpdate;
@@ -149,7 +152,7 @@ public class PlayerController : MonoBehaviour
         }
 
         after = transform.position;
-        
+
         // if player movement disabled then return
         if (isPlayerMovementDisabled)
             return;
@@ -172,6 +175,36 @@ public class PlayerController : MonoBehaviour
 
         // collecting items by the player controller
         TakeItem();
+
+        if (Input.GetKeyDown(Settings.commandButtons[Command.OpenInventory])) {
+            inventory.SetActive(!inventory.activeInHierarchy);
+            if (inventory.activeInHierarchy) {
+                Time.timeScale = 1f;
+                bestiary.SetActive(false);
+                map.SetActive(false);
+            }
+        }
+
+        if (Input.GetKeyDown(Settings.commandButtons[Command.OpenBestiary])) {
+            bestiary.SetActive(!bestiary.activeInHierarchy);
+            if (bestiary.activeInHierarchy) {
+                Time.timeScale = 1f;
+                map.SetActive(false);
+                inventory.SetActive(false);
+            }
+        }
+
+        if (Input.GetKeyDown(Settings.commandButtons[Command.OpenMap])) {
+            map.SetActive(!map.activeInHierarchy);
+            if (map.activeInHierarchy) {
+                bestiary.SetActive(false);
+                inventory.SetActive(false);
+                // Time.timeScale = 0;
+            }
+            else {
+                // Time.timeScale = 1f;}
+            }
+        }
 
         before = after;
     }
