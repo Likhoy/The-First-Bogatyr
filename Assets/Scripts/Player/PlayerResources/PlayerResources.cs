@@ -54,7 +54,7 @@ public class PlayerResources : MonoBehaviour
 
     public void SaveItem(GameObject itemPrefab)
     {
-        if (inventory.ContainsItem(itemPrefab.GetComponent<Item>().itemID) >= 1)
+        /*if (inventory.ContainsItem(itemPrefab.GetComponent<Item>().itemID) >= 1)
             inventory.AddItem(itemPrefab.GetComponent<Item>());
         else
         {
@@ -62,7 +62,7 @@ public class PlayerResources : MonoBehaviour
             item.GetComponent<CircleCollider2D>().enabled = false;
             item.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
             inventory.AddItem(item.GetComponent<Item>());
-        }
+        }*/
     }
 
     public void TryBuyProduct(Product product) // Монеточки
