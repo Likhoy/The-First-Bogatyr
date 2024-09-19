@@ -138,7 +138,7 @@ public class AttackTrigger : MonoBehaviour{
 		}
 		stat = GetComponent<Status>();
 		inv = GetComponent<Inventory>();
-		// itemDB = GetComponent<Inventory>().database;   ВЕРНУТЬ !!!!!!!!!!!!
+		// itemDB = GetComponent<Inventory>().database;   ВЕРНУТЬ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		skillDB = GetComponent<SkillStatus>().database;
 
 		gameObject.tag = "Player";
@@ -159,7 +159,7 @@ public class AttackTrigger : MonoBehaviour{
 			newCam.GetComponent<CameraFollowPlayer2D>().player = this.transform;
 			mainCam = newCam.gameObject;
 		}
-		SetupInitialShortcut();
+		// SetupInitialShortcut();                 ВЕРНУТЬ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		if(!GetComponent<AudioSource>()){
 			gameObject.AddComponent<AudioSource>();
 		}
