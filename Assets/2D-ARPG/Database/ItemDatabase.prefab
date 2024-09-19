@@ -1,0 +1,1979 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1772679060830740}
+  m_IsPrefabParent: 1
+--- !u!1 &1772679060830740
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4928728069516984}
+  - component: {fileID: 114011746680622798}
+  m_Layer: 0
+  m_Name: ItemDatabase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4928728069516984
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1772679060830740}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.0766771, y: 0.4404479, z: 0.16210938}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114011746680622798
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1772679060830740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15a8f52aa0faf93448c526b37be8ea03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  usableItem:
+  - itemName: 
+    icon: {fileID: 21300000, guid: 1a80d48d33f2308498652e572440c37e, type: 3}
+    dropPrefab: {fileID: 0}
+    useEffect: {fileID: 0}
+    description: 
+    price: 10
+    hpRecover: 0
+    mpRecover: 0
+    unusable: 0
+    unlimited: 0
+    sendMsg: 
+    attackItem:
+      enable: 0
+      attackPrefab: {fileID: 0}
+      atkAnimationTrigger: 
+      attackCast: 0.18
+      attackDelay: 0.12
+  - itemName: Potion
+    icon: {fileID: 21300000, guid: 396e84d28c6ba3640a5a8598fca8c6d5, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: c344572f91cfb7142872110daa46ea6a,
+      type: 2}
+    useEffect: {fileID: 4858437520048840, guid: 51c84056222de894e8ecbca692f567fa,
+      type: 2}
+    description: Restore 100 HP
+    price: 200
+    hpRecover: 100
+    mpRecover: 0
+    unusable: 0
+    unlimited: 0
+    sendMsg: 
+    attackItem:
+      enable: 0
+      attackPrefab: {fileID: 0}
+      atkAnimationTrigger: 
+      attackCast: 0.18
+      attackDelay: 0.12
+  - itemName: Ether
+    icon: {fileID: 21300000, guid: 3ca77bfbbce9cf94d896bb4040e0db87, type: 3}
+    dropPrefab: {fileID: 114871803656903900, guid: 3b3a5017c6d1603448286e7afa5444cc,
+      type: 2}
+    useEffect: {fileID: 4858437520048840, guid: cec37b7b92dd691458ade0900fe127ed,
+      type: 2}
+    description: Restore 50 MP
+    price: 200
+    hpRecover: 0
+    mpRecover: 50
+    unusable: 0
+    unlimited: 0
+    sendMsg: 
+    attackItem:
+      enable: 0
+      attackPrefab: {fileID: 0}
+      atkAnimationTrigger: 
+      attackCast: 0.18
+      attackDelay: 0.12
+  - itemName: Elixir
+    icon: {fileID: 21300000, guid: 1f2f02fdb06c6c540ac1c72b4793bb03, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    useEffect: {fileID: 4858437520048840, guid: 51c84056222de894e8ecbca692f567fa,
+      type: 2}
+    description: Restore 100 HP & 50 MP
+    price: 300
+    hpRecover: 100
+    mpRecover: 50
+    unusable: 0
+    unlimited: 0
+    sendMsg: 
+    attackItem:
+      enable: 0
+      attackPrefab: {fileID: 0}
+      atkAnimationTrigger: 
+      attackCast: 0.18
+      attackDelay: 0.12
+  - itemName: High Potion
+    icon: {fileID: 21300000, guid: 91267cf37c3a58949ac7cc82870d982c, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    useEffect: {fileID: 4858437520048840, guid: cec37b7b92dd691458ade0900fe127ed,
+      type: 2}
+    description: Restore 500 HP
+    price: 1000
+    hpRecover: 500
+    mpRecover: 0
+    unusable: 0
+    unlimited: 0
+    sendMsg: 
+    attackItem:
+      enable: 0
+      attackPrefab: {fileID: 0}
+      atkAnimationTrigger: 
+      attackCast: 0.18
+      attackDelay: 0.12
+  - itemName: High Ether
+    icon: {fileID: 21300000, guid: 8903c99a1bbbfc546a6d9c9fd3dd55f2, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    useEffect: {fileID: 4858437520048840, guid: cec37b7b92dd691458ade0900fe127ed,
+      type: 2}
+    description: Restore 250 MP
+    price: 1000
+    hpRecover: 0
+    mpRecover: 250
+    unusable: 0
+    unlimited: 0
+    sendMsg: 
+    attackItem:
+      enable: 0
+      attackPrefab: {fileID: 0}
+      atkAnimationTrigger: 
+      attackCast: 0.18
+      attackDelay: 0.12
+  - itemName: High Elixir
+    icon: {fileID: 21300000, guid: f8d3012db820afe4ebd0f3f86ccc4828, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    useEffect: {fileID: 4858437520048840, guid: cec37b7b92dd691458ade0900fe127ed,
+      type: 2}
+    description: Restore 500 HP & 250 MP
+    price: 1500
+    hpRecover: 500
+    mpRecover: 250
+    unusable: 0
+    unlimited: 0
+    sendMsg: 
+    attackItem:
+      enable: 0
+      attackPrefab: {fileID: 0}
+      atkAnimationTrigger: 
+      attackCast: 0.18
+      attackDelay: 0.12
+  - itemName: Arrow
+    icon: {fileID: 21300000, guid: df96498f32716424c931d6a758af26d4, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    useEffect: {fileID: 0}
+    description: 
+    price: 2
+    hpRecover: 0
+    mpRecover: 0
+    unusable: 1
+    unlimited: 0
+    sendMsg: 
+    attackItem:
+      enable: 0
+      attackPrefab: {fileID: 0}
+      atkAnimationTrigger: 
+      attackCast: 0.18
+      attackDelay: 0.12
+  - itemName: Trunk
+    icon: {fileID: 21300000, guid: 0e269cc0d7d1194478bc4538c845f3a9, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    useEffect: {fileID: 0}
+    description: Ingredients Item
+    price: 42
+    hpRecover: 0
+    mpRecover: 0
+    unusable: 1
+    unlimited: 0
+    sendMsg: 
+    attackItem:
+      enable: 0
+      attackPrefab: {fileID: 0}
+      atkAnimationTrigger: 
+      attackCast: 0.18
+      attackDelay: 0.12
+  - itemName: Gel
+    icon: {fileID: 21300000, guid: 97459670a62240c45bb74cc84f49eb5f, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    useEffect: {fileID: 0}
+    description: Ingredients Item
+    price: 38
+    hpRecover: 0
+    mpRecover: 0
+    unusable: 1
+    unlimited: 0
+    sendMsg: 
+    attackItem:
+      enable: 0
+      attackPrefab: {fileID: 0}
+      atkAnimationTrigger: 
+      attackCast: 0.18
+      attackDelay: 0.12
+  - itemName: Elder Trunk
+    icon: {fileID: 21300000, guid: 2b52c3c7d2690ba4298c565409ce0cb1, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    useEffect: {fileID: 0}
+    description: Ingredients Item
+    price: 54
+    hpRecover: 0
+    mpRecover: 0
+    unusable: 1
+    unlimited: 0
+    sendMsg: 
+    attackItem:
+      enable: 0
+      attackPrefab: {fileID: 0}
+      atkAnimationTrigger: 
+      attackCast: 0.18
+      attackDelay: 0.12
+  - itemName: Flame Stone
+    icon: {fileID: 21300000, guid: f3b9c085a8321014d89c00cd2a379ec9, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    useEffect: {fileID: 0}
+    description: Ingredients Item
+    price: 70
+    hpRecover: 0
+    mpRecover: 0
+    unusable: 1
+    unlimited: 0
+    sendMsg: 
+    attackItem:
+      enable: 0
+      attackPrefab: {fileID: 0}
+      atkAnimationTrigger: 
+      attackCast: 0.18
+      attackDelay: 0.12
+  - itemName: Green Herb
+    icon: {fileID: 21300000, guid: 661a441e1acda7a4eb0459651b9c44ce, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    useEffect: {fileID: 0}
+    description: Ingredients Item
+    price: 30
+    hpRecover: 0
+    mpRecover: 0
+    unusable: 1
+    unlimited: 0
+    sendMsg: 
+    attackItem:
+      enable: 0
+      attackPrefab: {fileID: 0}
+      atkAnimationTrigger: 
+      attackCast: 0.18
+      attackDelay: 0.12
+  - itemName: Blue Herb
+    icon: {fileID: 21300000, guid: de1afcbb64669b74f95e3e639b17b009, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    useEffect: {fileID: 0}
+    description: Ingredients Item
+    price: 30
+    hpRecover: 0
+    mpRecover: 0
+    unusable: 1
+    unlimited: 0
+    sendMsg: 
+    attackItem:
+      enable: 0
+      attackPrefab: {fileID: 0}
+      atkAnimationTrigger: 
+      attackCast: 0.18
+      attackDelay: 0.12
+  - itemName: Red Herb
+    icon: {fileID: 21300000, guid: 991b98ebf3b6b8f4e8731f01fe2bd535, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    useEffect: {fileID: 0}
+    description: Ingredients Item
+    price: 30
+    hpRecover: 0
+    mpRecover: 0
+    unusable: 1
+    unlimited: 0
+    sendMsg: 
+    attackItem:
+      enable: 0
+      attackPrefab: {fileID: 0}
+      atkAnimationTrigger: 
+      attackCast: 0.18
+      attackDelay: 0.12
+  - itemName: Iron Ore
+    icon: {fileID: 21300000, guid: 25a0963c2dad85f49bcb34e7e5817392, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    useEffect: {fileID: 0}
+    description: Ingredients Item
+    price: 50
+    hpRecover: 0
+    mpRecover: 0
+    unusable: 1
+    unlimited: 0
+    sendMsg: 
+    attackItem:
+      enable: 0
+      attackPrefab: {fileID: 0}
+      atkAnimationTrigger: 
+      attackCast: 0.18
+      attackDelay: 0.12
+  - itemName: Mystic Crystal Ore
+    icon: {fileID: 21300000, guid: bce8c0850fdd76248baade1e3993e2be, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    useEffect: {fileID: 0}
+    description: Ingredients Item
+    price: 50
+    hpRecover: 0
+    mpRecover: 0
+    unusable: 1
+    unlimited: 0
+    sendMsg: 
+    attackItem:
+      enable: 0
+      attackPrefab: {fileID: 0}
+      atkAnimationTrigger: 
+      attackCast: 0.18
+      attackDelay: 0.12
+  - itemName: Iron Ingot
+    icon: {fileID: 21300000, guid: 17492e75cfd4f924685863651fdcebfc, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    useEffect: {fileID: 0}
+    description: Ingredients Item
+    price: 150
+    hpRecover: 0
+    mpRecover: 0
+    unusable: 1
+    unlimited: 0
+    sendMsg: 
+    attackItem:
+      enable: 0
+      attackPrefab: {fileID: 0}
+      atkAnimationTrigger: 
+      attackCast: 0.18
+      attackDelay: 0.12
+  - itemName: Mystic Crystal Ingot
+    icon: {fileID: 21300000, guid: dce08cc023c74974880ed49f50debe59, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    useEffect: {fileID: 0}
+    description: Ingredients Item
+    price: 150
+    hpRecover: 0
+    mpRecover: 0
+    unusable: 1
+    unlimited: 0
+    sendMsg: 
+    attackItem:
+      enable: 0
+      attackPrefab: {fileID: 0}
+      atkAnimationTrigger: 
+      attackCast: 0.18
+      attackDelay: 0.12
+  equipment:
+  - itemName: 
+    icon: {fileID: 21300000, guid: 1a80d48d33f2308498652e572440c37e, type: 3}
+    dropPrefab: {fileID: 0}
+    canBlock: 0
+    description: 
+    price: 10
+    attack: 0
+    defense: 0
+    magicAttack: 0
+    magicDefense: 0
+    hpBonus: 0
+    mpBonus: 0
+    EquipmentType: 0
+    attackPrefab:
+    - {fileID: 0}
+    attackAnimationTrigger:
+    - 
+    - 
+    - 
+    blockingAnimationTrigger: 
+    whileAttack: 1
+    attackCast: 0.18
+    attackDelay: 0.12
+    soundEffect: {fileID: 0}
+    weaponType: 0
+    chargeAttack: []
+    elementlResistance:
+      normal: 0
+      fire: 0
+      ice: 0
+      thunder: 0
+      earth: 0
+      poison: 0
+      wind: 0
+      holy: 0
+      darkness: 0
+    statusResist:
+      poisonResist: 0
+      silenceResist: 0
+      stunResist: 0
+      frozenResist: 0
+    canDoubleJump: 0
+    autoGuard: 0
+    drainTouch: 0
+    mpReduce: 0
+    requireItemId: 0
+  - itemName: Bronze Sword
+    icon: {fileID: 21300000, guid: e67fd4c7858cf4e47b827c4ce98f6185, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    canBlock: 1
+    description: Attack +5
+    price: 500
+    attack: 5
+    defense: 0
+    magicAttack: 0
+    magicDefense: 0
+    hpBonus: 0
+    mpBonus: 0
+    EquipmentType: 0
+    attackPrefab:
+    - {fileID: 114970523288256178, guid: cb53edc85cc19ba4ebf51904687710c9, type: 2}
+    - {fileID: 114172392820257360, guid: 6b55d090de0a59245a4fc960a477e7b2, type: 2}
+    attackAnimationTrigger:
+    - sword1
+    - sword2
+    blockingAnimationTrigger: guard
+    whileAttack: 0
+    attackCast: 0.18
+    attackDelay: 0.16
+    soundEffect: {fileID: 8300000, guid: 2f4799e6c7eb97b488b6d7d3c3fc2693, type: 3}
+    weaponType: 0
+    chargeAttack: []
+    elementlResistance:
+      normal: 0
+      fire: 0
+      ice: 0
+      thunder: 0
+      earth: 0
+      poison: 0
+      wind: 0
+      holy: 0
+      darkness: 0
+    statusResist:
+      poisonResist: 0
+      silenceResist: 0
+      stunResist: 0
+      frozenResist: 0
+    canDoubleJump: 0
+    autoGuard: 0
+    drainTouch: 0
+    mpReduce: 0
+    requireItemId: 0
+  - itemName: Iron Sword
+    icon: {fileID: 21300000, guid: 235d3caade2be9943bd31de5ffefcfd0, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    canBlock: 1
+    description: Attack +15
+    price: 1500
+    attack: 15
+    defense: 0
+    magicAttack: 0
+    magicDefense: 0
+    hpBonus: 0
+    mpBonus: 0
+    EquipmentType: 0
+    attackPrefab:
+    - {fileID: 114970523288256178, guid: cb53edc85cc19ba4ebf51904687710c9, type: 2}
+    - {fileID: 114172392820257360, guid: 6b55d090de0a59245a4fc960a477e7b2, type: 2}
+    attackAnimationTrigger:
+    - sword1
+    - sword2
+    blockingAnimationTrigger: guard
+    whileAttack: 0
+    attackCast: 0.18
+    attackDelay: 0.16
+    soundEffect: {fileID: 8300000, guid: 2f4799e6c7eb97b488b6d7d3c3fc2693, type: 3}
+    weaponType: 0
+    chargeAttack: []
+    elementlResistance:
+      normal: 0
+      fire: 0
+      ice: 0
+      thunder: 0
+      earth: 0
+      poison: 0
+      wind: 0
+      holy: 0
+      darkness: 0
+    statusResist:
+      poisonResist: 0
+      silenceResist: 0
+      stunResist: 0
+      frozenResist: 0
+    canDoubleJump: 0
+    autoGuard: 0
+    drainTouch: 0
+    mpReduce: 0
+    requireItemId: 0
+  - itemName: Crystal Sword
+    icon: {fileID: 21300000, guid: 9d50fe6ba17034d4ca76bfedcb82bc1b, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    canBlock: 1
+    description: Attack +24
+    price: 2500
+    attack: 24
+    defense: 0
+    magicAttack: 0
+    magicDefense: 0
+    hpBonus: 0
+    mpBonus: 0
+    EquipmentType: 0
+    attackPrefab:
+    - {fileID: 114970523288256178, guid: cb53edc85cc19ba4ebf51904687710c9, type: 2}
+    - {fileID: 114172392820257360, guid: 6b55d090de0a59245a4fc960a477e7b2, type: 2}
+    attackAnimationTrigger:
+    - sword1
+    - sword2
+    blockingAnimationTrigger: guard
+    whileAttack: 0
+    attackCast: 0.18
+    attackDelay: 0.16
+    soundEffect: {fileID: 8300000, guid: 2f4799e6c7eb97b488b6d7d3c3fc2693, type: 3}
+    weaponType: 0
+    chargeAttack: []
+    elementlResistance:
+      normal: 0
+      fire: 0
+      ice: 0
+      thunder: 0
+      earth: 0
+      poison: 0
+      wind: 0
+      holy: 0
+      darkness: 0
+    statusResist:
+      poisonResist: 0
+      silenceResist: 0
+      stunResist: 0
+      frozenResist: 0
+    canDoubleJump: 0
+    autoGuard: 0
+    drainTouch: 0
+    mpReduce: 0
+    requireItemId: 0
+  - itemName: Wood Bow
+    icon: {fileID: 21300000, guid: 56300caa40c085a4d896dab9d0249570, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    canBlock: 0
+    description: Attack +3
+    price: 500
+    attack: 3
+    defense: 0
+    magicAttack: 0
+    magicDefense: 0
+    hpBonus: 0
+    mpBonus: 0
+    EquipmentType: 0
+    attackPrefab:
+    - {fileID: 114947202563082482, guid: 1190696b9b6a2014985f6fc850ce81c2, type: 2}
+    attackAnimationTrigger:
+    - bow
+    blockingAnimationTrigger: 
+    whileAttack: 1
+    attackCast: 0.17
+    attackDelay: 0.24
+    soundEffect: {fileID: 8300000, guid: 7397cccde826d4541a19172adc82dd1d, type: 3}
+    weaponType: 1
+    chargeAttack:
+    - chargeEffect: {fileID: 1625474289205842, guid: 8756a2ca850fb65418453f93e02fc6b3,
+        type: 2}
+      chargeAttackPrefab: {fileID: 114195371033531262, guid: 4ee9b4d0fd4033a4697da86d07d3890f,
+        type: 2}
+      chargeTime: 1
+      chargeAnimationTrigger: bow
+      attackCast: 0.15
+      attackDelay: 0.16
+      soundEffect: {fileID: 0}
+      soundEffect2: {fileID: 0}
+      currentChargeTime: 6.352576
+    - chargeEffect: {fileID: 1519547905622888, guid: 83c46df197433d441a50d8555d55a409,
+        type: 2}
+      chargeAttackPrefab: {fileID: 114465384646676470, guid: 5f1ff83c71e11a54abd47cab8fb67f31,
+        type: 2}
+      chargeTime: 2
+      chargeAnimationTrigger: bow
+      attackCast: 0.15
+      attackDelay: 0.16
+      soundEffect: {fileID: 0}
+      soundEffect2: {fileID: 0}
+      currentChargeTime: 7.352576
+    elementlResistance:
+      normal: 0
+      fire: 0
+      ice: 0
+      thunder: 0
+      earth: 0
+      poison: 0
+      wind: 0
+      holy: 0
+      darkness: 0
+    statusResist:
+      poisonResist: 0
+      silenceResist: 0
+      stunResist: 0
+      frozenResist: 0
+    canDoubleJump: 0
+    autoGuard: 0
+    drainTouch: 0
+    mpReduce: 0
+    requireItemId: 7
+  - itemName: Hunter Bow
+    icon: {fileID: 21300000, guid: 1f58e2a06333cfe4ca6ea75eb2205a32, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    canBlock: 0
+    description: Attack +12
+    price: 1500
+    attack: 12
+    defense: 0
+    magicAttack: 0
+    magicDefense: 0
+    hpBonus: 0
+    mpBonus: 0
+    EquipmentType: 0
+    attackPrefab:
+    - {fileID: 114947202563082482, guid: 1190696b9b6a2014985f6fc850ce81c2, type: 2}
+    attackAnimationTrigger:
+    - bow
+    blockingAnimationTrigger: 
+    whileAttack: 1
+    attackCast: 0.17
+    attackDelay: 0.24
+    soundEffect: {fileID: 8300000, guid: 7397cccde826d4541a19172adc82dd1d, type: 3}
+    weaponType: 1
+    chargeAttack:
+    - chargeEffect: {fileID: 1625474289205842, guid: 8756a2ca850fb65418453f93e02fc6b3,
+        type: 2}
+      chargeAttackPrefab: {fileID: 114195371033531262, guid: 4ee9b4d0fd4033a4697da86d07d3890f,
+        type: 2}
+      chargeTime: 1
+      chargeAnimationTrigger: bow
+      attackCast: 0.15
+      attackDelay: 0.16
+      soundEffect: {fileID: 0}
+      soundEffect2: {fileID: 0}
+      currentChargeTime: 42.692516
+    - chargeEffect: {fileID: 1519547905622888, guid: 83c46df197433d441a50d8555d55a409,
+        type: 2}
+      chargeAttackPrefab: {fileID: 114465384646676470, guid: 5f1ff83c71e11a54abd47cab8fb67f31,
+        type: 2}
+      chargeTime: 2
+      chargeAnimationTrigger: bow
+      attackCast: 0.15
+      attackDelay: 0.16
+      soundEffect: {fileID: 0}
+      soundEffect2: {fileID: 0}
+      currentChargeTime: 43.692516
+    elementlResistance:
+      normal: 0
+      fire: 0
+      ice: 0
+      thunder: 0
+      earth: 0
+      poison: 0
+      wind: 0
+      holy: 0
+      darkness: 0
+    statusResist:
+      poisonResist: 0
+      silenceResist: 0
+      stunResist: 0
+      frozenResist: 0
+    canDoubleJump: 0
+    autoGuard: 0
+    drainTouch: 0
+    mpReduce: 0
+    requireItemId: 7
+  - itemName: Crystal Bow
+    icon: {fileID: 21300000, guid: 0ea18d81383a29049b3b52062c04722a, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    canBlock: 0
+    description: Attack +18
+    price: 2500
+    attack: 18
+    defense: 0
+    magicAttack: 0
+    magicDefense: 0
+    hpBonus: 0
+    mpBonus: 0
+    EquipmentType: 0
+    attackPrefab:
+    - {fileID: 114947202563082482, guid: 1190696b9b6a2014985f6fc850ce81c2, type: 2}
+    attackAnimationTrigger:
+    - bow
+    blockingAnimationTrigger: 
+    whileAttack: 1
+    attackCast: 0.17
+    attackDelay: 0.24
+    soundEffect: {fileID: 8300000, guid: 7397cccde826d4541a19172adc82dd1d, type: 3}
+    weaponType: 1
+    chargeAttack:
+    - chargeEffect: {fileID: 1625474289205842, guid: 8756a2ca850fb65418453f93e02fc6b3,
+        type: 2}
+      chargeAttackPrefab: {fileID: 114195371033531262, guid: 4ee9b4d0fd4033a4697da86d07d3890f,
+        type: 2}
+      chargeTime: 1
+      chargeAnimationTrigger: bow
+      attackCast: 0.15
+      attackDelay: 0.16
+      soundEffect: {fileID: 0}
+      soundEffect2: {fileID: 0}
+      currentChargeTime: 42.692516
+    - chargeEffect: {fileID: 1519547905622888, guid: 83c46df197433d441a50d8555d55a409,
+        type: 2}
+      chargeAttackPrefab: {fileID: 114465384646676470, guid: 5f1ff83c71e11a54abd47cab8fb67f31,
+        type: 2}
+      chargeTime: 2
+      chargeAnimationTrigger: bow
+      attackCast: 0.15
+      attackDelay: 0.16
+      soundEffect: {fileID: 0}
+      soundEffect2: {fileID: 0}
+      currentChargeTime: 43.692516
+    elementlResistance:
+      normal: 0
+      fire: 0
+      ice: 0
+      thunder: 0
+      earth: 0
+      poison: 0
+      wind: 0
+      holy: 0
+      darkness: 0
+    statusResist:
+      poisonResist: 0
+      silenceResist: 0
+      stunResist: 0
+      frozenResist: 0
+    canDoubleJump: 0
+    autoGuard: 0
+    drainTouch: 0
+    mpReduce: 0
+    requireItemId: 7
+  - itemName: Wood Staff
+    icon: {fileID: 21300000, guid: bc5240c9818625947ac0db3cde551f2b, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    canBlock: 0
+    description: Magic Attack +5
+    price: 500
+    attack: 0
+    defense: 0
+    magicAttack: 5
+    magicDefense: 0
+    hpBonus: 0
+    mpBonus: 0
+    EquipmentType: 0
+    attackPrefab:
+    - {fileID: 114778748991676086, guid: f3fe2cba066c49649a9518e55cf3c61d, type: 2}
+    attackAnimationTrigger:
+    - staff
+    blockingAnimationTrigger: 
+    whileAttack: 1
+    attackCast: 0.2
+    attackDelay: 0.24
+    soundEffect: {fileID: 0}
+    weaponType: 2
+    chargeAttack:
+    - chargeEffect: {fileID: 1625474289205842, guid: 8756a2ca850fb65418453f93e02fc6b3,
+        type: 2}
+      chargeAttackPrefab: {fileID: 114761944984916970, guid: 82e3922569e7a0d40a3bc5ddd1502491,
+        type: 2}
+      chargeTime: 1
+      chargeAnimationTrigger: staff
+      attackCast: 0.15
+      attackDelay: 0.16
+      soundEffect: {fileID: 0}
+      soundEffect2: {fileID: 0}
+      currentChargeTime: 43.827442
+    - chargeEffect: {fileID: 1519547905622888, guid: 83c46df197433d441a50d8555d55a409,
+        type: 2}
+      chargeAttackPrefab: {fileID: 114820993815017558, guid: c7d04dcf429081547a489a1fa85e901d,
+        type: 2}
+      chargeTime: 2.1
+      chargeAnimationTrigger: staff
+      attackCast: 0.15
+      attackDelay: 0.16
+      soundEffect: {fileID: 0}
+      soundEffect2: {fileID: 0}
+      currentChargeTime: 44.92744
+    elementlResistance:
+      normal: 0
+      fire: 0
+      ice: 0
+      thunder: 0
+      earth: 0
+      poison: 0
+      wind: 0
+      holy: 0
+      darkness: 0
+    statusResist:
+      poisonResist: 0
+      silenceResist: 0
+      stunResist: 0
+      frozenResist: 0
+    canDoubleJump: 0
+    autoGuard: 0
+    drainTouch: 0
+    mpReduce: 0
+    requireItemId: 0
+  - itemName: Elder Staff
+    icon: {fileID: 21300000, guid: 8dba350607db0234982f297252dc471b, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    canBlock: 0
+    description: Magic Attack +15
+    price: 1500
+    attack: 0
+    defense: 0
+    magicAttack: 15
+    magicDefense: 0
+    hpBonus: 0
+    mpBonus: 0
+    EquipmentType: 0
+    attackPrefab:
+    - {fileID: 114778748991676086, guid: f3fe2cba066c49649a9518e55cf3c61d, type: 2}
+    attackAnimationTrigger:
+    - staff
+    blockingAnimationTrigger: 
+    whileAttack: 1
+    attackCast: 0.2
+    attackDelay: 0.24
+    soundEffect: {fileID: 0}
+    weaponType: 2
+    chargeAttack:
+    - chargeEffect: {fileID: 1625474289205842, guid: 8756a2ca850fb65418453f93e02fc6b3,
+        type: 2}
+      chargeAttackPrefab: {fileID: 114761944984916970, guid: 82e3922569e7a0d40a3bc5ddd1502491,
+        type: 2}
+      chargeTime: 1
+      chargeAnimationTrigger: staff
+      attackCast: 0.15
+      attackDelay: 0.16
+      soundEffect: {fileID: 0}
+      soundEffect2: {fileID: 0}
+      currentChargeTime: 42.692516
+    - chargeEffect: {fileID: 1519547905622888, guid: 83c46df197433d441a50d8555d55a409,
+        type: 2}
+      chargeAttackPrefab: {fileID: 114820993815017558, guid: c7d04dcf429081547a489a1fa85e901d,
+        type: 2}
+      chargeTime: 2.1
+      chargeAnimationTrigger: staff
+      attackCast: 0.15
+      attackDelay: 0.16
+      soundEffect: {fileID: 0}
+      soundEffect2: {fileID: 0}
+      currentChargeTime: 43.692516
+    elementlResistance:
+      normal: 0
+      fire: 0
+      ice: 0
+      thunder: 0
+      earth: 0
+      poison: 0
+      wind: 0
+      holy: 0
+      darkness: 0
+    statusResist:
+      poisonResist: 0
+      silenceResist: 0
+      stunResist: 0
+      frozenResist: 0
+    canDoubleJump: 0
+    autoGuard: 0
+    drainTouch: 0
+    mpReduce: 0
+    requireItemId: 0
+  - itemName: Crystal Staff
+    icon: {fileID: 21300000, guid: 1c99e64a1e098094390d5a667754a0b4, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    canBlock: 0
+    description: Magic Attack +25
+    price: 2500
+    attack: 0
+    defense: 0
+    magicAttack: 25
+    magicDefense: 0
+    hpBonus: 0
+    mpBonus: 0
+    EquipmentType: 0
+    attackPrefab:
+    - {fileID: 114778748991676086, guid: f3fe2cba066c49649a9518e55cf3c61d, type: 2}
+    attackAnimationTrigger:
+    - staff
+    blockingAnimationTrigger: 
+    whileAttack: 1
+    attackCast: 0.2
+    attackDelay: 0.24
+    soundEffect: {fileID: 0}
+    weaponType: 2
+    chargeAttack:
+    - chargeEffect: {fileID: 1625474289205842, guid: 8756a2ca850fb65418453f93e02fc6b3,
+        type: 2}
+      chargeAttackPrefab: {fileID: 114761944984916970, guid: 82e3922569e7a0d40a3bc5ddd1502491,
+        type: 2}
+      chargeTime: 1
+      chargeAnimationTrigger: staff
+      attackCast: 0.15
+      attackDelay: 0.16
+      soundEffect: {fileID: 0}
+      soundEffect2: {fileID: 0}
+      currentChargeTime: 42.692516
+    - chargeEffect: {fileID: 1519547905622888, guid: 83c46df197433d441a50d8555d55a409,
+        type: 2}
+      chargeAttackPrefab: {fileID: 114820993815017558, guid: c7d04dcf429081547a489a1fa85e901d,
+        type: 2}
+      chargeTime: 2.1
+      chargeAnimationTrigger: staff
+      attackCast: 0.15
+      attackDelay: 0.16
+      soundEffect: {fileID: 0}
+      soundEffect2: {fileID: 0}
+      currentChargeTime: 43.692516
+    elementlResistance:
+      normal: 0
+      fire: 0
+      ice: 0
+      thunder: 0
+      earth: 0
+      poison: 0
+      wind: 0
+      holy: 0
+      darkness: 0
+    statusResist:
+      poisonResist: 0
+      silenceResist: 0
+      stunResist: 0
+      frozenResist: 0
+    canDoubleJump: 0
+    autoGuard: 0
+    drainTouch: 0
+    mpReduce: 0
+    requireItemId: 0
+  - itemName: Bronze Armor
+    icon: {fileID: 21300000, guid: 7ec038422a66bf94f80b08a266f81fe2, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    canBlock: 0
+    description: 'Defense +5
+
+'
+    price: 500
+    attack: 0
+    defense: 5
+    magicAttack: 0
+    magicDefense: 0
+    hpBonus: 0
+    mpBonus: 0
+    EquipmentType: 1
+    attackPrefab: []
+    attackAnimationTrigger:
+    - 
+    - 
+    - 
+    blockingAnimationTrigger: 
+    whileAttack: 1
+    attackCast: 0.18
+    attackDelay: 0.12
+    soundEffect: {fileID: 0}
+    weaponType: 0
+    chargeAttack: []
+    elementlResistance:
+      normal: 0
+      fire: 0
+      ice: 0
+      thunder: 0
+      earth: 0
+      poison: 0
+      wind: 0
+      holy: 0
+      darkness: 0
+    statusResist:
+      poisonResist: 0
+      silenceResist: 0
+      stunResist: 0
+      frozenResist: 0
+    canDoubleJump: 0
+    autoGuard: 0
+    drainTouch: 0
+    mpReduce: 0
+    requireItemId: 0
+  - itemName: Iron Armor
+    icon: {fileID: 21300000, guid: 84a5c1e482a0fd949993e2363c4e65b1, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    canBlock: 0
+    description: Defense +12
+    price: 1500
+    attack: 0
+    defense: 12
+    magicAttack: 0
+    magicDefense: 0
+    hpBonus: 0
+    mpBonus: 0
+    EquipmentType: 1
+    attackPrefab: []
+    attackAnimationTrigger:
+    - 
+    - 
+    - 
+    blockingAnimationTrigger: 
+    whileAttack: 1
+    attackCast: 0.18
+    attackDelay: 0.12
+    soundEffect: {fileID: 0}
+    weaponType: 0
+    chargeAttack: []
+    elementlResistance:
+      normal: 0
+      fire: 0
+      ice: 0
+      thunder: 0
+      earth: 0
+      poison: 0
+      wind: 0
+      holy: 0
+      darkness: 0
+    statusResist:
+      poisonResist: 0
+      silenceResist: 0
+      stunResist: 0
+      frozenResist: 0
+    canDoubleJump: 0
+    autoGuard: 0
+    drainTouch: 0
+    mpReduce: 0
+    requireItemId: 0
+  - itemName: Crystal Armor
+    icon: {fileID: 21300000, guid: 39ecf9715546eb841ab011f4c1a9b62e, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    canBlock: 0
+    description: Defense +20
+    price: 2400
+    attack: 0
+    defense: 20
+    magicAttack: 0
+    magicDefense: 0
+    hpBonus: 0
+    mpBonus: 0
+    EquipmentType: 1
+    attackPrefab: []
+    attackAnimationTrigger:
+    - 
+    - 
+    - 
+    blockingAnimationTrigger: 
+    whileAttack: 1
+    attackCast: 0.18
+    attackDelay: 0.12
+    soundEffect: {fileID: 0}
+    weaponType: 0
+    chargeAttack: []
+    elementlResistance:
+      normal: 0
+      fire: 0
+      ice: 0
+      thunder: 0
+      earth: 0
+      poison: 0
+      wind: 0
+      holy: 0
+      darkness: 0
+    statusResist:
+      poisonResist: 0
+      silenceResist: 0
+      stunResist: 0
+      frozenResist: 0
+    canDoubleJump: 0
+    autoGuard: 0
+    drainTouch: 0
+    mpReduce: 0
+    requireItemId: 0
+  - itemName: Leather Gloves
+    icon: {fileID: 21300000, guid: a832a72ac35027d449ccf45b630fe6c4, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    canBlock: 0
+    description: 'Attack +3
+
+      Defense +3'
+    price: 500
+    attack: 3
+    defense: 3
+    magicAttack: 0
+    magicDefense: 0
+    hpBonus: 0
+    mpBonus: 0
+    EquipmentType: 4
+    attackPrefab: []
+    attackAnimationTrigger:
+    - 
+    - 
+    - 
+    blockingAnimationTrigger: 
+    whileAttack: 1
+    attackCast: 0.18
+    attackDelay: 0.12
+    soundEffect: {fileID: 0}
+    weaponType: 0
+    chargeAttack: []
+    elementlResistance:
+      normal: 0
+      fire: 0
+      ice: 0
+      thunder: 0
+      earth: 0
+      poison: 0
+      wind: 0
+      holy: 0
+      darkness: 0
+    statusResist:
+      poisonResist: 0
+      silenceResist: 0
+      stunResist: 0
+      frozenResist: 0
+    canDoubleJump: 0
+    autoGuard: 0
+    drainTouch: 0
+    mpReduce: 0
+    requireItemId: 0
+  - itemName: Iron Gloves
+    icon: {fileID: 21300000, guid: 53d76bc133a3fdc4cb42a10a80025585, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    canBlock: 0
+    description: 'Attack +7
+
+      Defense +7'
+    price: 1500
+    attack: 7
+    defense: 7
+    magicAttack: 0
+    magicDefense: 0
+    hpBonus: 0
+    mpBonus: 0
+    EquipmentType: 4
+    attackPrefab: []
+    attackAnimationTrigger:
+    - 
+    - 
+    - 
+    blockingAnimationTrigger: 
+    whileAttack: 1
+    attackCast: 0.18
+    attackDelay: 0.12
+    soundEffect: {fileID: 0}
+    weaponType: 0
+    chargeAttack: []
+    elementlResistance:
+      normal: 0
+      fire: 0
+      ice: 0
+      thunder: 0
+      earth: 0
+      poison: 0
+      wind: 0
+      holy: 0
+      darkness: 0
+    statusResist:
+      poisonResist: 0
+      silenceResist: 0
+      stunResist: 0
+      frozenResist: 0
+    canDoubleJump: 0
+    autoGuard: 0
+    drainTouch: 0
+    mpReduce: 0
+    requireItemId: 0
+  - itemName: Crystal Gloves
+    icon: {fileID: 21300000, guid: ded6ab875f9f79d49978c8fa7ef5559f, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    canBlock: 0
+    description: 'Attack +12
+
+      Defense +12'
+    price: 2400
+    attack: 12
+    defense: 12
+    magicAttack: 0
+    magicDefense: 0
+    hpBonus: 0
+    mpBonus: 0
+    EquipmentType: 4
+    attackPrefab: []
+    attackAnimationTrigger:
+    - 
+    - 
+    - 
+    blockingAnimationTrigger: 
+    whileAttack: 1
+    attackCast: 0.18
+    attackDelay: 0.12
+    soundEffect: {fileID: 0}
+    weaponType: 0
+    chargeAttack: []
+    elementlResistance:
+      normal: 0
+      fire: 0
+      ice: 0
+      thunder: 0
+      earth: 0
+      poison: 0
+      wind: 0
+      holy: 0
+      darkness: 0
+    statusResist:
+      poisonResist: 0
+      silenceResist: 0
+      stunResist: 0
+      frozenResist: 0
+    canDoubleJump: 0
+    autoGuard: 0
+    drainTouch: 0
+    mpReduce: 0
+    requireItemId: 0
+  - itemName: Vampire Gloves
+    icon: {fileID: 21300000, guid: 7a677448fed1c0441941d66e487f937c, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    canBlock: 0
+    description: 'Attack +12
+
+      Defense +12
+
+      10% Life Stolen per hit.'
+    price: 3200
+    attack: 12
+    defense: 12
+    magicAttack: 0
+    magicDefense: 0
+    hpBonus: 0
+    mpBonus: 0
+    EquipmentType: 4
+    attackPrefab: []
+    attackAnimationTrigger:
+    - 
+    - 
+    - 
+    blockingAnimationTrigger: 
+    whileAttack: 1
+    attackCast: 0.18
+    attackDelay: 0.12
+    soundEffect: {fileID: 0}
+    weaponType: 0
+    chargeAttack: []
+    elementlResistance:
+      normal: 0
+      fire: 0
+      ice: 0
+      thunder: 0
+      earth: 0
+      poison: 0
+      wind: 0
+      holy: 0
+      darkness: 0
+    statusResist:
+      poisonResist: 0
+      silenceResist: 0
+      stunResist: 0
+      frozenResist: 0
+    canDoubleJump: 0
+    autoGuard: 0
+    drainTouch: 10
+    mpReduce: 0
+    requireItemId: 0
+  - itemName: Leather Boots
+    icon: {fileID: 21300000, guid: 41361cdd53ef74f429b59320cf10a2f9, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    canBlock: 0
+    description: Magic Defense +5
+    price: 500
+    attack: 0
+    defense: 0
+    magicAttack: 0
+    magicDefense: 5
+    hpBonus: 0
+    mpBonus: 0
+    EquipmentType: 5
+    attackPrefab: []
+    attackAnimationTrigger:
+    - 
+    - 
+    - 
+    blockingAnimationTrigger: 
+    whileAttack: 1
+    attackCast: 0.18
+    attackDelay: 0.12
+    soundEffect: {fileID: 0}
+    weaponType: 0
+    chargeAttack: []
+    elementlResistance:
+      normal: 0
+      fire: 0
+      ice: 0
+      thunder: 0
+      earth: 0
+      poison: 0
+      wind: 0
+      holy: 0
+      darkness: 0
+    statusResist:
+      poisonResist: 0
+      silenceResist: 0
+      stunResist: 0
+      frozenResist: 0
+    canDoubleJump: 0
+    autoGuard: 0
+    drainTouch: 0
+    mpReduce: 0
+    requireItemId: 0
+  - itemName: Iron Boots
+    icon: {fileID: 21300000, guid: 2e85197432cc4234a8591b533016d374, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    canBlock: 0
+    description: Magic Defense +10
+    price: 1500
+    attack: 0
+    defense: 0
+    magicAttack: 0
+    magicDefense: 10
+    hpBonus: 0
+    mpBonus: 0
+    EquipmentType: 5
+    attackPrefab: []
+    attackAnimationTrigger:
+    - 
+    - 
+    - 
+    blockingAnimationTrigger: 
+    whileAttack: 1
+    attackCast: 0.18
+    attackDelay: 0.12
+    soundEffect: {fileID: 0}
+    weaponType: 0
+    chargeAttack: []
+    elementlResistance:
+      normal: 0
+      fire: 0
+      ice: 0
+      thunder: 0
+      earth: 0
+      poison: 0
+      wind: 0
+      holy: 0
+      darkness: 0
+    statusResist:
+      poisonResist: 0
+      silenceResist: 0
+      stunResist: 0
+      frozenResist: 0
+    canDoubleJump: 0
+    autoGuard: 0
+    drainTouch: 0
+    mpReduce: 0
+    requireItemId: 0
+  - itemName: Crystal Boots
+    icon: {fileID: 21300000, guid: 86cfabf20cf492d4da5d5bb4a532e1dd, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    canBlock: 0
+    description: 'Magic Defense +18
+
+      Max MP +50'
+    price: 2400
+    attack: 0
+    defense: 0
+    magicAttack: 0
+    magicDefense: 18
+    hpBonus: 0
+    mpBonus: 50
+    EquipmentType: 5
+    attackPrefab: []
+    attackAnimationTrigger:
+    - 
+    - 
+    - 
+    blockingAnimationTrigger: 
+    whileAttack: 1
+    attackCast: 0.18
+    attackDelay: 0.12
+    soundEffect: {fileID: 0}
+    weaponType: 0
+    chargeAttack: []
+    elementlResistance:
+      normal: 0
+      fire: 0
+      ice: 0
+      thunder: 0
+      earth: 0
+      poison: 0
+      wind: 0
+      holy: 0
+      darkness: 0
+    statusResist:
+      poisonResist: 0
+      silenceResist: 0
+      stunResist: 0
+      frozenResist: 0
+    canDoubleJump: 0
+    autoGuard: 0
+    drainTouch: 0
+    mpReduce: 0
+    requireItemId: 0
+  - itemName: Bronze Helm
+    icon: {fileID: 21300000, guid: 25dde5fe9f813f446bc6748d3afa6b1b, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    canBlock: 0
+    description: Max HP +50
+    price: 500
+    attack: 0
+    defense: 0
+    magicAttack: 0
+    magicDefense: 0
+    hpBonus: 50
+    mpBonus: 0
+    EquipmentType: 3
+    attackPrefab: []
+    attackAnimationTrigger:
+    - 
+    - 
+    - 
+    blockingAnimationTrigger: 
+    whileAttack: 1
+    attackCast: 0.18
+    attackDelay: 0.12
+    soundEffect: {fileID: 0}
+    weaponType: 0
+    chargeAttack: []
+    elementlResistance:
+      normal: 0
+      fire: 0
+      ice: 0
+      thunder: 0
+      earth: 0
+      poison: 0
+      wind: 0
+      holy: 0
+      darkness: 0
+    statusResist:
+      poisonResist: 0
+      silenceResist: 0
+      stunResist: 0
+      frozenResist: 0
+    canDoubleJump: 0
+    autoGuard: 0
+    drainTouch: 0
+    mpReduce: 0
+    requireItemId: 0
+  - itemName: Iron Helm
+    icon: {fileID: 21300000, guid: 7158b2a9d2164a54a9d602d3a5c98ba6, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    canBlock: 0
+    description: Max HP +200
+    price: 1500
+    attack: 0
+    defense: 0
+    magicAttack: 0
+    magicDefense: 0
+    hpBonus: 200
+    mpBonus: 0
+    EquipmentType: 3
+    attackPrefab: []
+    attackAnimationTrigger:
+    - 
+    - 
+    - 
+    blockingAnimationTrigger: 
+    whileAttack: 1
+    attackCast: 0.18
+    attackDelay: 0.12
+    soundEffect: {fileID: 0}
+    weaponType: 0
+    chargeAttack: []
+    elementlResistance:
+      normal: 0
+      fire: 0
+      ice: 0
+      thunder: 0
+      earth: 0
+      poison: 0
+      wind: 0
+      holy: 0
+      darkness: 0
+    statusResist:
+      poisonResist: 0
+      silenceResist: 0
+      stunResist: 0
+      frozenResist: 0
+    canDoubleJump: 0
+    autoGuard: 0
+    drainTouch: 0
+    mpReduce: 0
+    requireItemId: 0
+  - itemName: Crystal Helm
+    icon: {fileID: 21300000, guid: e0373cb6ac9ac424080a428bf438e3d9, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    canBlock: 0
+    description: Max HP +350
+    price: 2400
+    attack: 0
+    defense: 0
+    magicAttack: 0
+    magicDefense: 0
+    hpBonus: 350
+    mpBonus: 0
+    EquipmentType: 3
+    attackPrefab: []
+    attackAnimationTrigger:
+    - 
+    - 
+    - 
+    blockingAnimationTrigger: 
+    whileAttack: 1
+    attackCast: 0.18
+    attackDelay: 0.12
+    soundEffect: {fileID: 0}
+    weaponType: 0
+    chargeAttack: []
+    elementlResistance:
+      normal: 0
+      fire: 0
+      ice: 0
+      thunder: 0
+      earth: 0
+      poison: 0
+      wind: 0
+      holy: 0
+      darkness: 0
+    statusResist:
+      poisonResist: 0
+      silenceResist: 0
+      stunResist: 0
+      frozenResist: 0
+    canDoubleJump: 0
+    autoGuard: 0
+    drainTouch: 0
+    mpReduce: 0
+    requireItemId: 0
+  - itemName: Circlet of Flame
+    icon: {fileID: 21300000, guid: 7da8d4235354a3a40a86511a6843cee7, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    canBlock: 0
+    description: 'Fire Resistance +30%
+
+      Max MP +30'
+    price: 750
+    attack: 0
+    defense: 0
+    magicAttack: 0
+    magicDefense: 0
+    hpBonus: 0
+    mpBonus: 30
+    EquipmentType: 3
+    attackPrefab: []
+    attackAnimationTrigger:
+    - 
+    - 
+    - 
+    blockingAnimationTrigger: 
+    whileAttack: 1
+    attackCast: 0.18
+    attackDelay: 0.12
+    soundEffect: {fileID: 0}
+    weaponType: 0
+    chargeAttack: []
+    elementlResistance:
+      normal: 0
+      fire: 50
+      ice: 0
+      thunder: 0
+      earth: 0
+      poison: 0
+      wind: 0
+      holy: 0
+      darkness: 0
+    statusResist:
+      poisonResist: 0
+      silenceResist: 0
+      stunResist: 0
+      frozenResist: 0
+    canDoubleJump: 0
+    autoGuard: 0
+    drainTouch: 0
+    mpReduce: 0
+    requireItemId: 0
+  - itemName: Circlet of Ice
+    icon: {fileID: 21300000, guid: ae1b1bf37c7218c4eaa4916de81016c6, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    canBlock: 0
+    description: 'Ice Resistance +50%
+
+      Max MP +30'
+    price: 750
+    attack: 0
+    defense: 0
+    magicAttack: 0
+    magicDefense: 0
+    hpBonus: 0
+    mpBonus: 30
+    EquipmentType: 3
+    attackPrefab: []
+    attackAnimationTrigger:
+    - 
+    - 
+    - 
+    blockingAnimationTrigger: 
+    whileAttack: 1
+    attackCast: 0.18
+    attackDelay: 0.12
+    soundEffect: {fileID: 0}
+    weaponType: 0
+    chargeAttack: []
+    elementlResistance:
+      normal: 0
+      fire: 0
+      ice: 50
+      thunder: 0
+      earth: 0
+      poison: 0
+      wind: 0
+      holy: 0
+      darkness: 0
+    statusResist:
+      poisonResist: 0
+      silenceResist: 0
+      stunResist: 0
+      frozenResist: 0
+    canDoubleJump: 0
+    autoGuard: 0
+    drainTouch: 0
+    mpReduce: 0
+    requireItemId: 0
+  - itemName: Circlet of Venom
+    icon: {fileID: 21300000, guid: cda8d1c894203124cac31a13657ac8f9, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    canBlock: 0
+    description: 'Poison Resistance +50%
+
+      Max MP +30'
+    price: 750
+    attack: 0
+    defense: 0
+    magicAttack: 0
+    magicDefense: 0
+    hpBonus: 0
+    mpBonus: 30
+    EquipmentType: 3
+    attackPrefab: []
+    attackAnimationTrigger:
+    - 
+    - 
+    - 
+    blockingAnimationTrigger: 
+    whileAttack: 1
+    attackCast: 0.18
+    attackDelay: 0.12
+    soundEffect: {fileID: 0}
+    weaponType: 0
+    chargeAttack: []
+    elementlResistance:
+      normal: 0
+      fire: 0
+      ice: 0
+      thunder: 0
+      earth: 0
+      poison: 50
+      wind: 0
+      holy: 0
+      darkness: 0
+    statusResist:
+      poisonResist: 50
+      silenceResist: 0
+      stunResist: 0
+      frozenResist: 0
+    canDoubleJump: 0
+    autoGuard: 0
+    drainTouch: 0
+    mpReduce: 0
+    requireItemId: 0
+  - itemName: Guard Ring
+    icon: {fileID: 21300000, guid: bb6aca1c0d354344897374b471bd8e2c, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    canBlock: 0
+    description: Auto Guard 40%
+    price: 1500
+    attack: 0
+    defense: 0
+    magicAttack: 0
+    magicDefense: 0
+    hpBonus: 0
+    mpBonus: 0
+    EquipmentType: 2
+    attackPrefab: []
+    attackAnimationTrigger:
+    - 
+    - 
+    - 
+    blockingAnimationTrigger: 
+    whileAttack: 1
+    attackCast: 0.18
+    attackDelay: 0.12
+    soundEffect: {fileID: 0}
+    weaponType: 0
+    chargeAttack: []
+    elementlResistance:
+      normal: 0
+      fire: 0
+      ice: 0
+      thunder: 0
+      earth: 0
+      poison: 0
+      wind: 0
+      holy: 0
+      darkness: 0
+    statusResist:
+      poisonResist: 0
+      silenceResist: 0
+      stunResist: 0
+      frozenResist: 0
+    canDoubleJump: 0
+    autoGuard: 40
+    drainTouch: 0
+    mpReduce: 0
+    requireItemId: 0
+  - itemName: Blood Ring
+    icon: {fileID: 21300000, guid: 5d129611af809434ea52429d20c690d8, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    canBlock: 0
+    description: 20% Life Stolen per hit.
+    price: 1500
+    attack: 0
+    defense: 0
+    magicAttack: 0
+    magicDefense: 0
+    hpBonus: 0
+    mpBonus: 0
+    EquipmentType: 2
+    attackPrefab: []
+    attackAnimationTrigger:
+    - 
+    - 
+    - 
+    blockingAnimationTrigger: 
+    whileAttack: 1
+    attackCast: 0.18
+    attackDelay: 0.12
+    soundEffect: {fileID: 0}
+    weaponType: 0
+    chargeAttack: []
+    elementlResistance:
+      normal: 0
+      fire: 0
+      ice: 0
+      thunder: 0
+      earth: 0
+      poison: 0
+      wind: 0
+      holy: 0
+      darkness: 0
+    statusResist:
+      poisonResist: 0
+      silenceResist: 0
+      stunResist: 0
+      frozenResist: 0
+    canDoubleJump: 0
+    autoGuard: 0
+    drainTouch: 20
+    mpReduce: 0
+    requireItemId: 0
+  - itemName: Nature Ring
+    icon: {fileID: 21300000, guid: 9b79a10c1b935d241a5236e2aed31031, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    canBlock: 0
+    description: Prevent all abnormals status.
+    price: 1500
+    attack: 0
+    defense: 0
+    magicAttack: 0
+    magicDefense: 0
+    hpBonus: 0
+    mpBonus: 0
+    EquipmentType: 2
+    attackPrefab: []
+    attackAnimationTrigger:
+    - 
+    - 
+    - 
+    blockingAnimationTrigger: 
+    whileAttack: 1
+    attackCast: 0.18
+    attackDelay: 0.12
+    soundEffect: {fileID: 0}
+    weaponType: 0
+    chargeAttack: []
+    elementlResistance:
+      normal: 0
+      fire: 0
+      ice: 0
+      thunder: 0
+      earth: 0
+      poison: 0
+      wind: 0
+      holy: 0
+      darkness: 0
+    statusResist:
+      poisonResist: 100
+      silenceResist: 100
+      stunResist: 100
+      frozenResist: 100
+    canDoubleJump: 0
+    autoGuard: 0
+    drainTouch: 0
+    mpReduce: 0
+    requireItemId: 0
+  - itemName: Mana Ring
+    icon: {fileID: 21300000, guid: ea6789153e6c9444b9f18244f13d6e46, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    canBlock: 0
+    description: MP cost reduce by 30%
+    price: 1500
+    attack: 0
+    defense: 0
+    magicAttack: 0
+    magicDefense: 0
+    hpBonus: 0
+    mpBonus: 0
+    EquipmentType: 2
+    attackPrefab: []
+    attackAnimationTrigger:
+    - 
+    - 
+    - 
+    blockingAnimationTrigger: 
+    whileAttack: 1
+    attackCast: 0.18
+    attackDelay: 0.12
+    soundEffect: {fileID: 0}
+    weaponType: 0
+    chargeAttack: []
+    elementlResistance:
+      normal: 0
+      fire: 0
+      ice: 0
+      thunder: 0
+      earth: 0
+      poison: 0
+      wind: 0
+      holy: 0
+      darkness: 0
+    statusResist:
+      poisonResist: 0
+      silenceResist: 0
+      stunResist: 0
+      frozenResist: 0
+    canDoubleJump: 0
+    autoGuard: 0
+    drainTouch: 0
+    mpReduce: 30
+    requireItemId: 0
+  - itemName: Air Ring
+    icon: {fileID: 21300000, guid: bc5240c9818625947ac0db3cde551f2b, type: 3}
+    dropPrefab: {fileID: 114256888414227794, guid: 1e1f13056c3a69e45a568256daf15968,
+      type: 2}
+    canBlock: 0
+    description: 'Can perform Double Jump.
+
+      (Platformer Only)'
+    price: 1500
+    attack: 0
+    defense: 0
+    magicAttack: 0
+    magicDefense: 0
+    hpBonus: 0
+    mpBonus: 0
+    EquipmentType: 2
+    attackPrefab: []
+    attackAnimationTrigger:
+    - 
+    - 
+    - 
+    blockingAnimationTrigger: 
+    whileAttack: 1
+    attackCast: 0.18
+    attackDelay: 0.12
+    soundEffect: {fileID: 0}
+    weaponType: 0
+    chargeAttack: []
+    elementlResistance:
+      normal: 0
+      fire: 0
+      ice: 0
+      thunder: 0
+      earth: 0
+      poison: 0
+      wind: 0
+      holy: 0
+      darkness: 0
+    statusResist:
+      poisonResist: 0
+      silenceResist: 0
+      stunResist: 0
+      frozenResist: 0
+    canDoubleJump: 1
+    autoGuard: 0
+    drainTouch: 0
+    mpReduce: 0
+    requireItemId: 0
