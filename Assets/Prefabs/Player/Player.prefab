@@ -314,6 +314,16 @@ GameObject:
   - component: {fileID: 4890622985833527882}
   - component: {fileID: 309556796147259791}
   - component: {fileID: 2850912517341721183}
+  - component: {fileID: 5107940697659057351}
+  - component: {fileID: 5250146896848726967}
+  - component: {fileID: 677557975186357289}
+  - component: {fileID: 6046018568552437762}
+  - component: {fileID: 7779911375679255310}
+  - component: {fileID: 5063500281845367215}
+  - component: {fileID: 1637317166307312403}
+  - component: {fileID: 7423366742322306064}
+  - component: {fileID: 448878105639788715}
+  - component: {fileID: 3977268673793740044}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -404,10 +414,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementDetails: {fileID: 11400000, guid: ae5b33cca0289b846ac329a4fc989011, type: 2}
   weaponShootPosition: {fileID: 1316306444452579103}
-  takeItemList: []
   isTaking: 0
   isPlayerDashing: 0
   CAttack: {fileID: 8300000, guid: a18ee1e93c088964a8c139cd6a864be7, type: 3}
+  canDash: 0
+  dashSpeed: 15
+  dashDuration: 0.5
+  joyStick: {fileID: 0}
 --- !u!50 &6461650756046700633
 Rigidbody2D:
   serializedVersion: 4
@@ -471,7 +484,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.08}
-    oldSize: {x: 2.56, y: 2.56}
+    oldSize: {x: 5.12, y: 5.12}
     newSize: {x: 5.12, y: 5.12}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -490,7 +503,7 @@ Animator:
   m_GameObject: {fileID: 6461650756046700630}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c9a0942a484bc8c4885b14a8b131a0da, type: 2}
+  m_Controller: {fileID: 9100000, guid: 90e8161db3565054bb2c38a932354f71, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1117,7 +1130,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.08}
-    oldSize: {x: 2.56, y: 2.56}
+    oldSize: {x: 5.12, y: 5.12}
     newSize: {x: 5.12, y: 5.12}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1320,6 +1333,532 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 73e7b549fd26d40a8abf1ed9063a9d3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5107940697659057351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6461650756046700630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1b65272ed8ab2742a23028e3678469e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainSprite: {fileID: 95694210371499806, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+  deathPrefab: {fileID: 4591280014716052, guid: f7e055393a9b01a489b2f8ed965453d6, type: 3}
+  characterName: Ivan
+  characterId: 0
+  level: 1
+  atk: 4
+  def: 2
+  matk: 3
+  mdef: 1
+  exp: 0
+  maxExp: 100
+  maxHealth: 200
+  health: 200
+  maxMana: 100
+  mana: 100
+  statusPoint: 0
+  skillPoint: 0
+  immortal: 0
+  stability: 0
+  levelUpEffect: {fileID: 4349936092665838, guid: f960235a48e7c7a4b88644205b0045aa, type: 3}
+  poisonEffect: {fileID: 1838535596581266, guid: f03a7a3c2339d3744af16e9add8e0a70, type: 3}
+  silenceEffect: {fileID: 1108436611159726, guid: 69a2a1240bb8a1d40965e89b16cb6c5d, type: 3}
+  stunEffect: {fileID: 1957326969722616, guid: 4b272b7cd88dda947baa72dd9c3eb6a0, type: 3}
+  frozenEffect: {fileID: 1282490574542450, guid: 49c45fc3e10a0cf4bae614187b29abc7, type: 3}
+  additionStat:
+    atk: 0
+    def: 0
+    matk: 0
+    mdef: 0
+    health: 0
+    mana: 0
+  buffsStat:
+    atk: 0
+    def: 0
+    matk: 0
+    mdef: 0
+    health: 0
+    mana: 0
+  totalStat:
+    atk: 0
+    def: 0
+    matk: 0
+    mdef: 0
+    health: 0
+    mana: 0
+  hiddenStatus:
+    doubleJump: 0
+    drainTouch: 0
+    autoGuard: 0
+    mpReduce: 0
+  spawnPointName: 
+  poison: 0
+  silence: 0
+  stun: 0
+  frozen: 0
+  freeze: 0
+  dodge: 0
+  flinch: 0
+  brave: 0
+  barrier: 0
+  mbarrier: 0
+  faith: 0
+  block: 0
+  elementalEffective:
+    normal: 100
+    fire: 100
+    ice: 100
+    thunder: 100
+    earth: 100
+    poison: 100
+    wind: 100
+    holy: 100
+    darkness: 100
+  statusResist:
+    poisonResist: 0
+    silenceResist: 0
+    stunResist: 0
+    frozenResist: 0
+  eqResist:
+    poisonResist: 0
+    silenceResist: 0
+    stunResist: 0
+    frozenResist: 0
+  totalResist:
+    poisonResist: 0
+    silenceResist: 0
+    stunResist: 0
+    frozenResist: 0
+  eqElemental:
+    normal: 0
+    fire: 0
+    ice: 0
+    thunder: 0
+    earth: 0
+    poison: 0
+    wind: 0
+    holy: 0
+    darkness: 0
+  totalElemental: 000000000000000000000000000000000000000000000000000000000000000000000000
+  sendMsgWhenDead: 
+  canControl: 1
+  hurtVoice: {fileID: 0}
+  knock: {x: 0, y: 0, z: 0}
+  knockForce: 700
+--- !u!114 &5250146896848726967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6461650756046700630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c0e7ca4d88c8e4eb39b37e2b34835c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  database: {fileID: 114587703334864070, guid: 9a356f43d2fc759498b31dc14d15634b, type: 3}
+  skillListSlot: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+--- !u!114 &677557975186357289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6461650756046700630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 671c23fe0a21d0145a3c4d72d0e0e6d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventSystem: {fileID: 0}
+  healthBar: {fileID: 0}
+  statusWindow: {fileID: 0}
+  skillTree: {fileID: 0}
+  inventoryWindow: {fileID: 0}
+  questWindow: {fileID: 0}
+  lvUpWarningStatus: {fileID: 0}
+  lvUpWarningSkill: {fileID: 0}
+  newQuestWarning: {fileID: 0}
+--- !u!114 &6046018568552437762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6461650756046700630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cca8e1b37644a584dbd7f582ec2d241e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questDataBase: {fileID: 114333803930475386, guid: 16734100a7bef9344b5d77c89ad702b4, type: 3}
+  questProgress: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  questSlot: 0000000000000000000000000000000000000000
+--- !u!114 &7779911375679255310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6461650756046700630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 308d49216caeca84095bf6141fd23640, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canVasUI: {fileID: 0}
+--- !u!114 &5063500281845367215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6461650756046700630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 382419a624fff7644a07f0fd8f5c1e40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1637317166307312403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6461650756046700630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82d4fca93b7d72646954f962bc5180ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackPoint: {fileID: 4049209505775688, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+  aimAtMouse: 1
+  attackPrefab:
+  - {fileID: 114970523288256178, guid: cb53edc85cc19ba4ebf51904687710c9, type: 3}
+  - {fileID: 114172392820257360, guid: 6b55d090de0a59245a4fc960a477e7b2, type: 3}
+  weaponType: 0
+  notActive: 0
+  requireItemId: 0
+  requireItemName: 
+  attackSoundEffect: {fileID: 0}
+  attackAnimationTrigger:
+  - sword1
+  - sword2
+  blockingAnimationTrigger: 
+  whileAttack: 0
+  canBlock: 0
+  attackCast: 0.18
+  attackDelay: 0.16
+  meleefwd: 0
+  onAttacking: 0
+  actvateObj: {fileID: 0}
+  actvateMsg: 
+  buttonText: 
+  showButton: 0
+  charge:
+  - chargeEffect: {fileID: 1625474289205842, guid: 8756a2ca850fb65418453f93e02fc6b3, type: 3}
+    chargeAttackPrefab: {fileID: 114761944984916970, guid: 82e3922569e7a0d40a3bc5ddd1502491, type: 3}
+    chargeTime: 1
+    chargeAnimationTrigger: sword2
+    attackCast: 0.18
+    attackDelay: 0.16
+    soundEffect: {fileID: 0}
+    soundEffect2: {fileID: 0}
+    currentChargeTime: 0
+  - chargeEffect: {fileID: 1519547905622888, guid: 83c46df197433d441a50d8555d55a409, type: 3}
+    chargeAttackPrefab: {fileID: 114820993815017558, guid: c7d04dcf429081547a489a1fa85e901d, type: 3}
+    chargeTime: 2.2
+    chargeAnimationTrigger: sword2
+    attackCast: 0.18
+    attackDelay: 0.16
+    soundEffect: {fileID: 0}
+    soundEffect2: {fileID: 0}
+    currentChargeTime: 0
+  charging: 0
+  chargingEffect: {fileID: 0}
+  ch: 0
+  canvasElement:
+    activatorButton: {fileID: 1017626590867500, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+    activatorText: {fileID: 114637453827583514, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+  mainCameraPrefab: {fileID: 114096784573403338, guid: 273162996942eb54a865d8c2c256505f, type: 3}
+  sound:
+    attackComboVoice:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    magicCastVoice: {fileID: 0}
+  shortcuts:
+  - type: 1
+    id: 1
+    skill:
+      skillName: 
+      icon: {fileID: 0}
+      skillPrefab: {fileID: 0}
+      skillAnimationTrigger: cast
+      manaCost: 10
+      castTime: 0.2
+      skillDelay: 0.3
+      coolDown: 10
+      description: 
+      castEffect: {fileID: 0}
+      sendMsg: 
+      whileAttack: 1
+      skillSpawn: 0
+      soundEffect: {fileID: 0}
+      requireWeapon: 0
+      requireWeaponType: 0
+      multipleHit: []
+    onCoolDown: 0
+    wait: 0
+    icon: {fileID: 0}
+  - type: 3
+    id: 1
+    skill:
+      skillName: 
+      icon: {fileID: 0}
+      skillPrefab: {fileID: 0}
+      skillAnimationTrigger: 
+      manaCost: 10
+      castTime: 0.5
+      skillDelay: 0.3
+      coolDown: 1
+      description: 
+      castEffect: {fileID: 0}
+      sendMsg: 
+      whileAttack: 1
+      skillSpawn: 0
+      soundEffect: {fileID: 0}
+      requireWeapon: 0
+      requireWeaponType: 0
+      multipleHit: []
+    onCoolDown: 0
+    wait: 0
+    icon: {fileID: 0}
+  - type: 3
+    id: 8
+    skill:
+      skillName: 
+      icon: {fileID: 0}
+      skillPrefab: {fileID: 0}
+      skillAnimationTrigger: 
+      manaCost: 10
+      castTime: 0.5
+      skillDelay: 0.3
+      coolDown: 1
+      description: 
+      castEffect: {fileID: 0}
+      sendMsg: 
+      whileAttack: 1
+      skillSpawn: 0
+      soundEffect: {fileID: 0}
+      requireWeapon: 0
+      requireWeaponType: 0
+      multipleHit: []
+    onCoolDown: 0
+    wait: 0
+    icon: {fileID: 0}
+  - type: 0
+    id: 0
+    skill:
+      skillName: 
+      icon: {fileID: 0}
+      skillPrefab: {fileID: 0}
+      skillAnimationTrigger: 
+      manaCost: 10
+      castTime: 0.5
+      skillDelay: 0.3
+      coolDown: 1
+      description: 
+      castEffect: {fileID: 0}
+      sendMsg: 
+      whileAttack: 1
+      skillSpawn: 0
+      soundEffect: {fileID: 0}
+      requireWeapon: 0
+      requireWeaponType: 0
+      multipleHit: []
+    onCoolDown: 0
+    wait: 0
+    icon: {fileID: 0}
+  - type: 0
+    id: 0
+    skill:
+      skillName: 
+      icon: {fileID: 0}
+      skillPrefab: {fileID: 0}
+      skillAnimationTrigger: 
+      manaCost: 10
+      castTime: 0.5
+      skillDelay: 0.3
+      coolDown: 1
+      description: 
+      castEffect: {fileID: 0}
+      sendMsg: 
+      whileAttack: 1
+      skillSpawn: 0
+      soundEffect: {fileID: 0}
+      requireWeapon: 0
+      requireWeaponType: 0
+      multipleHit: []
+    onCoolDown: 0
+    wait: 0
+    icon: {fileID: 0}
+  - type: 2
+    id: 1
+    skill:
+      skillName: 
+      icon: {fileID: 0}
+      skillPrefab: {fileID: 0}
+      skillAnimationTrigger: 
+      manaCost: 10
+      castTime: 0.5
+      skillDelay: 0.3
+      coolDown: 1
+      description: 
+      castEffect: {fileID: 0}
+      sendMsg: 
+      whileAttack: 1
+      skillSpawn: 0
+      soundEffect: {fileID: 0}
+      requireWeapon: 0
+      requireWeaponType: 0
+      multipleHit: []
+    onCoolDown: 0
+    wait: 0
+    icon: {fileID: 0}
+  - type: 2
+    id: 4
+    skill:
+      skillName: 
+      icon: {fileID: 0}
+      skillPrefab: {fileID: 0}
+      skillAnimationTrigger: 
+      manaCost: 10
+      castTime: 0.5
+      skillDelay: 0.3
+      coolDown: 1
+      description: 
+      castEffect: {fileID: 0}
+      sendMsg: 
+      whileAttack: 1
+      skillSpawn: 0
+      soundEffect: {fileID: 0}
+      requireWeapon: 0
+      requireWeaponType: 0
+      multipleHit: []
+    onCoolDown: 0
+    wait: 0
+    icon: {fileID: 0}
+  - type: 2
+    id: 7
+    skill:
+      skillName: 
+      icon: {fileID: 0}
+      skillPrefab: {fileID: 0}
+      skillAnimationTrigger: cast
+      manaCost: 10
+      castTime: 0.2
+      skillDelay: 0.3
+      coolDown: 1
+      description: 
+      castEffect: {fileID: 0}
+      sendMsg: 
+      whileAttack: 1
+      skillSpawn: 0
+      soundEffect: {fileID: 0}
+      requireWeapon: 0
+      requireWeaponType: 0
+      multipleHit: []
+    onCoolDown: 0
+    wait: 0
+    icon: {fileID: 0}
+  mobileMode: 0
+  facingRight: 0
+  shortcutUi:
+  - iconImage: {fileID: 114707155551016872, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+    coolDownBackground: {fileID: 1074470964794682, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+    coolDownText: {fileID: 114308299088874530, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+    quantityText: {fileID: 114962937631497614, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+  - iconImage: {fileID: 114659117867070818, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+    coolDownBackground: {fileID: 1540258181933568, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+    coolDownText: {fileID: 114259703736568784, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+    quantityText: {fileID: 114476108478929314, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+  - iconImage: {fileID: 114195909923832846, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+    coolDownBackground: {fileID: 1389102069949244, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+    coolDownText: {fileID: 114821592060095178, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+    quantityText: {fileID: 114689672437560882, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+  - iconImage: {fileID: 114656217289290582, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+    coolDownBackground: {fileID: 1296911231404284, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+    coolDownText: {fileID: 114069657392809820, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+    quantityText: {fileID: 114717508926916630, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+  - iconImage: {fileID: 114689947838660302, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+    coolDownBackground: {fileID: 1797773680571642, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+    coolDownText: {fileID: 114695425936215530, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+    quantityText: {fileID: 114339099983417376, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+  - iconImage: {fileID: 114923107122690036, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+    coolDownBackground: {fileID: 1217331375167564, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+    coolDownText: {fileID: 114557962955048102, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+    quantityText: {fileID: 114872944833555120, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+  - iconImage: {fileID: 114257408919671878, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+    coolDownBackground: {fileID: 1424125286172212, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+    coolDownText: {fileID: 114220101829375642, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+    quantityText: {fileID: 114564799366786496, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+  - iconImage: {fileID: 114959350562642332, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+    coolDownBackground: {fileID: 1277519727575544, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+    coolDownText: {fileID: 114290861430581842, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+    quantityText: {fileID: 114422781661640594, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+  textPrinter: {fileID: 114306330429795034, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+  ignoreMonsterCollision: 1
+  dropItemPrefab: {fileID: 0}
+  minion: {fileID: 0}
+  draggingItemIcon: {fileID: 114136303645459026, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+--- !u!114 &7423366742322306064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6461650756046700630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c0e7ca4d88c8e4eb39b37e2b34835c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  database: {fileID: 114587703334864070, guid: 9a356f43d2fc759498b31dc14d15634b, type: 3}
+  skillListSlot: 010000000800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+--- !u!114 &448878105639788715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6461650756046700630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa834b195ceaaa34f8d594742d0ffafd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hpRegen: 0
+  mpRegen: 2
+  hpRegenDelay: 3
+  mpRegenDelay: 3
+--- !u!114 &3977268673793740044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6461650756046700630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 382419a624fff7644a07f0fd8f5c1e40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7890496247401995338
