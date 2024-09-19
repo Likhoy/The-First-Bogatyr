@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     #endregion Tooltip
     [SerializeField] private Transform weaponShootPosition;
 
-    [HideInInspector] public List<Item> takeItemList;
+    // [HideInInspector] public List<Item> takeItemList;
     [HideInInspector] public bool isTaking;
     private Player player;
     private float moveSpeed;
@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
         // create waitForFixedUpdate for use in corountine
         waitForFixedUpdate = new WaitForFixedUpdate();
 
-        takeItemList = new List<Item>();
+        // takeItemList = new List<Item>();
         isTaking = false;
     }
 
@@ -92,14 +92,14 @@ public class PlayerController : MonoBehaviour
 
     private void TakeItem()
     {
-        if (Input.GetKeyDown(Settings.commandButtons[Command.TakeItem]))
+        /*if (Input.GetKeyDown(Settings.commandButtons[Command.TakeItem]))
             if (takeItemList.Count > 0)
             {
                 System.Random r = new System.Random();
                 Item item = takeItemList[r.Next(takeItemList.Count)];
                 takeItemList.Remove(item);
                 item.TakeItem();
-            }
+            }*/
     }
 
     /// <summary>
