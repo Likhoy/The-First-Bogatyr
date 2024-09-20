@@ -112,7 +112,7 @@ public class AttackTrigger : MonoBehaviour{
 
 	private ItemData itemDB;
 	private SkillData skillDB;
-	public bool ignoreMonsterCollision = true;
+	// public bool ignoreMonsterCollision = true;
 	private bool onButtonMenu = false;
 	[HideInInspector]
 	public Transform dropItemPrefab;
@@ -138,12 +138,12 @@ public class AttackTrigger : MonoBehaviour{
 		}
 		stat = GetComponent<Status>();
 		inv = GetComponent<Inventory>();
-		// itemDB = GetComponent<Inventory>().database;   ВЕРНУТЬ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		itemDB = GetComponent<Inventory>().database;
 		skillDB = GetComponent<SkillStatus>().database;
 
 		gameObject.tag = "Player";
-		gameObject.layer = 8; //Set to Character Layer
-		Physics2D.IgnoreLayerCollision(8, 8, ignoreMonsterCollision); 
+		// gameObject.layer = 8; //Set to Character Layer
+		// Physics2D.IgnoreLayerCollision(8, 8, ignoreMonsterCollision); 
 
 		if(transform.eulerAngles.y == 0){
 			facingRight = true;
@@ -159,7 +159,7 @@ public class AttackTrigger : MonoBehaviour{
 			newCam.GetComponent<CameraFollowPlayer2D>().player = this.transform;
 			mainCam = newCam.gameObject;
 		}
-		// SetupInitialShortcut();                 ВЕРНУТЬ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		SetupInitialShortcut(); 
 		if(!GetComponent<AudioSource>()){
 			gameObject.AddComponent<AudioSource>();
 		}
