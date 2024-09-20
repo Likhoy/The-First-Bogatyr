@@ -536,7 +536,7 @@ MonoBehaviour:
   map: {fileID: 0}
   isPlayerDashing: 0
   CAttack: {fileID: 8300000, guid: a18ee1e93c088964a8c139cd6a864be7, type: 3}
-  canDash: 0
+  canDash: 1
   dashSpeed: 15
   dashDuration: 0.5
   joyStick: {fileID: 0}
@@ -1930,7 +1930,6 @@ MonoBehaviour:
     coolDownText: {fileID: 114290861430581842, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
     quantityText: {fileID: 114422781661640594, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
   textPrinter: {fileID: 114306330429795034, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-  ignoreMonsterCollision: 1
   dropItemPrefab: {fileID: 0}
   minion: {fileID: 0}
   draggingItemIcon: {fileID: 114136303645459026, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
