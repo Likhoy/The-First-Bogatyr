@@ -437,9 +437,8 @@ GameObject:
   - component: {fileID: 7779911375679255310}
   - component: {fileID: 5063500281845367215}
   - component: {fileID: 1637317166307312403}
-  - component: {fileID: 7423366742322306064}
   - component: {fileID: 448878105639788715}
-  - component: {fileID: 3977268673793740044}
+  - component: {fileID: 2529362141960948132}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -1467,7 +1466,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1b65272ed8ab2742a23028e3678469e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainSprite: {fileID: 95694210371499806, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+  mainSprite: {fileID: 6461650756046700637}
   deathPrefab: {fileID: 4591280014716052, guid: f7e055393a9b01a489b2f8ed965453d6, type: 3}
   characterName: Ivan
   characterId: 0
@@ -1660,17 +1659,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackPoint: {fileID: 6695044592910338706}
   aimAtMouse: 1
-  attackPrefab:
-  - {fileID: 114970523288256178, guid: cb53edc85cc19ba4ebf51904687710c9, type: 3}
-  - {fileID: 114172392820257360, guid: 6b55d090de0a59245a4fc960a477e7b2, type: 3}
+  attackPrefab: []
   weaponType: 0
   notActive: 0
   requireItemId: 0
   requireItemName: 
   attackSoundEffect: {fileID: 0}
-  attackAnimationTrigger:
-  - sword1
-  - sword2
+  attackAnimationTrigger: []
   blockingAnimationTrigger: 
   whileAttack: 0
   canBlock: 0
@@ -1939,20 +1934,6 @@ MonoBehaviour:
   dropItemPrefab: {fileID: 0}
   minion: {fileID: 0}
   draggingItemIcon: {fileID: 114136303645459026, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
---- !u!114 &7423366742322306064
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6461650756046700630}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86c0e7ca4d88c8e4eb39b37e2b34835c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  database: {fileID: 114587703334864070, guid: 9a356f43d2fc759498b31dc14d15634b, type: 3}
-  skillListSlot: 010000000800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 --- !u!114 &448878105639788715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1969,7 +1950,7 @@ MonoBehaviour:
   mpRegen: 2
   hpRegenDelay: 3
   mpRegenDelay: 3
---- !u!114 &3977268673793740044
+--- !u!114 &2529362141960948132
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1978,9 +1959,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 6461650756046700630}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 382419a624fff7644a07f0fd8f5c1e40, type: 3}
+  m_Script: {fileID: 11500000, guid: e532940c496527b448a852343f872338, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  database: {fileID: 114011746680622798, guid: 1a9cf2bf4d78c4540a7a26e6a66cda69, type: 3}
+  cash: 500
+  itemSlot: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  itemQuantity: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  equipment: 0000000000000000000000000000000000000000000000000000000000000000
+  weaponEquip: 0
+  allowWeaponUnequip: 1
+  subWeaponEquip: 0
+  armorEquip: 0
+  hatEquip: 0
+  glovesEquip: 0
+  bootsEquip: 0
+  accessoryEquip: 0
+  replaceAttack: 0
 --- !u!1 &7890496247401995338
 GameObject:
   m_ObjectHideFlags: 0
