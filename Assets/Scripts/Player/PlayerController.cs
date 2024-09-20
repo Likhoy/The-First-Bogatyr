@@ -515,6 +515,15 @@ public class PlayerController : MonoBehaviour
         onDashing = false;
     }
 
+    public void DashButton()
+    {
+        if (!canDash)
+        {
+            return;
+        }
+        StartCoroutine("Dash");
+    }
+
     public IEnumerator Dash()
     {
         if (!onDashing)

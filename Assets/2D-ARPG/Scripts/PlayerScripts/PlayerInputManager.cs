@@ -7,7 +7,7 @@ public class PlayerInputManager : MonoBehaviour{
     private AttackTrigger atk;
     private UiMaster ui;
     private SaveLoad save;
-    private TopdownInputController2D topDown2d;
+    private PlayerController topDown2d;
     private TopDownFourDirection topDown4d;
     private PlatformerController2D platormer2d;
     private PlatformerTransformation platormerTransformation;
@@ -20,8 +20,8 @@ public class PlayerInputManager : MonoBehaviour{
         if(GetComponent<SaveLoad>()) {
             save = GetComponent<SaveLoad>();
         }
-        if(GetComponent<TopdownInputController2D>()) {
-            topDown2d = GetComponent<TopdownInputController2D>();
+        if(GetComponent<PlayerController>()) {
+            topDown2d = GetComponent<PlayerController>();
         }
         if(GetComponent<TopDownFourDirection>()) {
             topDown4d = GetComponent<TopDownFourDirection>();
