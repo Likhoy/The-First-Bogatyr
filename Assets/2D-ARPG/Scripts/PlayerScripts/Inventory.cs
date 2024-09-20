@@ -446,6 +446,11 @@ public class Inventory : MonoBehaviour
         return full;
     }
 
+    public void AddEquipmentSilent(int id)
+    {
+        AddEquipment(id);
+    }
+
     public bool AddEquipment(int id)
     {
         bool full = false;
