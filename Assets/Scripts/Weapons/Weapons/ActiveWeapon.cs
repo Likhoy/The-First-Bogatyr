@@ -44,7 +44,8 @@ public class ActiveWeapon : MonoBehaviour
 
     private void SetWeaponEvent_OnSetActiveWeapon(SetActiveWeaponEvent setActiveWeaponEvent, SetActiveWeaponEventArgs setActiveWeaponEventArgs)
     {
-        SetWeapon(setActiveWeaponEventArgs.weapon);
+        if (setActiveWeaponEventArgs.weapon != null)
+            SetWeapon(setActiveWeaponEventArgs.weapon);
     }
 
     private void SetWeapon(Weapon weapon)

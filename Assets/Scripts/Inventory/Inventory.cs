@@ -9,17 +9,29 @@ public class Inventory : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.Instance.GetPlayer().GetComponent<DialogueSystemEvents>().conversationEvents.onConversationStart.AddListener(delegate { HideInventory(); });
-        GameManager.Instance.GetPlayer().GetComponent<DialogueSystemEvents>().conversationEvents.onConversationEnd.AddListener(delegate { ShowInventory(); });
+        Player player = GameManager.Instance.GetPlayer();
+        if (player == null)
+            return;
+
+        var events = player.GetComponent<DialogueSystemEvents>();
+        if (events != null)
+        {
+            events.conversationEvents.onConversationStart.AddListener(delegate { HideInventory(); });
+            events.conversationEvents.onConversationEnd.AddListener(delegate { ShowInventory(); });
+        }
     }
 
     private void OnDisable()
     {
         Player player = GameManager.Instance.GetPlayer();
-        if (player != null)
+        if (player == null)
+            return;
+
+        var events = player.GetComponent<DialogueSystemEvents>();
+        if (events != null)
         {
-            player.GetComponent<DialogueSystemEvents>().conversationEvents.onConversationStart.RemoveListener(delegate { HideInventory(); });
-            player.GetComponent<DialogueSystemEvents>().conversationEvents.onConversationEnd.RemoveListener(delegate { ShowInventory(); });
+            events.conversationEvents.onConversationStart.RemoveListener(delegate { HideInventory(); });
+            events.conversationEvents.onConversationEnd.RemoveListener(delegate { ShowInventory(); });
         }
     }
 

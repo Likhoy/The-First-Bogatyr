@@ -357,13 +357,13 @@ MonoBehaviour:
   - id: 1
     fields:
     - title: Title
-      value: Test conversation
+      value: Salesman conversation
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Description
       value: 
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Actor
       value: 1
       type: 5
@@ -574,7 +574,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 23.43119
+        x: 24.43119
         y: 198.5321
         width: 160
         height: 30
@@ -808,7 +808,7 @@ MonoBehaviour:
         height: 30
     entryGroups: []
     canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 1.06
+    canvasZoom: 1
   - id: 2
     fields:
     - title: Title
