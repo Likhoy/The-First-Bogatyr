@@ -114,7 +114,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     // bad realisation - needs refactoring
     public void GiveItemToPlayer(string itemName, double itemCount)
     {
-        foreach (GameObject itemPrefab in GameResources.Instance.items)
+        /*foreach (GameObject itemPrefab in GameResources.Instance.items)
         {
             if (itemPrefab.GetComponent<Item>().itemName == itemName)
             {
@@ -123,7 +123,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
                     GiveItem(itemPrefab);
                 }
             }
-        }
+        }*/
     }
 
     public void GiveItem(GameObject itemPrefab)

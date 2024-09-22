@@ -9,7 +9,7 @@ public class EnemyHealth : Health
     #region Tooltip
     [Tooltip("Populate with the HealthBar component on the HealthBar gameobject")]
     #endregion
-    [SerializeField] private HealthBar healthBar;
+    [SerializeField] private HealthBarOur healthBar;
 
     [HideInInspector] public Enemy enemy;
 
