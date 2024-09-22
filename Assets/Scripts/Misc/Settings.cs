@@ -25,7 +25,9 @@ public static class Settings
     public const float baseSpeedForPlayerAnimations = 8f;
 
     // Animator parameters - Enemy
-    public static float baseSpeedForEnemyAnimations = 3f;
+    public const float baseSpeedForEnemyAnimations = 3f;
+
+    public const float enemyAnimationSpeedMultiplier = 0.2f;
 
     #endregion ANIMATOR PARAMETERS
 
@@ -49,7 +51,7 @@ public static class Settings
     public const int preferredPathAStarMovementPenalty = 1;
     public const int targetFrameRateToSpreadPathfindingOver = 60;
     public const float playerMoveDistanceToRebuildPath = 3f;
-    public const float enemyPathRebuildCooldown = 1f;
+    public const float enemyPathRebuildCooldown = 0.2f;
 
     #endregion
 
@@ -87,22 +89,14 @@ public static class Settings
     #region SCENES PARAMETERS
     public const string menuSceneName = "Menu";
     public const string mainSceneName = "MainScene";
+    public const string endlessModeSceneName = "EndlessModeScene";
     public const string purpleWorldSceneName = "PurpleWorld";
     #endregion
 
     #region ENDLESS MODE PARAMETERS
-    public static readonly Vector2Int[] enemySpawnPossiblePositions = new Vector2Int[]
-    {
-        new Vector2Int(55, 30),
-        new Vector2Int(43, -25),
-        new Vector2Int(-39, -37),
-        new Vector2Int(-64, -16),
-        new Vector2Int(-63, 33),
-        new Vector2Int(-7, 50)
-    };
-    
-    public static readonly Vector3 gatewayPosition = Vector3.zero;
-    
+
+    public const int wavesAmount = 3;
+
     public const int waveAmountBetweenModifiers = 3;
 
     public const int waveBonusesNumber = 3;

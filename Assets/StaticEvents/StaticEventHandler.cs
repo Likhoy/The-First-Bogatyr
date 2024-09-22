@@ -4,9 +4,9 @@ public static class StaticEventHandler
 {
     public static event Action<WaveFinishedEventArgs> OnWaveFinished;
 
-    public static void CallWaveFinishedEvent(int waveNumber)
+    public static void CallWaveFinishedEvent(int waveNumber, WaveDetailsSO waveDetails)
     {
-        OnWaveFinished?.Invoke(new WaveFinishedEventArgs() { waveNumber = waveNumber });
+        OnWaveFinished?.Invoke(new WaveFinishedEventArgs() { waveNumber = waveNumber, waveDetails = waveDetails });
     }
 
     public static event Action<WaveLaunchedEventArgs> OnWaveLaunched;
@@ -25,5 +25,6 @@ public class WaveLaunchedEventArgs
 public class WaveFinishedEventArgs
 {
     public int waveNumber;
+    public WaveDetailsSO waveDetails;
 }
 

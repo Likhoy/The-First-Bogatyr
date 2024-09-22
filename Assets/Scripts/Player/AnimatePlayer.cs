@@ -104,7 +104,11 @@ public class AnimatePlayer : MonoBehaviour
     /// </summary>
     private void SetActiveWeaponEvent_OnSetActiveWeapon(SetActiveWeaponEvent setActiveWeaponEvent, SetActiveWeaponEventArgs setActiveWeaponEventArgs)
     {
-        SetHoldingWeaponAnimationParameters();
+        // на время - костыль
+        if (setActiveWeaponEventArgs.weapon != null && !setActiveWeaponEventArgs.isWeaponRanged)
+        {
+            SetHoldingWeaponAnimationParameters();
+        }
     }
 
     /// <summary>

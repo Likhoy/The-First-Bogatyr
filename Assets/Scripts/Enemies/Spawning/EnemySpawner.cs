@@ -8,8 +8,13 @@ using UnityEngine.SceneManagement;
 public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
 {
     private int enemiesToSpawn;
-    private int currentEnemyCount;
+    public int CurrentEnemyCount { get; private set; }
     public int EnemiesSpawnedSoFar { get; set; }
+
+    private void Start()
+    {
+        SpawnEnemiesImmediately();
+    }
 
     private void OnEnable()
     {
@@ -22,9 +27,9 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
     }
 
     /// <summary>
-    /// Spawn the enemies - for usage in the main story line
+    /// Spawn the enemies immediately (right after loading scene)
     /// </summary>
-    public void SpawnEnemiesImmediately()
+    private void SpawnEnemiesImmediately()
     {
         // Set gamestate engaging boss
         /*if (GameManager.Instance.gameState == GameState.bossStage)
@@ -90,22 +95,22 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
     /// <summary>
     /// Spawn enemy variation for usage in the endless mode
     /// </summary>
-    public void SpawnEnemy(EnemyDetailsSO enemyDetails, Vector2Int spawnPosition, EnemyModifiers enemyModifiers = null)
+    public GameObject SpawnEnemy(EnemyDetailsSO enemyDetails, Vector3 spawnPosition, EnemyModifiers enemyModifiers = null, Action<DestroyedEvent, DestroyedEventArgs> callback = null)
     {
-        CreateEnemy(enemyDetails, EnemyPrefabType.EndlessMode, MainLocationInfo.Grid.CellToWorld((Vector3Int)spawnPosition), enemyModifiers);
+        return CreateEnemy(enemyDetails, EnemyPrefabType.EndlessMode, spawnPosition, enemyModifiers, callback);
     }
 
 
     /// <summary>
     /// Create an enemy in the specified position
     /// </summary>
-    private void CreateEnemy(EnemyDetailsSO enemyDetails, EnemyPrefabType enemyPrefabType, Vector3 position, EnemyModifiers enemyModifiers = null)
+    private GameObject CreateEnemy(EnemyDetailsSO enemyDetails, EnemyPrefabType enemyPrefabType, Vector3 position, EnemyModifiers enemyModifiers = null, Action<DestroyedEvent, DestroyedEventArgs> callback = null)
     {
         // keep track of the number of enemies spawned so far 
         EnemiesSpawnedSoFar++;
 
         // Add one to the current enemy count - this is reduced when an enemy is destroyed
-        currentEnemyCount++;
+        CurrentEnemyCount++;
 
         // Instantiate enemy
         GameObject enemy = Instantiate(enemyDetails.enemyPrefabs[(int)enemyPrefabType], position, Quaternion.identity, transform);
@@ -113,9 +118,18 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
         // Initialize Enemy
         enemy.GetComponent<Enemy>().EnemyInitialization(enemyDetails, EnemiesSpawnedSoFar, enemyModifiers);
 
-        // subscribe to enemy destroyed event
-        enemy.GetComponent<DestroyedEvent>().OnDestroyed += Enemy_OnDestroyed;
+        DestroyedEvent destroyedEvent = enemy.GetComponent<DestroyedEvent>();
 
+        // subscribe to enemy destroyed event
+        destroyedEvent.OnDestroyed += Enemy_OnDestroyed;
+
+        // subscribe passed callbask as well
+        if (callback != null)
+        {
+            destroyedEvent.OnDestroyed += callback;
+        }
+
+        return enemy;
     }
 
     /// <summary>
@@ -131,25 +145,16 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
             GetComponent<DialogueSystemTrigger>().OnUse();
 
         // reduce current enemy count
-        currentEnemyCount--;
+        CurrentEnemyCount--;
 
         // add player experience
         var player = GameManager.Instance.GetPlayer();
         player.playerResources.AddExperience(destroyedEventArgs.experience);
         
         
-        if (currentEnemyCount <= 0)
+        if (CurrentEnemyCount <= 0)
         {
-
-            if (GameManager.Instance.gameState == GameState.EndlessMode)
-            {
-                // wave finished
-                StaticEventHandler.CallWaveFinishedEvent(GameManager.Instance.GetCurrentWaveNumber());
-                // launch next if possible
-                GameManager.Instance.TryLaunchNextWave();
-            }
                 
-
             // Set game state
             /*if (GameManager.Instance.gameState == GameState.engagingEnemies)
             {

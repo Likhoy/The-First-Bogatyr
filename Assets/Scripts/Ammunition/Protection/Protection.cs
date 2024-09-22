@@ -17,7 +17,7 @@ public abstract class Protection : IRollBackable, IComparable<Protection>
 
     public static void AddProtection<T>(Health characterHealth, PowerBonusDetailsSO bonusDetails) where T : Protection, new()
     {
-        Protection protection = characterHealth.currentProtections.Find(protection => protection.GetType() == typeof(T));
+        Protection protection = characterHealth.CurrentProtections.Find(protection => protection.GetType() == typeof(T));
         if (protection != null)
         {
             if (bonusDetails.bonusLevel > protection.protectionLevel)
@@ -34,7 +34,7 @@ public abstract class Protection : IRollBackable, IComparable<Protection>
             newProtection.parentHealthReference = characterHealth;
             newProtection.durability = bonusDetails.durability;
 
-            characterHealth.currentProtections.AddSorted(newProtection);
+            characterHealth.CurrentProtections.AddSorted(newProtection);
         }
     }
 
@@ -54,7 +54,7 @@ public abstract class Protection : IRollBackable, IComparable<Protection>
 
     public void Rollback()
     {
-        parentHealthReference.currentProtections.Remove(this);
+        parentHealthReference.CurrentProtections.Remove(this);
     }
 
     public int CompareTo(Protection other)

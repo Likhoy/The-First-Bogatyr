@@ -20,17 +20,22 @@ public class MainMenu : MonoBehaviour
             continueButton.SetActive(false);
         
         DialogueManager.Instance.gameObject.SetActive(true); // might be disabled in endless mode
-        
-        
+
+#if UNITY_EDITOR
+        DialogueManager.Instance.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+#endif
     }
 
     private void Start()
     {
         allButtons = new GameObject[5] { continueButton, newGameButton, endlessModeGameButton, settingsButton, exitButton };
 
-		// this way of placing disabling of dialogueManager children is intentional
-		DialogueManager.Instance.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
-		DialogueManager.Instance.transform.GetChild(0).GetChild(2).gameObject.SetActive(false);
+#if !UNITY_EDITOR
+        DialogueManager.Instance.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+#endif
+
+        // this way of placing disabling of dialogueManager children is intentional
+        DialogueManager.Instance.transform.GetChild(0).GetChild(2).gameObject.SetActive(false);
         DialogueManager.Instance.transform.GetChild(0).GetChild(3).gameObject.SetActive(false);
         DialogueManager.Instance.transform.GetChild(1).gameObject.SetActive(false);
     }
@@ -38,8 +43,6 @@ public class MainMenu : MonoBehaviour
     public void ContinueGamePressed()
     {
         DeactivateButtonsAfterClick(continueButton);
-
-        GameManager.Instance.PrepareMainStoryLine();
 
         SaveSystem.LoadFromSlot(1);
     }
@@ -51,9 +54,7 @@ public class MainMenu : MonoBehaviour
     {
         DeactivateButtonsAfterClick(endlessModeGameButton);
 
-        GameManager.Instance.PrepareEndlessMode();
-        //SaveSystem.RestartGame(Settings.mainSceneName); 
-        SceneManager.LoadScene(Settings.mainSceneName);
+        SceneManager.LoadScene(Settings.endlessModeSceneName);
     }
 
     /// <summary>
@@ -65,7 +66,6 @@ public class MainMenu : MonoBehaviour
 
         SaveSystem.DeleteSavedGameInSlot(1);
 
-        GameManager.Instance.PrepareMainStoryLine(); // preparations of game states are obligatory
         SaveSystem.RestartGame(Settings.mainSceneName);
         DialogueManager.Instance.ResetDatabase();
     }

@@ -1,4 +1,3 @@
-using PixelCrushers;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -91,10 +90,8 @@ public class Player : MonoBehaviour
         this.playerDetails = playerDetails;
 
         // Create player starting weapons
-        if (GameManager.Instance.gameState == GameState.EndlessMode)
-        {
+        if (playerDetails.startingWeapon != null)
             CreatePlayerStartingWeapon();
-        }
 
         // Set player starting health
         SetPlayerHealth();
@@ -124,7 +121,14 @@ public class Player : MonoBehaviour
         // If player has died
         if (healthEventArgs.healthAmount <= 0f)
         {
-            GameManager.Instance.HandlePlayerDeath();
+            if (health.UseExtraLive())
+            {
+                // do something
+            }
+            else
+            {
+                GameManager.Instance.HandlePlayerDeath();
+            }
         }
     }
 
@@ -199,7 +203,10 @@ public class Player : MonoBehaviour
     {
         if (weaponList.Count == 1)
         {
-            // here should be the message of deleting last weapon
+            weaponList.Clear();
+
+            // No more weapons
+            setActiveWeaponEvent.CallSetActiveWeaponEvent(null, false);
 
             return;
         }
@@ -232,6 +239,13 @@ public class Player : MonoBehaviour
     public Weapon GetPreviousWeapon(int weaponListPosition)
     {
         return weaponListPosition == 0 ? weaponList.Last() : weaponList[weaponListPosition - 2];
+    }
+
+    public Weapon FindWeaponByName(string weaponName)
+    {
+        return weaponList.Find(weapon => (weapon is MeleeWeapon meleeWeapon) ? 
+        meleeWeapon.weaponDetails.weaponName == weaponName : 
+        (weapon as RangedWeapon).weaponDetails.weaponName == weaponName);
     }
 
     /// <summary>

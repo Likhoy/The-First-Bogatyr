@@ -14,8 +14,8 @@ public class PlayerHealth : Health
         if (player.playerDetails.hasHitEffect)
         {
             hasHitEffect = true;
-            effectTime = player.playerDetails.hitEffectTime;
-            spriteRenderer = player.spriteRenderer;
+            EffectTime = player.playerDetails.hitEffectTime;
+            SpriteRenderer = player.spriteRenderer;
         }
     }
 
