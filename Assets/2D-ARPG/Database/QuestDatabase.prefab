@@ -1,0 +1,145 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1123886456926462}
+  m_IsPrefabParent: 1
+--- !u!1 &1123886456926462
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4272777125183732}
+  - component: {fileID: 114333803930475386}
+  m_Layer: 0
+  m_Name: QuestDatabase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4272777125183732
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1123886456926462}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.1372126, y: 2.6766183, z: 0.16015625}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114333803930475386
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1123886456926462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7646b9ccbd1c27442b71739032a1069b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 1772679060830740, guid: 1a9cf2bf4d78c4540a7a26e6a66cda69, type: 2}
+  questData:
+  - questName: 
+    description: 
+    finishProgress: 5
+    rewardCash: 150
+    rewardExp: 100
+    rewardItemID: 
+    rewardEquipmentID: 
+    showProgress: 1
+    cantCancel: 0
+  - questName: Kill 5 Angry Slimes
+    description: Angry Slimes Killed
+    finishProgress: 5
+    rewardCash: 150
+    rewardExp: 100
+    rewardItemID: 
+    rewardEquipmentID: 
+    showProgress: 1
+    cantCancel: 0
+  - questName: Kill 5 Goblins
+    description: Goblins Killed
+    finishProgress: 5
+    rewardCash: 200
+    rewardExp: 150
+    rewardItemID: 
+    rewardEquipmentID: 
+    showProgress: 1
+    cantCancel: 0
+  - questName: Kill 5 Goblin Mages
+    description: Goblin Mages Killed
+    finishProgress: 5
+    rewardCash: 240
+    rewardExp: 250
+    rewardItemID: 
+    rewardEquipmentID: 
+    showProgress: 1
+    cantCancel: 0
+  - questName: Kill Hobgoblin
+    description: Hobgoblin Killed
+    finishProgress: 1
+    rewardCash: 2000
+    rewardExp: 750
+    rewardItemID: 
+    rewardEquipmentID: 
+    showProgress: 1
+    cantCancel: 0
+  - questName: Defeat 5 Red Knights
+    description: Red Knights Killed
+    finishProgress: 5
+    rewardCash: 1000
+    rewardExp: 500
+    rewardItemID: 
+    rewardEquipmentID: 
+    showProgress: 1
+    cantCancel: 0
+  - questName: Defeat 5 Red Archers
+    description: Red Archers Killed
+    finishProgress: 5
+    rewardCash: 1000
+    rewardExp: 500
+    rewardItemID: 
+    rewardEquipmentID: 
+    showProgress: 1
+    cantCancel: 0
+  - questName: Kill Whopper Slime
+    description: Find and kill Whopper Slime
+    finishProgress: 1
+    rewardCash: 2000
+    rewardExp: 500
+    rewardItemID: 
+    rewardEquipmentID: 
+    showProgress: 1
+    cantCancel: 0
+  - questName: Dead End?
+    description: Find the way to remove boulders
+    finishProgress: 1
+    rewardCash: 200
+    rewardExp: 200
+    rewardItemID: 
+    rewardEquipmentID: 
+    showProgress: 0
+    cantCancel: 1
+  - questName: Rescue the prisoner
+    description: Find and rescue the prisoner.
+    finishProgress: 1
+    rewardCash: 500
+    rewardExp: 350
+    rewardItemID: 
+    rewardEquipmentID: 
+    showProgress: 0
+    cantCancel: 1

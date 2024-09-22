@@ -1,0 +1,402 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1250412029448332}
+  m_IsPrefabParent: 1
+--- !u!1 &1250412029448332
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4246579107005478}
+  - component: {fileID: 114523049186804340}
+  m_Layer: 0
+  m_Name: CraftingDatabase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4246579107005478
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1250412029448332}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.3055615, y: 2.4165907, z: -0.050251152}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114523049186804340
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1250412029448332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a417d049e5c08cc43a0c272b22cd9252, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  craftingData:
+  - itemName: Potion
+    ingredient:
+    - itemId: 12
+      itemType: 0
+      quantity: 2
+    gotItem:
+      itemId: 1
+      itemType: 0
+      quantity: 1
+  - itemName: Ether
+    ingredient:
+    - itemId: 13
+      itemType: 0
+      quantity: 2
+    gotItem:
+      itemId: 2
+      itemType: 0
+      quantity: 1
+  - itemName: Elixir
+    ingredient:
+    - itemId: 13
+      itemType: 0
+      quantity: 1
+    - itemId: 14
+      itemType: 0
+      quantity: 1
+    gotItem:
+      itemId: 3
+      itemType: 0
+      quantity: 1
+  - itemName: High Potion
+    ingredient:
+    - itemId: 1
+      itemType: 0
+      quantity: 1
+    - itemId: 14
+      itemType: 0
+      quantity: 2
+    gotItem:
+      itemId: 4
+      itemType: 0
+      quantity: 1
+  - itemName: High Ether
+    ingredient:
+    - itemId: 2
+      itemType: 0
+      quantity: 1
+    - itemId: 13
+      itemType: 0
+      quantity: 2
+    gotItem:
+      itemId: 5
+      itemType: 0
+      quantity: 1
+  - itemName: High Elixir
+    ingredient:
+    - itemId: 3
+      itemType: 0
+      quantity: 1
+    - itemId: 13
+      itemType: 0
+      quantity: 2
+    - itemId: 14
+      itemType: 0
+      quantity: 2
+    gotItem:
+      itemId: 6
+      itemType: 0
+      quantity: 1
+  - itemName: Arrow x25
+    ingredient:
+    - itemId: 8
+      itemType: 0
+      quantity: 1
+    - itemId: 15
+      itemType: 0
+      quantity: 1
+    gotItem:
+      itemId: 7
+      itemType: 0
+      quantity: 25
+  - itemName: Iron Ingot
+    ingredient:
+    - itemId: 15
+      itemType: 0
+      quantity: 2
+    gotItem:
+      itemId: 17
+      itemType: 0
+      quantity: 1
+  - itemName: Mystic Crystal Ingot
+    ingredient:
+    - itemId: 16
+      itemType: 0
+      quantity: 2
+    gotItem:
+      itemId: 18
+      itemType: 0
+      quantity: 1
+  - itemName: Iron Sword
+    ingredient:
+    - itemId: 17
+      itemType: 0
+      quantity: 3
+    gotItem:
+      itemId: 2
+      itemType: 1
+      quantity: 1
+  - itemName: Crystal Sword
+    ingredient:
+    - itemId: 18
+      itemType: 0
+      quantity: 3
+    gotItem:
+      itemId: 3
+      itemType: 1
+      quantity: 1
+  - itemName: Hunter Bow
+    ingredient:
+    - itemId: 8
+      itemType: 0
+      quantity: 10
+    gotItem:
+      itemId: 5
+      itemType: 1
+      quantity: 1
+  - itemName: Crystal Bow
+    ingredient:
+    - itemId: 10
+      itemType: 0
+      quantity: 5
+    - itemId: 18
+      itemType: 0
+      quantity: 1
+    gotItem:
+      itemId: 6
+      itemType: 1
+      quantity: 1
+  - itemName: Elder Staff
+    ingredient:
+    - itemId: 8
+      itemType: 0
+      quantity: 5
+    - itemId: 9
+      itemType: 0
+      quantity: 5
+    gotItem:
+      itemId: 8
+      itemType: 1
+      quantity: 1
+  - itemName: Crystal Staff
+    ingredient:
+    - itemId: 10
+      itemType: 0
+      quantity: 3
+    - itemId: 9
+      itemType: 0
+      quantity: 5
+    - itemId: 18
+      itemType: 0
+      quantity: 1
+    gotItem:
+      itemId: 9
+      itemType: 1
+      quantity: 1
+  - itemName: Iron Armor
+    ingredient:
+    - itemId: 17
+      itemType: 0
+      quantity: 3
+    gotItem:
+      itemId: 11
+      itemType: 1
+      quantity: 1
+  - itemName: Iron Gloves
+    ingredient:
+    - itemId: 17
+      itemType: 0
+      quantity: 2
+    gotItem:
+      itemId: 14
+      itemType: 1
+      quantity: 1
+  - itemName: Iron Boots
+    ingredient:
+    - itemId: 17
+      itemType: 0
+      quantity: 2
+    gotItem:
+      itemId: 18
+      itemType: 1
+      quantity: 1
+  - itemName: Iron Helm
+    ingredient:
+    - itemId: 17
+      itemType: 0
+      quantity: 2
+    gotItem:
+      itemId: 21
+      itemType: 1
+      quantity: 1
+  - itemName: Crystal Armor
+    ingredient:
+    - itemId: 18
+      itemType: 0
+      quantity: 3
+    gotItem:
+      itemId: 12
+      itemType: 1
+      quantity: 1
+  - itemName: Crystal Gloves
+    ingredient:
+    - itemId: 18
+      itemType: 0
+      quantity: 2
+    gotItem:
+      itemId: 15
+      itemType: 1
+      quantity: 1
+  - itemName: Crystal Boots
+    ingredient:
+    - itemId: 18
+      itemType: 0
+      quantity: 2
+    gotItem:
+      itemId: 19
+      itemType: 1
+      quantity: 1
+  - itemName: Crystal Helm
+    ingredient:
+    - itemId: 18
+      itemType: 0
+      quantity: 2
+    gotItem:
+      itemId: 22
+      itemType: 1
+      quantity: 1
+  - itemName: Vampire Gloves
+    ingredient:
+    - itemId: 18
+      itemType: 0
+      quantity: 2
+    - itemId: 11
+      itemType: 0
+      quantity: 10
+    - itemId: 15
+      itemType: 1
+      quantity: 1
+    gotItem:
+      itemId: 16
+      itemType: 1
+      quantity: 1
+  - itemName: Circlet of Flame
+    ingredient:
+    - itemId: 17
+      itemType: 0
+      quantity: 2
+    - itemId: 11
+      itemType: 0
+      quantity: 5
+    gotItem:
+      itemId: 23
+      itemType: 1
+      quantity: 1
+  - itemName: Circlet of Ice
+    ingredient:
+    - itemId: 17
+      itemType: 0
+      quantity: 2
+    - itemId: 9
+      itemType: 0
+      quantity: 5
+    gotItem:
+      itemId: 24
+      itemType: 1
+      quantity: 1
+  - itemName: Circlet of Venom
+    ingredient:
+    - itemId: 17
+      itemType: 0
+      quantity: 2
+    - itemId: 12
+      itemType: 0
+      quantity: 5
+    gotItem:
+      itemId: 25
+      itemType: 1
+      quantity: 1
+  - itemName: Guard Ring
+    ingredient:
+    - itemId: 17
+      itemType: 0
+      quantity: 1
+    - itemId: 18
+      itemType: 0
+      quantity: 2
+    - itemId: 9
+      itemType: 0
+      quantity: 5
+    gotItem:
+      itemId: 26
+      itemType: 1
+      quantity: 1
+  - itemName: Blood Ring
+    ingredient:
+    - itemId: 17
+      itemType: 0
+      quantity: 1
+    - itemId: 18
+      itemType: 0
+      quantity: 2
+    - itemId: 11
+      itemType: 0
+      quantity: 5
+    gotItem:
+      itemId: 27
+      itemType: 1
+      quantity: 1
+  - itemName: Nature Ring
+    ingredient:
+    - itemId: 17
+      itemType: 0
+      quantity: 1
+    - itemId: 18
+      itemType: 0
+      quantity: 2
+    - itemId: 10
+      itemType: 0
+      quantity: 5
+    gotItem:
+      itemId: 28
+      itemType: 1
+      quantity: 1
+  - itemName: Mana Ring
+    ingredient:
+    - itemId: 17
+      itemType: 0
+      quantity: 1
+    - itemId: 18
+      itemType: 0
+      quantity: 2
+    - itemId: 13
+      itemType: 0
+      quantity: 5
+    gotItem:
+      itemId: 29
+      itemType: 1
+      quantity: 1

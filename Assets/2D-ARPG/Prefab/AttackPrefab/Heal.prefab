@@ -1,0 +1,101 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1909088744928236}
+  m_IsPrefabParent: 1
+--- !u!1 &1909088744928236
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4614010088739258}
+  - component: {fileID: 114230027059754220}
+  - component: {fileID: 114816642213442716}
+  m_Layer: 0
+  m_Name: Heal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4614010088739258
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1909088744928236}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 485.07114, y: 460.9125, z: -1.8360567}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114230027059754220
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1909088744928236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b58ba60a4c940b542b5f3c410ed81485, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hpRestore: 100
+  variance: 20
+  popup: {fileID: 114269943842485142, guid: 4b8571126061c404695940146bb8875f, type: 2}
+  buffs: 0
+  statusAmount: 0
+  statusDuration: 5.5
+  shooterTag: Player
+  hitEffect: {fileID: 1871479287446130, guid: 51c84056222de894e8ecbca692f567fa, type: 2}
+  effectRadius: 0
+--- !u!114 &114816642213442716
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1909088744928236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 046f059975ff2f94ca9532918b7cedb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  damageMax: 20
+  playerAttack: 5
+  totalDamage: 0
+  variance: 15
+  criticalChance: 0
+  inflictStatus: []
+  shooterTag: Player
+  shooter: {fileID: 0}
+  Popup: {fileID: 4039106846122228, guid: 11e556cf827bc7d4bbdc76f0e2ba1752, type: 2}
+  hitEffect: {fileID: 0}
+  effectAtTarget: 0
+  flinch: 0
+  knockBackForce: 5000
+  penetrate: 0
+  AttackType: 0
+  element: 0
+  drainHp: 0
+  bombHitSetting:
+    enable: 0
+    bombEffect: {fileID: 0}
+    bombRadius: 20
+  spawnChildWhenHit:
+    enable: 0
+    prefab: {fileID: 0}
+    maximumSpawn: 1
+  fwdPlusAfterSpawn: 0
