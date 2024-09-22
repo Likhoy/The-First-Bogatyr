@@ -9,7 +9,7 @@ public class EnemyEM_MovementAI : BaseEnemyMovementAI
     protected override void Start()
     {
         base.Start();
-        gatewayPosition = Settings.gatewayPosition;
+        //gatewayPosition = Settings.gatewayPosition;
     }
 
     protected override void MoveEnemy()

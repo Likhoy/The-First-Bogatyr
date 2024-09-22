@@ -238,7 +238,7 @@ public class PlayerController : MonoBehaviour
                 if (timeBetweenAttack <= 0)
                 {
                     audioEffects.PlayOneShot(CAttack, 1f);
-                    player.meleeAttackEvent.CallMeleeAttackEvent();
+                    player.meleeAttackEvent.CallMeleeAttackEvent(Vector3.zero);
                     timeBetweenAttack = meleeWeapon.weaponDetails.weaponCooldownTime;
                 }
             }

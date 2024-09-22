@@ -6,14 +6,14 @@ public class MeleeAttackEvent : MonoBehaviour
 {
     public event Action<MeleeAttackEvent, MeleeAttackEventArgs> OnMeleeAttack;
 
-    public void CallMeleeAttackEvent()
+    public void CallMeleeAttackEvent(Vector3 targetPosition)
     {
-        OnMeleeAttack?.Invoke(this, new MeleeAttackEventArgs());
+        OnMeleeAttack?.Invoke(this, new MeleeAttackEventArgs() { targetPosition = targetPosition });
     }
 }
 
 public class MeleeAttackEventArgs : EventArgs
 {
-    // TODO
+    public Vector3 targetPosition;
 }
 

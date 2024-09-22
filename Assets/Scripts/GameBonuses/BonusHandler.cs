@@ -3,22 +3,20 @@ using System.Linq;
 
 public static class BonusHandler
 {
-    public static List<BonusDetailsSO> GetRandomBonusesForWave(int waveNumber)
+    public static List<BonusDetailsSO> GetRandomBonusesForWave(WaveDetailsSO waveDetails)
     {
-        WaveDetailsSO currentWaveDetails = GameManager.Instance.allWavesDetails[waveNumber - 1];
-
         // if no bonuses
-        if (currentWaveDetails.possibleBonuses.Count == 0)
+        if (waveDetails.possibleBonuses.Count == 0)
             return null;
 
         System.Random r = new System.Random();
-        int[] bonusesNums = Enumerable.Range(0, currentWaveDetails.possibleBonuses.Count).ToArray();
+        int[] bonusesNums = Enumerable.Range(0, waveDetails.possibleBonuses.Count).ToArray();
         r.Shuffle(bonusesNums);
 
         var chosenBonusDetails = new List<BonusDetailsSO>();
         for (int i = 0; i < Settings.waveBonusesNumber; i++)
         {
-            chosenBonusDetails.Add(currentWaveDetails.possibleBonuses[bonusesNums[i]]);
+            chosenBonusDetails.Add(waveDetails.possibleBonuses[bonusesNums[i]]);
         }
         return chosenBonusDetails;
     }
