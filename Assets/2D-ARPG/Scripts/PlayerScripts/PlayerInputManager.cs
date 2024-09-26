@@ -91,28 +91,6 @@ public class PlayerInputManager : MonoBehaviour{
             }
         }
 
-        //TopDown 4 Directions
-        if(topDown4d) {
-            if(Input.GetKeyUp(KeyCode.Mouse1)) {
-                topDown4d.CancelDash();
-            }
-            if(Input.GetKeyDown(KeyCode.Mouse1)) {
-                topDown4d.DashButton();
-            }
-        }
-
-        if(platormer2d){
-            if(Input.GetKeyUp(KeyCode.Mouse1)){
-                platormer2d.CancelDash();
-            }
-            if(Input.GetKeyDown(KeyCode.Mouse1)) {
-                platormer2d.DashButton();
-            }
-            if(Input.GetButtonDown("Jump")){
-                platormer2d.JumpButton();
-            }
-        }
-
         if(platormerTransformation) {
             if(Input.GetKeyUp(KeyCode.Mouse1)) {
                 platormerTransformation.CancelDash();
