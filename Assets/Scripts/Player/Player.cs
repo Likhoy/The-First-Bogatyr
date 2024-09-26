@@ -90,8 +90,7 @@ public class Player : MonoBehaviour
         this.playerDetails = playerDetails;
 
         // Create player starting weapons
-        if (playerDetails.startingWeapon != null)
-            CreatePlayerStartingWeapon();
+        CreatePlayerStartingWeapon();
 
         // Set player starting health
         SetPlayerHealth();
@@ -156,7 +155,11 @@ public class Player : MonoBehaviour
         weaponList.Clear();
 
         // Add weapon to player
-        AddWeaponToPlayer(playerDetails.startingWeapon);
+        // AddWeaponToPlayer(playerDetails.startingWeapon);
+
+        GetComponent<Inventory>().AddEquipment(1);
+
+        GetComponent<Inventory>().EquipItemFromID(1);
     }
 
     /// <summary>
