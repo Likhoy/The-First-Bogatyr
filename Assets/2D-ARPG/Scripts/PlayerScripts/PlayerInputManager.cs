@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerInputManager : MonoBehaviour{
@@ -8,8 +6,6 @@ public class PlayerInputManager : MonoBehaviour{
     private UiMaster ui;
     private SaveLoad save;
     private PlayerController topDown2d;
-    private TopDownFourDirection topDown4d;
-    private PlatformerController2D platormer2d;
     private PlatformerTransformation platormerTransformation;
     void Start(){
         atk = GetComponent<AttackTrigger>();
@@ -22,12 +18,6 @@ public class PlayerInputManager : MonoBehaviour{
         }
         if(GetComponent<PlayerController>()) {
             topDown2d = GetComponent<PlayerController>();
-        }
-        if(GetComponent<TopDownFourDirection>()) {
-            topDown4d = GetComponent<TopDownFourDirection>();
-        }
-        if(GetComponent<PlatformerController2D>()) {
-            platormer2d = GetComponent<PlatformerController2D>();
         }
         if(GetComponent<PlatformerTransformation>()) {
             platormerTransformation = GetComponent<PlatformerTransformation>();

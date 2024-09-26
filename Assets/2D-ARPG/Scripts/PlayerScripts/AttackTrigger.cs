@@ -148,7 +148,7 @@ public class AttackTrigger : MonoBehaviour{
 		if(transform.eulerAngles.y == 0){
 			facingRight = true;
 		}
-		if(mainCameraPrefab){
+		/*if(mainCameraPrefab){
 			GameObject[] cam = GameObject.FindGameObjectsWithTag("MainCamera"); 
 			foreach(GameObject cam2 in cam){ 
 				if(cam2){
@@ -158,7 +158,7 @@ public class AttackTrigger : MonoBehaviour{
 			Transform newCam = Instantiate(mainCameraPrefab.transform, transform.position , Quaternion.identity) as Transform;
 			newCam.GetComponent<CameraFollowPlayer2D>().player = this.transform;
 			mainCam = newCam.gameObject;
-		}
+		}*/
 		SetupInitialShortcut(); 
 		if(!GetComponent<AudioSource>()){
 			gameObject.AddComponent<AudioSource>();
