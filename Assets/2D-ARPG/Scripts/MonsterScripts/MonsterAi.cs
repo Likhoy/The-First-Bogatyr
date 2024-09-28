@@ -99,7 +99,7 @@ public class MonsterAi : MonoBehaviour {
 	public bool use4DirectionSprite = false;
 	void Start(){
 		gameObject.tag = "Enemy";
-		gameObject.layer = 8; //Set to Character Layer
+		// gameObject.layer = 8; //Set to Character Layer
 		rb = GetComponent<Rigidbody2D>();
 
 		//Create new Attack Point if you didn't have one.

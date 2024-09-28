@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerInputManager : MonoBehaviour{
@@ -8,8 +6,6 @@ public class PlayerInputManager : MonoBehaviour{
     private UiMaster ui;
     private SaveLoad save;
     private PlayerController topDown2d;
-    private TopDownFourDirection topDown4d;
-    private PlatformerController2D platormer2d;
     private PlatformerTransformation platormerTransformation;
     void Start(){
         atk = GetComponent<AttackTrigger>();
@@ -22,12 +18,6 @@ public class PlayerInputManager : MonoBehaviour{
         }
         if(GetComponent<PlayerController>()) {
             topDown2d = GetComponent<PlayerController>();
-        }
-        if(GetComponent<TopDownFourDirection>()) {
-            topDown4d = GetComponent<TopDownFourDirection>();
-        }
-        if(GetComponent<PlatformerController2D>()) {
-            platormer2d = GetComponent<PlatformerController2D>();
         }
         if(GetComponent<PlatformerTransformation>()) {
             platormerTransformation = GetComponent<PlatformerTransformation>();
@@ -88,28 +78,6 @@ public class PlayerInputManager : MonoBehaviour{
             }
             if(Input.GetKeyDown(KeyCode.Mouse1)) {
                 topDown2d.DashButton();
-            }
-        }
-
-        //TopDown 4 Directions
-        if(topDown4d) {
-            if(Input.GetKeyUp(KeyCode.Mouse1)) {
-                topDown4d.CancelDash();
-            }
-            if(Input.GetKeyDown(KeyCode.Mouse1)) {
-                topDown4d.DashButton();
-            }
-        }
-
-        if(platormer2d){
-            if(Input.GetKeyUp(KeyCode.Mouse1)){
-                platormer2d.CancelDash();
-            }
-            if(Input.GetKeyDown(KeyCode.Mouse1)) {
-                platormer2d.DashButton();
-            }
-            if(Input.GetButtonDown("Jump")){
-                platormer2d.JumpButton();
             }
         }
 
