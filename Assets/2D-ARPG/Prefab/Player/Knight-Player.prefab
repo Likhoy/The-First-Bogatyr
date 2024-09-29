@@ -4958,7 +4958,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 99
+  m_Text: 1
 --- !u!1 &1201182015659978
 GameObject:
   m_ObjectHideFlags: 0
@@ -24230,7 +24230,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Check
+  m_Text: 
 --- !u!114 &114357605594254570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26430,7 +26430,21 @@ MonoBehaviour:
   - {fileID: 114957324214162220}
   - {fileID: 114661449890501368}
   - {fileID: 114981453296076158}
+  weaponIcons: {fileID: 0}
+  subWeaponIcons: {fileID: 0}
+  armorIcons: {fileID: 0}
+  accIcons: {fileID: 0}
+  helmIcons: {fileID: 0}
+  glovesIcons: {fileID: 0}
+  bootsIcons: {fileID: 0}
   tooltip: {fileID: 1601601735611680}
+  tooltipIcon: {fileID: 0}
+  tooltipName: {fileID: 0}
+  tooltipText1: {fileID: 0}
+  usableTab: {fileID: 0}
+  equipmentTab: {fileID: 0}
+  pageText: {fileID: 0}
+  database: {fileID: 0}
 --- !u!1 &1779894469350388
 GameObject:
   m_ObjectHideFlags: 0
