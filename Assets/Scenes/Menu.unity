@@ -3279,6 +3279,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 935405465264602741, guid: 21c02c39c5ff12846b9b2b1af0add31e, type: 3}
+      propertyPath: instantiateDatabase
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 935405465274256625, guid: 21c02c39c5ff12846b9b2b1af0add31e, type: 3}
       propertyPath: m_Name
       value: Dialogue Manager
