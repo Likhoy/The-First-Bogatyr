@@ -291,6 +291,7 @@ MonoBehaviour:
     defaultNPCSubtitlePanel: {fileID: 11466480}
     defaultPCSubtitlePanel: {fileID: 11413806}
     allowOpenSubtitlePanelsOnStartConversation: 1
+    allowDialogueActorCustomPanels: 1
     menuPanels:
     - {fileID: 11411294}
     defaultMenuPanel: {fileID: 11411294}
@@ -301,6 +302,7 @@ MonoBehaviour:
     - {fileID: 155762}
     - {fileID: 191022}
   addEventSystemIfNeeded: 1
+  verifyPanelAssignments: 1
 --- !u!1 &105778
 GameObject:
   m_ObjectHideFlags: 0
@@ -3175,7 +3177,7 @@ MonoBehaviour:
     m_uiText: {fileID: 11499256}
     m_textMeshProUGUI: {fileID: 0}
   setLabelColor: 1
-  defaultColor: {r: 0, g: 0, b: 0, a: 1}
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &165426
 GameObject:
   m_ObjectHideFlags: 0
@@ -4445,6 +4447,8 @@ MonoBehaviour:
     numpadHotkeys: 0
     format: '{0}. {1}'
   blockInputDuration: 0
+  showSelectionWhileInputBlocked: 0
+  warnOnEmptyResponseText: 0
   onContentChanged:
     m_PersistentCalls:
       m_Calls:
