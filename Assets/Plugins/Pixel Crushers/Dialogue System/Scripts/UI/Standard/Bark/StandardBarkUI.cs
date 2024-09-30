@@ -2,7 +2,6 @@
 
 using UnityEngine;
 using System;
-using static PixelCrushers.DialogueSystem.DialogueActor;
 
 namespace PixelCrushers.DialogueSystem
 {
@@ -100,8 +99,6 @@ namespace PixelCrushers.DialogueSystem
 
         protected bool hasEverBarked = false;
 
-        private RectTransform panelRectTransform;
-
         /// <summary>
         /// Indicates whether a bark is currently playing.
         /// </summary>
@@ -122,7 +119,6 @@ namespace PixelCrushers.DialogueSystem
             animator = GetComponentInChildren<Animator>();
             typewriter = TypewriterUtility.GetTypewriter(barkText);
             if ((animator == null) && (canvasGroup != null)) animator = canvasGroup.GetComponentInChildren<Animator>();
-            panelRectTransform = transform.GetChild(0).GetComponent<RectTransform>();
         }
 
         protected virtual void Start()
@@ -132,7 +128,6 @@ namespace PixelCrushers.DialogueSystem
                 if (waitForContinueButton && (canvas.worldCamera == null)) canvas.worldCamera = UnityEngine.Camera.main;
                 canvas.enabled = false;
                 originalCanvasLocalPosition = canvas.GetComponent<RectTransform>().localPosition;
-                canvas.renderMode = RenderMode.ScreenSpaceOverlay;
             }
             if (nameText != null) nameText.SetActive(includeName);
             Tools.SetGameObjectActive(portraitImage, false);
@@ -185,7 +180,7 @@ namespace PixelCrushers.DialogueSystem
                 hasEverBarked = true;
                 SetUIElementsActive(false);
                 string subtitleText = subtitle.formattedText.text;
-                if (includeName)
+                if (includeName && !string.IsNullOrEmpty(Tools.StripTextMeshProTags(subtitle.speakerInfo.Name)))
                 {
                     if (nameText != null)
                     {
@@ -193,7 +188,7 @@ namespace PixelCrushers.DialogueSystem
                     }
                     else
                     {
-                        subtitleText = string.Format("{0}: {1}", subtitleText, subtitle.formattedText.text);
+                        subtitleText = string.Format("{0}: {1}", subtitle.speakerInfo.Name, subtitle.formattedText.text);
                     }
                 }
                 else
@@ -203,7 +198,7 @@ namespace PixelCrushers.DialogueSystem
                 if (showPortraitImage && subtitle.speakerInfo.portrait != null)
                 {
                     Tools.SetGameObjectActive(portraitImage, true);
-                    portraitImage.sprite = subtitle.speakerInfo.portrait;
+                    portraitImage.sprite = subtitle.GetSpeakerPortrait();
                 }
                 else
                 {
@@ -233,10 +228,7 @@ namespace PixelCrushers.DialogueSystem
             if (nameText.gameObject != this.gameObject && includeName) nameText.SetActive(value);
             if (barkText.gameObject != this.gameObject) barkText.SetActive(value);
             if (canvas != null && canvas.gameObject != this.gameObject) canvas.gameObject.SetActive(value);
-            if (value == true && canvas != null)
-            {
-                canvas.enabled = true;
-            }
+            if (value == true && canvas != null) canvas.enabled = true;
         }
 
         public virtual void OnBarkEnd(Transform actor)
