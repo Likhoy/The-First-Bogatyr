@@ -12,6 +12,7 @@ public enum Command
     Hit,
     SwitchWeapon,
     TakeItem,
+    ThrowItem,
     ContinueDialog,
     OpenBestiary,
     OpenMap,
