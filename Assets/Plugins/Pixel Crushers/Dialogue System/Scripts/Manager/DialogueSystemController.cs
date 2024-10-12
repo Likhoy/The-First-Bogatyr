@@ -399,7 +399,7 @@ namespace PixelCrushers.DialogueSystem
             if (dontDestroyOnLoad && allowOnlyOneInstance) applicationIsQuitting = true;
             if (!applicationIsQuitting && !m_isDuplicateBeingDestroyed && DialogueTime.isPaused) Unpause();
             UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
-            UILocalizationManager.languageChanged -= OnLanguageChanged;
+            // UILocalizationManager.languageChanged -= OnLanguageChanged;  LOVE/HATE
             //--- No need to unregister static Lua functions: UnregisterLuaFunctions();
         }
 
@@ -557,7 +557,7 @@ namespace PixelCrushers.DialogueSystem
             {
                 SetLanguage(displaySettings.localizationSettings.language);
             }
-            UILocalizationManager.languageChanged += OnLanguageChanged;
+            // UILocalizationManager.languageChanged += OnLanguageChanged; LOVE/HATE
         }
 
         /// <summary>
