@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerResources : MonoBehaviour
 {
     private Player player;
-    private Inventory inventory;
+    // private Inventory inventory;
     public int PlayerMoney { get; private set; }
     public int PlayerExperience { get; private set; }
 
@@ -18,7 +18,7 @@ public class PlayerResources : MonoBehaviour
 
     private void Awake()
     {
-        inventory = FindObjectOfType<Inventory>();
+        // inventory = FindObjectOfType<Inventory>();
         moneyIncreasedEvent = GetComponent<MoneyIncreasedEvent>();
         experienceIncreasedEvent = GetComponent<ExperienceIncreasedEvent>();
     }
@@ -54,7 +54,7 @@ public class PlayerResources : MonoBehaviour
 
     public void SaveItem(GameObject itemPrefab)
     {
-        if (inventory.ContainsItem(itemPrefab.GetComponent<Item>().itemID) >= 1)
+        /*if (inventory.ContainsItem(itemPrefab.GetComponent<Item>().itemID) >= 1)
             inventory.AddItem(itemPrefab.GetComponent<Item>());
         else
         {
@@ -62,7 +62,7 @@ public class PlayerResources : MonoBehaviour
             item.GetComponent<CircleCollider2D>().enabled = false;
             item.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
             inventory.AddItem(item.GetComponent<Item>());
-        }
+        }*/
     }
 
     public void TryBuyProduct(Product product) // Монеточки

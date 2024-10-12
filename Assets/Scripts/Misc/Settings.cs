@@ -60,16 +60,18 @@ public static class Settings
     #endregion
 
     #region BUTTON ASSIGNMENTS
-    public static Dictionary<Command, KeyCode> commandButtons = new Dictionary<Command, KeyCode>()
+    public static readonly Dictionary<Command, KeyCode> commandButtons = new()
     {
-        [Command.Dash] = KeyCode.LeftShift,
+        [Command.Dash] = KeyCode.Mouse1,
         [Command.Hit] = KeyCode.Mouse0,
         [Command.SwitchWeapon] = KeyCode.Q,
         [Command.TakeItem] = KeyCode.F,
         [Command.ContinueDialog] = KeyCode.Mouse0,
         [Command.OpenBestiary] = KeyCode.B,
         [Command.OpenMap] = KeyCode.M,
-        [Command.OpenPauseMenu] = KeyCode.Escape
+        [Command.OpenPauseMenu] = KeyCode.Escape,
+        [Command.OpenInventory] = KeyCode.I,
+        [Command.OpenSkillTree] = KeyCode.K
     };
     #endregion 
 
