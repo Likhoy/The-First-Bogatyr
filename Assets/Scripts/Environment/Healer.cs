@@ -32,13 +32,13 @@ public class Healer : MonoBehaviour, IUseable
     private void OnEnable()
     {
         // Subscribe to item used event
-        player.itemUsedEvent.OnItemUsed += ItemUsedEvent_OnHealerUsed;
+        // player.itemUsedEvent.OnItemUsed += ItemUsedEvent_OnHealerUsed;
     }
 
     private void OnDisable()
     {
         // Unsubscribe from item used event
-        player.itemUsedEvent.OnItemUsed -= ItemUsedEvent_OnHealerUsed;
+        // player.itemUsedEvent.OnItemUsed -= ItemUsedEvent_OnHealerUsed;
     }
 
     private void ItemUsedEvent_OnHealerUsed(ItemUsedEvent itemUsedEvent, ItemUsedEventArgs itemUsedEventArgs)
@@ -50,7 +50,7 @@ public class Healer : MonoBehaviour, IUseable
     {
         while (healingTimer >= 0f)
         {
-            player.health.AddHealth(healthBoostPerSecond);
+            // player.health.AddHealth(healthBoostPerSecond);
             yield return new WaitForSeconds(1f);
         }
     }
