@@ -18,15 +18,15 @@ public class MoneyUI : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.Instance.GetPlayer().productBoughtEvent.OnBuyProduct += ProductBoughtEvent_OnBuyProduct;
-        GameManager.Instance.GetPlayer().playerResources.moneyIncreasedEvent.OnMoneyIncreased += MoneyIncreasedEvent_OnMoneyIncreased;
+        // GameManager.Instance.GetPlayer().productBoughtEvent.OnBuyProduct += ProductBoughtEvent_OnBuyProduct;
+        // GameManager.Instance.GetPlayer().playerResources.moneyIncreasedEvent.OnMoneyIncreased += MoneyIncreasedEvent_OnMoneyIncreased;
     }
 
 
     private void OnDisable()
     {
-        GameManager.Instance.GetPlayer().productBoughtEvent.OnBuyProduct -= ProductBoughtEvent_OnBuyProduct;
-        GameManager.Instance.GetPlayer().playerResources.moneyIncreasedEvent.OnMoneyIncreased -= MoneyIncreasedEvent_OnMoneyIncreased;
+        // GameManager.Instance.GetPlayer().productBoughtEvent.OnBuyProduct -= ProductBoughtEvent_OnBuyProduct;
+        // GameManager.Instance.GetPlayer().playerResources.moneyIncreasedEvent.OnMoneyIncreased -= MoneyIncreasedEvent_OnMoneyIncreased;
     }
 
     /// <summary>

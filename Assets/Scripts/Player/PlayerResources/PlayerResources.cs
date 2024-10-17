@@ -73,7 +73,7 @@ public class PlayerResources : MonoBehaviour
             audioEffects.PlayOneShot(CMoney[rand.Next(CMoney.Length)]);
 
             SaveItem(product.itemPrefab);
-            player.productBoughtEvent.CallProductBoughtEvent(PlayerMoney);
+            // player.productBoughtEvent.CallProductBoughtEvent(PlayerMoney);
         }
         else
         {
@@ -101,14 +101,14 @@ public class PlayerResources : MonoBehaviour
                     // do nothing now - found same melee weapon
                 }
                 
-                player.setActiveWeaponEvent.CallSetActiveWeaponEvent(weapon, weapon is RangedWeapon);
+                // player.setActiveWeaponEvent.CallSetActiveWeaponEvent(weapon, weapon is RangedWeapon);
             }
             else
             {
                 player.AddWeaponToPlayer(weaponProduct.weaponDetails, weaponProduct.weaponAmmoAmount);
             }
             
-            player.productBoughtEvent.CallProductBoughtEvent(PlayerMoney);
+            // player.productBoughtEvent.CallProductBoughtEvent(PlayerMoney);
         }
     }
 

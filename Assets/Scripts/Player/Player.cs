@@ -3,55 +3,14 @@ using System.Linq;
 using UnityEngine;
 
 #region REQUIRE COMPONENTS
-[RequireComponent(typeof(PlayerResources))]
-[RequireComponent(typeof(HealthEvent))]
-[RequireComponent(typeof(PlayerHealth))]
-[RequireComponent(typeof(ReceiveContactDamage))]
-[RequireComponent(typeof(DestroyedEvent))]
-[RequireComponent(typeof(Destroyed))]
-[RequireComponent(typeof(MovementByVelocityEvent))]
-[RequireComponent(typeof(MovementByVelocity))]
-[RequireComponent(typeof(MovementToPositionEvent))]
-[RequireComponent(typeof(MovementToPosition))]
-[RequireComponent(typeof(IdleEvent))]
-[RequireComponent(typeof(Idle))]
-[RequireComponent(typeof(MeleeAttackEvent))]
-[RequireComponent(typeof(FireWeaponEvent))]
-[RequireComponent(typeof(FireWeapon))]
-[RequireComponent(typeof(SetActiveWeaponEvent))]
-[RequireComponent(typeof(ActiveWeapon))]
-[RequireComponent(typeof(WeaponFiredEvent))]
-[RequireComponent(typeof(ReloadWeaponEvent))]
-[RequireComponent(typeof(ReloadWeapon))]
-[RequireComponent(typeof(WeaponReloadedEvent))]
-[RequireComponent(typeof(ItemUsedEvent))]
-[RequireComponent(typeof(ProductBoughtEvent))]
 [RequireComponent(typeof(PlayerController))]
-[RequireComponent(typeof(AnimatePlayer))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(ReceiveContactDamage))]
 #endregion REQUIRE COMPONENTS
 
 public class Player : MonoBehaviour
 {
     [HideInInspector] public PlayerDetailsSO playerDetails;
-    [HideInInspector] public PlayerResources playerResources;
-    [HideInInspector] public HealthEvent healthEvent;
-    [HideInInspector] public PlayerHealth health;
-    [HideInInspector] public DestroyedEvent destroyedEvent;
-    [HideInInspector] public MovementByVelocityEvent movementByVelocityEvent;
-    [HideInInspector] public MovementToPositionEvent movementToPositionEvent;
-    [HideInInspector] public IdleEvent idleEvent;
-    [HideInInspector] public MeleeAttackEvent meleeAttackEvent;
-    [HideInInspector] public FireWeaponEvent fireWeaponEvent;
-    [HideInInspector] public SetActiveWeaponEvent setActiveWeaponEvent;
-    [HideInInspector] public ActiveWeapon activeWeapon;
-    [HideInInspector] public WeaponFiredEvent weaponFiredEvent;
-    [HideInInspector] public ReloadWeaponEvent reloadWeaponEvent;
-    [HideInInspector] public WeaponReloadedEvent weaponReloadedEvent;
-    [HideInInspector] public ItemUsedEvent itemUsedEvent;
-    [HideInInspector] public ProductBoughtEvent productBoughtEvent;
     [HideInInspector] public PlayerController playerControl;
     [HideInInspector] public SpriteRenderer spriteRenderer;
     [HideInInspector] public Animator animator;
@@ -61,22 +20,6 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         // Load components
-        playerResources = GetComponent<PlayerResources>();
-        healthEvent = GetComponent<HealthEvent>();
-        health = GetComponent<PlayerHealth>();
-        destroyedEvent = GetComponent<DestroyedEvent>();
-        movementByVelocityEvent = GetComponent<MovementByVelocityEvent>();
-        movementToPositionEvent = GetComponent<MovementToPositionEvent>();
-        idleEvent = GetComponent<IdleEvent>();
-        meleeAttackEvent = GetComponent<MeleeAttackEvent>();
-        fireWeaponEvent = GetComponent<FireWeaponEvent>();
-        setActiveWeaponEvent = GetComponent<SetActiveWeaponEvent>();
-        activeWeapon = GetComponent<ActiveWeapon>();
-        weaponFiredEvent = GetComponent<WeaponFiredEvent>();
-        reloadWeaponEvent = GetComponent<ReloadWeaponEvent>();
-        weaponReloadedEvent = GetComponent<WeaponReloadedEvent>();
-        itemUsedEvent = GetComponent<ItemUsedEvent>();
-        productBoughtEvent = GetComponent<ProductBoughtEvent>();
         playerControl = GetComponent<PlayerController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
@@ -99,8 +42,8 @@ public class Player : MonoBehaviour
     private void OnEnable()
     {
         // Subscribe to player health event
-        healthEvent.OnHealthChanged += HealthEvent_OnHealthChanged;
-        healthEvent.OnHealthChanged += HealthEvent_OnHealthChanged2; // for button helper
+        // healthEvent.OnHealthChanged += HealthEvent_OnHealthChanged;
+        // healthEvent.OnHealthChanged += HealthEvent_OnHealthChanged2; // for button helper
     }
 
     
@@ -108,14 +51,14 @@ public class Player : MonoBehaviour
     private void OnDisable()
     {
         // Unsubscribe from player health event
-        healthEvent.OnHealthChanged -= HealthEvent_OnHealthChanged;
+        // healthEvent.OnHealthChanged -= HealthEvent_OnHealthChanged;
     }
 
 
     /// <summary>
     /// Handle health changed event
     /// </summary>
-    private void HealthEvent_OnHealthChanged(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
+    /*private void HealthEvent_OnHealthChanged(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
     {
         // If player has died
         if (healthEventArgs.healthAmount <= 0f)
@@ -129,7 +72,7 @@ public class Player : MonoBehaviour
                 GameManager.Instance.HandlePlayerDeath();
             }
         }
-    }
+    }*/
 
     private void HealthEvent_OnHealthChanged2(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
     {
@@ -194,7 +137,7 @@ public class Player : MonoBehaviour
         weapon.weaponListPosition = weaponList.Count;
 
         // Set the added weapon as active
-        setActiveWeaponEvent.CallSetActiveWeaponEvent(weapon, isWeaponRanged);
+        // setActiveWeaponEvent.CallSetActiveWeaponEvent(weapon, isWeaponRanged);
 
         return weapon;
     }
@@ -209,7 +152,7 @@ public class Player : MonoBehaviour
             weaponList.Clear();
 
             // No more weapons
-            setActiveWeaponEvent.CallSetActiveWeaponEvent(null, false);
+            // setActiveWeaponEvent.CallSetActiveWeaponEvent(null, false);
 
             return;
         }
@@ -217,7 +160,7 @@ public class Player : MonoBehaviour
         Weapon previousWeapon = GetPreviousWeapon(weaponListPosition);
 
         // Set previous weapon as active if there is one
-        setActiveWeaponEvent.CallSetActiveWeaponEvent(previousWeapon, previousWeapon is RangedWeapon);
+        // setActiveWeaponEvent.CallSetActiveWeaponEvent(previousWeapon, previousWeapon is RangedWeapon);
 
         // Remove weapon from the list
         weaponList.RemoveAt(weaponListPosition - 1);
@@ -230,11 +173,11 @@ public class Player : MonoBehaviour
     /// <summary>
     /// Get next weapon from the weapon list - without validating zero number
     /// </summary>
-    public Weapon GetNextWeaponAfterCurrent()
+    /*public Weapon GetNextWeaponAfterCurrent()
     {
         Weapon currentWeapon = activeWeapon.GetCurrentWeapon();
         return currentWeapon.weaponListPosition == weaponList.Count ? weaponList[0] : weaponList[currentWeapon.weaponListPosition];
-    }
+    }*/
 
     /// <summary>
     /// Get previous weapon from the weapon list - without validating zero number
@@ -264,6 +207,6 @@ public class Player : MonoBehaviour
     /// </summary>
     private void SetPlayerHealth()
     {
-        health.SetStartingHealth(playerDetails.playerHealthAmount);
+        // health.SetStartingHealth(playerDetails.playerHealthAmount);
     }
 }

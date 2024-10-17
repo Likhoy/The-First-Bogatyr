@@ -48,7 +48,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         // should be expanded
         // SceneManager.LoadScene(Settings.menuSceneName);
-        player.destroyedEvent.OnDestroyed -= PlayerDestroyedEvent_OnDestroyed;
+        // player.destroyedEvent.OnDestroyed -= PlayerDestroyedEvent_OnDestroyed;
     }
 
     public void LetShowSceneTransitionImage()
@@ -75,7 +75,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
             bonusDetails.bonusPercent = (int)percent;
             bonusDetails.bonusType = PowerBonusType.DamageReflector;
 
-            Protection.AddProtection<DamageReflector>(player.health, bonusDetails);
+            // Protection.AddProtection<DamageReflector>(player.health, bonusDetails);
         }
         else
         {
@@ -128,7 +128,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     public void GiveItem(GameObject itemPrefab)
     {
-        player.playerResources.SaveItem(itemPrefab);
+        // player.playerResources.SaveItem(itemPrefab);
     }
 
 }
