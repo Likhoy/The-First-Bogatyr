@@ -20,7 +20,7 @@ public static class ItemEffects
 
         while (healingTimer > 0f)
         {
-            player.health.AddHealth(healthBoostPerSecond);
+            // player.health.AddHealth(healthBoostPerSecond);
             healingTimer--;
             yield return new WaitForSeconds(1f);
         }
@@ -43,8 +43,8 @@ public static class ItemEffects
 
         if (damageEffectCount == 1)
         {
-            player.activeWeapon.GetCurrentWeapon().weaponCurrentMinDamage *= 2;
-            player.activeWeapon.GetCurrentWeapon().weaponCurrentMaxDamage *= 2;
+            // player.activeWeapon.GetCurrentWeapon().weaponCurrentMinDamage *= 2;
+            // player.activeWeapon.GetCurrentWeapon().weaponCurrentMaxDamage *= 2;
         }
 
         while (strengthTimer > 0f)
@@ -54,8 +54,8 @@ public static class ItemEffects
         }
         if (damageEffectCount == 1)
         {
-            player.activeWeapon.GetCurrentWeapon().weaponCurrentMinDamage /= 2;
-            player.activeWeapon.GetCurrentWeapon().weaponCurrentMaxDamage /= 2;
+            // player.activeWeapon.GetCurrentWeapon().weaponCurrentMinDamage /= 2;
+            // player.activeWeapon.GetCurrentWeapon().weaponCurrentMaxDamage /= 2;
         }
         if (damageEffectCount == 1)
             effectImage.color = new Color(0, 0, 0, 0);

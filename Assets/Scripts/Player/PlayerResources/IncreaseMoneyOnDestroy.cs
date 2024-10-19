@@ -7,6 +7,6 @@ public class IncreaseMoneyOnDestroy : MonoBehaviour
     private void OnDestroy()
     {
         Player player = GameManager.Instance.GetPlayer();
-        player.playerResources.AddMoney(moneyAmount);
+        // player.playerResources.AddMoney(moneyAmount);
     }
 }

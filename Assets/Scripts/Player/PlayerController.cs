@@ -159,7 +159,7 @@ public class PlayerController : MonoBehaviour
         // ProcessMovementInput();
 
         // Process the player weapon input
-        ProcessWeaponInput();
+        // ProcessWeaponInput();
 
         // player dash cooldown timer
         // PlayerDashCooldownTimer();
@@ -316,7 +316,7 @@ public class PlayerController : MonoBehaviour
             if (!dashButtonPressed)
             {
                 // trigger movement event
-                player.movementByVelocityEvent.CallMovementByVelocityEvent(direction, moveSpeed);
+                // player.movementByVelocityEvent.CallMovementByVelocityEvent(direction, moveSpeed);
                 if (!audioSource.isPlaying && before != after)
                     audioSource.Play();
             }
@@ -334,7 +334,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             audioSource.Stop();
-            player.idleEvent.CallIdleEvent();
+            // player.idleEvent.CallIdleEvent();
         }
     }
 
@@ -358,7 +358,7 @@ public class PlayerController : MonoBehaviour
 
         while (Vector3.Distance(player.transform.position, targetPosition) > minDistance)
         {
-            player.movementToPositionEvent.CallMovementToPositionEvent(targetPosition, player.transform.position, movementDetails.dashSpeed, directon, isPlayerDashing);
+            // player.movementToPositionEvent.CallMovementToPositionEvent(targetPosition, player.transform.position, movementDetails.dashSpeed, directon, isPlayerDashing);
 
             // yield and wait for fixed update
             yield return waitForFixedUpdate;
@@ -414,10 +414,10 @@ public class PlayerController : MonoBehaviour
     {
         isPlayerMovementDisabled = true;
         StopPlayerDashRoutine(true);
-        player.idleEvent.CallIdleEvent();
+        // player.idleEvent.CallIdleEvent();
     }
 
-    private void ProcessWeaponInput()
+    /*private void ProcessWeaponInput()
     {
         // Hitting someone or something :)
         if (Input.GetKey(Settings.commandButtons[Command.Hit]))
@@ -459,7 +459,7 @@ public class PlayerController : MonoBehaviour
             Weapon nextWeapon = player.GetNextWeaponAfterCurrent();
             player.setActiveWeaponEvent.CallSetActiveWeaponEvent(nextWeapon, nextWeapon is RangedWeapon);
         }
-    }
+    }*/
 
     private void PlayerWeaponCooldownTimer()
     {
@@ -472,7 +472,7 @@ public class PlayerController : MonoBehaviour
     private void DealWithMeleeWeaponStrikedEvent()
     {
         //EnablePlayer();
-        player.weaponFiredEvent.CallWeaponFiredEvent(player.activeWeapon.GetCurrentWeapon());
+        // player.weaponFiredEvent.CallWeaponFiredEvent(player.activeWeapon.GetCurrentWeapon());
     }
 
     public void CancelDash()
