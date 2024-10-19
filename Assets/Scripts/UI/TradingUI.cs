@@ -31,7 +31,7 @@ public class TradingUI : MonoBehaviour
             prices[i].text = product.itemName + "\n" + product.price;
             images[i + 1].sprite = product.sprite;
             buttons[i].onClick.RemoveAllListeners();
-            buttons[i].onClick.AddListener(delegate { GameManager.Instance.GetPlayer().playerResources.TryBuyProduct(product); });
+            // buttons[i].onClick.AddListener(delegate { GameManager.Instance.GetPlayer().playerResources.TryBuyProduct(product); });
             this.transform.GetChild(i).gameObject.SetActive(true);
             i++;
         }
@@ -46,7 +46,7 @@ public class TradingUI : MonoBehaviour
             prices[i].text = $"{weaponProduct.weaponDetails.weaponName} {weaponAmmoAmount}\n{weaponProduct.price}";
             images[i + 1].sprite = weaponProduct.weaponDetails.weaponSprite;
             buttons[i].onClick.RemoveAllListeners();
-            buttons[i].onClick.AddListener(delegate { GameManager.Instance.GetPlayer().playerResources.TryBuyWeapon(weaponProduct); });
+            // buttons[i].onClick.AddListener(delegate { GameManager.Instance.GetPlayer().playerResources.TryBuyWeapon(weaponProduct); });
             this.transform.GetChild(i).gameObject.SetActive(true);
             i++;
         }

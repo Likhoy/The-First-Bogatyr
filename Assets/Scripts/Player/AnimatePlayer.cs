@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 using UnityEngine.Rendering;
 
 [RequireComponent(typeof(Player))]
@@ -169,13 +169,13 @@ public class AnimatePlayer : MonoBehaviour
         player.animator.SetBool(Settings.lookDown, false);
     }
 
-    /*private void InitializeDashAnimationParameters()
+    private void InitializeDashAnimationParameters()
     {
         player.animator.SetBool(Settings.rollDown, false);
         player.animator.SetBool(Settings.rollRight, false);
         player.animator.SetBool(Settings.rollLeft, false);
         player.animator.SetBool(Settings.rollUp, false);
-    }*/
+    }
 
 
     /// <summary>
@@ -190,7 +190,7 @@ public class AnimatePlayer : MonoBehaviour
     /// <summary>
     /// Set movement to position animation parameters
     /// </summary>
-    /*private void SetMovementToPositionAnimationParameters(MovementToPositionArgs movementToPositionArgs)
+    private void SetMovementToPositionAnimationParameters(MovementToPositionArgs movementToPositionArgs)
     {
         // Animate roll
         if (movementToPositionArgs.isRolling)
@@ -212,7 +212,7 @@ public class AnimatePlayer : MonoBehaviour
                 player.animator.SetBool(Settings.rollDown, true);
             }
         }
-    }*/
+    }
 
     /// <summary>
     /// Set movement animation parameters
@@ -252,3 +252,4 @@ public class AnimatePlayer : MonoBehaviour
     }
 
 }
+*/

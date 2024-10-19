@@ -13,12 +13,12 @@ public class ExperienceUI : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.Instance.GetPlayer().playerResources.experienceIncreasedEvent.OnExperienceIncreased += ExperienceEvent_OnExperienceChanged;
+        // GameManager.Instance.GetPlayer().playerResources.experienceIncreasedEvent.OnExperienceIncreased += ExperienceEvent_OnExperienceChanged;
     }
 
     private void OnDisable()
     {
-        GameManager.Instance.GetPlayer().playerResources.experienceIncreasedEvent.OnExperienceIncreased -= ExperienceEvent_OnExperienceChanged;
+        // GameManager.Instance.GetPlayer().playerResources.experienceIncreasedEvent.OnExperienceIncreased -= ExperienceEvent_OnExperienceChanged;
     }
 
     private void ExperienceEvent_OnExperienceChanged(ExperienceIncreasedEvent experienceEvent, ExperienceIncreasedEventArgs experienceEventArgs)

@@ -17,14 +17,14 @@ public class WeaponUI : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.Instance.GetPlayer().setActiveWeaponEvent.OnSetActiveWeapon += WeaponEvent_OnWeaponChanged;
-        GameManager.Instance.GetPlayer().weaponFiredEvent.OnWeaponFired += FiredIvent_OnWeaponFired;
+        // GameManager.Instance.GetPlayer().setActiveWeaponEvent.OnSetActiveWeapon += WeaponEvent_OnWeaponChanged;
+        // GameManager.Instance.GetPlayer().weaponFiredEvent.OnWeaponFired += FiredIvent_OnWeaponFired;
     }
 
     private void OnDisable()
     {
-        GameManager.Instance.GetPlayer().setActiveWeaponEvent.OnSetActiveWeapon -= WeaponEvent_OnWeaponChanged;
-        GameManager.Instance.GetPlayer().weaponFiredEvent.OnWeaponFired -= FiredIvent_OnWeaponFired;
+        // GameManager.Instance.GetPlayer().setActiveWeaponEvent.OnSetActiveWeapon -= WeaponEvent_OnWeaponChanged;
+        // GameManager.Instance.GetPlayer().weaponFiredEvent.OnWeaponFired -= FiredIvent_OnWeaponFired;
     }
 
     private void WeaponEvent_OnWeaponChanged(SetActiveWeaponEvent setActiveWeaponEvent, SetActiveWeaponEventArgs setActiveWeaponEventArgs)

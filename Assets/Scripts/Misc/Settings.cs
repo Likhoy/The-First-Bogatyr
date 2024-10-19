@@ -66,11 +66,12 @@ public static class Settings
         [Command.Hit] = KeyCode.Mouse0,
         [Command.SwitchWeapon] = KeyCode.Q,
         [Command.TakeItem] = KeyCode.F,
+        [Command.ThrowItem] = KeyCode.Q,
         [Command.ContinueDialog] = KeyCode.Mouse0,
         [Command.OpenBestiary] = KeyCode.B,
         [Command.OpenMap] = KeyCode.M,
         [Command.OpenPauseMenu] = KeyCode.Escape,
-        [Command.OpenInventory] = KeyCode.I,
+        [Command.OpenInventory] = KeyCode.E,
         [Command.OpenSkillTree] = KeyCode.K
     };
     #endregion 

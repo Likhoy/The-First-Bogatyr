@@ -43,7 +43,7 @@ public static class BonusHandler
 
     private static void ApplyResurrectorBonus(ResurrectorBonusDetailsSO bonusDetails)
     {
-        GameManager.Instance.GetPlayer().health.AddExtraLives(bonusDetails.livesReserve);
+        // GameManager.Instance.GetPlayer().health.AddExtraLives(bonusDetails.livesReserve);
     }
 
     private static void ApplyPowerBonus(PowerBonusDetailsSO bonusDetails)
@@ -51,22 +51,19 @@ public static class BonusHandler
         switch (bonusDetails.bonusType)
         {
             case PowerBonusType.Armour:
-                Protection.AddProtection<Armour>(GameManager.Instance.GetPlayer().health, 
-                    bonusDetails);
+                // Protection.AddProtection<Armour>(GameManager.Instance.GetPlayer().health, bonusDetails);
                 break;
 
             case PowerBonusType.VirtualArmour:
-                Protection.AddProtection<VirtualArmour>(GameManager.Instance.GetPlayer().health,
-                    bonusDetails);
+                // Protection.AddProtection<VirtualArmour>(GameManager.Instance.GetPlayer().health, bonusDetails);
                 break;
 
             case PowerBonusType.DamageReflector:
-                Protection.AddProtection<DamageReflector>(GameManager.Instance.GetPlayer().health,
-                    bonusDetails);
+                // Protection.AddProtection<DamageReflector>(GameManager.Instance.GetPlayer().health, bonusDetails);
                 break;
 
             case PowerBonusType.HealthBoost:
-                GameManager.Instance.GetPlayer().health.IncreaseMaxHealth(bonusDetails.bonusPercent);
+                // GameManager.Instance.GetPlayer().health.IncreaseMaxHealth(bonusDetails.bonusPercent);
                 break;
 
             default: break;
