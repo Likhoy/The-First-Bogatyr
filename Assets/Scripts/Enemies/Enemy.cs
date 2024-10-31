@@ -4,24 +4,7 @@ using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
 #region REQUIRE COMPONENTS
-[RequireComponent(typeof(HealthEvent))]
-[RequireComponent(typeof(EnemyHealth))]
-[RequireComponent(typeof(FireWeaponEvent))]
-[RequireComponent(typeof(DestroyedEvent))]
-[RequireComponent(typeof(Destroyed))]
 [RequireComponent(typeof(BehaviourTreeInstance))]
-[RequireComponent(typeof(FireWeaponEvent))]
-[RequireComponent(typeof(FireWeapon))]
-[RequireComponent(typeof(SetActiveWeaponEvent))]
-[RequireComponent(typeof(ActiveWeapon))]
-[RequireComponent(typeof(WeaponFiredEvent))]
-[RequireComponent(typeof(ReloadWeaponEvent))]
-[RequireComponent(typeof(ReloadWeapon))]
-[RequireComponent(typeof(WeaponReloadedEvent))]
-[RequireComponent(typeof(MovementToPositionEvent))]
-[RequireComponent(typeof(MovementToPosition))]
-[RequireComponent(typeof(IdleEvent))]
-[RequireComponent(typeof(Idle))]
 //[RequireComponent(typeof(AnimateEnemy))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
@@ -35,14 +18,6 @@ using UnityEngine.SceneManagement;
 public class Enemy : MonoBehaviour
 {
     [HideInInspector] public EnemyDetailsSO enemyDetails;
-    [HideInInspector] public HealthEvent healthEvent;
-    private EnemyHealth health;
-    //[HideInInspector] public AimWeaponEvent aimWeaponEvent;
-    [HideInInspector] public FireWeaponEvent fireWeaponEvent;
-    private FireWeapon fireWeapon;
-    [HideInInspector] public SetActiveWeaponEvent setActiveWeaponEvent;
-    [HideInInspector] public MovementToPositionEvent movementToPositionEvent;
-    [HideInInspector] public IdleEvent idleEvent;
     // private MaterializeEffect materializeEffect;
     private NavMeshAgent agent;
     private BoxCollider2D boxCollider2D;
@@ -74,14 +49,7 @@ public class Enemy : MonoBehaviour
         // Load components
         audioSource = GetComponent<AudioSource>();
         audioEffects = GameObject.Find("AudioEffects").GetComponent<AudioSource>();
-        healthEvent = GetComponent<HealthEvent>();
-        health = GetComponent<EnemyHealth>();
         //aimWeaponEvent = GetComponent<AimWeaponEvent>();
-        fireWeaponEvent = GetComponent<FireWeaponEvent>();
-        fireWeapon = GetComponent<FireWeapon>();
-        setActiveWeaponEvent = GetComponent<SetActiveWeaponEvent>();
-        movementToPositionEvent = GetComponent<MovementToPositionEvent>();
-        idleEvent = GetComponent<IdleEvent>();
         // materializeEffect = GetComponent<MaterializeEffect>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         polygonCollider2D = GetComponent<PolygonCollider2D>();
@@ -122,18 +90,6 @@ public class Enemy : MonoBehaviour
             audioSource.Stop();
 
         before = after;
-    }
-
-    private void OnEnable()
-    {
-        //subscribe to health event
-        healthEvent.OnHealthChanged += HealthEvent_OnHealthLost;
-    }
-
-    private void OnDisable()
-    {
-        // unsubscribe from health event
-        healthEvent.OnHealthChanged -= HealthEvent_OnHealthLost;
     }
 
     /// <summary>
@@ -221,7 +177,7 @@ public class Enemy : MonoBehaviour
                 return;
             }
         }*/
-        health.SetStartingHealth(enemyDetails.startingHealthAmount + modifierEffect);
+        // health.SetStartingHealth(enemyDetails.startingHealthAmount + modifierEffect);
     }
 
     /// <summary>
@@ -230,7 +186,7 @@ public class Enemy : MonoBehaviour
     private void SetEnemyStartingWeapon()
     {
         // Process if enemy has a weapon
-        if (enemyDetails.enemyRangedWeapon != null)
+        /*if (enemyDetails.enemyRangedWeapon != null)
         {
             RangedWeapon weapon = new RangedWeapon() { weaponDetails = enemyDetails.enemyRangedWeapon, 
                 weaponCurrentMinDamage = enemyDetails.enemyRangedWeapon.GetWeaponMinDamage(),
@@ -254,7 +210,7 @@ public class Enemy : MonoBehaviour
             
             if (activeWeapon.GetCurrentWeapon() == null)
                 setActiveWeaponEvent.CallSetActiveWeaponEvent(MeleeWeapon, false);
-        }
+        }*/
     }
 
     /// <summary>
@@ -288,7 +244,7 @@ public class Enemy : MonoBehaviour
         behaviourTree.enabled = isEnabled;
 
         // Enable / Disable Fire Weapon
-        fireWeapon.enabled = isEnabled;
+        // fireWeapon.enabled = isEnabled;
 
     }
 }

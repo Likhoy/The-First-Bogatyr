@@ -4,7 +4,7 @@ using UnityEngine;
 public struct EnemySpawnData
 {
     public EnemyDetailsSO enemyDetails;
-    public Vector2Int spawnPosition;
+    public Vector2 spawnPosition;
 }
 
 [System.Serializable]

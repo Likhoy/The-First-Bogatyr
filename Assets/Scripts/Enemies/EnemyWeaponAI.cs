@@ -216,7 +216,7 @@ public class EnemyWeaponAI : MonoBehaviour
         if (enemyDetails.firingLineOfSightRequired && !IsPlayerInLineOfSight(weaponDirection)) return;
 
         // Trigger fire weapon event
-        enemy.fireWeaponEvent.CallFireWeaponEvent(true, true, enemyAngleDegrees, weaponAngleDegrees, weaponDirection);
+        // enemy.fireWeaponEvent.CallFireWeaponEvent(true, true, enemyAngleDegrees, weaponAngleDegrees, weaponDirection);
 
     }
 

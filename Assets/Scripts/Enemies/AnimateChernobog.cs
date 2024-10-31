@@ -17,13 +17,13 @@ public class AnimateChernobog : MonoBehaviour
     private void OnEnable()
     {
         // Subscribe to movement event
-        enemy.movementToPositionEvent.OnMovementToPosition += MovementToPositionEvent_OnMovementToPosition;
+        // enemy.movementToPositionEvent.OnMovementToPosition += MovementToPositionEvent_OnMovementToPosition;
 
         // Subscribe to fire weapon event
-        enemy.fireWeaponEvent.OnFireWeapon += FireWeaponEvent_OnFireWeapon;
+        // enemy.fireWeaponEvent.OnFireWeapon += FireWeaponEvent_OnFireWeapon;
 
         // Subscribe to weapon fired event
-        enemy.weaponFiredEvent.OnWeaponFired += WeaponFiredEvent_OnWeaponFired;
+        // enemy.weaponFiredEvent.OnWeaponFired += WeaponFiredEvent_OnWeaponFired;
 
         // Subscribe to defending events
         enemy.defendingStageStartedEvent.OnDefendingStageStarted += DefendingStageStartedEvent_OnDefendingStageStarted;
@@ -32,19 +32,19 @@ public class AnimateChernobog : MonoBehaviour
         enemy.lookAtEvent.OnLookAt += LookAtEvent_OnLookAt;
 
         // Subscribe to idle event
-        enemy.idleEvent.OnIdle += IdleEvent_OnIdle;
+        // enemy.idleEvent.OnIdle += IdleEvent_OnIdle;
     }
 
     private void OnDisable()
     {
         // Unsubscribe from movement event
-        enemy.movementToPositionEvent.OnMovementToPosition -= MovementToPositionEvent_OnMovementToPosition;
+        // enemy.movementToPositionEvent.OnMovementToPosition -= MovementToPositionEvent_OnMovementToPosition;
 
         // Unsubscribe from fire weapon event
-        enemy.fireWeaponEvent.OnFireWeapon -= FireWeaponEvent_OnFireWeapon;
+        // enemy.fireWeaponEvent.OnFireWeapon -= FireWeaponEvent_OnFireWeapon;
 
         // Unsubscribe from weapon fired event
-        enemy.weaponFiredEvent.OnWeaponFired -= WeaponFiredEvent_OnWeaponFired;
+        // enemy.weaponFiredEvent.OnWeaponFired -= WeaponFiredEvent_OnWeaponFired;
 
         // Unsubscribe from defending events
         enemy.defendingStageStartedEvent.OnDefendingStageStarted -= DefendingStageStartedEvent_OnDefendingStageStarted;
@@ -53,7 +53,7 @@ public class AnimateChernobog : MonoBehaviour
         enemy.lookAtEvent.OnLookAt -= LookAtEvent_OnLookAt;
 
         // Unsubscribe from idle event
-        enemy.idleEvent.OnIdle -= IdleEvent_OnIdle;
+        // enemy.idleEvent.OnIdle -= IdleEvent_OnIdle;
     }
 
     /// <summary>
