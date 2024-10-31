@@ -56,7 +56,6 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
             throw new NullReferenceException("Не найдена нужная сцена в общем списке сцен.");
             
 
-        //grid = MainLocationInfo.Grid;
         enemiesToSpawn = currentLocationDetails.enemiesToSpawnImmediately.Length;
 
         // Check we have somewhere to spawn the enemies
@@ -67,10 +66,10 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
             {
                 EnemyDetailsSO enemyDetails = currentLocationDetails.enemiesToSpawnImmediately[EnemiesSpawnedSoFar].enemyDetails;
 
-                Vector3Int cellPosition = (Vector3Int)currentLocationDetails.enemiesToSpawnImmediately[EnemiesSpawnedSoFar].spawnPosition;
+                Vector3 position = (Vector3)currentLocationDetails.enemiesToSpawnImmediately[EnemiesSpawnedSoFar].spawnPosition;
 
                 // Create Enemy - Get next enemy type to spawn 
-                CreateEnemy(enemyDetails, EnemyPrefabType.MainStoryLine, MainLocationInfo.Grid.CellToWorld(cellPosition));
+                CreateEnemy(enemyDetails, EnemyPrefabType.MainStoryLine, position);
             }
         }
     }
@@ -81,12 +80,12 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
     public void SpawnEnemy(string enemyName, string spawnPosition)
     {
         int[] coords = spawnPosition.Split(" ").Select(coord => int.Parse(coord)).ToArray();
-        Vector3Int spawnPositionVect = new Vector3Int(coords[0], coords[1], coords[2]);
+        Vector3 spawnPositionVect = new Vector3(coords[0], coords[1], coords[2]);
         foreach (EnemyDetailsSO enemyDetails in GameResources.Instance.enemyDetailsList)
         {
             if (enemyDetails.enemyName == enemyName)
             {
-                CreateEnemy(enemyDetails, EnemyPrefabType.MainStoryLine, MainLocationInfo.Grid.CellToWorld(spawnPositionVect));
+                CreateEnemy(enemyDetails, EnemyPrefabType.MainStoryLine, spawnPositionVect);
             }
                 
         }
@@ -106,7 +105,7 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
     /// </summary>
     private GameObject CreateEnemy(EnemyDetailsSO enemyDetails, EnemyPrefabType enemyPrefabType, Vector3 position, EnemyModifiers enemyModifiers = null, Action<DestroyedEvent, DestroyedEventArgs> callback = null)
     {
-        // keep track of the number of enemies spawned so far 
+        // keep track of the number of enemies spawned so far
         EnemiesSpawnedSoFar++;
 
         // Add one to the current enemy count - this is reduced when an enemy is destroyed

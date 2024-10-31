@@ -262,6 +262,22 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 2c93afb1cbde1c84aaa99f57c69b8543, type: 2}
+    - target: {fileID: 7639492154734387235, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
+      propertyPath: attackPrefab
+      value: 
+      objectReference: {fileID: 114614958842046154, guid: bcfe240054bb2aa489b74f164972836f, type: 3}
+    - target: {fileID: 7639492154734387235, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
+      propertyPath: skill.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7639492154734387235, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
+      propertyPath: skill.Array.data[0].skillName
+      value: StrawSpit
+      objectReference: {fileID: 0}
+    - target: {fileID: 7639492154734387235, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
+      propertyPath: skill.Array.data[0].skillPrefab
+      value: 
+      objectReference: {fileID: 114970523288256178, guid: c892bbf9b9abacf41ab51399cc10fe5c, type: 3}
     - target: {fileID: 7932139898352477546, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -3546,10 +3562,10 @@ PrefabInstance:
       addedObject: {fileID: 6712194894880595544}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1767373786716691614, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
-      insertIndex: 27
+      insertIndex: -1
       addedObject: {fileID: 4703415303845726651}
     - targetCorrespondingSourceObject: {fileID: 1767373786716691614, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
-      insertIndex: 28
+      insertIndex: -1
       addedObject: {fileID: 7634689953978660055}
     - targetCorrespondingSourceObject: {fileID: 1767373786716691614, guid: 8e63a2c8f0d35bb459be9f045e8fd985, type: 3}
       insertIndex: -1

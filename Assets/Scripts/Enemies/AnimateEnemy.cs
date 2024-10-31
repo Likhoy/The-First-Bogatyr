@@ -24,10 +24,10 @@ public class AnimateEnemy : MonoBehaviour
     private void OnEnable()
     {
         // Subscribe to movement event
-        enemy.movementToPositionEvent.OnMovementToPosition += MovementToPositionEvent_OnMovementToPosition;
+        // enemy.movementToPositionEvent.OnMovementToPosition += MovementToPositionEvent_OnMovementToPosition;
 
         // Subscribe to idle event
-        enemy.idleEvent.OnIdle += IdleEvent_OnIdle;
+        // enemy.idleEvent.OnIdle += IdleEvent_OnIdle;
 
         // Subscribe to set active weapon event
         //enemy.setActiveWeaponEvent.OnSetActiveWeapon += SetActiveWeaponEvent_OnSetActiveWeapon;
@@ -42,10 +42,10 @@ public class AnimateEnemy : MonoBehaviour
     private void OnDisable()
     {
         // Unsubscribe from movement event
-        enemy.movementToPositionEvent.OnMovementToPosition -= MovementToPositionEvent_OnMovementToPosition;
+        // enemy.movementToPositionEvent.OnMovementToPosition -= MovementToPositionEvent_OnMovementToPosition;
 
         // Unsubscribe from idle event
-        enemy.idleEvent.OnIdle -= IdleEvent_OnIdle;
+        // enemy.idleEvent.OnIdle -= IdleEvent_OnIdle;
 
         // Unsubscribe from set active weapon event
         //enemy.setActiveWeaponEvent.OnSetActiveWeapon -= SetActiveWeaponEvent_OnSetActiveWeapon;

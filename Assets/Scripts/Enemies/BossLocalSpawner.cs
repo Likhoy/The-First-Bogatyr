@@ -21,7 +21,7 @@ public class BossLocalSpawner : MonoBehaviour
 
     private void OnEnable()
     {
-        enemy.healthEvent.OnHealthChanged += HealthEvent_OnHealthChanged;
+        // enemy.healthEvent.OnHealthChanged += HealthEvent_OnHealthChanged;
     }
 
     private void HealthEvent_OnHealthChanged(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
@@ -47,7 +47,10 @@ public class BossLocalSpawner : MonoBehaviour
             ToggleDefendingStageEvent(true);
         }
         else if (!needsToSpawn[2] && healthEventArgs.healthPercent * 100 < 25f)
-            enemy.healthEvent.OnHealthChanged -= HealthEvent_OnHealthChanged;
+        {
+            // enemy.healthEvent.OnHealthChanged -= HealthEvent_OnHealthChanged;
+        }
+
 
     }
 
