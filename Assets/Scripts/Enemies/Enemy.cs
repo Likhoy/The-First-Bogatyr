@@ -1,48 +1,25 @@
+using TheKiwiCoder;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
 #region REQUIRE COMPONENTS
-[RequireComponent(typeof(HealthEvent))]
-[RequireComponent(typeof(Health))]
-[RequireComponent(typeof(FireWeaponEvent))]
-[RequireComponent(typeof(DestroyedEvent))]
-[RequireComponent(typeof(Destroyed))]
-[RequireComponent(typeof(EnemyWeaponAI))]
-[RequireComponent(typeof(FireWeaponEvent))]
-[RequireComponent(typeof(FireWeapon))]
-[RequireComponent(typeof(SetActiveWeaponEvent))]
-[RequireComponent(typeof(ActiveWeapon))]
-[RequireComponent(typeof(WeaponFiredEvent))]
-[RequireComponent(typeof(ReloadWeaponEvent))]
-[RequireComponent(typeof(ReloadWeapon))]
-[RequireComponent(typeof(WeaponReloadedEvent))]
-[RequireComponent(typeof(BaseEnemyMovementAI))]
-[RequireComponent(typeof(MovementToPositionEvent))]
-[RequireComponent(typeof(MovementToPosition))]
-[RequireComponent(typeof(IdleEvent))]
-[RequireComponent(typeof(Idle))]
+[RequireComponent(typeof(BehaviourTreeInstance))]
 //[RequireComponent(typeof(AnimateEnemy))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(PolygonCollider2D))]
+[RequireComponent(typeof(NavMeshAgent))]
 #endregion REQUIRE COMPONENTS
 
 [DisallowMultipleComponent]
 public class Enemy : MonoBehaviour
 {
     [HideInInspector] public EnemyDetailsSO enemyDetails;
-    [HideInInspector] public HealthEvent healthEvent;
-    private Health health;
-    //[HideInInspector] public AimWeaponEvent aimWeaponEvent;
-    [HideInInspector] public FireWeaponEvent fireWeaponEvent;
-    private FireWeapon fireWeapon;
-    [HideInInspector] public SetActiveWeaponEvent setActiveWeaponEvent;
-    [HideInInspector] public BaseEnemyMovementAI enemyMovementAI;
-    [HideInInspector] public MovementToPositionEvent movementToPositionEvent;
-    [HideInInspector] public IdleEvent idleEvent;
     // private MaterializeEffect materializeEffect;
+    private NavMeshAgent agent;
     private BoxCollider2D boxCollider2D;
     private PolygonCollider2D polygonCollider2D;
     [HideInInspector] public SpriteRenderer[] spriteRendererArray;
@@ -52,8 +29,9 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public WeaponFiredEvent weaponFiredEvent;
     [HideInInspector] public DefendingStageStartedEvent defendingStageStartedEvent;
     [HideInInspector] public DefendingStageEndedEvent defendingStageEndedEvent;
-    [HideInInspector] public StaticAttackingStartedEvent staticAttackingStartedEvent;
-    [HideInInspector] public StaticAttackingEndedEvent staticAttackingEndedEvent;
+    [HideInInspector] public LookAtEvent lookAtEvent;
+
+    private BehaviourTreeInstance behaviourTree;
 
     private AudioSource audioSource;
     private AudioSource audioEffects;
@@ -71,15 +49,7 @@ public class Enemy : MonoBehaviour
         // Load components
         audioSource = GetComponent<AudioSource>();
         audioEffects = GameObject.Find("AudioEffects").GetComponent<AudioSource>();
-        healthEvent = GetComponent<HealthEvent>();
-        health = GetComponent<Health>();
         //aimWeaponEvent = GetComponent<AimWeaponEvent>();
-        fireWeaponEvent = GetComponent<FireWeaponEvent>();
-        fireWeapon = GetComponent<FireWeapon>();
-        setActiveWeaponEvent = GetComponent<SetActiveWeaponEvent>();
-        enemyMovementAI = GetComponent<BaseEnemyMovementAI>();
-        movementToPositionEvent = GetComponent<MovementToPositionEvent>();
-        idleEvent = GetComponent<IdleEvent>();
         // materializeEffect = GetComponent<MaterializeEffect>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         polygonCollider2D = GetComponent<PolygonCollider2D>();
@@ -90,13 +60,25 @@ public class Enemy : MonoBehaviour
         weaponFiredEvent = GetComponent<WeaponFiredEvent>();
         defendingStageStartedEvent = GetComponent<DefendingStageStartedEvent>();
         defendingStageEndedEvent = GetComponent<DefendingStageEndedEvent>();
-        staticAttackingStartedEvent = GetComponent<StaticAttackingStartedEvent>(); 
-        staticAttackingEndedEvent = GetComponent<StaticAttackingEndedEvent>();
+        lookAtEvent = GetComponent<LookAtEvent>();
         before = transform.position;
+
+        agent = GetComponent<NavMeshAgent>();
+        behaviourTree = GetComponent<BehaviourTreeInstance>();
+    }
+
+    private void Start()
+    {
+        // в 2D это устанавливается
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
     }
 
     private void Update()
     {
+        // обязательно для NavMeshAgent
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+
         after = transform.position;
 
         if (before != after)
@@ -108,18 +90,6 @@ public class Enemy : MonoBehaviour
             audioSource.Stop();
 
         before = after;
-    }
-
-    private void OnEnable()
-    {
-        //subscribe to health event
-        healthEvent.OnHealthChanged += HealthEvent_OnHealthLost;
-    }
-
-    private void OnDisable()
-    {
-        // unsubscribe from health event
-        healthEvent.OnHealthChanged -= HealthEvent_OnHealthLost;
     }
 
     /// <summary>
@@ -143,9 +113,9 @@ public class Enemy : MonoBehaviour
     private void EnemyDestroyed()
     {
         DestroyedEvent destroyedEvent = GetComponent<DestroyedEvent>();
-        destroyedEvent.CallDestroyedEvent(false, health.GetStartingHealth());
+        destroyedEvent.CallDestroyedEvent(false, enemyDetails.experienceDrop);
 
-        if (enemyDetails.moneyReward > 0 && SceneManager.GetActiveScene().name != GameManager.Instance.allLocationsDetails[2].sceneName)
+        if (enemyDetails.moneyReward > 0 && SceneManager.GetActiveScene().name != Settings.purpleWorldSceneName)
         {
             for (int i = 0; i < enemyDetails.moneyReward / 100; i++) // needed to add another money values
             {
@@ -167,7 +137,7 @@ public class Enemy : MonoBehaviour
     {
         this.enemyDetails = enemyDetails;
 
-        SetEnemyMovementUpdateFrame(enemySpawnNumber);
+        // SetEnemyMovementUpdateFrame(enemySpawnNumber);
 
         if (enemyModifiers != null)
         {
@@ -186,11 +156,11 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// Set enemy movement update frame
     /// </summary>
-    private void SetEnemyMovementUpdateFrame(int enemySpawnNumber)
+    /*private void SetEnemyMovementUpdateFrame(int enemySpawnNumber)
     {
         // Set frame number that enemy should process it's updates
         enemyMovementAI.SetUpdateFrameNumber(enemySpawnNumber % Settings.targetFrameRateToSpreadPathfindingOver);
-    }
+    }*/
 
 
     /// <summary>
@@ -207,7 +177,7 @@ public class Enemy : MonoBehaviour
                 return;
             }
         }*/
-        health.SetStartingHealth(enemyDetails.startingHealthAmount + modifierEffect);
+        // health.SetStartingHealth(enemyDetails.startingHealthAmount + modifierEffect);
     }
 
     /// <summary>
@@ -216,30 +186,41 @@ public class Enemy : MonoBehaviour
     private void SetEnemyStartingWeapon()
     {
         // Process if enemy has a weapon
-        if (enemyDetails.enemyRangedWeapon != null)
+        /*if (enemyDetails.enemyRangedWeapon != null)
         {
-            RangedWeapon weapon = new RangedWeapon() { weaponDetails = enemyDetails.enemyRangedWeapon, weaponReloadTimer = 0f, weaponClipRemainingAmmo = enemyDetails.enemyRangedWeapon.weaponClipAmmoCapacity, weaponRemainingAmmo = enemyDetails.enemyRangedWeapon.weaponAmmoCapacity, isWeaponReloading = false };
+            RangedWeapon weapon = new RangedWeapon() { weaponDetails = enemyDetails.enemyRangedWeapon, 
+                weaponCurrentMinDamage = enemyDetails.enemyRangedWeapon.GetWeaponMinDamage(),
+                weaponCurrentMaxDamage = enemyDetails.enemyRangedWeapon.GetWeaponMaxDamage(),
+                weaponReloadTimer = 0f, 
+                weaponClipRemainingAmmo = enemyDetails.enemyRangedWeapon.weaponClipAmmoCapacity, 
+                weaponRemainingAmmo = enemyDetails.enemyRangedWeapon.weaponAmmoCapacity, 
+                isWeaponReloading = false };
 
             // Set weapon for enemy
             setActiveWeaponEvent.CallSetActiveWeaponEvent(weapon, true);
             RangedWeapon = weapon;
         }
+        
         if (enemyDetails.enemyMeleeWeapon != null)
         {
-            MeleeWeapon = new MeleeWeapon() { weaponDetails = enemyDetails.enemyMeleeWeapon, weaponListPosition = 1 };
+            MeleeWeapon = new MeleeWeapon() { weaponDetails = enemyDetails.enemyMeleeWeapon,
+                weaponCurrentMinDamage = enemyDetails.enemyMeleeWeapon.GetWeaponMinDamage(),
+                weaponCurrentMaxDamage = enemyDetails.enemyMeleeWeapon.GetWeaponMaxDamage(),
+                weaponListPosition = 1 };
+            
             if (activeWeapon.GetCurrentWeapon() == null)
                 setActiveWeaponEvent.CallSetActiveWeaponEvent(MeleeWeapon, false);
-        }
+        }*/
     }
 
     /// <summary>
     /// Set enemy animator speed to match movement speed
     /// </summary>
-    private void SetEnemyAnimationSpeed()
+    /*private void SetEnemyAnimationSpeed()
     {
         // Set animator speed to match movement speed
         animator.speed = enemyMovementAI.moveSpeed / Settings.baseSpeedForEnemyAnimations;
-    }
+    }*/
 
     /*private IEnumerator MaterializeEnemy()
     {
@@ -259,11 +240,11 @@ public class Enemy : MonoBehaviour
         boxCollider2D.enabled = isEnabled;
         polygonCollider2D.enabled = isEnabled;
 
-        // Enable/Disable movement AI
-        enemyMovementAI.enabled = isEnabled;
+        // Enable/Disable enemy behaviour
+        behaviourTree.enabled = isEnabled;
 
         // Enable / Disable Fire Weapon
-        fireWeapon.enabled = isEnabled;
+        // fireWeapon.enabled = isEnabled;
 
     }
 }

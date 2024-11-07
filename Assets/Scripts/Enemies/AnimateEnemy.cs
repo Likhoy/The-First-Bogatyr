@@ -7,6 +7,8 @@ public class AnimateEnemy : MonoBehaviour
 {
     private Enemy enemy;
 
+    private float originalAnimatorSpeed;
+
     private void Awake()
     {
         // Load components
@@ -14,13 +16,18 @@ public class AnimateEnemy : MonoBehaviour
         
     }
 
+    private void Start()
+    {
+        originalAnimatorSpeed = enemy.animator.speed;
+    }
+
     private void OnEnable()
     {
         // Subscribe to movement event
-        enemy.movementToPositionEvent.OnMovementToPosition += MovementToPositionEvent_OnMovementToPosition;
+        // enemy.movementToPositionEvent.OnMovementToPosition += MovementToPositionEvent_OnMovementToPosition;
 
         // Subscribe to idle event
-        enemy.idleEvent.OnIdle += IdleEvent_OnIdle;
+        // enemy.idleEvent.OnIdle += IdleEvent_OnIdle;
 
         // Subscribe to set active weapon event
         //enemy.setActiveWeaponEvent.OnSetActiveWeapon += SetActiveWeaponEvent_OnSetActiveWeapon;
@@ -35,10 +42,10 @@ public class AnimateEnemy : MonoBehaviour
     private void OnDisable()
     {
         // Unsubscribe from movement event
-        enemy.movementToPositionEvent.OnMovementToPosition -= MovementToPositionEvent_OnMovementToPosition;
+        // enemy.movementToPositionEvent.OnMovementToPosition -= MovementToPositionEvent_OnMovementToPosition;
 
         // Unsubscribe from idle event
-        enemy.idleEvent.OnIdle -= IdleEvent_OnIdle;
+        // enemy.idleEvent.OnIdle -= IdleEvent_OnIdle;
 
         // Unsubscribe from set active weapon event
         //enemy.setActiveWeaponEvent.OnSetActiveWeapon -= SetActiveWeaponEvent_OnSetActiveWeapon;
@@ -92,11 +99,17 @@ public class AnimateEnemy : MonoBehaviour
     {
         InitializeLookAnimationParameters();
         SetMovementAnimationParameters();
+        SetAnimationSpeed(movementToPositionArgs.moveSpeed, movementToPositionArgs.moveDirection);
 
         float moveAngle = HelperUtilities.GetAngleFromVector(movementToPositionArgs.moveDirection);
         LookDirection lookDirection = HelperUtilities.GetLookDirection(moveAngle);
         SetLookAnimationParameters(lookDirection);
         //SetMovementToPositionAnimationParameters();
+    }
+
+    private void SetAnimationSpeed(float moveSpeed, Vector2 moveDirection)
+    {
+        enemy.animator.speed = Settings.enemyAnimationSpeedMultiplier * moveDirection.magnitude * moveSpeed;
     }
 
     /// <summary>
@@ -105,6 +118,12 @@ public class AnimateEnemy : MonoBehaviour
     private void IdleEvent_OnIdle(IdleEvent idleEvent)
     {
         SetIdleAnimationParameters();
+        ResetAnimationSpeed();
+    }
+
+    private void ResetAnimationSpeed()
+    {
+        enemy.animator.speed = originalAnimatorSpeed;
     }
 
     /// <summary>
@@ -148,7 +167,8 @@ public class AnimateEnemy : MonoBehaviour
         enemy.animator.SetBool(Settings.isIdle, false);
         enemy.animator.SetBool(Settings.isMoving, false);
         InitializeLookAnimationParameters();
-        float attackAngle = HelperUtilities.GetAngleFromVector((GameManager.Instance.GetPlayer().transform.position - transform.position).normalized);
+        ResetAnimationSpeed();
+        float attackAngle = HelperUtilities.GetAngleFromVector((meleeAttackEventArgs.targetPosition - transform.position).normalized);
         LookDirection lookDirection = HelperUtilities.GetLookDirection(attackAngle);
         SetLookAnimationParameters(lookDirection);
         EnemyMeleeAttackAnimation();
@@ -176,7 +196,7 @@ public class AnimateEnemy : MonoBehaviour
     /// </summary>
     private void SetLookAnimationParameters(LookDirection lookDirection)
     {
-        // Set aim direction
+        // Set look direction
         switch (lookDirection)
         {
             case LookDirection.Up:

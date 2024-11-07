@@ -15,7 +15,7 @@ public abstract class Item : MonoBehaviour, IUseable
         2 - weapon/tool
         3 - consumables
     */
-
+    public string itemName;
     public int itemID;
     public bool isStackable = false;
     public bool isDisposable = false;
@@ -39,32 +39,32 @@ public abstract class Item : MonoBehaviour, IUseable
 
     // private void OnMouseDown() => TakeItem();
 
-    private void OnTriggerEnter2D(Collider2D collider)
-    {
-        if (collider.gameObject.tag == "Player")
-        {
-            PlayerController player = collider.gameObject.GetComponent<PlayerController>();
-            if (!player.takeItemList.Contains(this))
-                player.takeItemList.Add(this);
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collider)
-    {
-        if (collider.gameObject.tag == "Player")
-        {
-            PlayerController player = collider.gameObject.GetComponent<PlayerController>();
-            if (player.takeItemList.Contains(this))
-                player.takeItemList.Remove(this);
-        }   
-    }
+    // private void OnTriggerEnter2D(Collider2D collider)
+    // {
+    //     if (collider.gameObject.tag == "Player")
+    //     {
+    //         PlayerController player = collider.gameObject.GetComponent<PlayerController>();
+    //         if (!player.takeItemList.Contains(this))
+    //             player.takeItemList.Add(this);
+    //     }
+    // }
+    //
+    // private void OnTriggerExit2D(Collider2D collider)
+    // {
+    //     if (collider.gameObject.tag == "Player")
+    //     {
+    //         PlayerController player = collider.gameObject.GetComponent<PlayerController>();
+    //         if (player.takeItemList.Contains(this))
+    //             player.takeItemList.Remove(this);
+    //     }   
+    // }
 
     public void TakeItem()
     {
         //Костыль (исправить)
         if (!isTaken)
         {
-            Inventory inventory = GameObject.FindObjectOfType<Inventory>();
+            ToolBar inventory = GameObject.FindObjectOfType<ToolBar>();
             GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
             inventory.AddItem(this);
             isTaken = true;

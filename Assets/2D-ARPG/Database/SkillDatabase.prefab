@@ -1,0 +1,352 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1913643244151294
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4979590564225312}
+  - component: {fileID: 114587703334864070}
+  m_Layer: 0
+  m_Name: SkillDatabase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4979590564225312
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1913643244151294}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.0766771, y: 0.4404479, z: 0.16210938}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114587703334864070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1913643244151294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fc8d14022fb02b499972586e136ff4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skill:
+  - skillName: 
+    icon: {fileID: 21300000, guid: 1a80d48d33f2308498652e572440c37e, type: 3}
+    skillPrefab: {fileID: 0}
+    skillAnimationTrigger: 
+    manaCost: 10
+    castTime: 0.5
+    skillDelay: 0.3
+    coolDown: 1
+    description: 
+    castEffect: {fileID: 0}
+    sendMsg: 
+    whileAttack: 1
+    skillSpawn: 0
+    soundEffect: {fileID: 0}
+    requireWeapon: 0
+    requireWeaponType: 0
+    multipleHit: []
+  - skillName: Firebolt
+    icon: {fileID: 21300000, guid: 6901ed3b257527a4c99f49fc152ba3af, type: 3}
+    skillPrefab: {fileID: 114824341282817212, guid: 860cf72ae1df8ea4bba28156ddfbec2a, type: 3}
+    skillAnimationTrigger: cast
+    manaCost: 10
+    castTime: 0.2
+    skillDelay: 0.3
+    coolDown: 1
+    description: '[Magic] Launch a ball of fire at the target.'
+    castEffect: {fileID: 0}
+    sendMsg: 
+    whileAttack: 1
+    skillSpawn: 0
+    soundEffect: {fileID: 0}
+    requireWeapon: 0
+    requireWeaponType: 0
+    multipleHit: []
+  - skillName: Homing Fire
+    icon: {fileID: 21300000, guid: 5dcf94ea354379046aa3efa4725e7ae7, type: 3}
+    skillPrefab: {fileID: 114824341282817212, guid: 597942bb94694e14ab1dd3e99575338d, type: 3}
+    skillAnimationTrigger: cast2
+    manaCost: 24
+    castTime: 0.5
+    skillDelay: 0.3
+    coolDown: 4
+    description: '[Magic] Launch a homing ball of fire at the target that will explode
+      in a large radius upon impact.'
+    castEffect: {fileID: 1183219815686614, guid: fd9fcbfd32d1e8940a5bffcf85cb4b86, type: 3}
+    sendMsg: 
+    whileAttack: 1
+    skillSpawn: 0
+    soundEffect: {fileID: 0}
+    requireWeapon: 0
+    requireWeaponType: 0
+    multipleHit: []
+  - skillName: Icebolt
+    icon: {fileID: 21300000, guid: 0aff75284449956449610aefd11dab0b, type: 3}
+    skillPrefab: {fileID: 114138256346317248, guid: 6fa2c959153929e44b7ae01dde175538, type: 3}
+    skillAnimationTrigger: cast
+    manaCost: 12
+    castTime: 0.2
+    skillDelay: 0.3
+    coolDown: 3
+    description: '[Magic] Launch a spear of ice at the target. Has a chance to freeze
+      the target.'
+    castEffect: {fileID: 0}
+    sendMsg: 
+    whileAttack: 1
+    skillSpawn: 0
+    soundEffect: {fileID: 0}
+    requireWeapon: 0
+    requireWeaponType: 0
+    multipleHit: []
+  - skillName: Ice Barrage
+    icon: {fileID: 21300000, guid: aff569479130f184fad3150e18634c7b, type: 3}
+    skillPrefab: {fileID: 114138256346317248, guid: 6fa2c959153929e44b7ae01dde175538, type: 3}
+    skillAnimationTrigger: cast2
+    manaCost: 28
+    castTime: 0.5
+    skillDelay: 0.1
+    coolDown: 8
+    description: '[Magic] Launch a consecutive barrage of 5 ice at the target.'
+    castEffect: {fileID: 1183219815686614, guid: fd9fcbfd32d1e8940a5bffcf85cb4b86, type: 3}
+    sendMsg: 
+    whileAttack: 1
+    skillSpawn: 0
+    soundEffect: {fileID: 0}
+    requireWeapon: 0
+    requireWeaponType: 0
+    multipleHit:
+    - skillPrefab: {fileID: 114138256346317248, guid: 6fa2c959153929e44b7ae01dde175538, type: 3}
+      skillAnimationTrigger: cast
+      castTime: 0.1
+      skillDelay: 0.1
+      soundEffect: {fileID: 0}
+    - skillPrefab: {fileID: 114138256346317248, guid: 6fa2c959153929e44b7ae01dde175538, type: 3}
+      skillAnimationTrigger: cast
+      castTime: 0.1
+      skillDelay: 0.1
+      soundEffect: {fileID: 0}
+    - skillPrefab: {fileID: 114138256346317248, guid: 6fa2c959153929e44b7ae01dde175538, type: 3}
+      skillAnimationTrigger: cast
+      castTime: 0.1
+      skillDelay: 0.1
+      soundEffect: {fileID: 0}
+    - skillPrefab: {fileID: 114138256346317248, guid: 6fa2c959153929e44b7ae01dde175538, type: 3}
+      skillAnimationTrigger: cast
+      castTime: 0.1
+      skillDelay: 0.35
+      soundEffect: {fileID: 0}
+  - skillName: Thunderbolt
+    icon: {fileID: 21300000, guid: b57f28ae55b2d324c9c58d8eeefd683d, type: 3}
+    skillPrefab: {fileID: 114377133487578894, guid: d505d3c656962f24ba57cdd13ffd7344, type: 3}
+    skillAnimationTrigger: cast
+    manaCost: 15
+    castTime: 0.2
+    skillDelay: 0.3
+    coolDown: 3
+    description: '[Magic] Launch a ball of lightning at the target and leave a damaging
+      static field at the point of impact for a while.'
+    castEffect: {fileID: 0}
+    sendMsg: 
+    whileAttack: 1
+    skillSpawn: 0
+    soundEffect: {fileID: 0}
+    requireWeapon: 0
+    requireWeaponType: 0
+    multipleHit: []
+  - skillName: Tri-Thunder
+    icon: {fileID: 21300000, guid: a1e03a143859aaf4dacbade54c356ff7, type: 3}
+    skillPrefab: {fileID: 114241125427015850, guid: ca209632a913f874ebba16156db9af85, type: 3}
+    skillAnimationTrigger: cast2
+    manaCost: 24
+    castTime: 0.5
+    skillDelay: 0.3
+    coolDown: 8
+    description: '[Magic] Simultaneously launch 3 homing balls of Thunderbolt at
+      the target.'
+    castEffect: {fileID: 1183219815686614, guid: fd9fcbfd32d1e8940a5bffcf85cb4b86, type: 3}
+    sendMsg: 
+    whileAttack: 1
+    skillSpawn: 0
+    soundEffect: {fileID: 0}
+    requireWeapon: 0
+    requireWeaponType: 0
+    multipleHit: []
+  - skillName: Heal
+    icon: {fileID: 21300000, guid: f1aea8a1938cf9d4993c83af31e5d6e0, type: 3}
+    skillPrefab: {fileID: 114816642213442716, guid: ebf7df589e1dd1e44a09f23ddd73b36b, type: 3}
+    skillAnimationTrigger: cast
+    manaCost: 20
+    castTime: 0.2
+    skillDelay: 0.3
+    coolDown: 30
+    description: "[Magic] Restore user\u2019s HP."
+    castEffect: {fileID: 0}
+    sendMsg: 
+    whileAttack: 1
+    skillSpawn: 0
+    soundEffect: {fileID: 0}
+    requireWeapon: 0
+    requireWeaponType: 0
+    multipleHit: []
+  - skillName: Pommel Bash
+    icon: {fileID: 21300000, guid: dd2932891cc842e4c890e6035f24cad9, type: 3}
+    skillPrefab: {fileID: 114454198768391208, guid: 51c38c3cbf810db41b8105f9c585804c, type: 3}
+    skillAnimationTrigger: sword1
+    manaCost: 10
+    castTime: 0.2
+    skillDelay: 0.3
+    coolDown: 5
+    description: '[Technique] Violently bash the enemy. May inflict Stun on the target.
+      A sword is required to use this skill.'
+    castEffect: {fileID: 0}
+    sendMsg: 
+    whileAttack: 0
+    skillSpawn: 0
+    soundEffect: {fileID: 0}
+    requireWeapon: 1
+    requireWeaponType: 0
+    multipleHit: []
+  - skillName: Blasting Zone
+    icon: {fileID: 21300000, guid: cfb278b431d73c14cbfbfbef609aeab2, type: 3}
+    skillPrefab: {fileID: 114936859557468406, guid: 8d9ec7bdde4c0fd49a833bd6ff484f07, type: 3}
+    skillAnimationTrigger: sword1
+    manaCost: 18
+    castTime: 0.2
+    skillDelay: 0.3
+    coolDown: 7
+    description: '[Technique] Create an area of explosion around self and damage
+      surrounding enemies. May inflict Stun on the target(s). A sword is required
+      to use this skill.'
+    castEffect: {fileID: 0}
+    sendMsg: 
+    whileAttack: 1
+    skillSpawn: 0
+    soundEffect: {fileID: 0}
+    requireWeapon: 1
+    requireWeaponType: 0
+    multipleHit: []
+  - skillName: Thunder Claws
+    icon: {fileID: 21300000, guid: 0c28e707e69c99f47a82a9d7499e0b57, type: 3}
+    skillPrefab: {fileID: 114614958842046154, guid: c9048bf58f05e1941bfeedd7be206866, type: 3}
+    skillAnimationTrigger: sword1
+    manaCost: 24
+    castTime: 0.2
+    skillDelay: 0.3
+    coolDown: 7
+    description: '[Technique] Attack the target with claw-shaped lightning slash
+      and leave a Thunderbolt upon impact. A sword is required to use this skill.'
+    castEffect: {fileID: 0}
+    sendMsg: 
+    whileAttack: 0
+    skillSpawn: 0
+    soundEffect: {fileID: 0}
+    requireWeapon: 1
+    requireWeaponType: 0
+    multipleHit: []
+  - skillName: Fire Wave
+    icon: {fileID: 21300000, guid: 570fdd030d7450d4eaae438427bef4f5, type: 3}
+    skillPrefab: {fileID: 114232216138816316, guid: aa7916656c9427a47ac80057cb85e0f3, type: 3}
+    skillAnimationTrigger: sword1
+    manaCost: 18
+    castTime: 0.2
+    skillDelay: 0.3
+    coolDown: 5
+    description: "[Technique]Create a heat wave using your sword and launch at the
+      target. Leave a burning area at the target for a while. A sword is required
+      to use this skill.\r"
+    castEffect: {fileID: 0}
+    sendMsg: 
+    whileAttack: 1
+    skillSpawn: 0
+    soundEffect: {fileID: 0}
+    requireWeapon: 1
+    requireWeaponType: 0
+    multipleHit: []
+  - skillName: Poison Arrow
+    icon: {fileID: 21300000, guid: e98e87c939a789e44b763492d16d702d, type: 3}
+    skillPrefab: {fileID: 114375420134449628, guid: f6a213caa064b7b4bb6d3c85eb518368, type: 3}
+    skillAnimationTrigger: bow
+    manaCost: 12
+    castTime: 0.2
+    skillDelay: 0.3
+    coolDown: 2
+    description: '[Archery] Fire a poison-laced arrow at the target. May inflict
+      Poison on the target. A bow is required to use this skill.'
+    castEffect: {fileID: 0}
+    sendMsg: 
+    whileAttack: 1
+    skillSpawn: 0
+    soundEffect: {fileID: 0}
+    requireWeapon: 1
+    requireWeaponType: 1
+    multipleHit: []
+  - skillName: Explosive Arrow
+    icon: {fileID: 21300000, guid: 7be755e37b6e90743a85d093878076a0, type: 3}
+    skillPrefab: {fileID: 114617791781766456, guid: 88d5f5b2cbfa7424fb1fd3c187260f54, type: 3}
+    skillAnimationTrigger: bow
+    manaCost: 18
+    castTime: 0.2
+    skillDelay: 0.3
+    coolDown: 3
+    description: '[Archery] Fire an exploding arrow at the target that will explode
+      in a wide radius. A bow is required to use this skill.'
+    castEffect: {fileID: 0}
+    sendMsg: 
+    whileAttack: 1
+    skillSpawn: 0
+    soundEffect: {fileID: 0}
+    requireWeapon: 1
+    requireWeaponType: 1
+    multipleHit: []
+  - skillName: Thunder Shield
+    icon: {fileID: 21300000, guid: 5b6a55a7924a5494196557c8ccd97143, type: 3}
+    skillPrefab: {fileID: 114475679173221730, guid: ba60addae86d3dd41b86adf66ce2239f, type: 3}
+    skillAnimationTrigger: cast2
+    manaCost: 20
+    castTime: 0.5
+    skillDelay: 0.3
+    coolDown: 15
+    description: '[Magic] Create a rotating shield of thunder around self that will
+      damage any incoming enemies.'
+    castEffect: {fileID: 1183219815686614, guid: fd9fcbfd32d1e8940a5bffcf85cb4b86, type: 3}
+    sendMsg: 
+    whileAttack: 1
+    skillSpawn: 0
+    soundEffect: {fileID: 0}
+    requireWeapon: 0
+    requireWeaponType: 0
+    multipleHit: []
+  - skillName: Reinforcement
+    icon: {fileID: 21300000, guid: e0373cb6ac9ac424080a428bf438e3d9, type: 3}
+    skillPrefab: {fileID: 114198382222220556, guid: ee36e4adde9dafa4786becc092722708, type: 3}
+    skillAnimationTrigger: cast2
+    manaCost: 30
+    castTime: 0.5
+    skillDelay: 0.3
+    coolDown: 30
+    description: Summon a reinforcement to assist you in a fight.
+    castEffect: {fileID: 1183219815686614, guid: fd9fcbfd32d1e8940a5bffcf85cb4b86, type: 3}
+    sendMsg: 
+    whileAttack: 1
+    skillSpawn: 0
+    soundEffect: {fileID: 0}
+    requireWeapon: 0
+    requireWeaponType: 0
+    multipleHit: []

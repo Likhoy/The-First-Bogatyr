@@ -12,10 +12,13 @@ public enum Command
     Hit,
     SwitchWeapon,
     TakeItem,
+    ThrowItem,
     ContinueDialog,
     OpenBestiary,
     OpenMap,
-    OpenPauseMenu
+    OpenPauseMenu,
+    OpenInventory,
+    OpenSkillTree
 }
 
 public enum EnemyPrefabType
@@ -24,15 +27,24 @@ public enum EnemyPrefabType
     EndlessMode
 }
 
-public enum GameState
+public enum GameMode
 {
-    MainStoryLine,
-    EndlessMode
+    MainStory,
+    Endless
 }
 
 public enum PowerBonusType
 {
     HealthBoost,
-    Armor,
+    Armour,
+    VirtualArmour,
     DamageReflector
+}
+
+public enum BonusLevel
+{
+    One = 1,
+    Two,
+    Three,
+    Four
 }

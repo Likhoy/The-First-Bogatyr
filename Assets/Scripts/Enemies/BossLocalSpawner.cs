@@ -1,5 +1,4 @@
 using UnityEngine;
-using System;
 public class BossLocalSpawner : MonoBehaviour
 {
 
@@ -22,7 +21,7 @@ public class BossLocalSpawner : MonoBehaviour
 
     private void OnEnable()
     {
-        enemy.healthEvent.OnHealthChanged += HealthEvent_OnHealthChanged;
+        // enemy.healthEvent.OnHealthChanged += HealthEvent_OnHealthChanged;
     }
 
     private void HealthEvent_OnHealthChanged(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
@@ -48,7 +47,10 @@ public class BossLocalSpawner : MonoBehaviour
             ToggleDefendingStageEvent(true);
         }
         else if (!needsToSpawn[2] && healthEventArgs.healthPercent * 100 < 25f)
-            enemy.healthEvent.OnHealthChanged -= HealthEvent_OnHealthChanged;
+        {
+            // enemy.healthEvent.OnHealthChanged -= HealthEvent_OnHealthChanged;
+        }
+
 
     }
 
@@ -108,7 +110,7 @@ public class BossLocalSpawner : MonoBehaviour
     private void ToggleDefendingStageEvent(bool isStarting)
     {
         polygonCollider2D.enabled = !isStarting;
-        enemy.enemyMovementAI.enabled = !isStarting;
+        //enemy.enemyMovementAI.enabled = !isStarting;
         enemyWeaponAI.enabled = !isStarting;
         if (isStarting)
         {

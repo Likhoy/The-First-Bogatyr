@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class PlayerMapPosition : MonoBehaviour
 {
-    private float mapWidth;
+    /*private float mapWidth;
     private float mapHeight;
 
     private void Awake()
@@ -17,7 +17,7 @@ public class PlayerMapPosition : MonoBehaviour
     {
         Vector3 playerPosition = GameManager.Instance.GetPlayer().GetPlayerPosition();
         transform.localPosition = new Vector3(playerPosition.x * mapWidth / MainLocationInfo.realLocationWidth, playerPosition.y * mapHeight / MainLocationInfo.realLocationHeight, 0);
-    }
+    }*/
 
     
 }

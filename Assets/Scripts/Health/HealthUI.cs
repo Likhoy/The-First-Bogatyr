@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class HealthUI : MonoBehaviour
 {
     [SerializeField] private Image healthBar;
+    [SerializeField] private TMP_Text healthText;
 
     private void Awake()
     {
@@ -14,12 +15,12 @@ public class HealthUI : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.Instance.GetPlayer().healthEvent.OnHealthChanged += HealthEvent_OnHealthChanged;
+        // GameManager.Instance.GetPlayer().healthEvent.OnHealthChanged += HealthEvent_OnHealthChanged;
     }
 
     private void OnDisable()
     {
-        GameManager.Instance.GetPlayer().healthEvent.OnHealthChanged -= HealthEvent_OnHealthChanged;
+        // GameManager.Instance.GetPlayer().healthEvent.OnHealthChanged -= HealthEvent_OnHealthChanged;
     }
 
     private void HealthEvent_OnHealthChanged(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
@@ -29,6 +30,7 @@ public class HealthUI : MonoBehaviour
 
     private void SetHealthUI(HealthEventArgs healthEventArgs)
     {
-        healthBar.fillAmount = healthEventArgs.healthAmount / 100f;
+        healthBar.fillAmount = healthEventArgs.healthPercent;
+        healthText.text = healthEventArgs.healthAmount.ToString() + "/" + healthEventArgs.maxHealthAmount.ToString();
     }
 }

@@ -6,17 +6,25 @@ public class WeaponUI : MonoBehaviour
 {
     [SerializeField] private Image weaponImage;
     [SerializeField] private TMP_Text countItems;
+    [SerializeField] private Image weaponBackground;
+    [SerializeField] private Sprite[] backgroundSprite;
+
+    private void Awake()
+    {
+        weaponImage.gameObject.SetActive(false);
+        countItems.text = "";
+    }
 
     private void OnEnable()
     {
-        GameManager.Instance.GetPlayer().setActiveWeaponEvent.OnSetActiveWeapon += WeaponEvent_OnWeaponChanged;
-        GameManager.Instance.GetPlayer().weaponFiredEvent.OnWeaponFired += FiredIvent_OnWeaponFired;
+        // GameManager.Instance.GetPlayer().setActiveWeaponEvent.OnSetActiveWeapon += WeaponEvent_OnWeaponChanged;
+        // GameManager.Instance.GetPlayer().weaponFiredEvent.OnWeaponFired += FiredIvent_OnWeaponFired;
     }
 
     private void OnDisable()
     {
-        GameManager.Instance.GetPlayer().setActiveWeaponEvent.OnSetActiveWeapon -= WeaponEvent_OnWeaponChanged;
-        GameManager.Instance.GetPlayer().weaponFiredEvent.OnWeaponFired -= FiredIvent_OnWeaponFired;
+        // GameManager.Instance.GetPlayer().setActiveWeaponEvent.OnSetActiveWeapon -= WeaponEvent_OnWeaponChanged;
+        // GameManager.Instance.GetPlayer().weaponFiredEvent.OnWeaponFired -= FiredIvent_OnWeaponFired;
     }
 
     private void WeaponEvent_OnWeaponChanged(SetActiveWeaponEvent setActiveWeaponEvent, SetActiveWeaponEventArgs setActiveWeaponEventArgs)
@@ -33,9 +41,9 @@ public class WeaponUI : MonoBehaviour
     {
         if(weaponFiredEventArgs.weapon != null)
         {
-            if(weaponFiredEventArgs.weapon is RangedWeapon)
+            if(weaponFiredEventArgs.weapon is RangedWeapon rangedWeapon)
             {
-                countItems.text = "" + (weaponFiredEventArgs.weapon as RangedWeapon).weaponRemainingAmmo;
+                countItems.text = "" + rangedWeapon.weaponRemainingAmmo;
             }
             else
             {
@@ -53,6 +61,7 @@ public class WeaponUI : MonoBehaviour
     {
         if (setActiveWeaponEventArgs.weapon != null)
         {
+            weaponBackground.sprite = backgroundSprite[0];
             weaponImage.gameObject.SetActive(true);
           
             if (setActiveWeaponEventArgs.isWeaponRanged)
@@ -68,7 +77,9 @@ public class WeaponUI : MonoBehaviour
         }
         else
         {
+            weaponBackground.sprite = backgroundSprite[1];
             weaponImage.gameObject.SetActive(false);
+            countItems.text = "";
         }
     }
 

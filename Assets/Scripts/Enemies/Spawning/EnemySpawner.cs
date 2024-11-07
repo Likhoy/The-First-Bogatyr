@@ -8,13 +8,12 @@ using UnityEngine.SceneManagement;
 public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
 {
     private int enemiesToSpawn;
-    private int currentEnemyCount;
+    public int CurrentEnemyCount { get; private set; }
     public int EnemiesSpawnedSoFar { get; set; }
-    private Grid grid;
 
     private void Start()
     {
-        grid = MainLocationInfo.Grid;
+        SpawnEnemiesImmediately();
     }
 
     private void OnEnable()
@@ -28,9 +27,9 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
     }
 
     /// <summary>
-    /// Spawn the enemies - for usage in the main story line
+    /// Spawn the enemies immediately (right after loading scene)
     /// </summary>
-    public void SpawnEnemies()
+    private void SpawnEnemiesImmediately()
     {
         // Set gamestate engaging boss
         /*if (GameManager.Instance.gameState == GameState.bossStage)
@@ -57,7 +56,6 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
             throw new NullReferenceException("Не найдена нужная сцена в общем списке сцен.");
             
 
-        //grid = MainLocationInfo.Grid;
         enemiesToSpawn = currentLocationDetails.enemiesToSpawnImmediately.Length;
 
         // Check we have somewhere to spawn the enemies
@@ -68,10 +66,10 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
             {
                 EnemyDetailsSO enemyDetails = currentLocationDetails.enemiesToSpawnImmediately[EnemiesSpawnedSoFar].enemyDetails;
 
-                Vector3Int cellPosition = (Vector3Int)currentLocationDetails.enemiesToSpawnImmediately[EnemiesSpawnedSoFar].spawnPosition;
+                Vector3 position = (Vector3)currentLocationDetails.enemiesToSpawnImmediately[EnemiesSpawnedSoFar].spawnPosition;
 
                 // Create Enemy - Get next enemy type to spawn 
-                CreateEnemy(enemyDetails, EnemyPrefabType.MainStoryLine, grid.CellToWorld(cellPosition));
+                CreateEnemy(enemyDetails, EnemyPrefabType.MainStoryLine, position);
             }
         }
     }
@@ -82,12 +80,12 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
     public void SpawnEnemy(string enemyName, string spawnPosition)
     {
         int[] coords = spawnPosition.Split(" ").Select(coord => int.Parse(coord)).ToArray();
-        Vector3Int spawnPositionVect = new Vector3Int(coords[0], coords[1], coords[2]);
+        Vector3 spawnPositionVect = new Vector3(coords[0], coords[1], coords[2]);
         foreach (EnemyDetailsSO enemyDetails in GameResources.Instance.enemyDetailsList)
         {
             if (enemyDetails.enemyName == enemyName)
             {
-                CreateEnemy(enemyDetails, EnemyPrefabType.MainStoryLine, grid.CellToWorld(spawnPositionVect));
+                CreateEnemy(enemyDetails, EnemyPrefabType.MainStoryLine, spawnPositionVect);
             }
                 
         }
@@ -96,22 +94,22 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
     /// <summary>
     /// Spawn enemy variation for usage in the endless mode
     /// </summary>
-    public void SpawnEnemy(EnemyDetailsSO enemyDetails, Vector2Int spawnPosition, EnemyModifiers enemyModifiers = null)
+    public GameObject SpawnEnemy(EnemyDetailsSO enemyDetails, Vector3 spawnPosition, EnemyModifiers enemyModifiers = null, Action<DestroyedEvent, DestroyedEventArgs> callback = null)
     {
-        CreateEnemy(enemyDetails, EnemyPrefabType.EndlessMode, grid.CellToWorld((Vector3Int)spawnPosition), enemyModifiers);
+        return CreateEnemy(enemyDetails, EnemyPrefabType.EndlessMode, spawnPosition, enemyModifiers, callback);
     }
 
 
     /// <summary>
     /// Create an enemy in the specified position
     /// </summary>
-    private void CreateEnemy(EnemyDetailsSO enemyDetails, EnemyPrefabType enemyPrefabType, Vector3 position, EnemyModifiers enemyModifiers = null)
+    private GameObject CreateEnemy(EnemyDetailsSO enemyDetails, EnemyPrefabType enemyPrefabType, Vector3 position, EnemyModifiers enemyModifiers = null, Action<DestroyedEvent, DestroyedEventArgs> callback = null)
     {
-        // keep track of the number of enemies spawned so far 
+        // keep track of the number of enemies spawned so far
         EnemiesSpawnedSoFar++;
 
         // Add one to the current enemy count - this is reduced when an enemy is destroyed
-        currentEnemyCount++;
+        CurrentEnemyCount++;
 
         // Instantiate enemy
         GameObject enemy = Instantiate(enemyDetails.enemyPrefabs[(int)enemyPrefabType], position, Quaternion.identity, transform);
@@ -119,9 +117,18 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
         // Initialize Enemy
         enemy.GetComponent<Enemy>().EnemyInitialization(enemyDetails, EnemiesSpawnedSoFar, enemyModifiers);
 
-        // subscribe to enemy destroyed event
-        enemy.GetComponent<DestroyedEvent>().OnDestroyed += Enemy_OnDestroyed;
+        DestroyedEvent destroyedEvent = enemy.GetComponent<DestroyedEvent>();
 
+        // subscribe to enemy destroyed event
+        destroyedEvent.OnDestroyed += Enemy_OnDestroyed;
+
+        // subscribe passed callbask as well
+        if (callback != null)
+        {
+            destroyedEvent.OnDestroyed += callback;
+        }
+
+        return enemy;
     }
 
     /// <summary>
@@ -137,17 +144,16 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
             GetComponent<DialogueSystemTrigger>().OnUse();
 
         // reduce current enemy count
-        currentEnemyCount--;
+        CurrentEnemyCount--;
 
-        if (currentEnemyCount <= 0)
+        // add player experience
+        var player = GameManager.Instance.GetPlayer();
+        // player.playerResources.AddExperience(destroyedEventArgs.experience);
+        
+        
+        if (CurrentEnemyCount <= 0)
         {
-
-            if (GameManager.Instance.gameState == GameState.EndlessMode)
-            {
-                GameManager.Instance.TryLaunchNextWave();
-            }
                 
-
             // Set game state
             /*if (GameManager.Instance.gameState == GameState.engagingEnemies)
             {

@@ -25,7 +25,9 @@ public static class Settings
     public const float baseSpeedForPlayerAnimations = 8f;
 
     // Animator parameters - Enemy
-    public static float baseSpeedForEnemyAnimations = 3f;
+    public const float baseSpeedForEnemyAnimations = 3f;
+
+    public const float enemyAnimationSpeedMultiplier = 0.2f;
 
     #endregion ANIMATOR PARAMETERS
 
@@ -49,7 +51,7 @@ public static class Settings
     public const int preferredPathAStarMovementPenalty = 1;
     public const int targetFrameRateToSpreadPathfindingOver = 60;
     public const float playerMoveDistanceToRebuildPath = 3f;
-    public const float enemyPathRebuildCooldown = 1f;
+    public const float enemyPathRebuildCooldown = 0.2f;
 
     #endregion
 
@@ -58,16 +60,19 @@ public static class Settings
     #endregion
 
     #region BUTTON ASSIGNMENTS
-    public static Dictionary<Command, KeyCode> commandButtons = new Dictionary<Command, KeyCode>()
+    public static readonly Dictionary<Command, KeyCode> commandButtons = new()
     {
-        [Command.Dash] = KeyCode.LeftShift,
-        [Command.Hit] = KeyCode.Mouse1,
+        [Command.Dash] = KeyCode.Mouse1,
+        [Command.Hit] = KeyCode.Mouse0,
         [Command.SwitchWeapon] = KeyCode.Q,
         [Command.TakeItem] = KeyCode.F,
+        [Command.ThrowItem] = KeyCode.Q,
         [Command.ContinueDialog] = KeyCode.Mouse0,
         [Command.OpenBestiary] = KeyCode.B,
         [Command.OpenMap] = KeyCode.M,
-        [Command.OpenPauseMenu] = KeyCode.Escape
+        [Command.OpenPauseMenu] = KeyCode.Escape,
+        [Command.OpenInventory] = KeyCode.E,
+        [Command.OpenSkillTree] = KeyCode.K
     };
     #endregion 
 
@@ -87,22 +92,14 @@ public static class Settings
     #region SCENES PARAMETERS
     public const string menuSceneName = "Menu";
     public const string mainSceneName = "MainScene";
+    public const string endlessModeSceneName = "EndlessModeScene";
     public const string purpleWorldSceneName = "PurpleWorld";
     #endregion
 
     #region ENDLESS MODE PARAMETERS
-    public static readonly Vector2Int[] enemySpawnPossiblePositions = new Vector2Int[]
-    {
-        new Vector2Int(55, 30),
-        new Vector2Int(43, -25),
-        new Vector2Int(-39, -37),
-        new Vector2Int(-64, -16),
-        new Vector2Int(-63, 33),
-        new Vector2Int(-7, 50)
-    };
-    
-    public static readonly Vector3 gatewayPosition = Vector3.zero;
-    
+
+    public const int wavesAmount = 3;
+
     public const int waveAmountBetweenModifiers = 3;
 
     public const int waveBonusesNumber = 3;

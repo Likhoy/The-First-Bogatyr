@@ -5,9 +5,6 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/Menu.unity
     guid: 35e20b7be05daf741b9962584ab69ae0
@@ -15,6 +12,30 @@ EditorBuildSettings:
     path: Assets/Scenes/MainScene.unity
     guid: ac05e43445e230645ae1546ac82222c6
   - enabled: 1
+    path: Assets/Scenes/EndlessModeScene.unity
+    guid: b24dc156b036b4246aa925a2e243f578
+  - enabled: 1
     path: Assets/Scenes/PurpleWorld.unity
     guid: e5f49de922259284fbc802885b553fd6
+  - enabled: 1
+    path: Assets/2D-ARPG/ExampleScenes/Title.unity
+    guid: 67e8fb70d1d7ab442b093891fbc07125
+  - enabled: 1
+    path: Assets/2D-ARPG/ExampleScenes/Camp.unity
+    guid: 4ac9d29b64f618d4a831cd86760f77cf
+  - enabled: 1
+    path: Assets/2D-ARPG/ExampleScenes/Field2.unity
+    guid: ff54b861feca1a243834ff56d463bc55
+  - enabled: 1
+    path: Assets/2D-ARPG/ExampleScenes/Field1.unity
+    guid: dfd911739024929418d7acff75a82e5b
+  - enabled: 1
+    path: Assets/2D-ARPG/ExampleScenes/FourDirectionsExample.unity
+    guid: 0fabbc1a7b36358408c8497c076fc348
+  - enabled: 1
+    path: Assets/2D-ARPG/ExampleScenes/PlatformerExample.unity
+    guid: aeae853bbdf7ace419c120d636a06130
+  - enabled: 1
+    path: Assets/2D-ARPG/ExampleScenes/MobileExample.unity
+    guid: f7d35031c499dba46b54e6e54a55f9e3
   m_configObjects: {}

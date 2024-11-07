@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    private DialogueSystemController dialogSystemController;
     [SerializeField] private GameObject continueButton;
     [SerializeField] private GameObject newGameButton;
     [SerializeField] private GameObject endlessModeGameButton;
@@ -19,17 +18,26 @@ public class MainMenu : MonoBehaviour
     {
         if (!SaveSystem.HasSavedGameInSlot(1))
             continueButton.SetActive(false);
-        dialogSystemController = FindObjectOfType<DialogueSystemController>();
-        dialogSystemController.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+        
+        DialogueManager.Instance.gameObject.SetActive(true); // might be disabled in endless mode
+
+#if UNITY_EDITOR
+        DialogueManager.Instance.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+#endif
     }
 
     private void Start()
     {
-        allButtons = new GameObject[4] { continueButton, newGameButton, settingsButton, exitButton };
+        allButtons = new GameObject[5] { continueButton, newGameButton, endlessModeGameButton, settingsButton, exitButton };
 
-        dialogSystemController.transform.GetChild(0).GetChild(2).gameObject.SetActive(false);
-        dialogSystemController.transform.GetChild(0).GetChild(3).gameObject.SetActive(false);
-        dialogSystemController.transform.GetChild(1).gameObject.SetActive(false);
+#if !UNITY_EDITOR
+        DialogueManager.Instance.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+#endif
+
+        // this way of placing disabling of dialogueManager children is intentional
+        DialogueManager.Instance.transform.GetChild(0).GetChild(2).gameObject.SetActive(false);
+        DialogueManager.Instance.transform.GetChild(0).GetChild(3).gameObject.SetActive(false);
+        DialogueManager.Instance.transform.GetChild(1).gameObject.SetActive(false);
     }
 
     public void ContinueGamePressed()
@@ -37,11 +45,6 @@ public class MainMenu : MonoBehaviour
         DeactivateButtonsAfterClick(continueButton);
 
         SaveSystem.LoadFromSlot(1);
-
-        dialogSystemController.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
-        dialogSystemController.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
-        dialogSystemController.transform.GetChild(0).GetChild(3).gameObject.SetActive(true);
-        dialogSystemController.transform.GetChild(1).gameObject.SetActive(true);
     }
 
     /// <summary>
@@ -51,8 +54,7 @@ public class MainMenu : MonoBehaviour
     {
         DeactivateButtonsAfterClick(endlessModeGameButton);
 
-        GameManager.Instance.PrepareEndlessMode();
-        SaveSystem.RestartGame(Settings.mainSceneName); 
+        SceneManager.LoadScene(Settings.endlessModeSceneName);
     }
 
     /// <summary>
@@ -64,9 +66,8 @@ public class MainMenu : MonoBehaviour
 
         SaveSystem.DeleteSavedGameInSlot(1);
 
-        GameManager.Instance.PrepareMainStoryLine(); // preparations of game states are obligatory
         SaveSystem.RestartGame(Settings.mainSceneName);
-        dialogSystemController.ResetDatabase();
+        DialogueManager.Instance.ResetDatabase();
     }
 
     private void DeactivateButtonsAfterClick(GameObject buttonPressed)
