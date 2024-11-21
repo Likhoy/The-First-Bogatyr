@@ -4,10 +4,10 @@ using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
 #region REQUIRE COMPONENTS
-[RequireComponent(typeof(BehaviourTreeInstance))]
+// [RequireComponent(typeof(BehaviourTreeInstance))]
 //[RequireComponent(typeof(AnimateEnemy))]
-[RequireComponent(typeof(SpriteRenderer))]
-[RequireComponent(typeof(Animator))]
+// [RequireComponent(typeof(SpriteRenderer))]
+// [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(PolygonCollider2D))]

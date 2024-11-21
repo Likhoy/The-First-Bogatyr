@@ -37,7 +37,7 @@ public class BulletMove : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter2D(Collider2D other){
-		if(other.gameObject.tag == "Wall" && !passthroughWall){
+		if(LayerMask.LayerToName(other.gameObject.layer) == "Environment" && !passthroughWall){
 			if(hitEffect){
 				Instantiate(hitEffect, transform.position , transform.rotation);
 			}

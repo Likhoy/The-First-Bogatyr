@@ -209,6 +209,7 @@ public class MonsterAi : MonoBehaviour {
 			return;
 		}
 
+		// используется в UseSkill
 		if(onMoving){
 			if(fwdSkill && distance <= approachDistance){
 				rb.velocity = Vector2.zero;
@@ -227,8 +228,13 @@ public class MonsterAi : MonoBehaviour {
 		if(followState == AIState.Moving){
 			if(anim){
 				anim.SetBool("run" , true);
-			}
-			LookAtTarget();
+
+                Vector2 velocityNormalized = rb.velocity.normalized;
+
+                anim.SetFloat("Horizontal", velocityNormalized.x);
+                anim.SetFloat("Vertical", velocityNormalized.y);
+            }
+			// LookAtTarget();  УБРАНО!!!
 			if(distance <= approachDistance) {
 				followState = AIState.Pausing;
 			}else if(distance >= lostSight){
@@ -249,6 +255,7 @@ public class MonsterAi : MonoBehaviour {
 						Vector3 dir = followTarget.position - playerPointer.position;
 						float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 						playerPointer.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
 						rb.velocity = playerPointer.TransformDirection(Vector3.right) * speed;
 					}else{
 						Vector2 destination = new Vector2((transform.position.x - followTarget.position.x), (transform.position.y - followTarget.position.y)) * speed * 10 * Time.deltaTime;
@@ -299,7 +306,7 @@ public class MonsterAi : MonoBehaviour {
 						pfwd = attackPoint.TransformDirection(Vector3.right);
 					}else{
 						//-------------------
-						int r = Random.Range(0,10);
+						/*int r = Random.Range(0,10);
 						if(r >= 5){
 							Vector3 rot = transform.eulerAngles;
 							rot.y = 0;
@@ -310,10 +317,15 @@ public class MonsterAi : MonoBehaviour {
 							rot.y = 180;
 							transform.eulerAngles = rot;
 							facingRight = false;
-						}
+						}*/
 						if(anim){
 							anim.SetBool("run",true);
-						}
+
+                            Vector2 velocityNormalized = rb.velocity.normalized;
+
+                            anim.SetFloat("Horizontal", velocityNormalized.x);
+                            anim.SetFloat("Vertical", velocityNormalized.y);
+                        }
 						//Random Movement Direction
 						pfwd = transform.TransformDirection(Vector3.right);
 					}
@@ -353,7 +365,12 @@ public class MonsterAi : MonoBehaviour {
 		}
 		Vector3 delta = followTarget.position - transform.position;
 
-		if(use4DirectionSprite) {
+		Vector3 deltaNormalized = delta.normalized;
+
+		anim.SetFloat("SightHorizontal", deltaNormalized.x);
+        anim.SetFloat("SightVertical", deltaNormalized.y);
+
+        /*if(use4DirectionSprite) {
 			if(delta.y > 1 && Mathf.Abs(delta.x) < 2){
 				SetDirection(2);
 			}else if(delta.y < -1 && Mathf.Abs(delta.x) < 2){
@@ -376,8 +393,8 @@ public class MonsterAi : MonoBehaviour {
 			rot.y = 180;
 			transform.eulerAngles = rot;
 			facingRight = false;
-		}
-	}
+		}*/
+    }
 
 	private int currentDir = 0;
 	public void SetDirection(int dir){
@@ -553,9 +570,14 @@ public class MonsterAi : MonoBehaviour {
 						anim.SetTrigger(skill[s].moveAnimTrigger);
 					}else{
 						anim.SetBool("run" , true);
-					}
+
+						Vector2 velocityNormalized = rb.velocity.normalized;
+
+                        anim.SetFloat("Horizontal", velocityNormalized.x);
+                        anim.SetFloat("Vertical", velocityNormalized.y);
+                    }
 				}
-				LookAtTarget();
+				// LookAtTarget();  УБРАНО !!!
 				if(skill[s].moveDirection == DirectionSet.Forward){
 					fwdSkill = true;
 					movDir = attackPoint.TransformDirection(Vector3.right);
@@ -579,6 +601,14 @@ public class MonsterAi : MonoBehaviour {
 					anim.SetBool("run" , false);
 				}
 			}
+			else if (skill[s].moveDirection == DirectionSet.None)
+			{
+				rb.velocity = Vector2.zero;
+                if (anim)
+                {
+                    anim.SetBool("run", false);
+                }
+            }
 			
 			//Cast Effect
 			if(skill[s].castEffect && followTarget){
@@ -596,7 +626,7 @@ public class MonsterAi : MonoBehaviour {
 					if(anim && skill[s].skillAnimationTrigger != ""){
 						anim.SetTrigger(skill[s].skillAnimationTrigger);
 					}
-					LookAtTarget();
+					// LookAtTarget(); УБРАЛ!!!
 					yield return new WaitForSeconds(skill[s].castTime);
 					if(aimAtTarget && followTarget){
 						Vector3 dir = followTarget.position - attackPoint.position;
