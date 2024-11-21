@@ -186,7 +186,9 @@ public class BulletStatus : MonoBehaviour {
 				Destroy(gameObject);
 			}
 			//When Enemy Shoot at Player
-		}else if(shooterTag == "Enemy" && other.tag == "Player" || shooterTag == "Enemy" && other.tag == "Ally"){
+		}
+		else if(shooterTag == "Enemy" && other.tag == "Player" || shooterTag == "Enemy" && other.tag == "Ally")
+		{
 			if(oneHitPerEnemy){
 				//Prevent Bullet to damage same enemy multiple times.
 				if(!alreadyDmg.Contains(other.gameObject)){

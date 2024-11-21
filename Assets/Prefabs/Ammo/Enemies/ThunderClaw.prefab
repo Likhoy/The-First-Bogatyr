@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4164626686487708}
   - component: {fileID: 212737323621045586}
   - component: {fileID: 95234941555562082}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Slash (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,8 +71,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -60221129
+  m_SortingLayer: 4
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300002, guid: 047cfa5f193fdb1479bfc2e9b95b677c, type: 3}
   m_Color: {r: 0.9117647, g: 0.88661253, b: 0, a: 1}
@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 114287205605516274}
   - component: {fileID: 61564795872660960}
   - component: {fileID: 82360862210117002}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ThunderClaw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,8 +137,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -6.88, y: 4.44, z: 0.15943393}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4264089378049184}
   m_Father: {fileID: 0}
@@ -182,12 +182,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 046f059975ff2f94ca9532918b7cedb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 75
-  damageMax: 150
+  damage: 5
+  damageMax: 10
   playerAttack: 5
   totalDamage: 0
-  variance: 25
-  criticalChance: 75
+  variance: 3
+  criticalChance: 25
   inflictStatus: []
   shooterTag: Enemy
   shooter: {fileID: 0}
@@ -225,7 +225,7 @@ MonoBehaviour:
   speed: 0.05
   relativeDirection: {x: 1, y: 0, z: 0}
   duration: 0.32
-  shooterTag: Player
+  shooterTag: Enemy
   hitEffect: {fileID: 0}
   passthroughWall: 1
 --- !u!61 &61564795872660960
@@ -380,7 +380,7 @@ GameObject:
   - component: {fileID: 4693768677845726}
   - component: {fileID: 212964509534104430}
   - component: {fileID: 95856751369140558}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Slash (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -440,8 +440,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -60221129
+  m_SortingLayer: 4
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300002, guid: 047cfa5f193fdb1479bfc2e9b95b677c, type: 3}
   m_Color: {r: 1, g: 0.98093307, b: 0.30882353, a: 1}
@@ -487,7 +487,7 @@ GameObject:
   - component: {fileID: 212635061226547954}
   - component: {fileID: 95092364798631326}
   - component: {fileID: 114818978006788688}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Slash (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -549,8 +549,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -60221129
+  m_SortingLayer: 4
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300002, guid: 047cfa5f193fdb1479bfc2e9b95b677c, type: 3}
   m_Color: {r: 1, g: 0.9724138, b: 0, a: 1}
