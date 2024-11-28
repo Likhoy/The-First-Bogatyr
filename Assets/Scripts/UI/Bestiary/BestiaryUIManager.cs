@@ -9,13 +9,18 @@ using UnityEngine.UI;
 public class BestiaryUIManager : MonoBehaviour
 {
     public ScrollRect listScrollView;
+    public GameObject infoPanel;
     public TMP_Text creatureNameTMP;
     public Image creatureImage;
     public GameObject descriptionPanel;
     public TMP_Text creatureDescriptionTMP;
+    public GameObject namePanel;
+    public GameObject vulnerabilitiesPanel;
+    public Transform vulnerabilitiesContainer;
 
     public Button groupButtonPrefab;
     public Button creatureButtonPrefab;
+    public GameObject vulnerabilityCellPrefab;
 
     private Dictionary<Button, List<Button>> groupToCreatureButtonsMap = new Dictionary<Button, List<Button>>();
 
@@ -101,32 +106,80 @@ public class BestiaryUIManager : MonoBehaviour
         Button newButton = Instantiate(creatureButtonPrefab, parent);
         newButton.GetComponentInChildren<TMP_Text>().text = creature.name;
         newButton.GetComponentsInChildren<Image>()[1].sprite = creature.icon;
-        newButton.onClick.AddListener(() => DisplayCreatureInfo(creature));
+        newButton.onClick.AddListener(() => DisplayCreatureInfo(creature, newButton));
         return newButton;
     }
 
-    private void DisplayCreatureInfo(BestiaryCreatureInfoSO creature)
-    {
-        if (creatureImage != null) creatureImage.sprite = creature.picture;
-        if (creatureNameTMP != null) creatureNameTMP.text = creature.name;
-        if (creatureDescriptionTMP != null) creatureDescriptionTMP.text = creature.description;
-    }
+    private Button lastSelectedButton;
 
-    public void HideDescriptionPanel()
+    private void DisplayCreatureInfo(BestiaryCreatureInfoSO creature,Button selectedButton)
     {
-        ToggleDescriptionPanel(false);
-    }
-
-    public void DisplayDescriptionPanel()
-    {
-        ToggleDescriptionPanel(true);
-    }
-
-    private void ToggleDescriptionPanel(bool isVisible)
-    {
-        if (descriptionPanel != null)
+        if (lastSelectedButton == selectedButton)
         {
-            descriptionPanel.SetActive(isVisible);
+            infoPanel.SetActive(false);
+            descriptionPanel.SetActive(false);
+            namePanel.SetActive(false);
+            ClearVulnerabilitiesPanel();
+            vulnerabilitiesPanel.SetActive(false);
+            lastSelectedButton = null;
         }
+        else
+        {
+            lastSelectedButton = selectedButton;
+            infoPanel.SetActive(true);
+            descriptionPanel.SetActive(true);
+            namePanel.SetActive(true);
+
+            if (creatureImage != null) creatureImage.sprite = creature.picture;
+            if (creatureNameTMP != null) creatureNameTMP.text = creature.name;
+            if (creatureDescriptionTMP != null) creatureDescriptionTMP.text = creature.description;
+
+            if (creature is EnemyBestiaryInfoSO enemy)
+            {
+                ShowVulnerabilities(enemy.Vulnerabilities);
+            }
+            else
+            {
+                ClearVulnerabilitiesPanel();
+            }
+
+        }
+
+    }
+
+    private void ShowVulnerabilities(List<Vulnerability> vulnerabilities)
+    {
+        vulnerabilitiesPanel.SetActive(true);
+        ClearVulnerabilitiesPanel();
+
+        foreach (Vulnerability vulnerability in vulnerabilities)
+        {
+            GameObject vulnerabilityCell = Instantiate(vulnerabilityCellPrefab, vulnerabilitiesContainer);
+
+            Image icon = vulnerabilityCell.GetComponentsInChildren<Image>()[1];
+            if (icon != null)
+            {
+                icon.sprite = vulnerability.icon; 
+            }
+
+            TMP_Text text = vulnerabilityCell.GetComponentInChildren<TMP_Text>();
+            if (text != null)
+            {
+                text.text = vulnerability.name;
+            }
+        }
+    }
+
+    private void ClearVulnerabilitiesPanel()
+    {
+        foreach (Transform child in vulnerabilitiesContainer)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
+    public void ClosePanel()
+    {
+        this.gameObject.SetActive(false);
     }
 }
