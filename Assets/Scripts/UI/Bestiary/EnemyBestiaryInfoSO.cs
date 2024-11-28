@@ -5,6 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewEnemy", menuName = "Bestiary/Enemy")]
 public class EnemyBestiaryInfoSO : BestiaryCreatureInfoSO
 {
-    public List<string> weaknesses;
+    public List<Vulnerability> Vulnerabilities;
 }
 
