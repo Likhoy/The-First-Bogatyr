@@ -9,6 +9,7 @@ using System;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEditor;
+using System.Diagnostics.Contracts;
 
 public class SettingsMenu : MonoBehaviour
 {
@@ -31,14 +32,18 @@ public class SettingsMenu : MonoBehaviour
 
     [SerializeField] private Slider gammaSlider;
     [SerializeField] private TMP_Text gammaLabel;
+    [SerializeField] private Slider contrastSlider;
+    [SerializeField] private TMP_Text contrastLabel;
     [SerializeField] private VolumeProfile profile;
     private LiftGammaGain volumeGain;
+    private ColorAdjustments volumeContrast;
 
     void Start()
     {
         InitializeFullscreenToggleSettings();
         InitializeResolutionSettings();
         InitializeGammaSettings();
+        InitialozeContrastSettings();
         InitializeAudioToggleSettings();
         InitializeAudioSlidersSettings();
     }
@@ -114,6 +119,23 @@ public class SettingsMenu : MonoBehaviour
         else
         {
             gammaSlider.value = volumeGain.gamma.value.x;
+        }
+    }
+
+    private void InitialozeContrastSettings()
+    {
+        profile.TryGet<ColorAdjustments>(out volumeContrast);
+
+        contrastSlider.onValueChanged.AddListener(SetContrast);
+
+        if (PlayerPrefs.HasKey("ContrastValue"))
+        {
+            float contrastValue = PlayerPrefs.GetFloat("ContrastValue");
+            contrastSlider.value = contrastValue;
+        }
+        else
+        {
+            contrastSlider.value = volumeContrast.contrast.value;
         }
     }
 
@@ -234,6 +256,18 @@ public class SettingsMenu : MonoBehaviour
 
             gammaLabel.text = $"{value + 1:F2}";
         }
+    }
+
+    private void SetContrast(float value)
+    {
+        if (volumeContrast != null)
+        {
+            volumeContrast.contrast.value = value; 
+        }
+
+        PlayerPrefs.SetFloat("ContrastValue", value);
+
+        contrastLabel.text = $"{value:F0}";
     }
 
     public void HideSettings()
