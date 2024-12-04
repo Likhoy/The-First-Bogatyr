@@ -31,7 +31,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4909408955140719168}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -107,7 +106,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4909408955140719168}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.006}
   m_AnchorMin: {x: 0.11161503, y: 0.053600896}
   m_AnchorMax: {x: 0.99513084, y: 0.4666536}
@@ -183,7 +181,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4909408955140719168}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.74576956, y: 0.053600896}
   m_AnchorMax: {x: 0.99513084, y: 0.42400002}
@@ -320,7 +317,6 @@ RectTransform:
   - {fileID: 4909408953457210246}
   - {fileID: 4909408954608657599}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.012, y: 0.07300001}
   m_AnchorMax: {x: 0.33552083, y: 0.16100001}
@@ -339,5 +335,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d7f879c7ee57e742ba80a3a7a7e218b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBar: {fileID: 4909408953457210244}
-  healthText: {fileID: 4909408954608657593}
+  hpBar: {fileID: 4909408953457210244}
+  hpText: {fileID: 4909408954608657593}
+  player: {fileID: 0}
