@@ -5,32 +5,76 @@ using UnityEngine.UI;
 [DisallowMultipleComponent]
 public class HealthUI : MonoBehaviour
 {
-    [SerializeField] private Image healthBar;
-    [SerializeField] private TMP_Text healthText;
+    [SerializeField] private Image hpBar;
+    [SerializeField] private TMP_Text hpText;
 
+    public GameObject player;
     private void Awake()
     {
         
     }
 
-    private void OnEnable()
+    void Start()
     {
-        // GameManager.Instance.GetPlayer().healthEvent.OnHealthChanged += HealthEvent_OnHealthChanged;
+        if (!player)
+        {
+            player = GameObject.FindWithTag("Player");
+        }
     }
 
-    private void OnDisable()
+    void Update()
     {
-        // GameManager.Instance.GetPlayer().healthEvent.OnHealthChanged -= HealthEvent_OnHealthChanged;
-    }
+        if (!player)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Status stat = player.GetComponent<Status>();
 
-    private void HealthEvent_OnHealthChanged(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
-    {
-        SetHealthUI(healthEventArgs);
-    }
+        int maxHp = stat.totalStat.health;
+        float hp = stat.health;
+        float curHp = hp / maxHp;
 
-    private void SetHealthUI(HealthEventArgs healthEventArgs)
-    {
-        healthBar.fillAmount = healthEventArgs.healthPercent;
-        healthText.text = healthEventArgs.healthAmount.ToString() + "/" + healthEventArgs.maxHealthAmount.ToString();
+        if (curHp > hpBar.fillAmount)
+        {
+            hpBar.fillAmount += 1 / 1 * Time.unscaledDeltaTime;
+            if (hpBar.fillAmount > curHp)
+            {
+                hpBar.fillAmount = curHp;
+            }
+        }
+        if (curHp < hpBar.fillAmount)
+        {
+            hpBar.fillAmount -= 1 / 1 * Time.unscaledDeltaTime;
+            if (hpBar.fillAmount < curHp)
+            {
+                hpBar.fillAmount = curHp;
+            }
+        }
+
+        if (hpText)
+        {
+            hpText.text = hp.ToString() + "/" + maxHp.ToString();
+        }
     }
+    //    private void OnEnable()
+    //{
+    //    // GameManager.Instance.GetPlayer().healthEvent.OnHealthChanged += HealthEvent_OnHealthChanged;
+    //}
+
+    //private void OnDisable()
+    //{
+    //    // GameManager.Instance.GetPlayer().healthEvent.OnHealthChanged -= HealthEvent_OnHealthChanged;
+    //}
+
+    //private void HealthEvent_OnHealthChanged(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
+    //{
+    //    SetHealthUI(healthEventArgs);
+    //}
+
+    //private void SetHealthUI(HealthEventArgs healthEventArgs)
+    //{
+    //    healthBar.fillAmount = healthEventArgs.healthPercent;
+    //    healthText.text = healthEventArgs.healthAmount.ToString() + "/" + healthEventArgs.maxHealthAmount.ToString();
+    //}
 }
