@@ -6,7 +6,7 @@ using UnityEngine;
 public class BestiaryController : MonoBehaviour
 {
     public List<CreaturesGroup> creaturesGroups;
-    public BestiaryUIManager uiManager;
+    public BestiaryUI uiManager;
 
     private void Start()
     {

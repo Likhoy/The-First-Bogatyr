@@ -9,7 +9,7 @@ public class UiMaster : MonoBehaviour {
 	public SkillTreeUi skillTree;
 	public InventoryUi inventoryWindow;
 	public QuestUi questWindow;
-    public Bestiary bestiary;
+    public BestiaryUI bestiary;
     public GameObject map;
 
     public GameObject lvUpWarningStatus;
