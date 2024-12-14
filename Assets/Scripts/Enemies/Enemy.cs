@@ -31,6 +31,8 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public DefendingStageEndedEvent defendingStageEndedEvent;
     [HideInInspector] public LookAtEvent lookAtEvent;
 
+    private MonsterAi monsterAi;
+
     private BehaviourTreeInstance behaviourTree;
 
     private AudioSource audioSource;
@@ -65,6 +67,8 @@ public class Enemy : MonoBehaviour
 
         agent = GetComponent<NavMeshAgent>();
         behaviourTree = GetComponent<BehaviourTreeInstance>();
+
+        monsterAi = GetComponent<MonsterAi>();
     }
 
     private void Start()
@@ -137,7 +141,7 @@ public class Enemy : MonoBehaviour
     {
         this.enemyDetails = enemyDetails;
 
-        // SetEnemyMovementUpdateFrame(enemySpawnNumber);
+        SetEnemyMovementUpdateFrame(enemySpawnNumber);
 
         if (enemyModifiers != null)
         {
@@ -156,11 +160,11 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// Set enemy movement update frame
     /// </summary>
-    /*private void SetEnemyMovementUpdateFrame(int enemySpawnNumber)
+    private void SetEnemyMovementUpdateFrame(int enemySpawnNumber)
     {
         // Set frame number that enemy should process it's updates
-        enemyMovementAI.SetUpdateFrameNumber(enemySpawnNumber % Settings.targetFrameRateToSpreadPathfindingOver);
-    }*/
+        monsterAi.SetUpdateFrameNumber(enemySpawnNumber % Settings.targetFrameRateToSpreadPathfindingOver);
+    }
 
 
     /// <summary>
