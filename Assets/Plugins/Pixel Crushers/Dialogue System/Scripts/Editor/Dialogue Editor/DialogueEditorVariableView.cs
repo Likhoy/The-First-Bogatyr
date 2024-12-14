@@ -185,8 +185,8 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             }
 
             EditorGUI.BeginChangeCheck();
-            variableFilter = EditorGUILayout.TextField(GUIContent.none, variableFilter, "ToolbarSeachTextField");
-            GUILayout.Label(string.Empty, "ToolbarSeachCancelButtonEmpty");
+            variableFilter = EditorGUILayout.TextField(GUIContent.none, variableFilter, MoreEditorGuiUtility.ToolbarSearchTextFieldName);
+            GUILayout.Label(string.Empty, MoreEditorGuiUtility.ToolbarSearchCancelButtonEmpty);
             if (EditorGUI.EndChangeCheck()) RefreshView();
 
             DrawVariableMenu();
@@ -248,6 +248,14 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
         private void ToggleSyncVariablesFromDB()
         {
             database.syncInfo.syncVariables = !database.syncInfo.syncVariables;
+            if (!database.syncInfo.syncVariables && database.syncInfo.syncVariablesDatabase!= null)
+            {
+                if (EditorUtility.DisplayDialog("Disconnect Synced DB",
+                    "Also delete synced variables from this database?", "Yes", "No"))
+                {
+                    database.variables.RemoveAll(x => syncedVariableIDs.Contains(x.id));
+                }
+            }
             EditorUtility.SetDirty(database);
         }
 
@@ -478,6 +486,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                 if (!(reorderableList != null && 0 <= index && index < reorderableList.count)) return;
                 var variable = reorderableList.list[index] as Variable;
                 if (variable == null) return;
+                if (variable.fields == null) variable.fields = new List<Field>();
 
                 EditorGUI.BeginDisabledGroup(syncedVariableIDs != null && syncedVariableIDs.Contains(variable.id));
                 if (!variable.FieldExists("Initial Value")) variable.fields.Add(new Field("Initial Value", string.Empty, FieldType.Text));
