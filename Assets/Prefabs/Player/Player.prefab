@@ -638,7 +638,7 @@ MonoBehaviour:
     height: 64
   useKey: 0
   useButton: Fire1
-  defaultUseMessage: "(\u041D\u0430\u0436\u043C\u0438\u0442\u0435 \u041B\u041A\u041C,
+  m_defaultUseMessage: "(\u041D\u0430\u0436\u043C\u0438\u0442\u0435 \u041B\u041A\u041C,
     \u0447\u0442\u043E\u0431\u044B \u043D\u0430\u0447\u0430\u0442\u044C \u0434\u0438\u0430\u043B\u043E\u0433)"
   broadcastToChildren: 1
   actorTransform: {fileID: 0}
@@ -861,6 +861,8 @@ MonoBehaviour:
   barkOrder: 1
   allowDuringConversations: 0
   cacheBarkLines: 0
+  barkOnStart: 0
+  barkOnEnable: 0
   minSeconds: 5
   maxSeconds: 5
   target: {fileID: 0}
@@ -979,7 +981,8 @@ AudioSource:
   m_GameObject: {fileID: 6461650756046700630}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -6589914489095399406, guid: cdc3e4e9bd2842147841d16d43ecfa5b, type: 2}
+  OutputAudioMixerGroup: {fileID: -6589914489095399406, guid: cdc3e4e9bd2842147841d16d43ecfa5b,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: d972e2ec3407c0443921b55413a81588, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.9
@@ -1079,7 +1082,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainSprite: {fileID: 6461650756046700637}
-  deathPrefab: {fileID: 4591280014716052, guid: f7e055393a9b01a489b2f8ed965453d6, type: 3}
+  deathPrefab: {fileID: 4591280014716052, guid: f7e055393a9b01a489b2f8ed965453d6,
+    type: 3}
   characterName: Ivan
   characterId: 0
   level: 1
@@ -1097,11 +1101,15 @@ MonoBehaviour:
   skillPoint: 0
   immortal: 0
   stability: 0
-  levelUpEffect: {fileID: 4349936092665838, guid: f960235a48e7c7a4b88644205b0045aa, type: 3}
-  poisonEffect: {fileID: 1838535596581266, guid: f03a7a3c2339d3744af16e9add8e0a70, type: 3}
-  silenceEffect: {fileID: 1108436611159726, guid: 69a2a1240bb8a1d40965e89b16cb6c5d, type: 3}
+  levelUpEffect: {fileID: 4349936092665838, guid: f960235a48e7c7a4b88644205b0045aa,
+    type: 3}
+  poisonEffect: {fileID: 1838535596581266, guid: f03a7a3c2339d3744af16e9add8e0a70,
+    type: 3}
+  silenceEffect: {fileID: 1108436611159726, guid: 69a2a1240bb8a1d40965e89b16cb6c5d,
+    type: 3}
   stunEffect: {fileID: 1957326969722616, guid: 4b272b7cd88dda947baa72dd9c3eb6a0, type: 3}
-  frozenEffect: {fileID: 1282490574542450, guid: 49c45fc3e10a0cf4bae614187b29abc7, type: 3}
+  frozenEffect: {fileID: 1282490574542450, guid: 49c45fc3e10a0cf4bae614187b29abc7,
+    type: 3}
   additionStat:
     atk: 0
     def: 0
@@ -1231,7 +1239,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca8e1b37644a584dbd7f582ec2d241e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questDataBase: {fileID: 114333803930475386, guid: 16734100a7bef9344b5d77c89ad702b4, type: 3}
+  questDataBase: {fileID: 114333803930475386, guid: 16734100a7bef9344b5d77c89ad702b4,
+    type: 3}
   questProgress: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   questSlot: 0000000000000000000000000000000000000000
 --- !u!114 &7779911375679255310
@@ -1292,8 +1301,10 @@ MonoBehaviour:
   buttonText: 
   showButton: 0
   charge:
-  - chargeEffect: {fileID: 1625474289205842, guid: 8756a2ca850fb65418453f93e02fc6b3, type: 3}
-    chargeAttackPrefab: {fileID: 114761944984916970, guid: 82e3922569e7a0d40a3bc5ddd1502491, type: 3}
+  - chargeEffect: {fileID: 1625474289205842, guid: 8756a2ca850fb65418453f93e02fc6b3,
+      type: 3}
+    chargeAttackPrefab: {fileID: 114761944984916970, guid: 82e3922569e7a0d40a3bc5ddd1502491,
+      type: 3}
     chargeTime: 1
     chargeAnimationTrigger: sword2
     attackCast: 0.18
@@ -1301,8 +1312,10 @@ MonoBehaviour:
     soundEffect: {fileID: 0}
     soundEffect2: {fileID: 0}
     currentChargeTime: 0
-  - chargeEffect: {fileID: 1519547905622888, guid: 83c46df197433d441a50d8555d55a409, type: 3}
-    chargeAttackPrefab: {fileID: 114820993815017558, guid: c7d04dcf429081547a489a1fa85e901d, type: 3}
+  - chargeEffect: {fileID: 1519547905622888, guid: 83c46df197433d441a50d8555d55a409,
+      type: 3}
+    chargeAttackPrefab: {fileID: 114820993815017558, guid: c7d04dcf429081547a489a1fa85e901d,
+      type: 3}
     chargeTime: 2.2
     chargeAnimationTrigger: sword2
     attackCast: 0.18
@@ -1314,9 +1327,12 @@ MonoBehaviour:
   chargingEffect: {fileID: 0}
   ch: 0
   canvasElement:
-    activatorButton: {fileID: 1017626590867500, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-    activatorText: {fileID: 114637453827583514, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-  mainCameraPrefab: {fileID: 114096784573403338, guid: 273162996942eb54a865d8c2c256505f, type: 3}
+    activatorButton: {fileID: 1017626590867500, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+    activatorText: {fileID: 114637453827583514, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+  mainCameraPrefab: {fileID: 114096784573403338, guid: 273162996942eb54a865d8c2c256505f,
+    type: 3}
   sound:
     attackComboVoice:
     - {fileID: 0}
@@ -1511,42 +1527,76 @@ MonoBehaviour:
   mobileMode: 0
   facingRight: 0
   shortcutUi:
-  - iconImage: {fileID: 114707155551016872, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-    coolDownBackground: {fileID: 1074470964794682, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-    coolDownText: {fileID: 114308299088874530, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-    quantityText: {fileID: 114962937631497614, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-  - iconImage: {fileID: 114659117867070818, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-    coolDownBackground: {fileID: 1540258181933568, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-    coolDownText: {fileID: 114259703736568784, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-    quantityText: {fileID: 114476108478929314, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-  - iconImage: {fileID: 114195909923832846, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-    coolDownBackground: {fileID: 1389102069949244, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-    coolDownText: {fileID: 114821592060095178, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-    quantityText: {fileID: 114689672437560882, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-  - iconImage: {fileID: 114656217289290582, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-    coolDownBackground: {fileID: 1296911231404284, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-    coolDownText: {fileID: 114069657392809820, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-    quantityText: {fileID: 114717508926916630, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-  - iconImage: {fileID: 114689947838660302, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-    coolDownBackground: {fileID: 1797773680571642, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-    coolDownText: {fileID: 114695425936215530, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-    quantityText: {fileID: 114339099983417376, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-  - iconImage: {fileID: 114923107122690036, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-    coolDownBackground: {fileID: 1217331375167564, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-    coolDownText: {fileID: 114557962955048102, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-    quantityText: {fileID: 114872944833555120, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-  - iconImage: {fileID: 114257408919671878, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-    coolDownBackground: {fileID: 1424125286172212, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-    coolDownText: {fileID: 114220101829375642, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-    quantityText: {fileID: 114564799366786496, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-  - iconImage: {fileID: 114959350562642332, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-    coolDownBackground: {fileID: 1277519727575544, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-    coolDownText: {fileID: 114290861430581842, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-    quantityText: {fileID: 114422781661640594, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
-  textPrinter: {fileID: 114306330429795034, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+  - iconImage: {fileID: 114707155551016872, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+    coolDownBackground: {fileID: 1074470964794682, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+    coolDownText: {fileID: 114308299088874530, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+    quantityText: {fileID: 114962937631497614, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+  - iconImage: {fileID: 114659117867070818, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+    coolDownBackground: {fileID: 1540258181933568, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+    coolDownText: {fileID: 114259703736568784, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+    quantityText: {fileID: 114476108478929314, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+  - iconImage: {fileID: 114195909923832846, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+    coolDownBackground: {fileID: 1389102069949244, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+    coolDownText: {fileID: 114821592060095178, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+    quantityText: {fileID: 114689672437560882, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+  - iconImage: {fileID: 114656217289290582, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+    coolDownBackground: {fileID: 1296911231404284, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+    coolDownText: {fileID: 114069657392809820, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+    quantityText: {fileID: 114717508926916630, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+  - iconImage: {fileID: 114689947838660302, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+    coolDownBackground: {fileID: 1797773680571642, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+    coolDownText: {fileID: 114695425936215530, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+    quantityText: {fileID: 114339099983417376, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+  - iconImage: {fileID: 114923107122690036, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+    coolDownBackground: {fileID: 1217331375167564, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+    coolDownText: {fileID: 114557962955048102, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+    quantityText: {fileID: 114872944833555120, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+  - iconImage: {fileID: 114257408919671878, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+    coolDownBackground: {fileID: 1424125286172212, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+    coolDownText: {fileID: 114220101829375642, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+    quantityText: {fileID: 114564799366786496, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+  - iconImage: {fileID: 114959350562642332, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+    coolDownBackground: {fileID: 1277519727575544, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+    coolDownText: {fileID: 114290861430581842, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+    quantityText: {fileID: 114422781661640594, guid: 8c06341e0d07097499562209f0ba1bc5,
+      type: 3}
+  textPrinter: {fileID: 114306330429795034, guid: 8c06341e0d07097499562209f0ba1bc5,
+    type: 3}
   dropItemPrefab: {fileID: 0}
   minion: {fileID: 0}
-  draggingItemIcon: {fileID: 114136303645459026, guid: 8c06341e0d07097499562209f0ba1bc5, type: 3}
+  draggingItemIcon: {fileID: 114136303645459026, guid: 8c06341e0d07097499562209f0ba1bc5,
+    type: 3}
 --- !u!114 &448878105639788715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1577,8 +1627,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   database: {fileID: 114011746680622798, guid: 1a9cf2bf4d78c4540a7a26e6a66cda69, type: 3}
   cash: 500
-  itemSlot: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  itemQuantity: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  itemSlot: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000120000001200000000000000000000000000000000000000
+  itemQuantity: 00000000030000000200000001000000000000000400000005000000060000006300000040000000200000001000000008000000040000000200000001000000020000000400000008000000100000002000000000000000000000000000000000000000
   equipment: 0000000000000000000000000000000000000000000000000000000000000000
   weaponEquip: 0
   allowWeaponUnequip: 1
