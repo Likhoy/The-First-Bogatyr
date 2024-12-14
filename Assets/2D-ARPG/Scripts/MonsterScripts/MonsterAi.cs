@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.InputSystem.Android;
 
 [RequireComponent(typeof (Status))]
 [RequireComponent(typeof (BoxCollider2D))]
@@ -92,8 +94,12 @@ public class MonsterAi : MonoBehaviour {
 		Up = 3,
 		Down = 4
 	}
-	
-	public SkillSetting[] skill;
+
+	private NavMeshAgent agent;
+
+    private int updateFrameNumber = 1;
+
+    public SkillSetting[] skill;
 	private Transform playerPointer;
 	private Rigidbody2D rb;
 	public bool use4DirectionSprite = false;
@@ -142,16 +148,22 @@ public class MonsterAi : MonoBehaviour {
 		Vector3 pos = transform.position;
 		pos.z = 0;
 		transform.position = pos;
-	}
+
+        agent = GetComponent<NavMeshAgent>();
+    }
 	
 	void Update(){
 		if(Time.timeScale == 0.0f || stat.freeze || GlobalStatus.freezeAll){
 			followState = AIState.Idle;
-			if(rb.gravityScale > 0){
+
+			agent.ResetPath();
+			agent.isStopped = true;
+
+			/*if(rb.gravityScale > 0){
 				rb.velocity = new Vector2(0 , rb.velocity.y);
 			}else{
 				rb.velocity = Vector2.zero;
-			}
+			}*/
 			if(anim){
 				anim.SetBool("run" , false);
 			}
@@ -160,12 +172,16 @@ public class MonsterAi : MonoBehaviour {
 		FindClosestEnemy();
 		
 		if(meleefwd){
-			if(rb.gravityScale > 0){
+
+            agent.ResetPath();
+            agent.isStopped = true;
+
+            /*if(rb.gravityScale > 0){
 				rb.velocity = new Vector2(0 , rb.velocity.y);
 			}else{
 				rb.velocity = Vector2.zero;
-			}
-			if(rb.gravityScale == 0){
+			}*/
+            if (rb.gravityScale == 0){
 				Vector3 dir = attackPoint.TransformDirection(Vector3.right);
 				rb.velocity = dir * 4;
 			}else{
@@ -175,12 +191,16 @@ public class MonsterAi : MonoBehaviour {
 		}
 
 		if(!followTarget){
-			if(rb.gravityScale > 0){
+
+            agent.ResetPath();
+            agent.isStopped = true;
+
+            /*if(rb.gravityScale > 0){
 				rb.velocity = new Vector2(0 , rb.velocity.y);
 			}else{
 				rb.velocity = Vector2.zero;
-			}
-			if(followState == AIState.Moving || followState == AIState.Pausing){
+			}*/
+            if (followState == AIState.Moving || followState == AIState.Pausing){
 				followState = AIState.Idle;
 				if(anim){
 					anim.SetBool("run" , false);
@@ -229,10 +249,12 @@ public class MonsterAi : MonoBehaviour {
 			if(anim){
 				anim.SetBool("run" , true);
 
-                Vector2 velocityNormalized = rb.velocity.normalized;
+				Vector2 moveDiretion = agent.nextPosition - transform.position;
 
-                anim.SetFloat("Horizontal", velocityNormalized.x);
-                anim.SetFloat("Vertical", velocityNormalized.y);
+                Vector2 directionNormalized = moveDiretion.normalized;
+
+                anim.SetFloat("Horizontal", directionNormalized.x);
+                anim.SetFloat("Vertical", directionNormalized.y);
             }
 			// LookAtTarget();  УБРАНО!!!
 			if(distance <= approachDistance) {
@@ -251,22 +273,35 @@ public class MonsterAi : MonoBehaviour {
 					mov.y = -gravity;
 					rb.velocity = mov;
 				} else{
-					if(playerPointer){
+                    /*if(playerPointer){
 						Vector3 dir = followTarget.position - playerPointer.position;
 						float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 						playerPointer.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
 						rb.velocity = playerPointer.TransformDirection(Vector3.right) * speed;
+
 					}else{
 						Vector2 destination = new Vector2((transform.position.x - followTarget.position.x), (transform.position.y - followTarget.position.y)) * speed * 10 * Time.deltaTime;
 						rb.velocity = -destination;
-					}
-				}
+					}*/
+
+					// + pathRebuildCooldown
+
+					if (Time.frameCount % Settings.targetFrameRateToSpreadPathfindingOver == updateFrameNumber)
+					{
+                        agent.isStopped = false;
+                        agent.SetDestination(followTarget.position);
+                    }
+                }
 
 			}
 		}else if(followState == AIState.Pausing){
-			rb.velocity = Vector2.zero;
-			if(anim){
+
+            agent.ResetPath();
+            agent.isStopped = true;
+
+            // rb.velocity = Vector2.zero;
+            if (anim){
 				anim.SetBool("run" , false);
 			}
 			//----Attack----
@@ -321,10 +356,12 @@ public class MonsterAi : MonoBehaviour {
 						if(anim){
 							anim.SetBool("run",true);
 
-                            Vector2 velocityNormalized = rb.velocity.normalized;
+                            Vector2 moveDiretion = agent.nextPosition - transform.position;
 
-                            anim.SetFloat("Horizontal", velocityNormalized.x);
-                            anim.SetFloat("Vertical", velocityNormalized.y);
+                            Vector2 directionNormalized = moveDiretion.normalized;
+
+                            anim.SetFloat("Horizontal", directionNormalized.x);
+                            anim.SetFloat("Vertical", directionNormalized.y);
                         }
 						//Random Movement Direction
 						pfwd = transform.TransformDirection(Vector3.right);
@@ -359,7 +396,15 @@ public class MonsterAi : MonoBehaviour {
 		}
 	}
 
-	void LookAtTarget(){
+    /// <summary>
+    /// Set the frame number that the enemy path will be recalculated on - to avoid performance spikes
+    /// </summary>
+    public void SetUpdateFrameNumber(int updateFrameNumber)
+    {
+        this.updateFrameNumber = updateFrameNumber;
+    }
+
+    void LookAtTarget(){
 		if(!followTarget){
 			return;
 		}
@@ -571,10 +616,12 @@ public class MonsterAi : MonoBehaviour {
 					}else{
 						anim.SetBool("run" , true);
 
-						Vector2 velocityNormalized = rb.velocity.normalized;
+                        Vector2 moveDiretion = agent.nextPosition - transform.position;
 
-                        anim.SetFloat("Horizontal", velocityNormalized.x);
-                        anim.SetFloat("Vertical", velocityNormalized.y);
+                        Vector2 directionNormalized = moveDiretion.normalized;
+
+                        anim.SetFloat("Horizontal", directionNormalized.x);
+                        anim.SetFloat("Vertical", directionNormalized.y);
                     }
 				}
 				// LookAtTarget();  УБРАНО !!!
