@@ -17,11 +17,11 @@ public class AttackTrigger : MonoBehaviour{
 	//public Vector2 limitAimAngle = new Vector2(-75 , 75);
 
 	public BulletStatus[] attackPrefab = new BulletStatus[1];
-	public int weaponType = 0;
+	public int weaponType;
 
-	public bool notActive = false;
+	public bool notActive;
 
-	public int requireItemId = 0;
+	public int requireItemId;
 	public string requireItemName = "";
 	public AudioClip attackSoundEffect;
 
@@ -29,16 +29,16 @@ public class AttackTrigger : MonoBehaviour{
 	public string blockingAnimationTrigger ;
 	
 	public WhileAtk whileAttack = WhileAtk.Immobile;
-	public bool canBlock = false;
+	public bool canBlock;
 	public float attackCast = 0.18f;
 	public float attackDelay = 0.12f;
 
 	[HideInInspector]
-	public bool meleefwd = false;
+	public bool meleefwd;
 	[HideInInspector]
-	public bool onAttacking = false;
-	private int c = 0;
-	private float nextFire = 0.0f;
+	public bool onAttacking;
+	private int c;
+	private float nextFire;
 
 	[HideInInspector]
 	public GameObject actvateObj;
@@ -47,11 +47,11 @@ public class AttackTrigger : MonoBehaviour{
 	[HideInInspector]
 	public string buttonText = "";
 	[HideInInspector]
-	public bool showButton = false;
+	public bool showButton;
 
 	public ChargeAtk[] charge;
 	[HideInInspector]
-	public bool charging = false;
+	public bool charging;
 	[HideInInspector]
 	public GameObject chargingEffect;
 	[HideInInspector]
@@ -77,12 +77,12 @@ public class AttackTrigger : MonoBehaviour{
 	[System.Serializable]
 	public class ShortcutData{
 		public ShortcutType type = ShortcutType.None; //0 Empty , 1 Items , 2 Equipment , 3 Skills
-		public int id = 0;
+		public int id;
 		public SkillSetting skill;
 		[HideInInspector]
-		public int onCoolDown = 0;
+		public int onCoolDown;
 		[HideInInspector]
-		public float wait = 0;
+		public float wait;
 		public Sprite icon;
 	}
 	public enum ShortcutType{
@@ -94,10 +94,10 @@ public class AttackTrigger : MonoBehaviour{
 	public ShortcutData[] shortcuts = new ShortcutData[8];
 	private Status stat;
 
-	public bool mobileMode = false;
+	public bool mobileMode;
 	[HideInInspector]
 	public bool facingRight = true;
-	private int skSelect = 0;
+	private int skSelect;
 	private Inventory inv;
 
 	[System.Serializable]
@@ -113,7 +113,7 @@ public class AttackTrigger : MonoBehaviour{
 	private ItemData itemDB;
 	private SkillData skillDB;
 	// public bool ignoreMonsterCollision = true;
-	private bool onButtonMenu = false;
+	private bool onButtonMenu;
 	[HideInInspector]
 	public Transform dropItemPrefab;
 
@@ -122,14 +122,14 @@ public class AttackTrigger : MonoBehaviour{
 
 	private Rigidbody2D rb;
 
-	void Awake(){
-		if(!GlobalStatus.mainPlayer){
+	void Awake() {
+		if (!GlobalStatus.mainPlayer) {
 			GlobalStatus.mainPlayer = this.gameObject;
 		}
 		DontDestroyOnLoad(transform.gameObject);
 		rb = GetComponent<Rigidbody2D>();
 		//Create new Attack Point if you didn't have one.
-		if(!attackPoint){
+		if (!attackPoint) {
 			attackPoint = new GameObject().transform;
 			attackPoint.position = transform.position;
 			attackPoint.rotation = transform.rotation;
@@ -145,13 +145,13 @@ public class AttackTrigger : MonoBehaviour{
 		// gameObject.layer = 8; //Set to Character Layer
 		// Physics2D.IgnoreLayerCollision(8, 8, ignoreMonsterCollision); 
 
-		if(transform.eulerAngles.y == 0){
+		if (transform.eulerAngles.y == 0) {
 			facingRight = true;
 		}
-		/*if(mainCameraPrefab){
+		/*if (mainCameraPrefab) {
 			GameObject[] cam = GameObject.FindGameObjectsWithTag("MainCamera"); 
-			foreach(GameObject cam2 in cam){ 
-				if(cam2){
+			foreach(GameObject cam2 in cam) { 
+				if (cam2) {
 					Destroy(cam2.gameObject);
 				}
 			}
@@ -160,7 +160,7 @@ public class AttackTrigger : MonoBehaviour{
 			mainCam = newCam.gameObject;
 		}*/
 		SetupInitialShortcut(); 
-		if(!GetComponent<AudioSource>()){
+		if (!GetComponent<AudioSource>()) {
 			gameObject.AddComponent<AudioSource>();
 		}
 
@@ -169,7 +169,7 @@ public class AttackTrigger : MonoBehaviour{
 		pos.z = 0;
 		transform.position = pos;
 
-        if(!GetComponent<PlayerInputManager>()) {
+        if (!GetComponent<PlayerInputManager>()) {
 			gameObject.AddComponent<PlayerInputManager>();
         }
 
@@ -178,161 +178,161 @@ public class AttackTrigger : MonoBehaviour{
 		//Physics.IgnoreLayerCollision(10 , 11 , true);
 	}
 	
-	void Update(){
-		if(draggingItemIcon && draggingItemIcon.gameObject.activeSelf == true){
+	void Update() {
+		if (draggingItemIcon && draggingItemIcon.gameObject.activeSelf) {
 			Vector2 dragIconPos = Input.mousePosition;
 			dragIconPos.y -= 0.55f;
 			draggingItemIcon.transform.position = dragIconPos;
-			if(Input.GetKeyUp(KeyCode.Mouse0)){
+			if (Input.GetKeyUp(KeyCode.Mouse0)) {
 				SetShortcut();
 			}
 		}
 
 		//Skill Cooldown
-		for(int s = 0; s < shortcuts.Length; s++){
-			if(shortcuts[s].onCoolDown > 0){
-				if(shortcuts[s].wait >= 1){
+		for (int s = 0; s < shortcuts.Length; s++) {
+			if (shortcuts[s].onCoolDown > 0) {
+				if (shortcuts[s].wait >= 1) {
 					shortcuts[s].onCoolDown--;
 					shortcuts[s].wait = 0;
-				}else{
+				} else {
 					shortcuts[s].wait += Time.deltaTime;
 				}	
 			}
 		}
-		for(int a = 0; a < shortcutUi.Length; a++){
-			if(shortcuts[a].onCoolDown > 0){
-				if(shortcutUi[a].coolDownText){
+		for (int a = 0; a < shortcutUi.Length; a++) {
+			if (shortcuts[a].onCoolDown > 0) {
+				if (shortcutUi[a].coolDownText) {
 					shortcutUi[a].coolDownText.gameObject.SetActive(true);
 					shortcutUi[a].coolDownText.text = shortcuts[a].onCoolDown.ToString();
 				}
-				if(shortcutUi[a].coolDownBackground){
+				if (shortcutUi[a].coolDownBackground) {
 					shortcutUi[a].coolDownBackground.gameObject.SetActive(true);
 				}
-			}else{
-				if(shortcutUi[a].coolDownText){
+			} else {
+				if (shortcutUi[a].coolDownText) {
 					shortcutUi[a].coolDownText.gameObject.SetActive(false);
 				}
-				if(shortcutUi[a].coolDownBackground){
+				if (shortcutUi[a].coolDownBackground) {
 					shortcutUi[a].coolDownBackground.SetActive(false);
 				}
 			}
 		}
 		
-		if(showButton){
-			if(!canvasElement.activatorButton.activeSelf){
+		if (showButton) {
+			if (!canvasElement.activatorButton.activeSelf) {
 				canvasElement.activatorButton.SetActive(true);
 			}
-			if(GlobalStatus.freezeAll || Time.timeScale == 0 || !actvateObj || GlobalStatus.interacting){
-				if(canvasElement.activatorButton.activeSelf){
+			if (GlobalStatus.freezeAll || Time.timeScale == 0 || !actvateObj || GlobalStatus.interacting) {
+				if (canvasElement.activatorButton.activeSelf) {
 					canvasElement.activatorButton.SetActive(false);
 				}
 			}
 		}
-		if(!showButton && canvasElement.activatorButton && canvasElement.activatorButton.activeSelf){
+		if (!showButton && canvasElement.activatorButton && canvasElement.activatorButton.activeSelf) {
 			canvasElement.activatorButton.SetActive(false);
 		}
 
 		//Guard Button
-		if(stat.block && GlobalStatus.freezeAll || stat.block && GlobalStatus.freezePlayer){
+		if (stat.block && GlobalStatus.freezeAll || stat.block && GlobalStatus.freezePlayer) {
 			stat.GuardBreak("cancelGuard");
 		}
 
 		//------Aiming---------
-		if(attackPoint && aimAtMouse){
+		if (attackPoint && aimAtMouse) {
 			Vector3 dir = Input.mousePosition - Camera.main.WorldToScreenPoint(attackPoint.position);
 			float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-			/*if(limitAimAngle != Vector2.zero){
+			/*if (limitAimAngle != Vector2.zero) {
 				angle = Mathf.Clamp(angle, limitAimAngle.x, limitAimAngle.y);
 			}*/
 			attackPoint.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 		}
 
 		//Release Charging
-		/*if(Input.GetButtonUp("Fire1") && charging && !mobileMode){
+		/*if (Input.GetButtonUp("Fire1") && charging && !mobileMode) {
 			charging = false;
-			if(Time.timeScale == 0.0f || stat.freeze || GlobalStatus.freezeAll || GlobalStatus.freezePlayer || stat.block || stat.flinch){
-				if(chargingEffect){
+			if (Time.timeScale == 0.0f || stat.freeze || GlobalStatus.freezeAll || GlobalStatus.freezePlayer || stat.block || stat.flinch) {
+				if (chargingEffect) {
 					Destroy(chargingEffect.gameObject);
 				}
 				c = 0;
 				return;
 			}
 			int b = charge.Length -1;
-			if(chargingEffect){
+			if (chargingEffect) {
 				Destroy(chargingEffect.gameObject);
 			}
-			while(b >= 0){
-				if(Time.time > charge[b].currentChargeTime){
+			while(b >= 0) {
+				if (Time.time > charge[b].currentChargeTime) {
 					//Charge Attack!!
-					if(Time.time > (nextFire + 0.5f)){
+					if (Time.time > (nextFire + 0.5f)) {
 						c = 0;
 					}
 					StartCoroutine(ChargeAttack());
 					b = -1;
-				}else{
+				} else {
 					b--;
 				}
 			}
 		}*/
 		
-		if(Time.timeScale == 0.0f || stat.freeze || GlobalStatus.freezeAll || GlobalStatus.freezePlayer){
+		if (Time.timeScale == 0.0f || stat.freeze || GlobalStatus.freezeAll || GlobalStatus.freezePlayer) {
 			return;
 		}
-		if(stat.flinch){
+		if (stat.flinch) {
 			rb.velocity = stat.knock * stat.knockForce;
 			return;
 		}
-		if(stat.block){
-			if(!stat.flinch){
+		if (stat.block) {
+			if (!stat.flinch) {
 				rb.velocity = Vector2.zero;
 			}
 			return;
 		}
 
-		if(meleefwd){
-			if(rb.gravityScale > 0){
+		if (meleefwd) {
+			if (rb.gravityScale > 0) {
 				rb.velocity = new Vector2(0 , rb.velocity.y);
-			}else{
+			} else {
 				rb.velocity = Vector2.zero;
 			}
-			if(aimAtMouse && rb.gravityScale == 0 || GetComponent<TopDownFourDirection>()){
+			if (aimAtMouse && rb.gravityScale == 0 || GetComponent<TopDownFourDirection>()) {
 				Vector3 dir = attackPoint.TransformDirection(Vector3.right);
 				//rb.AddForce(dir * 3200 * Time.deltaTime);
 
 				rb.velocity = dir * 2.5f;
-			}else{
+			} else {
 				Vector3 dir = transform.TransformDirection(Vector3.right);
 
-				if(rb.gravityScale > 0){
-					rb.AddForce(dir * 3200 * Time.deltaTime);
-				}else{
+				if (rb.gravityScale > 0) {
+					rb.AddForce(dir * (3200 * Time.deltaTime));
+				} else {
 					rb.velocity = dir * 2.5f;
 				}
 			}
 		}
 
-		if(notActive){
+		if (notActive) {
 			return;
 		}
-		if(draggingItemIcon && draggingItemIcon.gameObject.activeSelf == true){
+		if (draggingItemIcon && draggingItemIcon.gameObject.activeSelf == true) {
 			return;
 		}
 
 		//Normal Trigger
-		/*if(Input.GetButton("Fire1") && Time.time > nextFire && !onAttacking && !mobileMode && !onShortCutArea && !GlobalStatus.menuOn && !charging && !onButtonMenu){
-			if(Time.time > (nextFire + 0.5f)){
+		/*if (Input.GetButton("Fire1") && Time.time > nextFire && !onAttacking && !mobileMode && !onShortCutArea && !GlobalStatus.menuOn && !charging && !onButtonMenu) {
+			if (Time.time > (nextFire + 0.5f)) {
 				c = 0;
 			}
 			//Attack Combo
-			if(attackAnimationTrigger.Length >= 1){
+			if (attackAnimationTrigger.Length >= 1) {
 				StartCoroutine(AttackCombo());
 			}
 
 			//Charging Weapon if the Weapon can charge and player hold the Attack Button
-			if(charge.Length > 0 && !charging && Time.time > nextFire /2){
+			if (charge.Length > 0 && !charging && Time.time > nextFire /2) {
 				charging = true;
 				int b = charge.Length -1;
-				while(b >= 0){
+				while(b >= 0) {
 					charge[b].currentChargeTime = Time.time + charge[b].chargeTime;
 					b--;
 				}
@@ -340,13 +340,13 @@ public class AttackTrigger : MonoBehaviour{
 		}*/
 
 		//Charging Effect
-		if(charging){
+		if (charging) {
 			int b = charge.Length -1;
-			while(b >= 0){
-				if(Time.time > charge[b].currentChargeTime){
-					if(charge[b].chargeEffect && chargingEffect != charge[b].chargeEffect){
-						if(!chargingEffect || ch != b){
-							if(chargingEffect){
+			while(b >= 0) {
+				if (Time.time > charge[b].currentChargeTime) {
+					if (charge[b].chargeEffect && chargingEffect != charge[b].chargeEffect) {
+						if (!chargingEffect || ch != b) {
+							if (chargingEffect) {
 								Destroy(chargingEffect.gameObject);
 							}
 							chargingEffect = Instantiate(charge[b].chargeEffect , transform.position, transform.rotation) as GameObject;
@@ -355,7 +355,7 @@ public class AttackTrigger : MonoBehaviour{
 						}
 					}
 					b = -1;
-				}else{
+				} else {
 					b--;
 				}
 			}
@@ -363,24 +363,24 @@ public class AttackTrigger : MonoBehaviour{
 
 	}
 
-	public void UseShortcut(int slot){
-        if(onAttacking) {
+	public void UseShortcut(int slot) {
+        if (onAttacking) {
 			return;
         }
-		if(shortcuts.Length < slot +1){
+		if (shortcuts.Length < slot +1) {
 			return;
 		}
-		if(shortcuts[slot].type == ShortcutType.Skill){
+		if (shortcuts[slot].type == ShortcutType.Skill) {
 			//Skill
 			skSelect = slot;
 			TriggerSkill(skSelect);
 		}
-		if(shortcuts[slot].type == ShortcutType.Equipment){
+		if (shortcuts[slot].type == ShortcutType.Equipment) {
 			//Equipment
 			inv.EquipItemFromID(shortcuts[slot].id);
 			UpdateShortcut();
 		}
-		if(shortcuts[slot].type == ShortcutType.UsableItem){
+		if (shortcuts[slot].type == ShortcutType.UsableItem) {
 			//Item
 			inv.UseItemFromID(shortcuts[slot].id);
 			UpdateShortcut();
@@ -388,50 +388,50 @@ public class AttackTrigger : MonoBehaviour{
 	}
 
 	public Image draggingItemIcon;
-	private int pickupShortcutId = 0;
-	private int pickupShortcutType = 0;
-	private bool onShortCutArea = false;
-	private bool onDiscardArea = false;
-	private int onShortCutSlot = 0;
-	private bool onSwapping = false;
-	private int swapSlot = 0;
+	private int pickupShortcutId;
+	private int pickupShortcutType;
+	private bool onShortCutArea;
+	private bool onDiscardArea;
+	private int onShortCutSlot;
+	private bool onSwapping;
+	private int swapSlot;
 	private ShortcutData tempShortcut;
 
-	public void UpdateShortcut(){
-		for(int a = 0; a < shortcutUi.Length; a++){
-			if(shortcuts[a].type == ShortcutType.None){
+	public void UpdateShortcut() {
+		for (int a = 0; a < shortcutUi.Length; a++) {
+			if (shortcuts[a].type == ShortcutType.None) {
 				shortcutUi[a].iconImage.gameObject.SetActive(false);
 				shortcutUi[a].coolDownBackground.SetActive(false);
 				shortcutUi[a].quantityText.gameObject.SetActive(false);
 			}
-			if(shortcuts[a].type == ShortcutType.UsableItem){
+			if (shortcuts[a].type == ShortcutType.UsableItem) {
 				int s = inv.FindItemSlot(shortcuts[a].id);
-				if(s < inv.itemSlot.Length){
+				if (s < inv.itemSlot.Length) {
 					shortcutUi[a].iconImage.gameObject.SetActive(true);
 					shortcutUi[a].coolDownBackground.SetActive(false);
 					shortcutUi[a].quantityText.gameObject.SetActive(true);
 					shortcutUi[a].iconImage.sprite = itemDB.usableItem[shortcuts[a].id].icon;
 					shortcutUi[a].quantityText.text = inv.itemQuantity[s].ToString();
-				}else{
+				} else {
 					shortcutUi[a].iconImage.gameObject.SetActive(false);
 					shortcutUi[a].coolDownBackground.SetActive(false);
 					shortcutUi[a].quantityText.gameObject.SetActive(false);
 				}
 			}
-			if(shortcuts[a].type == ShortcutType.Equipment){
+			if (shortcuts[a].type == ShortcutType.Equipment) {
 				bool s = inv.CheckItem(shortcuts[a].id , 1 , 1);
-				if(s){
+				if (s) {
 					shortcutUi[a].iconImage.gameObject.SetActive(true);
 					shortcutUi[a].coolDownBackground.SetActive(false);
 					shortcutUi[a].quantityText.gameObject.SetActive(false);
 					shortcutUi[a].iconImage.sprite = itemDB.equipment[shortcuts[a].id].icon;
-				}else{
+				} else {
 					shortcutUi[a].iconImage.gameObject.SetActive(false);
 					shortcutUi[a].coolDownBackground.SetActive(false);
 					shortcutUi[a].quantityText.gameObject.SetActive(false);
 				}
 			}
-			if(shortcuts[a].type == ShortcutType.Skill){
+			if (shortcuts[a].type == ShortcutType.Skill) {
 				shortcutUi[a].iconImage.gameObject.SetActive(true);
 				//shortcutUi[a].coolDownBackground.SetActive(false);
 				shortcutUi[a].quantityText.gameObject.SetActive(false);
@@ -441,44 +441,43 @@ public class AttackTrigger : MonoBehaviour{
 	}
 
 	public void GuardUp() {
-		if(canBlock && !onAttacking && !stat.block) {
+		if (canBlock && !onAttacking && !stat.block) {
 			stat.mainSprite.ResetTrigger("cancelGuard");
 			stat.GuardUp(blockingAnimationTrigger);
 			rb.velocity = Vector2.zero;
 		}
 	}
 
-	public void EnterShortcutArea(int slot){
-		print("Shortcut Area = " + slot);
+	public void EnterShortcutArea(int slot) {
 		onShortCutArea = true;
 		onShortCutSlot = slot;
 		onDiscardArea = false;
 	}
-
-	public void ExitShortcutArea(){
-		if(Application.platform != RuntimePlatform.Android && Application.platform != RuntimePlatform.IPhonePlayer){
+	
+	public void ExitShortcutArea() {
+		if (Application.platform != RuntimePlatform.Android && Application.platform != RuntimePlatform.IPhonePlayer) {
 			onShortCutArea = false;
 		}
 	}
-
-	public void EnterDiscardArea(){
+	
+	public void EnterDiscardArea() {
 		onDiscardArea = true;
 		onShortCutArea = false;
 	}
 	
-	public void ExitSDiscardArea(){
-		if(Application.platform != RuntimePlatform.Android && Application.platform != RuntimePlatform.IPhonePlayer){
+	public void ExitSDiscardArea() {
+		if (Application.platform != RuntimePlatform.Android && Application.platform != RuntimePlatform.IPhonePlayer) {
 			onDiscardArea = false;
 		}
 	}
 
-	public void PickupForShortcut(int id , int type){
+	public void PickupForShortcut(int id , int type) {
 		pickupShortcutId = id;
 		pickupShortcutType = type;
 		draggingItemIcon.gameObject.SetActive(true);
 	}
-
-	public void PickupForSwap(int slot){
+	
+	public void PickupForSwap(int slot) {
 		pickupShortcutId = shortcuts[slot].id;
 		pickupShortcutType = (int)shortcuts[slot].type;
 		draggingItemIcon.sprite = shortcutUi[slot].iconImage.sprite;
@@ -486,21 +485,21 @@ public class AttackTrigger : MonoBehaviour{
 		swapSlot = slot;
 		onSwapping = true;
 	}
-
-	public void SetShortcut(){
+	
+	public void SetShortcut() {
 		draggingItemIcon.gameObject.SetActive(false);
-		if(onDiscardArea){
-			if(pickupShortcutType == 1 || pickupShortcutType == 2){
+		if (onDiscardArea) {
+			if (pickupShortcutType is 1 or 2) {
 				DropItem();
 			}
 			onSwapping = false;
 			return;
 		}
-		if(!onShortCutArea){
+		if (!onShortCutArea) {
 			onSwapping = false;
 			return;
 		}
-		if(onSwapping){
+		if (onSwapping) {
 			tempShortcut = shortcuts[onShortCutSlot];
 			shortcuts[onShortCutSlot] = shortcuts[swapSlot];
 			shortcuts[swapSlot] = tempShortcut;
@@ -509,18 +508,18 @@ public class AttackTrigger : MonoBehaviour{
 			UpdateShortcut();
 			return;
 		}
-		if(shortcuts[onShortCutSlot].onCoolDown > 0){
+		if (shortcuts[onShortCutSlot].onCoolDown > 0) {
 			StartCoroutine(ShowPrintingText("This Skill is on Cooldown!!"));
 			return;
 		}
 		shortcuts[onShortCutSlot].id = pickupShortcutId;
-		if(pickupShortcutType == 1){
+		if (pickupShortcutType == 1) {
 			shortcuts[onShortCutSlot].type = ShortcutType.UsableItem;
 		}
-		if(pickupShortcutType == 2){
+		if (pickupShortcutType == 2) {
 			shortcuts[onShortCutSlot].type = ShortcutType.Equipment;
 		}
-		if(pickupShortcutType == 3){
+		if (pickupShortcutType == 3) {
 			shortcuts[onShortCutSlot].type = ShortcutType.Skill;
 			GetComponent<SkillStatus>().AssignSkillByID(onShortCutSlot , pickupShortcutId);
 		}
@@ -530,10 +529,10 @@ public class AttackTrigger : MonoBehaviour{
 		UpdateShortcut();
 	}
 
-	void CheckSameShortcut(){
+	void CheckSameShortcut() {
 		int n = 0;
-		while(n < shortcuts.Length){
-			if(shortcuts[n].id == pickupShortcutId && (int)shortcuts[n].type == pickupShortcutType && n != onShortCutSlot){
+		while(n < shortcuts.Length) {
+			if (shortcuts[n].id == pickupShortcutId && (int)shortcuts[n].type == pickupShortcutType && n != onShortCutSlot) {
 				shortcuts[n].type = ShortcutType.None;
 				shortcuts[n].skill.manaCost = 0;
 				shortcuts[n].skill.skillPrefab = null;
@@ -551,7 +550,7 @@ public class AttackTrigger : MonoBehaviour{
 				
 				shortcuts[n].skill.soundEffect = null;
 				
-				if(shortcuts[n].onCoolDown > 0){
+				if (shortcuts[n].onCoolDown > 0) {
 					shortcuts[onShortCutSlot].onCoolDown = shortcuts[n].onCoolDown;
 				}
 				shortcuts[n].onCoolDown = 0;
@@ -560,108 +559,106 @@ public class AttackTrigger : MonoBehaviour{
 		}
 	}
 
-	public void SetupInitialShortcut(){
-		for(int a = 0; a < shortcuts.Length; a++){
-			if(shortcuts[a].type == ShortcutType.Skill){
+	public void SetupInitialShortcut() {
+		for (int a = 0; a < shortcuts.Length; a++) {
+			if (shortcuts[a].type == ShortcutType.Skill) {
 				GetComponent<SkillStatus>().AssignSkillByID(a , shortcuts[a].id);
 			}
 		}
 		UpdateShortcut();
 	}
 
-	public void EnterButtonMenu(bool c){
+	public void EnterButtonMenu(bool c) {
 		onButtonMenu = c;
 	}
 
-	public void DropItem(){
+	public void DropItem() {
 		draggingItemIcon.gameObject.SetActive(false);
-		if(!onDiscardArea){
+		if (!onDiscardArea) {
 			return;
 		}
-		if(pickupShortcutType == 1){
+		if (pickupShortcutType == 1) {
 			int slot = GetComponent<Inventory>().FindItemSlot(pickupShortcutId);
-			if(slot < GetComponent<Inventory>().itemSlot.Length){
-				int qty = GetComponent<Inventory>().itemQuantity[slot];
-				GetComponent<Inventory>().RemoveItem(pickupShortcutId , qty);
-				if(itemDB.usableItem[pickupShortcutId].dropPrefab){
-					Vector3 dropPos = transform.position;
-					int ran = Random.Range(0 , 100);
-					if(rb.gravityScale > 0){
-						if(ran >= 50){
-							dropPos.x += Random.Range(1 , 1.8f);
-						}else{
-							dropPos.x -= Random.Range(1 , 1.8f);
-						}
-						dropPos.y += Random.Range(1.1f , 1.4f);
-					}else{
-						if(ran >= 75){
-							dropPos.x += Random.Range(1.2f , 1.5f);
-							dropPos.y += Random.Range(-1.2f , 1.2f);
-						}else if(ran >= 50){
-							dropPos.x -= Random.Range(1.2f , 1.5f);
-							dropPos.y += Random.Range(-1.2f , 1.2f);
-						}else if(ran >= 25){
-							dropPos.x += Random.Range(-1.2f , 1.2f);
-							dropPos.y += Random.Range(1.2f , 1.5f);
-						}else{
-							dropPos.x += Random.Range(-1.2f , 1.2f);
-							dropPos.y -= Random.Range(1.2f , 1.5f);
-						}
-					}
+			if (slot >= GetComponent<Inventory>().itemSlot.Length) return;
+			int qty = GetComponent<Inventory>().itemQuantity[slot];
+			GetComponent<Inventory>().RemoveItem(pickupShortcutId , qty);
+			if (!itemDB.usableItem[pickupShortcutId].dropPrefab) return;
+			Vector3 dropPos = transform.position;
+			int ran = Random.Range(0 , 100);
+			if (rb.gravityScale > 0) {
+				if (ran >= 50) {
+					dropPos.x += Random.Range(1 , 1.8f);
+				} else {
+					dropPos.x -= Random.Range(1 , 1.8f);
+				}
+				dropPos.y += Random.Range(1.1f , 1.4f);
+			} else {
+				if (ran >= 75) {
+					dropPos.x += Random.Range(1.2f , 1.5f);
+					dropPos.y += Random.Range(-1.2f , 1.2f);
+				}else if (ran >= 50) {
+					dropPos.x -= Random.Range(1.2f , 1.5f);
+					dropPos.y += Random.Range(-1.2f , 1.2f);
+				}else if (ran >= 25) {
+					dropPos.x += Random.Range(-1.2f , 1.2f);
+					dropPos.y += Random.Range(1.2f , 1.5f);
+				} else {
+					dropPos.x += Random.Range(-1.2f , 1.2f);
+					dropPos.y -= Random.Range(1.2f , 1.5f);
+				}
+			}
 
-					Transform drop = itemDB.usableItem[pickupShortcutId].dropPrefab.transform;
-					if(dropItemPrefab){
-						drop = dropItemPrefab;
-					}
+			Transform drop = itemDB.usableItem[pickupShortcutId].dropPrefab.transform;
+			if (dropItemPrefab) {
+				drop = dropItemPrefab;
+			}
 
-					Transform i = Instantiate(drop , dropPos , Quaternion.identity) as Transform;
-					/*i.GetComponent<AddItem>().itemID = pickupShortcutId;
+			Transform i = Instantiate(drop , dropPos , Quaternion.identity) as Transform;
+			/*i.GetComponent<AddItem>().itemID = pickupShortcutId;
 					i.GetComponent<AddItem>().itemType = ItType.Usable;
 					i.GetComponent<AddItem>().itemQuantity = qty;*/
 
-					i.GetComponentInChildren<AddItem>().itemID = pickupShortcutId;
-					i.GetComponentInChildren<AddItem>().itemType = ItType.Usable;
-					i.GetComponentInChildren<AddItem>().itemQuantity = qty;
+			i.GetComponentInChildren<AddItem>().itemID = pickupShortcutId;
+			i.GetComponentInChildren<AddItem>().itemType = ItType.Usable;
+			i.GetComponentInChildren<AddItem>().itemQuantity = qty;
 
-					if(rb.gravityScale == 0 && i.GetComponent<Rigidbody2D>()) {
-						i.GetComponent<Rigidbody2D>().gravityScale = 0;
-					}
-
-					if(i.GetComponent<SpriteRenderer>()){
-						i.GetComponent<SpriteRenderer>().sprite = itemDB.usableItem[pickupShortcutId].icon;
-					}
-				}
+			if (rb.gravityScale == 0 && i.GetComponent<Rigidbody2D>()) {
+				i.GetComponent<Rigidbody2D>().gravityScale = 0;
 			}
-		}else if(pickupShortcutType == 2){
+
+			if (i.GetComponent<SpriteRenderer>()) {
+				i.GetComponent<SpriteRenderer>().sprite = itemDB.usableItem[pickupShortcutId].icon;
+			}
+		}else if (pickupShortcutType == 2) {
 			GetComponent<Inventory>().RemoveEquipment(pickupShortcutId);
-			if(itemDB.equipment[pickupShortcutId].dropPrefab){
+			if (itemDB.equipment[pickupShortcutId].dropPrefab) {
 				Vector3 dropPos = transform.position;
 				int ran = Random.Range(0 , 100);
-				if(rb.gravityScale > 0){
-					if(ran >= 50){
+				if (rb.gravityScale > 0) {
+					if (ran >= 50) {
 						dropPos.x += Random.Range(1 , 1.8f);
-					}else{
+					} else {
 						dropPos.x -= Random.Range(1 , 1.8f);
 					}
 					dropPos.y += Random.Range(1.1f , 1.4f);
-				}else{
-					if(ran >= 75){
+				} else {
+					if (ran >= 75) {
 						dropPos.x += Random.Range(1.2f , 1.5f);
 						dropPos.y += Random.Range(-1.2f , 1.2f);
-					}else if(ran >= 50){
+					}else if (ran >= 50) {
 						dropPos.x -= Random.Range(1.2f , 1.5f);
 						dropPos.y += Random.Range(-1.2f , 1.2f);
-					}else if(ran >= 25){
+					}else if (ran >= 25) {
 						dropPos.x += Random.Range(-1.2f , 1.2f);
 						dropPos.y += Random.Range(1.2f , 1.5f);
-					}else{
+					} else {
 						dropPos.x += Random.Range(-1.2f , 1.2f);
 						dropPos.y -= Random.Range(1.2f , 1.5f);
 					}
 				}
 
 				Transform drop = itemDB.equipment[pickupShortcutId].dropPrefab.transform;
-				if(dropItemPrefab){
+				if (dropItemPrefab) {
 					drop = dropItemPrefab;
 				}
 
@@ -672,39 +669,39 @@ public class AttackTrigger : MonoBehaviour{
 				i.GetComponentInChildren<AddItem>().itemID = pickupShortcutId;
 				i.GetComponentInChildren<AddItem>().itemType = ItType.Equipment;
 
-				if(rb.gravityScale == 0 && i.GetComponent<Rigidbody2D>()){
+				if (rb.gravityScale == 0 && i.GetComponent<Rigidbody2D>()) {
 					i.GetComponent<Rigidbody2D>().gravityScale = 0;
 				}
 
-				if(i.GetComponent<SpriteRenderer>()){
+				if (i.GetComponent<SpriteRenderer>()) {
 					i.GetComponent<SpriteRenderer>().sprite = itemDB.equipment[pickupShortcutId].icon;
 				}
 			}
 		}
 	}
 
-	public void DiscardShortcut(){
+	public void DiscardShortcut() {
 		pickupShortcutId = 0;
 		pickupShortcutType = 0;
 	}
 
-	public void TriggerAttack(){
-		if(Time.timeScale == 0.0f || GetComponent<Status>().freeze || GlobalStatus.freezePlayer){
+	public void TriggerAttack() {
+		if (Time.timeScale == 0.0f || GetComponent<Status>().freeze || GlobalStatus.freezePlayer) {
 			return;
 		}
-		if(Time.time > nextFire && !onAttacking && !onShortCutArea && !GlobalStatus.menuOn && !charging && !onButtonMenu) {
-			if(Time.time > (nextFire + 0.5f)){
+		if (Time.time > nextFire && !onAttacking && !onShortCutArea && !GlobalStatus.menuOn && !charging && !onButtonMenu) {
+			if (Time.time > (nextFire + 0.5f)) {
 				c = 0;
 			}
 			//Attack Combo
-			if(attackAnimationTrigger.Length >= 1 && !charging){
+			if (attackAnimationTrigger.Length >= 1 && !charging) {
 				StartCoroutine(AttackCombo());
 			}
 			//Charging Weapon if the Weapon can charge and player hold the Attack Button
-			if(charge.Length > 0 && !charging && Time.time > nextFire /2){
+			if (charge.Length > 0 && !charging && Time.time > nextFire /2) {
 				charging = true;
 				int b = charge.Length -1;
-				while(b >= 0){
+				while(b >= 0) {
 					charge[b].currentChargeTime = Time.time + charge[b].chargeTime;
 					b--;
 				}
@@ -712,57 +709,57 @@ public class AttackTrigger : MonoBehaviour{
 		}
 	}
 
-	public void ReleaseCharge(){
-		if(charging){
+	public void ReleaseCharge() {
+		if (charging) {
 			charging = false;
-			if(Time.timeScale == 0.0f || stat.freeze || GlobalStatus.freezeAll || GlobalStatus.freezePlayer || stat.block || stat.flinch){
-				if(chargingEffect){
+			if (Time.timeScale == 0.0f || stat.freeze || GlobalStatus.freezeAll || GlobalStatus.freezePlayer || stat.block || stat.flinch) {
+				if (chargingEffect) {
 					Destroy(chargingEffect.gameObject);
 				}
 				c = 0;
 				return;
 			}
 			int b = charge.Length -1;
-			if(chargingEffect){
+			if (chargingEffect) {
 				Destroy(chargingEffect.gameObject);
 			}
-			while(b >= 0){
-				if(Time.time > charge[b].currentChargeTime){
+			while(b >= 0) {
+				if (Time.time > charge[b].currentChargeTime) {
 					//Charge Attack!!
-					if(Time.time > (nextFire + 0.5f)){
+					if (Time.time > (nextFire + 0.5f)) {
 						c = 0;
 					}
 					StartCoroutine(ChargeAttack());
 					b = -1;
-				}else{
+				} else {
 					b--;
 				}
 			}
 		}
 	}
 
-	public void LookAtMouse(){
+	public void LookAtMouse() {
 		Vector3 delta = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
 
-		if(GetComponent<TopDownFourDirection>()){
-			if(delta.y > 1 && Mathf.Abs(delta.x) < 2){
+		if (GetComponent<TopDownFourDirection>()) {
+			if (delta.y > 1 && Mathf.Abs(delta.x) < 2) {
 				GetComponent<TopDownFourDirection>().SetDirection(2);
-			}else if(delta.y < -1 && Mathf.Abs(delta.x) < 2) {
+			}else if (delta.y < -1 && Mathf.Abs(delta.x) < 2) {
 				GetComponent<TopDownFourDirection>().SetDirection(3);
-			}else if(delta.x >= 0){
+			}else if (delta.x >= 0) {
 				GetComponent<TopDownFourDirection>().SetDirection(0);
-			}else if(delta.x < 0){
+			}else if (delta.x < 0) {
 				GetComponent<TopDownFourDirection>().SetDirection(1);
 			}
 			return;
 		}
 
-		if(delta.x >= 0 && !facingRight){
+		if (delta.x >= 0 && !facingRight) {
 			Vector3 rot = transform.eulerAngles;
 			rot.y = 0;
 			transform.eulerAngles = rot;
 			facingRight = true;
-		}else if (delta.x < 0 && facingRight){
+		}else if (delta.x < 0 && facingRight) {
 			Vector3 rot = transform.eulerAngles;
 			rot.y = 180;
 			transform.eulerAngles = rot;
@@ -770,8 +767,8 @@ public class AttackTrigger : MonoBehaviour{
 		}
 	}
 
-	IEnumerator ShowPrintingText(string txt){
-		if(!textPrinter){
+	IEnumerator ShowPrintingText(string txt) {
+		if (!textPrinter) {
 			yield break;
 		}
 		textPrinter.text = txt;
@@ -780,28 +777,28 @@ public class AttackTrigger : MonoBehaviour{
 		textPrinter.gameObject.SetActive(false);
 	}
 
-	public void PrintingText(string txt){
+	public void PrintingText(string txt) {
 		StartCoroutine(ShowPrintingText(txt));
 	}
 	
-	IEnumerator AttackCombo(){
+	IEnumerator AttackCombo() {
 		int atkPref = c;
-		if(c >= attackAnimationTrigger.Length){
+		if (c >= attackAnimationTrigger.Length) {
 			c = 0;
 		}
-		if(atkPref >= attackPrefab.Length){
+		if (atkPref >= attackPrefab.Length) {
 			atkPref = 0;
 		}
-		if(attackPrefab.Length > 0 && !attackPrefab[atkPref]){
+		if (attackPrefab.Length > 0 && !attackPrefab[atkPref]) {
 			print("You didn't assign Attack Prefab yet");
 			yield break;
 		}
-		if(stat.dodge){
+		if (stat.dodge) {
 			yield break;
 		}
-		if(requireItemId > 0){
+		if (requireItemId > 0) {
 			bool have = GetComponent<Inventory>().RemoveItem(requireItemId , 1);
-			if(!have){
+			if (!have) {
 				print("Require " + requireItemName);
 				StartCoroutine(ShowPrintingText("Require " + requireItemName));
 				yield break;
@@ -811,24 +808,24 @@ public class AttackTrigger : MonoBehaviour{
 		int matk = GetComponent<Status>().totalStat.matk;
 		onAttacking = true;
 		// If Melee Dash
-		if(aimAtMouse) {
+		if (aimAtMouse) {
 			LookAtMouse();
 		}
-		if(whileAttack == WhileAtk.MeleeFwd){
+		if (whileAttack == WhileAtk.MeleeFwd) {
 			GetComponent<Status>().canControl = false;
 			StartCoroutine(MeleeDash());
 		}
 		// If Immobile
-		if(whileAttack == WhileAtk.Immobile){
+		if (whileAttack == WhileAtk.Immobile) {
 			GetComponent<Status>().canControl = false;
 		}
-		if(sound.attackComboVoice.Length > c && sound.attackComboVoice[c]){
+		if (sound.attackComboVoice.Length > c && sound.attackComboVoice[c]) {
 			GetComponent<AudioSource>().PlayOneShot(sound.attackComboVoice[c]);
 		}
-		if(attackSoundEffect){
+		if (attackSoundEffect) {
 			GetComponent<AudioSource>().PlayOneShot(attackSoundEffect);
 		}
-		if(attackAnimationTrigger[c] != ""){
+		if (attackAnimationTrigger[c] != "") {
 			stat.mainSprite.SetTrigger(attackAnimationTrigger[c]);
 		}
 		
@@ -836,16 +833,16 @@ public class AttackTrigger : MonoBehaviour{
 		c++;
 
 		nextFire = Time.time + attackDelay;
-        if (attackPrefab.Length > 0){
+        if (attackPrefab.Length > 0) {
 			Transform bulletShootout = Instantiate(attackPrefab[atkPref].transform, attackPoint.transform.position, attackPoint.transform.rotation) as Transform;
 			bulletShootout.gameObject.SetActive(true);
 			bulletShootout.GetComponent<BulletStatus>().Setting(str, matk, "Player", this.gameObject);
-			if (GetComponent<Status>().hiddenStatus.drainTouch > 0){
+			if (GetComponent<Status>().hiddenStatus.drainTouch > 0) {
 				bulletShootout.GetComponent<BulletStatus>().drainHp += GetComponent<Status>().hiddenStatus.drainTouch;
 			}
 		}
 		
-		if(c >= attackAnimationTrigger.Length){
+		if (c >= attackAnimationTrigger.Length) {
 			c = 0;
 		}
 		yield return new WaitForSeconds(attackDelay);
@@ -854,18 +851,18 @@ public class AttackTrigger : MonoBehaviour{
 		GetComponent<Status>().canControl = true;
 	}
 
-	IEnumerator ChargeAttack(){
+	IEnumerator ChargeAttack() {
 		charging = false;
-		if(!charge[ch].chargeAttackPrefab){
+		if (!charge[ch].chargeAttackPrefab) {
 			print("You didn't assign Attack Prefab yet");
 			yield break;
 		}
-		if(stat.dodge){
+		if (stat.dodge) {
 			yield break;
 		}
-		if(requireItemId > 0){
+		if (requireItemId > 0) {
 			bool have = GetComponent<Inventory>().RemoveItem(requireItemId , 1);
-			if(!have){
+			if (!have) {
 				print("Require " + requireItemName);
 				StartCoroutine(ShowPrintingText("Require " + requireItemName));
 				yield break;
@@ -877,25 +874,25 @@ public class AttackTrigger : MonoBehaviour{
 		onAttacking = true;
 		
 		// If Melee Dash
-		if(whileAttack == WhileAtk.MeleeFwd){
+		if (whileAttack == WhileAtk.MeleeFwd) {
 			GetComponent<Status>().canControl = false;
 			StartCoroutine(MeleeDash());
 		}
 		// If Immobile
-		if(whileAttack == WhileAtk.Immobile){
+		if (whileAttack == WhileAtk.Immobile) {
 			GetComponent<Status>().canControl = false;
 		}
 		
-		if(charge[ch].soundEffect){
+		if (charge[ch].soundEffect) {
 			GetComponent<AudioSource>().PlayOneShot(charge[ch].soundEffect);
 		}
-		if(charge[ch].soundEffect2){
+		if (charge[ch].soundEffect2) {
 			GetComponent<AudioSource>().PlayOneShot(charge[ch].soundEffect2);
 		}
-		if(aimAtMouse){
+		if (aimAtMouse) {
 			LookAtMouse();
 		}
-		if(charge[ch].chargeAnimationTrigger != ""){
+		if (charge[ch].chargeAnimationTrigger != "") {
 			stat.mainSprite.SetTrigger(charge[ch].chargeAnimationTrigger);
 		}
 		
@@ -906,7 +903,7 @@ public class AttackTrigger : MonoBehaviour{
 		Transform bulletShootout = Instantiate(charge[ch].chargeAttackPrefab.transform, attackPoint.transform.position , attackPoint.transform.rotation) as Transform;
 		bulletShootout.gameObject.SetActive(true);
 		bulletShootout.GetComponent<BulletStatus>().Setting(str , matk , "Player" , this.gameObject);
-		if(GetComponent<Status>().hiddenStatus.drainTouch > 0){
+		if (GetComponent<Status>().hiddenStatus.drainTouch > 0) {
 			bulletShootout.GetComponent<BulletStatus>().drainHp += GetComponent<Status>().hiddenStatus.drainTouch;
 		}
 		yield return new WaitForSeconds(charge[ch].attackDelay);
@@ -915,37 +912,37 @@ public class AttackTrigger : MonoBehaviour{
 		GetComponent<Status>().canControl = true;
 	}
 
-	public void TriggerSkill(int sk){
-		if(Time.timeScale == 0.0f || GetComponent<Status>().freeze || onAttacking || !shortcuts[sk].skill.skillPrefab || GlobalStatus.freezePlayer){
+	public void TriggerSkill(int sk) {
+		if (Time.timeScale == 0.0f || GetComponent<Status>().freeze || onAttacking || !shortcuts[sk].skill.skillPrefab || GlobalStatus.freezePlayer) {
 			return;
 		}
 		StartCoroutine(MagicSkill(sk));
 	}
 
 	private GameObject castEff;
-	IEnumerator MagicSkill(int skillID){
-		if(shortcuts[skillID].skill.requireWeapon && weaponType != shortcuts[skillID].skill.requireWeaponType){
+	IEnumerator MagicSkill(int skillID) {
+		if (shortcuts[skillID].skill.requireWeapon && weaponType != shortcuts[skillID].skill.requireWeaponType) {
 			//Check Weapon Type for Use Skill
 			print("Cannot Use Skill with this Weapon");
 			StartCoroutine(ShowPrintingText("Cannot Use Skill with this Weapon"));
 			yield break;
 		}
-		if(shortcuts[skillID].onCoolDown > 0 || GetComponent<Status>().silence){
+		if (shortcuts[skillID].onCoolDown > 0 || GetComponent<Status>().silence) {
 			yield break;
 		}
 		c = 0;
 		int cost = shortcuts[skillID].skill.manaCost;
-		if(GetComponent<Status>().hiddenStatus.mpReduce > 0){
+		if (GetComponent<Status>().hiddenStatus.mpReduce > 0) {
 			//Calculate MP Reduce
 			int per = 100 - GetComponent<Status>().hiddenStatus.mpReduce;
-			if(per < 0){
+			if (per < 0) {
 				per = 0;
 			}
 			cost *= per;
 			cost /= 100;
 		}
-		if(GetComponent<Status>().mana >= cost){
-			if(shortcuts[skillID].skill.sendMsg != ""){
+		if (GetComponent<Status>().mana >= cost) {
+			if (shortcuts[skillID].skill.sendMsg != "") {
 				SendMessage(shortcuts[skillID].skill.sendMsg , SendMessageOptions.DontRequireReceiver);
 			}
 			GetComponent<Status>().mana -= cost;
@@ -953,70 +950,70 @@ public class AttackTrigger : MonoBehaviour{
 			int str = GetComponent<Status>().totalStat.atk;
 			int matk = GetComponent<Status>().totalStat.matk;
 			
-			if(sound.magicCastVoice){
+			if (sound.magicCastVoice) {
 				GetComponent<AudioSource>().clip = sound.magicCastVoice;
 				GetComponent<AudioSource>().Play();
 			}
 			onAttacking = true;
 			// If Melee Dash
-			if(shortcuts[skillID].skill.whileAttack == WhileAtk.MeleeFwd){
+			if (shortcuts[skillID].skill.whileAttack == WhileAtk.MeleeFwd) {
 				GetComponent<Status>().canControl = false;
 				meleefwd = true;
 			}
 			// If Immobile
-			if(shortcuts[skillID].skill.whileAttack == WhileAtk.Immobile){
+			if (shortcuts[skillID].skill.whileAttack == WhileAtk.Immobile) {
 				GetComponent<Status>().canControl = false;
 			}
-			if(aimAtMouse){
+			if (aimAtMouse) {
 				LookAtMouse();
 			}
-			if(shortcuts[skillID].skill.skillAnimationTrigger != ""){
+			if (shortcuts[skillID].skill.skillAnimationTrigger != "") {
 				stat.mainSprite.SetTrigger(shortcuts[skillID].skill.skillAnimationTrigger);
 			}
-			if(shortcuts[skillID].skill.castEffect){
+			if (shortcuts[skillID].skill.castEffect) {
 				castEff = Instantiate(shortcuts[skillID].skill.castEffect , transform.position , transform.rotation) as GameObject;
 				castEff.transform.parent = this.transform;
 			}
 			nextFire = Time.time + shortcuts[skillID].skill.skillDelay;
 
 			yield return new WaitForSeconds(shortcuts[skillID].skill.castTime);
-			if(castEff){
+			if (castEff) {
 				Destroy(castEff);
 			}
 			//onAttacking = true;
-			if(shortcuts[skillID].skill.skillSpawn == BSpawnType.FromPlayer){
+			if (shortcuts[skillID].skill.skillSpawn == BSpawnType.FromPlayer) {
 				Transform bulletShootout = Instantiate(shortcuts[skillID].skill.skillPrefab.transform, attackPoint.transform.position , attackPoint.transform.rotation) as Transform;
 				bulletShootout.gameObject.SetActive(true);
 				bulletShootout.GetComponent<BulletStatus>().Setting(str , matk , "Player" , this.gameObject);
-			}else{
+			} else {
 				Vector2 skillPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
 				Transform bulletShootout = Instantiate(shortcuts[skillID].skill.skillPrefab.transform, skillPos , attackPoint.transform.rotation) as Transform;
 				bulletShootout.gameObject.SetActive(true);
 				bulletShootout.GetComponent<BulletStatus>().Setting(str , matk , "Player" , this.gameObject);
 			}
-			if(shortcuts[skillID].skill.soundEffect){
+			if (shortcuts[skillID].skill.soundEffect) {
 				GetComponent<AudioSource>().PlayOneShot(shortcuts[skillID].skill.soundEffect);
 			}
 			yield return new WaitForSeconds(shortcuts[skillID].skill.skillDelay);
 			
 			//Addition Hit
-			for(int m = 0; m < shortcuts[skillID].skill.multipleHit.Length; m++){
-				if(shortcuts[skillID].skill.multipleHit[m].skillAnimationTrigger != ""){
+			for (int m = 0; m < shortcuts[skillID].skill.multipleHit.Length; m++) {
+				if (shortcuts[skillID].skill.multipleHit[m].skillAnimationTrigger != "") {
 					stat.mainSprite.SetTrigger(shortcuts[skillID].skill.multipleHit[m].skillAnimationTrigger);
 				}
 				yield return new WaitForSeconds(shortcuts[skillID].skill.multipleHit[m].castTime);
 				
-				if(shortcuts[skillID].skill.skillSpawn == BSpawnType.FromPlayer){
+				if (shortcuts[skillID].skill.skillSpawn == BSpawnType.FromPlayer) {
 					Transform bulletShootout = Instantiate(shortcuts[skillID].skill.multipleHit[m].skillPrefab.transform, attackPoint.transform.position , attackPoint.transform.rotation) as Transform;
 					bulletShootout.gameObject.SetActive(true);
 					bulletShootout.GetComponent<BulletStatus>().Setting(str , matk , "Player" , this.gameObject);
-				}else{
+				} else {
 					/*Transform bulletShootout = Instantiate(shortcuts[skillID].skill.multipleHit[m].skillPrefab.transform, skillSpawnPos , transform.rotation) as Transform;
 					bulletShootout.gameObject.SetActive(true);
 					bulletShootout.GetComponent<BulletStatus>().Setting(str , matk , "Player" , this.gameObject);*/
 	}
-				if(shortcuts[skillID].skill.multipleHit[m].soundEffect){
+				if (shortcuts[skillID].skill.multipleHit[m].soundEffect) {
 					GetComponent<AudioSource>().PlayOneShot(shortcuts[skillID].skill.multipleHit[m].soundEffect);
 				}
 				yield return new WaitForSeconds(shortcuts[skillID].skill.multipleHit[m].skillDelay);
@@ -1027,56 +1024,56 @@ public class AttackTrigger : MonoBehaviour{
 			//onAttacking = false;
 			meleefwd = false;
 			GetComponent<Status>().canControl = true;
-		}else{
+		} else {
 			StartCoroutine(ShowPrintingText("Not Enough MP!!"));
 		}
 	}
 
-	IEnumerator MeleeDash(){
+	IEnumerator MeleeDash() {
 		meleefwd = true;
 		yield return new WaitForSeconds(0.2f);
 		meleefwd = false;
 	}
 
-	public void GetActivator(GameObject obj , string msg , string btn){
+	public void GetActivator(GameObject obj , string msg , string btn) {
 		actvateObj = obj;
 		actvateMsg = msg;
 		buttonText = btn;
 		showButton = true;
-		if(canvasElement.activatorText){
+		if (canvasElement.activatorText) {
 			canvasElement.activatorText.text = btn;
 		}
 	}
 	
-	public void RemoveActivator(GameObject obj){
-		if(obj == actvateObj){
+	public void RemoveActivator(GameObject obj) {
+		if (obj == actvateObj) {
 			actvateObj = null;
 			actvateMsg = "";
 			buttonText = "";
 			showButton = false;
-			if(canvasElement.activatorText){
+			if (canvasElement.activatorText) {
 				canvasElement.activatorText.text = "";
 			}
 		}
 	}
 	
-	public void Activator(){
-		if(!actvateObj || actvateMsg == "" || stat.freeze){
+	public void Activator() {
+		if (!actvateObj || actvateMsg == "" || stat.freeze) {
 			return;
 		}
 		actvateObj.SendMessage(actvateMsg , SendMessageOptions.DontRequireReceiver);
 	}
 
-	public void TriggerGuard(){
-		if(canBlock && !onAttacking && !stat.block){
+	public void TriggerGuard() {
+		if (canBlock && !onAttacking && !stat.block) {
 			stat.mainSprite.ResetTrigger("cancelGuard");
 			stat.GuardUp(blockingAnimationTrigger);
 			rb.velocity = Vector2.zero;
 		}
 	}
 
-	public void CancelGuard(){
-		if(stat.block){
+	public void CancelGuard() {
+		if (stat.block) {
 			stat.GuardBreak("cancelGuard");
 		}
 	}

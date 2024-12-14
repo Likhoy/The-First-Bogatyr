@@ -1,17 +1,19 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using TheKiwiCoder;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventoryUi : MonoBehaviour
-{
+public class InventoryUi : MonoBehaviour {
     public GameObject player;
 
     public Text moneyText;
 
-    public Image[] itemIcons = new Image[16];
-    public Text[] itemQty = new Text[16];
-    public Image[] equipmentIcons = new Image[16];
+    public List<Image> itemIcons;
+    public List<Text> itemQty;
+    public Image[] equipmentIcons = new Image[25];
 
     public Image weaponIcons;
     public Image subWeaponIcons;
@@ -28,193 +30,156 @@ public class InventoryUi : MonoBehaviour
 
     public GameObject usableTab;
     public GameObject equipmentTab;
-    public Text pageText;
 
     public GameObject database;
     private ItemData db;
 
-    private int maxPage = 1;
-    private int maxPageEq = 1;
-    private int page = 0;
-    private int cPage = 0;
-    private int ePage = 0;
-    private int itemLength = 16;
+    private int itemLength;
     private int eqLength = 8;
+    
+    public Image draggingItemIcon;
+    private int draggingItemId;
+    private int draggingItemType; // 0 = Item , 1 = Equipment
+    public GameObject discardItemConfirmation;
+    
+    private int sourceSlot;
+    private int targetSlot;
+    private AttackTrigger atk;
 
-    void Start()
-    {
+    void Start() {
         db = database.GetComponent<ItemData>();
 
-        //Set Max Page
-        if (!player && GlobalStatus.mainPlayer)
-        {
+        if (!player && GlobalStatus.mainPlayer) {
             player = GlobalStatus.mainPlayer;
         }
 
-
-        if (player)
-        {
-            itemLength = player.GetComponent<Inventory>().itemSlot.Length;
-            eqLength = player.GetComponent<Inventory>().equipment.Length;
-        }
-
-        maxPage = itemLength / itemIcons.Length;
-        if (itemLength % itemIcons.Length != 0)
-        {
-            maxPage += 1;
-        }
-        //maxPage -= 1;
-
-        maxPageEq = eqLength / equipmentIcons.Length;
-        if (eqLength % equipmentIcons.Length != 0)
-        {
-            maxPageEq += 1;
-        }
-        //maxPageEq -= 1;
-        print(maxPage + " " + maxPageEq);
+        if (!player) return;
+        atk = player.GetComponent<AttackTrigger>();
+        itemLength = player.GetComponent<Inventory>().itemSlot.Length;
+        eqLength = player.GetComponent<Inventory>().equipment.Length;
+        
     }
 
-    void Update()
-    {
-        if (tooltip && tooltip.activeSelf == true)
-        {
+    private void OnEnable() {
+        var usableItemTab = transform.Find("ItemsBG/UsableItemTab");
+
+        if (usableItemTab == null) return;
+        itemIcons.Clear();
+        itemQty.Clear();
+
+        foreach (Transform itemSlot in usableItemTab) {
+            var iconTransform = itemSlot.Find("Icon");
+            var qtyTransform = itemSlot.Find("QtyText");
+
+            if (iconTransform == null || qtyTransform == null) continue;
+            var icon = iconTransform.GetComponent<Image>();
+            var quantity = qtyTransform.GetComponent<Text>();
+
+            if (icon == null || quantity == null) continue;
+            itemIcons.Add(icon);
+            itemQty.Add(quantity);
+        }
+    }
+
+    void Update() {
+        if (tooltip && tooltip.activeSelf) {
             Vector2 tooltipPos = Input.mousePosition;
             tooltipPos.x += 7;
             tooltip.transform.position = tooltipPos;
         }
-        /*if(draggingItemIcon && draggingItemIcon.gameObject.activeSelf == true){
-			Vector2 dragIconPos = Input.mousePosition;
-			dragIconPos.y -= 0.55f;
-			draggingItemIcon.transform.position = dragIconPos;
-			if(Input.GetKeyUp(KeyCode.Mouse0)){
-				OnDropItem();
-			}
-		}*/
-        if (!player)
-        {
-            return;
+
+        if (!player) return;
+        
+        for (var i = 0; i < itemIcons.Count; i++) {
+            itemIcons[i].GetComponent<Image>().sprite = i < itemLength ? 
+                db.usableItem[player.GetComponent<Inventory>().itemSlot[i]].icon : 
+                db.usableItem[0].icon;
         }
-
-
-        for (int a = 0; a < itemIcons.Length; a++)
-        {
-            if (a + cPage < itemLength)
-            {
-                itemIcons[a].GetComponent<Image>().sprite = db.usableItem[player.GetComponent<Inventory>().itemSlot[a + cPage]].icon;
-            }
-            else
-            {
-                itemIcons[a].GetComponent<Image>().sprite = db.usableItem[0].icon;
-            }
-        }
-
-
-
-        for (int q = 0; q < itemQty.Length; q++)
-        {
-            if (q + cPage < itemLength)
-            {
-                string qty = player.GetComponent<Inventory>().itemQuantity[q + cPage].ToString();
-                if (qty == "0")
-                {
+        
+        for (var i = 0; i < itemQty.Count; i++) {
+            if (i < itemLength) {
+                var qty = player.GetComponent<Inventory>().itemQuantity[i].ToString();
+                if (qty == "0") {
                     qty = "";
                 }
-                itemQty[q].GetComponent<Text>().text = qty;
+                itemQty[i].GetComponent<Text>().text = qty;
             }
-            else
-            {
-                itemQty[q].GetComponent<Text>().text = "";
-            }
-        }
-
-
-
-        for (int b = 0; b < equipmentIcons.Length; b++)
-        {
-            if (b + ePage < eqLength)
-            {
-                equipmentIcons[b].GetComponent<Image>().sprite = db.equipment[player.GetComponent<Inventory>().equipment[b + ePage]].icon;
-            }
-            else
-            {
-                equipmentIcons[b].GetComponent<Image>().sprite = db.equipment[0].icon;
+            else {
+                itemQty[i].GetComponent<Text>().text = "";
             }
         }
+        
+        for (var i = 0; i < equipmentIcons.Length; i++) {
+            equipmentIcons[i].GetComponent<Image>().sprite = i < eqLength ? 
+                db.equipment[player.GetComponent<Inventory>().equipment[i]].icon : 
+                db.equipment[0].icon;
+        }
 
-        if (weaponIcons)
-        {
+        if (weaponIcons) {
             weaponIcons.GetComponent<Image>().sprite = db.equipment[player.GetComponent<Inventory>().weaponEquip].icon;
         }
-        if (subWeaponIcons)
-        {
+        if (subWeaponIcons) {
             subWeaponIcons.GetComponent<Image>().sprite = db.equipment[player.GetComponent<Inventory>().subWeaponEquip].icon;
         }
-        if (armorIcons)
-        {
+        if (armorIcons) {
             armorIcons.GetComponent<Image>().sprite = db.equipment[player.GetComponent<Inventory>().armorEquip].icon;
         }
-        if (accIcons)
-        {
+        if (accIcons) {
             accIcons.GetComponent<Image>().sprite = db.equipment[player.GetComponent<Inventory>().accessoryEquip].icon;
         }
-        if (helmIcons)
-        {
+        if (helmIcons) {
             helmIcons.GetComponent<Image>().sprite = db.equipment[player.GetComponent<Inventory>().hatEquip].icon;
         }
-        if (glovesIcons)
-        {
+        if (glovesIcons) {
             glovesIcons.GetComponent<Image>().sprite = db.equipment[player.GetComponent<Inventory>().glovesEquip].icon;
         }
-        if (bootsIcons)
-        {
+        if (bootsIcons) {
             bootsIcons.GetComponent<Image>().sprite = db.equipment[player.GetComponent<Inventory>().bootsEquip].icon;
         }
-        if (moneyText)
-        {
+        if (moneyText) {
             moneyText.GetComponent<Text>().text = player.GetComponent<Inventory>().cash.ToString();
         }
 
     }
 
-    public void ShowItemTooltip(int slot)
-    {
+    public void OnBeginDrag(GameObject itemSlot) {
+        int slot = itemSlot.transform.GetSiblingIndex();
+        sourceSlot = slot;
+    }
 
-
-        if (!tooltip || !player || slot + cPage >= itemLength)
-        {
+    public void OnEndDrag(GameObject itemSlot) {
+        if (sourceSlot != targetSlot) {
+            SwapItems(sourceSlot, targetSlot);
+        }
+    }
+    
+    /*ShowTooltip*/
+    public void OnPointerEnter(GameObject itemSlot) {
+        int slot = itemSlot.transform.GetSiblingIndex();
+        targetSlot = slot;
+        if (!tooltip || !player) return; 
+        if (slot >= itemLength) return;
+        if (player.GetComponent<Inventory>().itemSlot[slot] <= 0) {
+            OnPointerExit();
             return;
         }
-        slot += cPage;
-        if (player.GetComponent<Inventory>().itemSlot[slot] <= 0)
-        {
-            HideTooltip();
-            return;
-        }
-
 
         tooltipIcon.GetComponent<Image>().sprite = db.usableItem[player.GetComponent<Inventory>().itemSlot[slot]].icon;
         tooltipName.GetComponent<Text>().text = db.usableItem[player.GetComponent<Inventory>().itemSlot[slot]].itemName;
-
         tooltipText1.GetComponent<Text>().text = db.usableItem[player.GetComponent<Inventory>().itemSlot[slot]].description;
-
 
         tooltip.SetActive(true);
     }
 
-    public void ShowEquipmentTooltip(int slot)
-    {
-        if (!tooltip || !player || slot + ePage >= eqLength)
-        {
+    public void ShowEquipmentTooltip(int slot) {
+        if (!tooltip || !player || slot >= eqLength) {
             return;
         }
-        slot += ePage;
-        if (player.GetComponent<Inventory>().equipment[slot] <= 0)
-        {
-            HideTooltip();
+        if (player.GetComponent<Inventory>().equipment[slot] <= 0) {
+            OnPointerExit();
             return;
         }
-
-
+        
         tooltipIcon.GetComponent<Image>().sprite = db.equipment[player.GetComponent<Inventory>().equipment[slot]].icon;
         tooltipName.GetComponent<Text>().text = db.equipment[player.GetComponent<Inventory>().equipment[slot]].itemName;
 
@@ -223,304 +188,155 @@ public class InventoryUi : MonoBehaviour
         tooltip.SetActive(true);
     }
 
-    public void ShowOnEquipTooltip(int type)
-    {
-        if (!tooltip || !player)
-        {
+    public void ShowOnEquipTooltip(int type) {
+        if (!tooltip || !player) {
             return;
         }
-        //0 = Weapon, 1 = Armor, 2 = Accessories , 3 = Sub Weapon
-        //4 = Headgear , 5 = Gloves , 6 = Boots
-        int id = 0;
-        if (type == 0)
-        {
-            id = player.GetComponent<Inventory>().weaponEquip;
-        }
-        if (type == 1)
-        {
-            id = player.GetComponent<Inventory>().armorEquip;
-        }
-        if (type == 2)
-        {
-            id = player.GetComponent<Inventory>().accessoryEquip;
-        }
-        if (type == 3)
-        {
-            id = player.GetComponent<Inventory>().subWeaponEquip;
-        }
-        if (type == 4)
-        {
-            id = player.GetComponent<Inventory>().hatEquip;
-        }
-        if (type == 5)
-        {
-            id = player.GetComponent<Inventory>().glovesEquip;
-        }
-        if (type == 6)
-        {
-            id = player.GetComponent<Inventory>().bootsEquip;
-        }
+        // 0 = Weapon, 1 = Armor, 2 = Accessories , 3 = Sub Weapon
+        // 4 = Headgear , 5 = Gloves , 6 = Boots
+        var id = type switch {
+            0 => player.GetComponent<Inventory>().weaponEquip,
+            1 => player.GetComponent<Inventory>().armorEquip,
+            2 => player.GetComponent<Inventory>().accessoryEquip,
+            3 => player.GetComponent<Inventory>().subWeaponEquip,
+            4 => player.GetComponent<Inventory>().hatEquip,
+            5 => player.GetComponent<Inventory>().glovesEquip,
+            6 => player.GetComponent<Inventory>().bootsEquip,
+            _ => 0
+        };
 
-        if (id <= 0)
-        {
-            HideTooltip();
+        if (id <= 0) {
+            OnPointerExit();
             return;
         }
-
-
+        
         tooltipIcon.GetComponent<Image>().sprite = db.equipment[id].icon;
         tooltipName.GetComponent<Text>().text = db.equipment[id].itemName;
 
         tooltipText1.GetComponent<Text>().text = db.equipment[id].description;
-
-
+        
         tooltip.SetActive(true);
     }
 
-    public void HideTooltip()
-    {
-        if (!tooltip)
-        {
-            return;
-        }
+    /*HideTooltip*/
+    public void OnPointerExit() {
+        if (!tooltip) return;
         tooltip.SetActive(false);
     }
 
-    public void UseItem(int itemSlot)
-    {
-        if (!player || itemSlot + cPage >= itemLength)
-        {
+    public void OnClickItemSlot(GameObject itemSlot) {
+        int slot = itemSlot.transform.GetSiblingIndex();
+        if (!player || slot >= itemLength) {
             return;
         }
-        player.GetComponent<Inventory>().UseItem(itemSlot + cPage);
-        ShowItemTooltip(itemSlot + cPage);
+        player.GetComponent<Inventory>().UseItem(slot);
+        OnPointerEnter(itemSlot);
     }
 
-    public void EquipItem(int itemSlot)
-    {
-        if (!player || itemSlot + ePage >= eqLength)
-        {
+    public void EquipItem(int itemSlot) {
+        if (!player || itemSlot >= eqLength) {
             return;
         }
-        player.GetComponent<Inventory>().EquipItem(player.GetComponent<Inventory>().equipment[itemSlot + ePage], itemSlot + ePage);
-        ShowEquipmentTooltip(itemSlot + ePage);
+        player.GetComponent<Inventory>().EquipItem(player.GetComponent<Inventory>().equipment[itemSlot], itemSlot);
+        ShowEquipmentTooltip(itemSlot);
     }
-
-
-    public void ResetPage()
-    {
-        page = 0;
-        cPage = 0;
-        ePage = 0;
-        if (pageText)
-        {
-            int p = page + 1;
-            pageText.GetComponent<Text>().text = p.ToString();
-        }
-    }
-
-
-
-    public void NextPage()
-    {
-        if (page < maxPage - 1)
-        {
-            page++;
-            cPage = page * itemIcons.Length;
-        }
-        if (pageText)
-        {
-            int p = page + 1;
-            pageText.GetComponent<Text>().text = p.ToString();
-        }
-    }
-
-
-    public void NextPageEq()
-    {
-        if (page < maxPageEq - 1)
-        {
-            page++;
-            ePage = page * equipmentIcons.Length;
-        }
-        if (pageText)
-        {
-            int p = page + 1;
-            pageText.GetComponent<Text>().text = p.ToString();
-        }
-    }
-
-
-    public void PreviousPage()
-    {
-        if (page > 0)
-        {
-            page--;
-            cPage = page * itemIcons.Length;
-            ePage = page * equipmentIcons.Length;
-        }
-        if (pageText)
-        {
-            int p = page + 1;
-            pageText.GetComponent<Text>().text = p.ToString();
-        }
-    }
-
-
-    public void UnEquip(int type)
-    {
-        //0 = Weapon, 1 = Armor, 2 = Accessories
-        //3 = Headgear , 4 = Gloves , 5 = Boots
-        if (!player)
-        {
+    
+    public void UnEquip(int type) {
+        // 0 = Weapon, 1 = Armor, 2 = Accessories, 3 = Headgear , 4 = Gloves , 5 = Boots
+        if (!player) {
             return;
         }
-        int id = 0;
-        if (type == 0)
-        {
-            id = player.GetComponent<Inventory>().weaponEquip;
-        }
-        if (type == 1)
-        {
-            id = player.GetComponent<Inventory>().armorEquip;
-        }
-        if (type == 2)
-        {
-            id = player.GetComponent<Inventory>().accessoryEquip;
-        }
-        if (type == 4)
-        {
-            id = player.GetComponent<Inventory>().hatEquip;
-        }
-        if (type == 5)
-        {
-            id = player.GetComponent<Inventory>().glovesEquip;
-        }
-        if (type == 6)
-        {
-            id = player.GetComponent<Inventory>().bootsEquip;
-        }
-        //print(id);
-        if (id > 0)
-        {
+
+        var id = type switch {
+            0 => player.GetComponent<Inventory>().weaponEquip,
+            1 => player.GetComponent<Inventory>().armorEquip,
+            2 => player.GetComponent<Inventory>().accessoryEquip,
+            4 => player.GetComponent<Inventory>().hatEquip,
+            5 => player.GetComponent<Inventory>().glovesEquip,
+            6 => player.GetComponent<Inventory>().bootsEquip,
+            _ => 0
+        };
+        if (id > 0) {
             player.GetComponent<Inventory>().UnEquip(id);
         }
         ShowOnEquipTooltip(type);
     }
-
-
-    /*
-	public void SwapWeapon(){
-		if(!player){
+    
+    public void SwapWeapon() {
+		if (!player) {
 			return;
 		}
 		player.GetComponent<Inventory>().SwapWeapon();
 		ShowOnEquipTooltip(3);
 	}
-	*/
 
-
-    public void CloseMenu()
-    {
+    public void CloseMenu() {
         Time.timeScale = 1.0f;
-        //Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         GlobalStatus.menuOn = false;
         gameObject.SetActive(false);
-        /*if(draggingItemIcon){
+        if (draggingItemIcon) {
 			draggingItemIcon.gameObject.SetActive(false);
-		}*/
-        //onDiscardArea = false;
+		}
     }
-
-
-
-    public void OpenUsableTab()
-    {
-        ResetPage();
+    
+    public void OpenUsableTab() {
         usableTab.SetActive(true);
         equipmentTab.SetActive(false);
     }
 
-    public void OpenEquipmentTab()
-    {
-        ResetPage();
+    public void OpenEquipmentTab() {
         usableTab.SetActive(false);
         equipmentTab.SetActive(true);
     }
-
-
-    //public Image draggingItemIcon;
-    //private int draggingItemId = 0;
-    //private int draggingItemType = 0; //0 = Item , 1 = Equipment
-    //public GameObject discardItemConfirmation;
-    //private bool onDiscardArea = false;
-
-    /*
-	public void OnDragItem(int itemSlot){
-		if(!player || itemSlot + cPage >= itemLength){
-			return;
-		}
-		if(player.GetComponent<Inventory>().itemSlot[itemSlot + cPage] == 0){
-			return;
-		}
-		AttackTrigger atk = player.GetComponent<AttackTrigger>();
+    
+	public void OnDragItem(GameObject itemSlot) {
+        int slot = itemSlot.transform.GetSiblingIndex();
+		if (!player || slot >= itemLength) return;
+		if (player.GetComponent<Inventory>().itemSlot[slot] == 0) return;
 		atk.draggingItemIcon.gameObject.SetActive(true);
-		atk.draggingItemIcon.sprite = db.usableItem[player.GetComponent<Inventory>().itemSlot[itemSlot + cPage]].icon;
-		//draggingItemId = player.GetComponent<Inventory>().itemSlot[itemSlot + cPage];
-		//draggingItemType = 0;
+		atk.draggingItemIcon.sprite = db.usableItem[player.GetComponent<Inventory>().itemSlot[slot]].icon;
+        
+		draggingItemType = 0;
 
-		player.GetComponent<AttackTrigger>().PickupForShortcut(player.GetComponent<Inventory>().itemSlot[itemSlot + cPage] , 1);
+		player.GetComponent<AttackTrigger>().PickupForShortcut(player.GetComponent<Inventory>().itemSlot[slot] , 1);
 	}
-	*/
-
-    /*public void OnDropItem(){
-        AttackTrigger atk = player.GetComponent<AttackTrigger>();
-        atk.draggingItemIcon.gameObject.SetActive(false);
-        if(!player || !onDiscardArea){
-            return;
-        }
-        if(discardItemConfirmation){
-            discardItemConfirmation.SetActive(true);
-        }else{
-            DiscardItem();
-        }
+    
+    public void SwapItems(int slot1, int slot2) {
+        if (!player) return;
+        var inventory = player.GetComponent<Inventory>();
+        if (slot1 >= itemLength || slot2 >= itemLength) return;
+        (inventory.itemSlot[slot1], inventory.itemSlot[slot2]) = (inventory.itemSlot[slot2], inventory.itemSlot[slot1]);
+        (inventory.itemQuantity[slot1], inventory.itemQuantity[slot2]) = (inventory.itemQuantity[slot2], inventory.itemQuantity[slot1]);
     }
 
-    public void DiscardItem(){
-        if(!player){
-            return;
-        }
-        if(draggingItemType == 0){
+    private void DiscardItem() {
+        if (!player) return;
+        if (draggingItemType == 0) {
             player.GetComponent<Inventory>().RemoveItem(draggingItemId , 9999999);
-        }else{
+        } else {
             player.GetComponent<Inventory>().RemoveEquipment(draggingItemId);
         }
-        if(discardItemConfirmation){
+        if (discardItemConfirmation) {
             discardItemConfirmation.SetActive(false);
         }
         player.GetComponent<AttackTrigger>().DiscardShortcut();
-    }*/
+    }
 
-    /*public void EnterDiscardArea(bool d){
-        onDiscardArea = d;
-        print ("Dragging Area = " + d);
-    }*/
-
-    /*
-    public void OnDragEquipment(int itemSlot){
-        if(!player || itemSlot + ePage >= eqLength){
+    public void OnDragEquipment(int itemSlot) {
+        if (!player || itemSlot >= eqLength) {
             return;
         }
-        if(player.GetComponent<Inventory>().equipment[itemSlot + ePage] == 0){
+        if (player.GetComponent<Inventory>().equipment[itemSlot] == 0) {
             return;
         }
         AttackTrigger atk = player.GetComponent<AttackTrigger>();
         atk.draggingItemIcon.gameObject.SetActive(true);
-        atk.draggingItemIcon.sprite = db.equipment[player.GetComponent<Inventory>().equipment[itemSlot + ePage]].icon;
-        //draggingItemId = player.GetComponent<Inventory>().equipment[itemSlot + ePage];
-        //draggingItemType = 1;
+        atk.draggingItemIcon.sprite = db.equipment[player.GetComponent<Inventory>().equipment[itemSlot]].icon;
+        draggingItemId = player.GetComponent<Inventory>().equipment[itemSlot];
+        draggingItemType = 1;
 
-        player.GetComponent<AttackTrigger>().PickupForShortcut(player.GetComponent<Inventory>().equipment[itemSlot + ePage] , 2);
-    }*/
+        player.GetComponent<AttackTrigger>().PickupForShortcut(player.GetComponent<Inventory>().equipment[itemSlot] , 2);
+    }
 }

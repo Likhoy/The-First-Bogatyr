@@ -2,131 +2,108 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
-{
+public class Inventory : MonoBehaviour {
     public ItemData database;
     public int cash = 500;
     public int[] itemSlot = new int[16];
     public int[] itemQuantity = new int[16];
     public int[] equipment = new int[8];
 
-    public int weaponEquip = 0;
-    public bool allowWeaponUnequip = false;
-    public int subWeaponEquip = 0;
-    public int armorEquip = 0;
-    public int hatEquip = 0;
-    public int glovesEquip = 0;
-    public int bootsEquip = 0;
-    public int accessoryEquip = 0;
+    public int weaponEquip;
+    public bool allowWeaponUnequip;
+    public int subWeaponEquip;
+    public int armorEquip;
+    public int hatEquip;
+    public int glovesEquip;
+    public int bootsEquip;
+    public int accessoryEquip;
 
     [HideInInspector]
-    public bool replaceAttack = false;
+    public bool replaceAttack;
 
-    void Start()
-    {
+    void Start() {
         InitialSetting();
     }
 
-    public void InitialSetting()
-    {
-        if (weaponEquip > 0)
-        {
-            int tempEq = weaponEquip;
+    public void InitialSetting() {
+        if (weaponEquip > 0) {
+            var tempEq = weaponEquip;
             weaponEquip = 0;
             EquipItem(tempEq, 9999);
         }
-        //Reset Power of Current Weapon & Armor
+        // Reset Power of Current Weapon & Armor
         SettingEquipmentStatus();
         StartCoroutine(DelayUpdateUI());
     }
 
-    IEnumerator DelayUpdateUI()
-    {
+    IEnumerator DelayUpdateUI() {
         yield return new WaitForSeconds(0.05f);
         UpdateAmmoUI();
     }
 
-    public void UseItem(int slot)
-    {
-        int id = itemSlot[slot];
-        if (database.usableItem[id].unusable)
-        {
+    public void UseItem(int slot) {
+        var id = itemSlot[slot];
+        if (database.usableItem[id].unusable) {
             return;
         }
         GetComponent<Status>().Heal(database.usableItem[id].hpRecover, database.usableItem[id].mpRecover);
-        if (database.usableItem[id].sendMsg != "")
-        {
+        if (database.usableItem[id].sendMsg != "") {
             SendMessage(database.usableItem[id].sendMsg, SendMessageOptions.DontRequireReceiver);
         }
-        if (database.usableItem[id].useEffect)
-        {
+        if (database.usableItem[id].useEffect) {
             Instantiate(database.usableItem[id].useEffect, transform.position, transform.rotation);
         }
-        if (database.usableItem[id].attackItem.enable)
-        {
-            //-------
+        if (database.usableItem[id].attackItem.enable) {
+            // -------
         }
-        if (!database.usableItem[id].unlimited)
-        {
+        if (!database.usableItem[id].unlimited) {
             itemQuantity[slot]--;
         }
-        if (itemQuantity[slot] <= 0)
-        {
+        if (itemQuantity[slot] <= 0) {
             itemSlot[slot] = 0;
             itemQuantity[slot] = 0;
         }
-        AutoSortItem();
         GetComponent<AttackTrigger>().UpdateShortcut();
     }
 
-    public void UseItemFromID(int id)
-    {
-        int slot = FindItemSlot(id);
-        if (slot < itemSlot.Length)
-        {
+    public void UseItemFromID(int id) {
+        var slot = FindItemSlot(id);
+        if (slot < itemSlot.Length) {
             UseItem(slot);
         }
     }
 
-    public void EquipItemFromID(int id)
-    {
-        int slot = FindEquipmentSlot(id);
-        if (slot < equipment.Length)
-        {
+    public void EquipItemFromID(int id) {
+        var slot = FindEquipmentSlot(id);
+        if (slot < equipment.Length) {
             EquipItem(id, slot);
         }
     }
 
-    public void EquipItem(int id, int slot)
-    {
-        if (id == 0)
-        {
+    public void EquipItem(int id, int slot) {
+        if (id == 0) {
             return;
         }
         //Backup Your Current Equipment before Unequip
-        int tempEquipment = 0;
+        var tempEquipment = 0;
 
-        if ((int)database.equipment[id].EquipmentType == 0)
-        {//Equipment = Weapon
-            if (!replaceAttack)
-            {
-                if (GetComponent<Status>().block)
-                {
+        if ((int)database.equipment[id].EquipmentType == 0) {//Equipment = Weapon
+            if (!replaceAttack) {
+                if (GetComponent<Status>().block) {
                     GetComponent<Status>().GuardBreak("cancelGuard");
                 }
                 //Weapon Type
 
-                if (database.equipment[id].attackPrefab.Length > 0)
-                {
+                if (database.equipment[id].attackPrefab.Length > 0) {
                     GetComponent<AttackTrigger>().attackPrefab = new BulletStatus[database.equipment[id].attackPrefab.Length];
-                    for (int a = 0; a < database.equipment[id].attackPrefab.Length; a++)
+                    for (var a = 0; a < database.equipment[id].attackPrefab.Length; a++)
                     {
                         //GetComponent<AttackTrigger>().attackPrefab[a] = new BulletStatus();
                         GetComponent<AttackTrigger>().attackPrefab[a] = database.equipment[id].attackPrefab[a];
                     }
                 }
                 GetComponent<AttackTrigger>().weaponType = database.equipment[id].weaponType;
-                int reqId = database.equipment[id].requireItemId;
+                var reqId = database.equipment[id].requireItemId;
                 GetComponent<AttackTrigger>().requireItemId = reqId;
                 GetComponent<AttackTrigger>().requireItemName = database.usableItem[reqId].itemName;
                 GetComponent<AttackTrigger>().attackSoundEffect = database.equipment[id].soundEffect;
@@ -140,12 +117,11 @@ public class Inventory : MonoBehaviour
                 GetComponent<AttackTrigger>().attackDelay = database.equipment[id].attackDelay;
                 GetComponent<AttackTrigger>().attackSoundEffect = database.equipment[id].soundEffect;
                 //Update Show Ammo UI
-                if (reqId > 0 && ShowAmmo.showAmmo)
-                {
+                if (reqId > 0 && ShowAmmo.showAmmo) {
                     ShowAmmo.showAmmo.OnOffShowing(true);
-                    int sl = FindItemSlot(reqId);
-                    int am = 0;
-                    Sprite spr = database.usableItem[reqId].icon;
+                    var sl = FindItemSlot(reqId);
+                    var am = 0;
+                    var spr = database.usableItem[reqId].icon;
                     if (sl < itemQuantity.Length)
                     {
                         am = itemQuantity[sl];
@@ -153,50 +129,42 @@ public class Inventory : MonoBehaviour
                     ShowAmmo.showAmmo.UpdateSprite(spr);
                     ShowAmmo.showAmmo.UpdateAmmo(am);
                 }
-                else if (ShowAmmo.showAmmo)
-                {
+                else if (ShowAmmo.showAmmo) {
                     ShowAmmo.showAmmo.OnOffShowing(false);
                 }
             }
             tempEquipment = weaponEquip;
             weaponEquip = id;
-            if (WeaponTooltips.showWeaponTooltips)
-            {
+            if (WeaponTooltips.showWeaponTooltips) {
                 WeaponTooltips.showWeaponTooltips.SetTooltip(database.equipment[id].weaponType);
             }
         }
-        else if ((int)database.equipment[id].EquipmentType == 1)
-        {
+        else if ((int)database.equipment[id].EquipmentType == 1) {
             //Armor Type
             tempEquipment = armorEquip;
             armorEquip = id;
         }
-        else if ((int)database.equipment[id].EquipmentType == 2)
-        {
+        else if ((int)database.equipment[id].EquipmentType == 2) {
             //Accessory Type
             tempEquipment = accessoryEquip;
             accessoryEquip = id;
         }
-        else if ((int)database.equipment[id].EquipmentType == 3)
-        {
+        else if ((int)database.equipment[id].EquipmentType == 3) {
             //Headgear Type
             tempEquipment = hatEquip;
             hatEquip = id;
         }
-        else if ((int)database.equipment[id].EquipmentType == 4)
-        {
+        else if ((int)database.equipment[id].EquipmentType == 4) {
             //Gloves Type
             tempEquipment = glovesEquip;
             glovesEquip = id;
         }
-        else if ((int)database.equipment[id].EquipmentType == 5)
-        {
+        else if ((int)database.equipment[id].EquipmentType == 5) {
             //Boots Type
             tempEquipment = bootsEquip;
             bootsEquip = id;
         }
-        if (slot <= equipment.Length)
-        {
+        if (slot <= equipment.Length) {
             equipment[slot] = 0;
         }
         //Reset Power of Current Weapon & Armor
@@ -205,13 +173,11 @@ public class Inventory : MonoBehaviour
         AddEquipment(tempEquipment);
     }
 
-    void SettingEquipmentStatus()
-    {
-        if (!GetComponent<Status>())
-        {
+    void SettingEquipmentStatus() {
+        if (!GetComponent<Status>()) {
             return;
         }
-        Status stat = GetComponent<Status>();
+        var stat = GetComponent<Status>();
         //Reset Power of Current Weapon & Armor
         //Set New Variable of Weapon
         stat.additionStat.atk = database.equipment[weaponEquip].attack;
@@ -271,31 +237,13 @@ public class Inventory : MonoBehaviour
         stat.eqResist.silenceResist = database.equipment[weaponEquip].statusResist.silenceResist + database.equipment[armorEquip].statusResist.silenceResist + database.equipment[accessoryEquip].statusResist.silenceResist + database.equipment[hatEquip].statusResist.silenceResist + database.equipment[glovesEquip].statusResist.silenceResist + database.equipment[bootsEquip].statusResist.silenceResist;
         stat.eqResist.frozenResist = database.equipment[weaponEquip].statusResist.frozenResist + database.equipment[armorEquip].statusResist.frozenResist + database.equipment[accessoryEquip].statusResist.frozenResist + database.equipment[hatEquip].statusResist.frozenResist + database.equipment[glovesEquip].statusResist.frozenResist + database.equipment[bootsEquip].statusResist.frozenResist;
 
-        stat.hiddenStatus.doubleJump = false;
-        if (database.equipment[weaponEquip].canDoubleJump)
-        {
-            stat.hiddenStatus.doubleJump = true;
-        }
-        if (database.equipment[armorEquip].canDoubleJump)
-        {
-            stat.hiddenStatus.doubleJump = true;
-        }
-        if (database.equipment[hatEquip].canDoubleJump)
-        {
-            stat.hiddenStatus.doubleJump = true;
-        }
-        if (database.equipment[glovesEquip].canDoubleJump)
-        {
-            stat.hiddenStatus.doubleJump = true;
-        }
-        if (database.equipment[bootsEquip].canDoubleJump)
-        {
-            stat.hiddenStatus.doubleJump = true;
-        }
-        if (database.equipment[accessoryEquip].canDoubleJump)
-        {
-            stat.hiddenStatus.doubleJump = true;
-        }
+        stat.hiddenStatus.doubleJump = database.equipment[weaponEquip].canDoubleJump 
+                                       || database.equipment[armorEquip].canDoubleJump 
+                                       || database.equipment[hatEquip].canDoubleJump 
+                                       || database.equipment[glovesEquip].canDoubleJump 
+                                       || database.equipment[bootsEquip].canDoubleJump 
+                                       || database.equipment[accessoryEquip].canDoubleJump;
+        
         stat.hiddenStatus.autoGuard = database.equipment[weaponEquip].autoGuard + database.equipment[armorEquip].autoGuard + database.equipment[accessoryEquip].autoGuard + database.equipment[hatEquip].autoGuard + database.equipment[glovesEquip].autoGuard + database.equipment[bootsEquip].autoGuard;
         stat.hiddenStatus.drainTouch = database.equipment[weaponEquip].drainTouch + database.equipment[armorEquip].drainTouch + database.equipment[accessoryEquip].drainTouch + database.equipment[hatEquip].drainTouch + database.equipment[glovesEquip].drainTouch + database.equipment[bootsEquip].drainTouch;
         stat.hiddenStatus.mpReduce = database.equipment[weaponEquip].mpReduce + database.equipment[armorEquip].mpReduce + database.equipment[accessoryEquip].mpReduce + database.equipment[hatEquip].mpReduce + database.equipment[glovesEquip].mpReduce + database.equipment[bootsEquip].mpReduce;
@@ -303,13 +251,11 @@ public class Inventory : MonoBehaviour
         stat.CalculateStatus();
     }
 
-    public void SwapWeapon()
-    {
-        int tempEq = weaponEquip; //Store Main Weapon Data
+    public void SwapWeapon() {
+        var tempEq = weaponEquip; // Store Main Weapon Data
 
-        if (subWeaponEquip == 0)
-        {
-            //Use Unequip Instead if no Sub Weapon equipped
+        if (subWeaponEquip == 0) {
+            // Use Unequip Instead if no Sub Weapon equipped
             weaponEquip = 0; // Set to 0 because we didn't want to add it to inventory after swap.
             UnEquip(0);
             subWeaponEquip = tempEq;
@@ -320,111 +266,72 @@ public class Inventory : MonoBehaviour
         subWeaponEquip = tempEq;
     }
 
-    public void UnEquip(int id)
-    {
-        bool full = false;
-        if ((int)database.equipment[id].EquipmentType == 0)
-        {
-            full = AddEquipment(weaponEquip);
-        }
-        else if ((int)database.equipment[id].EquipmentType == 1)
-        {
-            full = AddEquipment(armorEquip);
-        }
-        else if ((int)database.equipment[id].EquipmentType == 2)
-        {
-            full = AddEquipment(accessoryEquip);
-        }
-        else if ((int)database.equipment[id].EquipmentType == 3)
-        {
-            full = AddEquipment(hatEquip);
-        }
-        else if ((int)database.equipment[id].EquipmentType == 4)
-        {
-            full = AddEquipment(glovesEquip);
-        }
-        else if ((int)database.equipment[id].EquipmentType == 5)
-        {
-            full = AddEquipment(bootsEquip);
-        }
-        if (!full)
-        {
-            if ((int)database.equipment[id].EquipmentType == 0)
-            {
-                if (GetComponent<Status>().block)
-                {
-                    GetComponent<Status>().GuardBreak("cancelGuard");
-                }
-                weaponEquip = 0;
+    public void UnEquip(int id) {
+        var full = (int)database.equipment[id].EquipmentType switch {
+            0 => AddEquipment(weaponEquip),
+            1 => AddEquipment(armorEquip),
+            2 => AddEquipment(accessoryEquip),
+            3 => AddEquipment(hatEquip),
+            4 => AddEquipment(glovesEquip),
+            5 => AddEquipment(bootsEquip),
+            _ => false
+        };
 
-                GetComponent<AttackTrigger>().weaponType = database.equipment[0].weaponType;
-                int reqId = 0;
-                GetComponent<AttackTrigger>().requireItemId = reqId;
-                GetComponent<AttackTrigger>().requireItemName = "";
-                UpdateAmmoUI();
-                GetComponent<AttackTrigger>().canBlock = database.equipment[0].canBlock;
+        if (full) return;
+        if ((int)database.equipment[id].EquipmentType == 0) {
+            if (GetComponent<Status>().block) {
+                GetComponent<Status>().GuardBreak("cancelGuard");
+            }
+            weaponEquip = 0;
 
-                GetComponent<AttackTrigger>().attackPrefab = database.equipment[0].attackPrefab;
-                GetComponent<AttackTrigger>().attackAnimationTrigger = database.equipment[0].attackAnimationTrigger;
-                GetComponent<AttackTrigger>().blockingAnimationTrigger = database.equipment[0].blockingAnimationTrigger;
-                GetComponent<AttackTrigger>().whileAttack = database.equipment[0].whileAttack;
+            GetComponent<AttackTrigger>().weaponType = database.equipment[0].weaponType;
+            var reqId = 0;
+            GetComponent<AttackTrigger>().requireItemId = reqId;
+            GetComponent<AttackTrigger>().requireItemName = "";
+            UpdateAmmoUI();
+            GetComponent<AttackTrigger>().canBlock = database.equipment[0].canBlock;
 
-                GetComponent<AttackTrigger>().attackSoundEffect = database.equipment[0].soundEffect;
-                GetComponent<AttackTrigger>().charge = database.equipment[0].chargeAttack;
-                if (WeaponTooltips.showWeaponTooltips)
-                {
-                    WeaponTooltips.showWeaponTooltips.SetTooltip(database.equipment[0].weaponType);
-                }
+            GetComponent<AttackTrigger>().attackPrefab = database.equipment[0].attackPrefab;
+            GetComponent<AttackTrigger>().attackAnimationTrigger = database.equipment[0].attackAnimationTrigger;
+            GetComponent<AttackTrigger>().blockingAnimationTrigger = database.equipment[0].blockingAnimationTrigger;
+            GetComponent<AttackTrigger>().whileAttack = database.equipment[0].whileAttack;
+
+            GetComponent<AttackTrigger>().attackSoundEffect = database.equipment[0].soundEffect;
+            GetComponent<AttackTrigger>().charge = database.equipment[0].chargeAttack;
+            if (WeaponTooltips.showWeaponTooltips) {
+                WeaponTooltips.showWeaponTooltips.SetTooltip(database.equipment[0].weaponType);
             }
-            else if ((int)database.equipment[id].EquipmentType == 1)
-            {
-                armorEquip = 0;
-            }
-            else if ((int)database.equipment[id].EquipmentType == 2)
-            {
-                accessoryEquip = 0;
-            }
-            else if ((int)database.equipment[id].EquipmentType == 3)
-            {
-                hatEquip = 0;
-            }
-            else if ((int)database.equipment[id].EquipmentType == 4)
-            {
-                glovesEquip = 0;
-            }
-            else if ((int)database.equipment[id].EquipmentType == 5)
-            {
-                bootsEquip = 0;
-            }
-            //Reset Power of Current Weapon & Armor
-            SettingEquipmentStatus();
+        } else if ((int)database.equipment[id].EquipmentType == 1) {
+            armorEquip = 0;
+        } else if ((int)database.equipment[id].EquipmentType == 2) {
+            accessoryEquip = 0;
+        } else if ((int)database.equipment[id].EquipmentType == 3) {
+            hatEquip = 0;
+        } else if ((int)database.equipment[id].EquipmentType == 4) {
+            glovesEquip = 0;
+        } else if ((int)database.equipment[id].EquipmentType == 5) {
+            bootsEquip = 0;
         }
+        // Reset Power of Current Weapon & Armor
+        SettingEquipmentStatus();
     }
 
-    public bool AddItem(int id, int quan)
-    {
-        bool full = false;
-        bool geta = false;
+    public bool AddItem(int id, int quan) {
+        var full = false;
+        var geta = false;
 
-        int pt = 0;
-        while (pt < itemSlot.Length && !geta)
-        {
-            if (itemSlot[pt] == id)
-            {
+        var pt = 0;
+        while (pt < itemSlot.Length && !geta) {
+            if (itemSlot[pt] == id) {
                 itemQuantity[pt] += quan;
                 geta = true;
-            }
-            else if (itemSlot[pt] == 0)
-            {
+            } else if (itemSlot[pt] == 0) {
                 itemSlot[pt] = id;
                 itemQuantity[pt] = quan;
                 geta = true;
-            }
-            else
-            {
+            } else {
                 pt++;
-                if (pt >= itemSlot.Length)
-                {
+                if (pt >= itemSlot.Length) {
                     full = true;
                     print("Full");
                 }
@@ -432,11 +339,9 @@ public class Inventory : MonoBehaviour
         }
         UpdateAmmoUI();
 
-        int slot = FindItemSlot(id);
-        if (slot < itemSlot.Length)
-        {
-            if (itemQuantity[slot] <= 0)
-            {
+        var slot = FindItemSlot(id);
+        if (slot < itemSlot.Length) {
+            if (itemQuantity[slot] <= 0) {
                 itemSlot[slot] = 0;
                 itemQuantity[slot] = 0;
                 AutoSortItem();
@@ -446,29 +351,22 @@ public class Inventory : MonoBehaviour
         return full;
     }
 
-    public void AddEquipmentSilent(int id)
-    {
+    public void AddEquipmentSilent(int id) {
         AddEquipment(id);
     }
 
-    public bool AddEquipment(int id)
-    {
-        bool full = false;
-        bool geta = false;
+    public bool AddEquipment(int id) {
+        var full = false;
+        var geta = false;
 
-        int pt = 0;
-        while (pt < equipment.Length && !geta)
-        {
-            if (equipment[pt] == 0)
-            {
+        var pt = 0;
+        while (pt < equipment.Length && !geta) {
+            if (equipment[pt] == 0) {
                 equipment[pt] = id;
                 geta = true;
-            }
-            else
-            {
+            } else {
                 pt++;
-                if (pt >= equipment.Length)
-                {
+                if (pt >= equipment.Length) {
                     full = true;
                     print("Full");
                 }
@@ -479,18 +377,14 @@ public class Inventory : MonoBehaviour
     }
 
     //------------AutoSort----------
-    public void AutoSortItem()
-    {
-        int pt = 0;
-        int nextp = 0;
-        bool clearr = false;
-        while (pt < itemSlot.Length)
-        {
-            if (itemSlot[pt] == 0)
-            {
+    public void AutoSortItem() {
+        var pt = 0;
+        var nextp = 0;
+        var clearr = false;
+        while (pt < itemSlot.Length) {
+            if (itemSlot[pt] == 0) {
                 nextp = pt + 1;
-                while (nextp < itemSlot.Length && !clearr)
-                {
+                while (nextp < itemSlot.Length && !clearr) {
                     if (itemSlot[nextp] > 0)
                     {
                         //Fine Next Item and Set
@@ -508,27 +402,21 @@ public class Inventory : MonoBehaviour
                 //Continue New Loop
                 clearr = false;
                 pt++;
-            }
-            else
-            {
+            } else {
                 pt++;
             }
         }
         UpdateAmmoUI();
     }
 
-    public void AutoSortEquipment()
-    {
-        int pt = 0;
-        int nextp = 0;
-        bool clearr = false;
-        while (pt < equipment.Length)
-        {
-            if (equipment[pt] == 0)
-            {
+    public void AutoSortEquipment() {
+        var pt = 0;
+        var nextp = 0;
+        var clearr = false;
+        while (pt < equipment.Length) {
+            if (equipment[pt] == 0) {
                 nextp = pt + 1;
-                while (nextp < equipment.Length && !clearr)
-                {
+                while (nextp < equipment.Length && !clearr) {
                     if (equipment[nextp] > 0)
                     {
                         //Fine Next Item and Set
@@ -544,54 +432,43 @@ public class Inventory : MonoBehaviour
                 //Continue New Loop
                 clearr = false;
                 pt++;
-            }
-            else
-            {
+            } else {
                 pt++;
             }
         }
     }
 
-    public bool CheckItem(int id, int type, int qty)
-    {
-        bool having = false;
-        bool geta = false;
+    public bool CheckItem(int id, int type, int qty) {
+        var having = false;
+        var geta = false;
         //type 0 = Usable , 1 = Equipment
 
-        int pt = 0;
+        var pt = 0;
 
         //================Usable==================
-        if (type == 0)
-        {
-            while (pt < itemSlot.Length && !geta)
-            {
-                if (itemSlot[pt] == id)
-                {
+        if (type == 0) {
+            while (pt < itemSlot.Length && !geta) {
+                if (itemSlot[pt] == id) {
                     if (itemQuantity[pt] >= qty)
                     {
                         having = true;
                     }
                     geta = true;
                 }
-                else
-                {
+                else {
                     pt++;
                 }
                 //--------------------------
             }
         }
         //=================Equipment=================
-        if (type == 1)
-        {
-            while (pt < equipment.Length && !geta)
-            {
-                if (equipment[pt] == id)
-                {
+        if (type == 1) {
+            while (pt < equipment.Length && !geta) {
+                if (equipment[pt] == id) {
                     having = true;
                     geta = true;
                 }
-                else
-                {
+                else {
                     pt++;
                 }
                 //--------------------------
@@ -600,21 +477,15 @@ public class Inventory : MonoBehaviour
         return having;
     }
 
-    public int FindItemSlot(int id)
-    {
-        bool geta = false;
-        int pt = 0;
-        while (pt < itemSlot.Length && !geta)
-        {
-            if (itemSlot[pt] == id)
-            {
+    public int FindItemSlot(int id) {
+        var geta = false;
+        var pt = 0;
+        while (pt < itemSlot.Length && !geta) {
+            if (itemSlot[pt] == id) {
                 geta = true;
-            }
-            else
-            {
+            } else {
                 pt++;
-                if (pt >= itemSlot.Length)
-                {
+                if (pt >= itemSlot.Length) {
                     pt = itemSlot.Length + 50;//No Item
                     print("No Item");
                 }
@@ -623,21 +494,15 @@ public class Inventory : MonoBehaviour
         return pt;
     }
 
-    public int FindEquipmentSlot(int id)
-    {
-        bool geta = false;
-        int pt = 0;
-        while (pt < equipment.Length && !geta)
-        {
-            if (equipment[pt] == id)
-            {
+    public int FindEquipmentSlot(int id) {
+        var geta = false;
+        var pt = 0;
+        while (pt < equipment.Length && !geta) {
+            if (equipment[pt] == id) {
                 geta = true;
-            }
-            else
-            {
+            } else {
                 pt++;
-                if (pt >= equipment.Length)
-                {
+                if (pt >= equipment.Length) {
                     pt = equipment.Length + 50;//No Item
                     print("No Item");
                 }
@@ -646,22 +511,17 @@ public class Inventory : MonoBehaviour
         return pt;
     }
 
-    public bool RemoveItem(int id, int amount)
-    {
-        bool haveItem = false;
-        int slot = FindItemSlot(id);
-        if (slot < itemSlot.Length)
-        {
-            if (itemQuantity[slot] > 0)
-            {
+    public bool RemoveItem(int id, int amount) {
+        var haveItem = false;
+        var slot = FindItemSlot(id);
+        if (slot < itemSlot.Length) {
+            if (itemQuantity[slot] > 0) {
                 itemQuantity[slot] -= amount;
                 haveItem = true;
             }
-            if (itemQuantity[slot] <= 0)
-            {
+            if (itemQuantity[slot] <= 0) {
                 itemSlot[slot] = 0;
                 itemQuantity[slot] = 0;
-                AutoSortItem();
             }
         }
         UpdateAmmoUI();
@@ -669,12 +529,10 @@ public class Inventory : MonoBehaviour
         return haveItem;
     }
 
-    public bool RemoveEquipment(int id)
-    {
-        bool haveItem = false;
-        int slot = FindEquipmentSlot(id);
-        if (slot < equipment.Length)
-        {
+    public bool RemoveEquipment(int id) {
+        var haveItem = false;
+        var slot = FindEquipmentSlot(id);
+        if (slot < equipment.Length) {
             equipment[slot] = 0;
             AutoSortEquipment();
             haveItem = true;
@@ -683,32 +541,26 @@ public class Inventory : MonoBehaviour
         return haveItem;
     }
 
-    public void UpdateAmmoUI()
-    {
+    public void UpdateAmmoUI() {
         //Update Show Ammo UI
-        if (!GetComponent<AttackTrigger>())
-        {
+        if (!GetComponent<AttackTrigger>()) {
             return;
         }
-        int reqId = GetComponent<AttackTrigger>().requireItemId;
+        var reqId = GetComponent<AttackTrigger>().requireItemId;
 
-        if (reqId > 0 && ShowAmmo.showAmmo)
-        {
+        if (reqId > 0 && ShowAmmo.showAmmo) {
             ShowAmmo.showAmmo.OnOffShowing(true);
-            int sl = FindItemSlot(reqId);
-            int am = 0;
-            //Sprite spr = database.usableItem[reqId].iconSprite;
-            if (sl < itemQuantity.Length)
-            {
+            var sl = FindItemSlot(reqId);
+            var am = 0;
+            // Sprite spr = database.usableItem[reqId].iconSprite;
+            if (sl < itemQuantity.Length) {
                 am = itemQuantity[sl];
             }
-            //ShowAmmoC.showAmmo.UpdateSprite(spr);
+            // ShowAmmoC.showAmmo.UpdateSprite(spr);
             ShowAmmo.showAmmo.UpdateAmmo(am);
         }
-        else if (ShowAmmo.showAmmo)
-        {
+        else if (ShowAmmo.showAmmo) {
             ShowAmmo.showAmmo.OnOffShowing(false);
         }
     }
 }
-
