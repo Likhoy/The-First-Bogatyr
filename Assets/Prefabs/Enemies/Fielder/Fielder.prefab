@@ -18,19 +18,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8789802321598305715, guid: dd5662b63ee15b24eac629a7b0c87444, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8789802321598305715, guid: dd5662b63ee15b24eac629a7b0c87444, type: 3}
       propertyPath: m_BaseOffset
-      value: 4.608
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8789802321598305715, guid: dd5662b63ee15b24eac629a7b0c87444, type: 3}
       propertyPath: m_AngularSpeed
       value: 120
       objectReference: {fileID: 0}
+    - target: {fileID: -8789802321598305715, guid: dd5662b63ee15b24eac629a7b0c87444, type: 3}
+      propertyPath: m_StoppingDistance
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -1077951594999834703, guid: dd5662b63ee15b24eac629a7b0c87444, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1077951594999834703, guid: dd5662b63ee15b24eac629a7b0c87444, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[0].x
+      value: -0.2073158
+      objectReference: {fileID: 0}
+    - target: {fileID: -1077951594999834703, guid: dd5662b63ee15b24eac629a7b0c87444, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[0].y
+      value: 1.8544602
       objectReference: {fileID: 0}
     - target: {fileID: 697094059043980008, guid: dd5662b63ee15b24eac629a7b0c87444, type: 3}
       propertyPath: m_Name
@@ -108,9 +120,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7063381947116832874, guid: dd5662b63ee15b24eac629a7b0c87444, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7063381947116832874, guid: dd5662b63ee15b24eac629a7b0c87444, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.242
+      objectReference: {fileID: 0}
     - target: {fileID: 8000721335727356442, guid: dd5662b63ee15b24eac629a7b0c87444, type: 3}
       propertyPath: m_Name
       value: FielderSprite
+      objectReference: {fileID: 0}
+    - target: {fileID: 8525427796732306445, guid: dd5662b63ee15b24eac629a7b0c87444, type: 3}
+      propertyPath: approachDistance
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8525427796732306445, guid: dd5662b63ee15b24eac629a7b0c87444, type: 3}
+      propertyPath: patrolSetting.patrolSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8525427796732306445, guid: dd5662b63ee15b24eac629a7b0c87444, type: 3}
+      propertyPath: patrolSetting.moveDuration
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

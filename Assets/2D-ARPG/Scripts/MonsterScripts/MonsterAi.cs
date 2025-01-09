@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.InputSystem.Android;
 
 [RequireComponent(typeof (Status))]
 [RequireComponent(typeof (BoxCollider2D))]
@@ -53,18 +52,27 @@ public class MonsterAi : MonoBehaviour {
 	private Animator anim;
 	private bool meleefwd = false;
 
-	[System.Serializable]
+    /*[System.Serializable]
 	public class PatrollingSetting{
 		public bool enable = false;
 		public float patrolSpeed = 4;
 		public float idleDuration = 1.5f;
 		public float moveDuration = 1.5f;
-	}
-	public PatrollingSetting patrolSetting;
-	private int patrolState = 0; //0 = Idle , 1 = Moving.
-	private float patrolWait = 0;
+	}*/
+    //public PatrollingSetting patrolSetting;
+
+    public Vector2 patrolingAreaLeftBottom;
+
+    public Vector2 patrolingAreaRightTop;
+
+	private bool isSetTargetPoint = false;
+	private bool waitForNewTargetPoint;
+	private Vector2 randomPosition;
+
+    /*private int patrolState = 0; //0 = Idle , 1 = Moving.
+	private float patrolWait = 0;*/
 	private int c = 0;
-	private Vector3 pfwd = Vector3.right;
+	// private Vector3 pfwd = Vector3.right;
 	private float density = 1;
 
 	[System.Serializable]
@@ -150,6 +158,9 @@ public class MonsterAi : MonoBehaviour {
 		transform.position = pos;
 
         agent = GetComponent<NavMeshAgent>();
+
+		// начинаем патрулирование
+		SetRandomDirection();
     }
 	
 	void Update(){
@@ -165,7 +176,7 @@ public class MonsterAi : MonoBehaviour {
 				rb.velocity = Vector2.zero;
 			}*/
 			if(anim){
-				anim.SetBool("run" , false);
+				ResetRunningAnimationParameters();
 			}
 			return;
 		}
@@ -203,7 +214,7 @@ public class MonsterAi : MonoBehaviour {
             if (followState == AIState.Moving || followState == AIState.Pausing){
 				followState = AIState.Idle;
 				if(anim){
-					anim.SetBool("run" , false);
+					ResetRunningAnimationParameters();
 				}
 			}
 			return;
@@ -232,39 +243,44 @@ public class MonsterAi : MonoBehaviour {
 		// используется в UseSkill
 		if(onMoving){
 			if(fwdSkill && distance <= approachDistance){
-				rb.velocity = Vector2.zero;
+
+				agent.ResetPath();
+				agent.isStopped = true;
+				
+				// rb.velocity = Vector2.zero;
 				return;
 			}
 			if(rb.gravityScale > 0) {
 				movDir.y = 0;
 			}
 			rb.velocity = movDir * movSpd;
-		}
+
+            SetRunningAnimationParameters();
+        }
 
 		if(attacking){
 			return;
 		}
 		//------------------------------------
 		if(followState == AIState.Moving){
-			if(anim){
-				anim.SetBool("run" , true);
-
-				Vector2 moveDiretion = agent.nextPosition - transform.position;
-
-                Vector2 directionNormalized = moveDiretion.normalized;
-
-                anim.SetFloat("Horizontal", directionNormalized.x);
-                anim.SetFloat("Vertical", directionNormalized.y);
+			if(anim)
+            {
+				if (!agent.isStopped)
+				{
+                    SetRunningAnimationParameters();
+                }
             }
-			// LookAtTarget();  УБРАНО!!!
-			if(distance <= approachDistance) {
+			
+            // LookAtTarget();  УБРАНО!!!
+            if (distance <= approachDistance) {
+				
 				followState = AIState.Pausing;
 			}else if(distance >= lostSight){
 				//Lost Sight
 				stat.health = stat.maxHealth;
 				followState = AIState.Idle;
 				if(anim){
-					anim.SetBool("run" , false);
+					ResetRunningAnimationParameters();
 				}
 			}else{
 				//transform.position = Vector2.MoveTowards(transform.position, followTarget.position, speed * Time.deltaTime);
@@ -302,7 +318,7 @@ public class MonsterAi : MonoBehaviour {
 
             // rb.velocity = Vector2.zero;
             if (anim){
-				anim.SetBool("run" , false);
+				ResetRunningAnimationParameters();
 			}
 			//----Attack----
 			StartCoroutine("Attack");
@@ -311,90 +327,67 @@ public class MonsterAi : MonoBehaviour {
 				followState = AIState.Moving;
 			}
 		}else if(followState == AIState.Idle){
-			if(patrolSetting.enable){
-				if(patrolState == 1){//Moving
-					rb.velocity = pfwd * patrolSetting.patrolSpeed;
-				}
-				//----------------------------
-				if(patrolWait >= patrolSetting.idleDuration && patrolState == 0){
-					//Set to Moving Mode.
-					Vector3 delta = transform.position;
-					delta.x += Random.Range(-2.0f,2.0f);
-					delta.y += Random.Range(-2.0f,2.0f);
+			//if(patrolSetting.enable){
 
-					Vector3 dir = delta - attackPoint.position;
-					float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
-					attackPoint.rotation = Quaternion.AngleAxis(angle,Vector3.forward);
-
-					if(use4DirectionSprite){
-						delta -= transform.position;
-						//print(delta);
-						if(delta.y > 1 && Mathf.Abs(delta.x) < 0.5f){
-							SetDirection(2);
-						}else if(delta.y < 1 && Mathf.Abs(delta.x) < 0.5f){
-							SetDirection(3);
-						}else if(delta.x >= 0){
-							SetDirection(0);
-						}else if(delta.x < 0){
-							SetDirection(1);
-						}
-						pfwd = attackPoint.TransformDirection(Vector3.right);
-					}else{
-						//-------------------
-						/*int r = Random.Range(0,10);
-						if(r >= 5){
-							Vector3 rot = transform.eulerAngles;
-							rot.y = 0;
-							transform.eulerAngles = rot;
-							facingRight = true;
-						}else{
-							Vector3 rot = transform.eulerAngles;
-							rot.y = 180;
-							transform.eulerAngles = rot;
-							facingRight = false;
-						}*/
-						if(anim){
-							anim.SetBool("run",true);
-
-                            Vector2 moveDiretion = agent.nextPosition - transform.position;
-
-                            Vector2 directionNormalized = moveDiretion.normalized;
-
-                            anim.SetFloat("Horizontal", directionNormalized.x);
-                            anim.SetFloat("Vertical", directionNormalized.y);
-                        }
-						//Random Movement Direction
-						pfwd = transform.TransformDirection(Vector3.right);
-					}
-					
-					if(gravity == 0){
-						pfwd.y = Random.Range(-1.1f , 1.1f);
-					}
-					patrolWait = 0; // Reset wait time.
-					patrolState = 1; // Change State to Move.
-				}
-				if(patrolWait >= patrolSetting.moveDuration && patrolState == 1){
-					//Set to Idle Mode.
-					if(anim){
-						anim.SetBool("run" , false);
-					}
-					rb.velocity = Vector2.zero;
-					patrolWait = 0;
-					patrolState = 0;
-				}
-				patrolWait += Time.deltaTime;
-				//-----------------------------
-			}else{
-				rb.velocity = Vector2.zero;
+			// добежали до нужного места - ищем новое
+			if (!waitForNewTargetPoint && isSetTargetPoint && Vector2.Distance(transform.position, randomPosition) < approachDistance)
+			{
+				waitForNewTargetPoint = true;
+				Invoke(nameof(SetRandomDirection), 2.0f);
 			}
-			//----------------Idle Mode--------------
-			int getHealth = stat.maxHealth - stat.health;
+			// стоим в Idle
+			else if (waitForNewTargetPoint)
+			{
+                agent.ResetPath();
+                agent.isStopped = true;
+				ResetRunningAnimationParameters();
+            }
+			// ищем новую позицию после преследования
+            else if (!isSetTargetPoint)
+            {
+                waitForNewTargetPoint = true;
+                Invoke(nameof(SetRandomDirection), 1.0f);
+            }
+			// бежим на позицию
+            else if (!waitForNewTargetPoint && isSetTargetPoint)
+            {
+                SetRunningAnimationParameters();
+            }
+
+            //-----------------------------
+            /*}else{
+				rb.velocity = Vector2.zero;
+			}*/
+            //----------------Idle Mode--------------
+            int getHealth = stat.maxHealth - stat.health;
 			
 			if(distance < detectRange || getHealth > 0){
-				followState = AIState.Moving;
+				isSetTargetPoint = false;
+                agent.ResetPath();
+                agent.isStopped = true;
+
+                followState = AIState.Moving;
 			}
 		}
 	}
+
+    private void ResetRunningAnimationParameters()
+    {
+        anim.SetBool("run", false);
+
+        anim.SetFloat("Horizontal", 0);
+        anim.SetFloat("Vertical", 0);
+    }
+
+    private void SetRunningAnimationParameters()
+    {
+        anim.SetBool("run", true);
+
+        Vector2 velocityNormalized = agent.velocity.normalized;
+
+        anim.SetFloat("Horizontal", velocityNormalized.x);
+        anim.SetFloat("Vertical", velocityNormalized.y);
+    }
 
     /// <summary>
     /// Set the frame number that the enemy path will be recalculated on - to avoid performance spikes
@@ -555,7 +548,7 @@ public class MonsterAi : MonoBehaviour {
 		if(!followTarget || GlobalStatus.freezeAll){
 			followState = AIState.Idle;
 			if(anim){
-				anim.SetBool("run" , false);
+				ResetRunningAnimationParameters();
 			}
 			return;
 		}
@@ -614,14 +607,7 @@ public class MonsterAi : MonoBehaviour {
 					if(skill[s].moveAnimTrigger != ""){
 						anim.SetTrigger(skill[s].moveAnimTrigger);
 					}else{
-						anim.SetBool("run" , true);
-
-                        Vector2 moveDiretion = agent.nextPosition - transform.position;
-
-                        Vector2 directionNormalized = moveDiretion.normalized;
-
-                        anim.SetFloat("Horizontal", directionNormalized.x);
-                        anim.SetFloat("Vertical", directionNormalized.y);
+						// SetRunningAnimationParameters();
                     }
 				}
 				// LookAtTarget();  УБРАНО !!!
@@ -643,17 +629,23 @@ public class MonsterAi : MonoBehaviour {
 				onMoving = true;
 				yield return new WaitForSeconds(skill[s].moveDuration);
 				onMoving = false;
-				rb.velocity = Vector2.zero;
-				if(anim){
-					anim.SetBool("run" , false);
+				// rb.velocity = Vector2.zero;
+                agent.ResetPath();
+                agent.isStopped = true;
+                
+				if (anim){
+					ResetRunningAnimationParameters();
 				}
 			}
 			else if (skill[s].moveDirection == DirectionSet.None)
 			{
-				rb.velocity = Vector2.zero;
-                if (anim)
+				// rb.velocity = Vector2.zero;
+				agent.ResetPath();
+				agent.isStopped = true;
+                
+				if (anim)
                 {
-                    anim.SetBool("run", false);
+					ResetRunningAnimationParameters();
                 }
             }
 			
@@ -721,6 +713,23 @@ public class MonsterAi : MonoBehaviour {
 			CheckDistance();
 		}
 	}
-	//-----------
+    //-----------
+
+	private void SetRandomDirection()
+	{
+        do
+        {
+            randomPosition = new Vector3(Random.Range(patrolingAreaLeftBottom.x, patrolingAreaRightTop.x),
+                Random.Range(patrolingAreaLeftBottom.y, patrolingAreaRightTop.y), 0); // рандомный выбор позиции
+        }
+        while (Vector2.Distance(transform.position, randomPosition) < 3f);
+
+        agent.isStopped = false;
+        agent.SetDestination(randomPosition);
+
+        isSetTargetPoint = true;
+
+        waitForNewTargetPoint = false;
+    }
 }
 

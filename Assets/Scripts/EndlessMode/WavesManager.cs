@@ -47,7 +47,7 @@ public class WavesManager : MonoBehaviour
             for (int j = 0; j < groupSpawnData.amountOfEnemiesToSpawn; j++)
             {
                 EnemyModifiers enemyModifiers = CalculateEnemyModifiers(groupSpawnData.enemiesBaseData[j]); // get enemy modifiers
-                GameObject enemySpawned = EnemySpawner.Instance.SpawnEnemy(groupSpawnData.enemiesBaseData[j], spawnPositions[j], enemyModifiers, Enemy_OnDestroyed);
+                GameObject enemySpawned = EnemySpawner.Instance.SpawnEnemy(new EnemySpawnData() { enemyDetails = groupSpawnData.enemiesBaseData[j], spawnPosition = spawnPositions[j] }, enemyModifiers, Enemy_OnDestroyed);
 
                 enemySpawned.GetComponent<BehaviourTreeInstance>().SetBlackboardValue("targetPosition", (Vector3)portal.GetComponent<BoxCollider2D>().ClosestPoint(enemySpawned.transform.position));
             }
