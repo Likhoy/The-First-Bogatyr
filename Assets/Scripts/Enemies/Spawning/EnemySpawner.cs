@@ -18,7 +18,7 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
 
     private void OnEnable()
     {
-        Lua.RegisterFunction("SpawnEnemy", this, SymbolExtensions.GetMethodInfo(() => SpawnEnemy(string.Empty, string.Empty)));
+        Lua.RegisterFunction("SpawnEnemy", this, SymbolExtensions.GetMethodInfo(() => SpawnEnemy(string.Empty, string.Empty, string.Empty)));
     }
 
     private void OnDisable()
@@ -64,12 +64,9 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
             // Loop through to create all the enemeies
             for (int i = 0; i < enemiesToSpawn; i++)
             {
-                EnemyDetailsSO enemyDetails = currentLocationDetails.enemiesToSpawnImmediately[EnemiesSpawnedSoFar].enemyDetails;
-
-                Vector3 position = (Vector3)currentLocationDetails.enemiesToSpawnImmediately[EnemiesSpawnedSoFar].spawnPosition;
 
                 // Create Enemy - Get next enemy type to spawn 
-                CreateEnemy(enemyDetails, EnemyPrefabType.MainStoryLine, position);
+                CreateEnemy(currentLocationDetails.enemiesToSpawnImmediately[EnemiesSpawnedSoFar], EnemyPrefabType.MainStoryLine);
             }
         }
     }
@@ -77,15 +74,24 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
     /// <summary>
     /// Spawn enemy by it's name at position passed as string in the following format - "{coord_x} {coord_y} {coord_z}"
     /// </summary>
-    public void SpawnEnemy(string enemyName, string spawnPosition)
+    public void SpawnEnemy(string enemyName, string spawnPosition, string patrolAreaBounds)
     {
-        int[] coords = spawnPosition.Split(" ").Select(coord => int.Parse(coord)).ToArray();
+        int[] coords = spawnPosition.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(coord => int.Parse(coord)).ToArray();
         Vector3 spawnPositionVect = new Vector3(coords[0], coords[1], coords[2]);
+
+        int[] coords2 = patrolAreaBounds.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(coord => int.Parse(coord)).ToArray();
+        
+        Vector2 patrolAreaLeftBottom = new Vector2(coords2[0], coords2[1]);
+
+        Vector2 patrolAreaRightTop = new Vector2(coords2[2], coords2[3]);
+
         foreach (EnemyDetailsSO enemyDetails in GameResources.Instance.enemyDetailsList)
         {
             if (enemyDetails.enemyName == enemyName)
             {
-                CreateEnemy(enemyDetails, EnemyPrefabType.MainStoryLine, spawnPositionVect);
+                CreateEnemy(new EnemySpawnData() { enemyDetails = enemyDetails,
+                    spawnPosition = spawnPositionVect, patrolingAreaLeftBottom = patrolAreaLeftBottom, 
+                    patrolingAreaRightTop = patrolAreaRightTop}, EnemyPrefabType.MainStoryLine);
             }
                 
         }
@@ -94,17 +100,19 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
     /// <summary>
     /// Spawn enemy variation for usage in the endless mode
     /// </summary>
-    public GameObject SpawnEnemy(EnemyDetailsSO enemyDetails, Vector3 spawnPosition, EnemyModifiers enemyModifiers = null, Action<DestroyedEvent, DestroyedEventArgs> callback = null)
+    public GameObject SpawnEnemy(EnemySpawnData enemySpawnData, EnemyModifiers enemyModifiers = null, Action<DestroyedEvent, DestroyedEventArgs> callback = null)
     {
-        return CreateEnemy(enemyDetails, EnemyPrefabType.EndlessMode, spawnPosition, enemyModifiers, callback);
+        return CreateEnemy(enemySpawnData, EnemyPrefabType.EndlessMode, enemyModifiers, callback);
     }
 
 
     /// <summary>
     /// Create an enemy in the specified position
     /// </summary>
-    private GameObject CreateEnemy(EnemyDetailsSO enemyDetails, EnemyPrefabType enemyPrefabType, Vector3 position, EnemyModifiers enemyModifiers = null, Action<DestroyedEvent, DestroyedEventArgs> callback = null)
+    private GameObject CreateEnemy(EnemySpawnData enemySpawnData, EnemyPrefabType enemyPrefabType, EnemyModifiers enemyModifiers = null, Action<DestroyedEvent, DestroyedEventArgs> callback = null)
     {
+        EnemyDetailsSO enemyDetails = enemySpawnData.enemyDetails;
+
         // keep track of the number of enemies spawned so far
         EnemiesSpawnedSoFar++;
 
@@ -112,7 +120,7 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
         CurrentEnemyCount++;
 
         // Instantiate enemy
-        GameObject enemy = Instantiate(enemyDetails.enemyPrefabs[(int)enemyPrefabType], position, Quaternion.identity, transform);
+        GameObject enemy = Instantiate(enemyDetails.enemyPrefabs[(int)enemyPrefabType], enemySpawnData.spawnPosition, Quaternion.identity, transform);
 
         // Initialize Enemy
         enemy.GetComponent<Enemy>().EnemyInitialization(enemyDetails, EnemiesSpawnedSoFar, enemyModifiers);
@@ -121,6 +129,11 @@ public class EnemySpawner : SingletonMonobehaviour<EnemySpawner>
 
         // subscribe to enemy destroyed event
         destroyedEvent.OnDestroyed += Enemy_OnDestroyed;
+
+        var monsterAi = enemy.GetComponent<MonsterAi>();
+
+        monsterAi.patrolingAreaLeftBottom = enemySpawnData.patrolingAreaLeftBottom;
+        monsterAi.patrolingAreaRightTop = enemySpawnData.patrolingAreaRightTop;
 
         // subscribe passed callbask as well
         if (callback != null)
