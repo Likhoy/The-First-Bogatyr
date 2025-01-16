@@ -4,35 +4,25 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - WaterTiles
-  - GroundTiles
-  - SolidTiles
-  - NPC
-  - enemyWeapon
-  - HealthBar
-  - Bestiariy
-  - collisionTilemap
-  - transitionImage
-  - Chernobog
-  - ButtonPrev
-  - ButtonNext
-  - dialogueManager
-  - GameOverPanel
+  - Wall
+  - Ally
+  - Enemy
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Player
+  - 
   - Water
   - UI
-  - Camera 1
-  - Enemy
-  - EnemyWeapon
-  - EnemyAmmo
-  - Environment
-  - NPC
-  - PlayerWeapon
-  - PlayerAmmo
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 
@@ -54,19 +44,4 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: Ground
-    uniqueID: 3848486181
-    locked: 0
-  - name: Ground Decoration 1
-    uniqueID: 1461035181
-    locked: 0
-  - name: Ground Decoration 2
-    uniqueID: 4245475735
-    locked: 0
-  - name: Instances
-    uniqueID: 4234746167
-    locked: 0
-  - name: Collision
-    uniqueID: 353375123
     locked: 0

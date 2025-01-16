@@ -33,7 +33,7 @@ public class InventorySaver : Saver
 
     public override string RecordData()
     {
-        realSlotsCount = inventory.Slots.Count(slot => !slot.IsEmpty);
+        /*realSlotsCount = inventory.Slots.Count(slot => !slot.IsEmpty);
         m_data.realSlotsCount = realSlotsCount;
         m_data.item_ids = new int[realSlotsCount];
         m_data.counts = new int[realSlotsCount];
@@ -42,7 +42,9 @@ public class InventorySaver : Saver
             m_data.item_ids[i] = inventory.Slots[i].Item.itemID;
             m_data.counts[i] = inventory.Slots[i].Count;
         }
-        return SaveSystem.Serialize(m_data);
+        return SaveSystem.Serialize(m_data);*/
+
+        return "";
     }
 
     public override void ApplyData(string s)
@@ -53,9 +55,9 @@ public class InventorySaver : Saver
         m_data = data;
         for (int i = 0; i < m_data.realSlotsCount; i++)
         {
-            GameObject itemPrefab = GameResources.Instance.items.First(item => item.GetComponent<Item>().itemID == m_data.item_ids[i]);
-            for (int j = 0; j < m_data.counts[i]; j++)
-                GameManager.Instance.GiveItem(itemPrefab);
+            // GameObject itemPrefab = GameResources.Instance.items.First(item => item.GetComponent<Item>().itemID == m_data.item_ids[i]);
+            //for (int j = 0; j < m_data.counts[i]; j++)
+            //    GameManager.Instance.GiveItem(itemPrefab);
         }
     }
 }

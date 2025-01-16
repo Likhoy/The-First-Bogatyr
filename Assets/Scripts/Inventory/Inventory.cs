@@ -1,7 +1,7 @@
-using PixelCrushers.DialogueSystem;
+/*using PixelCrushers.DialogueSystem;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class InventoryOld : MonoBehaviour
 {
     [SerializeField] private InventorySlot[] slots;
 
@@ -81,3 +81,4 @@ public class Inventory : MonoBehaviour
         return res;
     }
 }
+*/

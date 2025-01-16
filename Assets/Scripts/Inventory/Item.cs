@@ -1,4 +1,4 @@
-using System;
+/*using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -9,12 +9,12 @@ public abstract class Item : MonoBehaviour, IUseable
 {
     public int itemType = 0;
 
-    /*
+    *//*
         0 - is for generic item
         1 - armor
         2 - weapon/tool
         3 - consumables
-    */
+    *//*
     public string itemName;
     public int itemID;
     public bool isStackable = false;
@@ -83,3 +83,4 @@ public abstract class Item : MonoBehaviour, IUseable
         throw new System.NotImplementedException();
     }
 }
+*/

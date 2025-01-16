@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 #region REQUIRE COMPONENTS
 [RequireComponent(typeof(HealthEvent))]
-[RequireComponent(typeof(EnemyHealth))]
+// [RequireComponent(typeof(EnemyHealth))]
 [RequireComponent(typeof(FireWeaponEvent))]
 [RequireComponent(typeof(DestroyedEvent))]
 [RequireComponent(typeof(Destroyed))]
@@ -36,7 +36,7 @@ public class Enemy : MonoBehaviour
 {
     [HideInInspector] public EnemyDetailsSO enemyDetails;
     [HideInInspector] public HealthEvent healthEvent;
-    private EnemyHealth health;
+    // private EnemyHealth health;
     //[HideInInspector] public AimWeaponEvent aimWeaponEvent;
     [HideInInspector] public FireWeaponEvent fireWeaponEvent;
     private FireWeapon fireWeapon;
@@ -75,7 +75,7 @@ public class Enemy : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         audioEffects = GameObject.Find("AudioEffects").GetComponent<AudioSource>();
         healthEvent = GetComponent<HealthEvent>();
-        health = GetComponent<EnemyHealth>();
+        // health = GetComponent<EnemyHealth>();
         //aimWeaponEvent = GetComponent<AimWeaponEvent>();
         fireWeaponEvent = GetComponent<FireWeaponEvent>();
         fireWeapon = GetComponent<FireWeapon>();
@@ -221,7 +221,7 @@ public class Enemy : MonoBehaviour
                 return;
             }
         }*/
-        health.SetStartingHealth(enemyDetails.startingHealthAmount + modifierEffect);
+        // health.SetStartingHealth(enemyDetails.startingHealthAmount + modifierEffect);
     }
 
     /// <summary>
