@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,15 +20,15 @@ public class SkillTreeUi : MonoBehaviour {
 	}
 
 	public SkillSlot[] skillSlots = new SkillSlot[5];
-	public Text skillPointText;
+	public TMP_Text skillPointText;
 	public GameObject player;
 	private int buttonSelect = 0;
 
 	public GameObject tooltip;
 	public Image tooltipIcon;
-	public Text tooltipName;
-	public Text tooltipText;
-	public Text mpCostTooltip;
+	public TMP_Text tooltipName;
+	public TMP_Text tooltipText;
+	public TMP_Text mpCostTooltip;
 	public SkillData database;
 
 	public void Start(){
