@@ -71,7 +71,7 @@ public static class Settings
         [Command.OpenBestiary] = KeyCode.B,
         [Command.OpenMap] = KeyCode.M,
         [Command.OpenPauseMenu] = KeyCode.Escape,
-        [Command.OpenInventory] = KeyCode.E,
+        [Command.OpenInventory] = KeyCode.I,
         [Command.OpenSkillTree] = KeyCode.K
     };
     #endregion 

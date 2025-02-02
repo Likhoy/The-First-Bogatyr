@@ -772,7 +772,7 @@ namespace PixelCrushers.DialogueSystem
         {
             if (!DialogueManager.hasInstance)
             {
-                Debug.LogError($"Dialogue System: Dialogue System Trigger '{name}' can't fire. There is no Dialogue Manager GameObject.", this);
+                // Debug.LogError($"Dialogue System: Dialogue System Trigger '{name}' can't fire. There is no Dialogue Manager GameObject.", this);
                 return;
             }
             if (DialogueDebug.logInfo) Debug.Log("Dialogue System: Dialogue System Trigger is firing " + trigger + ".", this);
