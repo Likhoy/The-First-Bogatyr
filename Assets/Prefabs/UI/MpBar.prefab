@@ -84,7 +84,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3525762210459540365}
-  - component: {fileID: 2714753357358477714}
+  - component: {fileID: 1859559929733687513}
   m_Layer: 5
   m_Name: MpBar
   m_TagString: Untagged
@@ -114,7 +114,7 @@ RectTransform:
   m_AnchoredPosition: {x: -601, y: 369}
   m_SizeDelta: {x: 600, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2714753357358477714
+--- !u!114 &1859559929733687513
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,7 +123,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3183877484501967588}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 059d408fdd775a44fb4c9b328a11a256, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b783273b5e260b43a7b2b0fcfddfc77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mpBar: {fileID: 4849628021478642933}
