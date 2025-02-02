@@ -1,13 +1,13 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1102 &-2223399842824543386
+--- !u!1102 &-9145793095836479004
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: villager_walk_slow
+  m_Name: run_persons
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -20,7 +20,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 7ad6254c9b33c474498d30a12409bb17, type: 2}
+  m_Motion: {fileID: 7400000, guid: 7132f22aac780b44091548c102b4ac3f, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -32,13 +32,13 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: done_experiment_villager_with clothes_1
+  m_Name: PERSON_PREFAB
   serializedVersion: 5
   m_AnimatorParameters: []
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
-    m_StateMachine: {fileID: 8458264721111323684}
+    m_StateMachine: {fileID: 2857371495579778777}
     m_Mask: {fileID: 0}
     m_Motions: []
     m_Behaviours: []
@@ -48,14 +48,14 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
---- !u!1102 &934087324186769590
+--- !u!1102 &1479055139976963396
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: villager_walk
+  m_Name: sword_hit_experiment_persons
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -68,39 +68,13 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 752e507268a22204f80a921e68e19ebc, type: 2}
+  m_Motion: {fileID: 7400000, guid: 777b5d7ec58866748921baafa2ceb23e, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &1074743240556858601
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: villager_idle
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: cc264ce8acc3e2941b274c6d302058ad, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1107 &8458264721111323684
+--- !u!1107 &2857371495579778777
 AnimatorStateMachine:
   serializedVersion: 6
   m_ObjectHideFlags: 1
@@ -110,20 +84,17 @@ AnimatorStateMachine:
   m_Name: Base Layer
   m_ChildStates:
   - serializedVersion: 1
-    m_State: {fileID: 1074743240556858601}
-    m_Position: {x: 280, y: 40, z: 0}
+    m_State: {fileID: 8089059914662561303}
+    m_Position: {x: 200, y: 0, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: 934087324186769590}
-    m_Position: {x: 315, y: 105, z: 0}
+    m_State: {fileID: 4490537258882590719}
+    m_Position: {x: 235, y: 65, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: 8560712722964610347}
-    m_Position: {x: 350, y: 170, z: 0}
+    m_State: {fileID: -9145793095836479004}
+    m_Position: {x: 270, y: 130, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: 9109312061960316449}
-    m_Position: {x: 385, y: 235, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -2223399842824543386}
-    m_Position: {x: 420, y: 300, z: 0}
+    m_State: {fileID: 1479055139976963396}
+    m_Position: {x: 305, y: 195, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -133,15 +104,15 @@ AnimatorStateMachine:
   m_EntryPosition: {x: 50, y: 120, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: 1074743240556858601}
---- !u!1102 &8560712722964610347
+  m_DefaultState: {fileID: 8089059914662561303}
+--- !u!1102 &4490537258882590719
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: villager_idle_1
+  m_Name: walk_persons
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -154,20 +125,20 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 37bf2b1668e5ee54fbeb3afb479f0575, type: 2}
+  m_Motion: {fileID: 7400000, guid: 12fa0d91fcb8fb64390f0dd3bb15b49d, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &9109312061960316449
+--- !u!1102 &8089059914662561303
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: villager_dialog
+  m_Name: idle_persons
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -180,7 +151,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: b3fc8205ac551a040888ea5bf824130f, type: 2}
+  m_Motion: {fileID: 7400000, guid: 4dbed893bba27c44888f72e32e570be5, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
