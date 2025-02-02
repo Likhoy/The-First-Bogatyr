@@ -13,11 +13,14 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject settingsUI;
     [SerializeField] private GameObject mainUI;
 
-    void Update()
-    {
-        controller = FindObjectOfType<DialogueSystemController>();
+    void Awake() {
         player = GameManager.Instance.GetPlayer();
 
+    }
+    
+    void Update()
+    {
+        // controller = FindObjectOfType<DialogueSystemController>();
         if (Input.GetKeyDown(Settings.commandButtons[Command.OpenPauseMenu]))
         {         
             if (GameIsPaused)

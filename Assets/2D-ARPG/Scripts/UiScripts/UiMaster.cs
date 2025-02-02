@@ -20,7 +20,7 @@ public class UiMaster : MonoBehaviour {
 
     private void Awake()
     {
-		questLogWindow = DialogueManager.Instance.GetComponentInChildren<QuestLogWindow>();
+		// questLogWindow = DialogueManager.Instance.GetComponentInChildren<QuestLogWindow>();
     }
 
     void Start(){
