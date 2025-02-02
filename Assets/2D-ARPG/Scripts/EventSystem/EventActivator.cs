@@ -205,7 +205,7 @@ public class EventActivator : MonoBehaviour {
         }
 
         eventRunning = true;
-        GetComponents<EventSetting>()[0].Activate();
+        GetComponents<EventSetting>()[1].Activate();
 
         if (closePlayerUi && GlobalStatus.mainPlayer) GlobalStatus.mainPlayer.GetComponent<UiMaster>().CloseAllMenu();
     }

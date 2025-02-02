@@ -1,0 +1,133 @@
+******************************************************************************************************************
+Auto Radial Layout - QUICK START GUIDE
+----------------------------------------------------------------------------
+
+Full documentation can be fount at: https://www.gigasoftworks.com/products/radiallayout/docs/overview.html
+
+******************************************************************************************************************
+
++--------------------------------------------------------------
+TABLE OF CONTENTS
+
+1. Overview
+2. Basic Building
+3. Links
+4. Query System
+5. Further Help & contacts
++--------------------------------------------------------------
+
+1. Overview
+
+Effortlessly Create Radial and Graph Layouts with Auto Radial Layout!
+
+With Auto Radial Layout, designing simple or intricate radial and graph layouts has never been easier. Simply drop the Radial Layout prefab onto your canvas, and use the intuitive inspector buttons to add or remove nodes. The plugin takes care of the rest, automatically positioning your nodes to create visually appealing layouts.
+
+Need to display connections between nodes? Auto Radial Layout handles that too, automatically generating links to connect nodes seamlessly. Links also feataure a progress functionality that allows you to highlight the progress from one node to the next.
+
+For added functionality, the plugin also includes a tag-based query system that allows you to search for specific nodes (or links connecting nodes) within your layout.
+
+Features:
+
+* New RadialLayout Component: Easily create and manage radial and graph layouts.
+* Editor Gizmos and Handles: Quickly adjust the size and rotation of your layouts directly in the editor.
+* User-Friendly Inspector Buttons: Build and explore complex layouts with just a few clicks.
+* Two Node Distribution Modes: Choose between Concentric and Branches for flexible layout options.
+* Sub-Layouts: Nodes can be converted to sub-layouts and viceversa to create nested structures.
+* Versatile Applications: Perfect for creating skill trees, radial menus, graph UIs, main UI panels, and much more.
+* Automatic Node Placement with Full Control: Nodes are positioned automatically, but you can customize their placement as needed.
+* Prefab-Based Instancing: Add empty nodes to just define the layout, or instantiate your own custom nodes and links prefabs with just one click.
+* Automatic Link Generation: Simply place the nodes, and the plugin will handle link creation for you.
+* Integrated Query System: Easily search for specific nodes within your layout.
+ 
+----------------------------------------------------------------------------------------------------------------
+
+2. Basic Building
+
+* Basic building operations are explained in the Example_BasicBuilding scene found in Examples folder
+
+1) Place a prefab_RadialLayout gameobject in your scene, this can be done either:
+	a) by dragging the prefab found in the Prefabs folder
+	b) by using the GameObject context menu under UI->Radial Layout
+
+	IMPORTANT: the radial layout object must be contained inside a Canvas object!
+
+2) Use the green gizmo handle in scene view to change layout radius and rotation.
+	- Gizmos can be disabled in the Editor Settings section in the layout Inspector
+
+3) Select the prefab_RadialLayout object in the scene, and click the ADD NODE button in the Inspector.
+	- You'll notice that the node is empty (You will see just a blue circle if gizmos are enabled).
+	  If you want to instatiate a prefab Node, simply drag one of the prefabs found in the Prefabs\Nodes folder
+	  into the Node Prefab field in the Layout inspector.
+	- You can create your own Node prefabs and instantiate them automatically by clicking the ADD NODE button
+
+4) Click the DELETE LAST NODE in the Layout inspector to delete nodes, select a node and click ADD CHILD NODE to add a child node to it.
+
+
+----------------------------------------------------------------------------------------------------------------
+
+3. Links
+
+* Examples of links operations are shown in the Example_Links scene found in Examples folder
+
+Links are enabled by default and are auto generated on Layout rebuild:
+
+	- If you want to create a linkless layout simply unset the Links Prefab field in the Layout inspector.
+	- If you want to use custom link prefabs, simply set the Links Prefab field in the Layout inspector with your own RadialLayoutLink prefab.
+
+Inner Links:
+	
+	if you want to enable inner links (from layout center to nodes of the inner circle) simply turn on the Show Inner Links in the Layout inspector.
+
+Link Progress:
+
+	every default link implements a progress fill that you can use to highlight progress between two nodes.
+	Simply set the ProgressValue float value in the RadialLayoutLink component and the fill will be automatically updated.
+	You can choose between instant and animated fill in the Layout inspector.
+
+
+----------------------------------------------------------------------------------------------------------------
+
+4. Query System
+
+* Query examples are shown in Example_QuerySystem and Example_QuerySystem2 scenes found in Examples folder
+
+To enable query system on a layout check the UseQuerySystem flag in the layout instector. A RadialLayoutTarget component will be added to each node and an unique id will be assigned.
+You can set node tags in the RadialLayoutTarget component of a node.
+
+To start a query, always start by calling the Begin function over the target layout:
+
+	RadialLayoutQueryManager.Begin(this.layout)
+
+followed by one of the provided methods of the RadialLayoutQueryResult class, for example:
+
+	RadialLayoutQueryManager.Begin(this.layout).GetNodeResultWithUniqueId(selectedID);
+
+Queries will return a RadialLayoutQueryResult class that contains the Nodes, Links, and Layouts of the search.
+
+Queries can be chained together, for example:
+
+	RadialLayoutQueryManager.Begin(this.layout).GetNodesWithTags("projectileSpells").GetNodesWithTags("fire");
+
+will first search for all nodes tagged "projectileSpells", and then search for tag "fire" over the previous result;
+
+You can also combine results with logical operator:
+
+	var all_nodes = RadialLayoutQueryManager.Begin(this.layout).GetAllNodes();
+	var result_1 = RadialLayoutQueryManager.Begin(this.layout).GetNodesWithTags("red");
+	var result_2 = RadialLayoutQueryManager.Begin(this.layout).GetNodesWithTags("black");
+
+	result = result_1 | result_2;  // red OR black nodes
+	result = result_1 + result_2;  // same as above
+	result = result_1 & result_2;  // red AND black nodes
+	result = all_nodes - result_1; // all nodes except red
+
+
+----------------------------------------------------------------------------------------------------------------
+5. Further Help & contacts
+
+You can view the full documentation at https://www.gigasoftworks.com/products/radiallayout/docs/overview.html
+
+For any question or additional support you can contact GIGA Softworks at contact@gigasoftworks.com
+
+
+
