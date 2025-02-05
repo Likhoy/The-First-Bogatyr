@@ -5,6 +5,10 @@ public struct EnemySpawnData
 {
     public EnemyDetailsSO enemyDetails;
     public Vector2 spawnPosition;
+
+    public Vector2 patrolingAreaLeftBottom;
+
+    public Vector2 patrolingAreaRightTop;
 }
 
 [System.Serializable]

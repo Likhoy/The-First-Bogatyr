@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2182894270290142187
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1313,7 +1313,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1432649527877463938
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2225,7 +2225,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000061035156, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 4000, y: 3000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3338301984652338747
@@ -3105,7 +3105,7 @@ GameObject:
   - component: {fileID: 6993222537299471659}
   - component: {fileID: 3553332707959921577}
   - component: {fileID: 317005748574706270}
-  - component: {fileID: 3838757636752372649}
+  - component: {fileID: 4906971236054207443}
   m_Layer: 5
   m_Name: Scroll Rect
   m_TagString: Untagged
@@ -3171,7 +3171,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3838757636752372649
+--- !u!114 &4906971236054207443
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3180,17 +3180,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 8082386169282157095}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bda7087e25d09fd49a19af82dd5fe6e4, type: 3}
+  m_Script: {fileID: 11500000, guid: ad3d9711eba577e49b694989c38a2d03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 4970566543587418338}
   m_Horizontal: 1
   m_Vertical: 1
-  m_MovementType: 2
+  m_MovementType: 1
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 0.5
+  m_ScrollSensitivity: 1
   m_Viewport: {fileID: 0}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 0}
@@ -3201,9 +3201,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  _minZoom: 0.5
-  _maxZoom: 10
-  _zoomLerpSpeed: 10
+  _minZoom: 0.1
+  _maxZoom: 1
+  _zoomLerpSpeed: 5
 --- !u!1 &8191247958393124087
 GameObject:
   m_ObjectHideFlags: 0
@@ -3532,7 +3532,7 @@ PrefabInstance:
     - target: {fileID: 8839505274107482825, guid: 67e30c92340abbd46bdab35c55ce69f6, type: 3}
       propertyPath: prefab_node
       value: 
-      objectReference: {fileID: 2053247588538161416, guid: 4384c136398a9f54d864d1a3f4307664, type: 3}
+      objectReference: {fileID: 2053247588538161416, guid: 2e1e4cc43ed0a994e9e123f98343803f, type: 3}
     - target: {fileID: 8839505274107482825, guid: 67e30c92340abbd46bdab35c55ce69f6, type: 3}
       propertyPath: circleRadius
       value: 150

@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 // [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
-[RequireComponent(typeof(PolygonCollider2D))]
+[RequireComponent(typeof(CapsuleCollider2D))]
 [RequireComponent(typeof(NavMeshAgent))]
 #endregion REQUIRE COMPONENTS
 
@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
     // private MaterializeEffect materializeEffect;
     private NavMeshAgent agent;
     private BoxCollider2D boxCollider2D;
-    private PolygonCollider2D polygonCollider2D;
+    private CapsuleCollider2D capsuleCollider2D;
     [HideInInspector] public SpriteRenderer[] spriteRendererArray;
     [HideInInspector] public Animator animator;
     [HideInInspector] public MeleeAttackEvent meleeAttackEvent;
@@ -54,7 +54,7 @@ public class Enemy : MonoBehaviour
         //aimWeaponEvent = GetComponent<AimWeaponEvent>();
         // materializeEffect = GetComponent<MaterializeEffect>();
         boxCollider2D = GetComponent<BoxCollider2D>();
-        polygonCollider2D = GetComponent<PolygonCollider2D>();
+        capsuleCollider2D = GetComponent<CapsuleCollider2D>();
         spriteRendererArray = GetComponentsInChildren<SpriteRenderer>();
         animator = GetComponent<Animator>();
         meleeAttackEvent = GetComponent<MeleeAttackEvent>();
@@ -69,21 +69,23 @@ public class Enemy : MonoBehaviour
         behaviourTree = GetComponent<BehaviourTreeInstance>();
 
         monsterAi = GetComponent<MonsterAi>();
-    }
 
-    private void Start()
-    {
         // в 2D это устанавливается
         agent.updateRotation = false;
         agent.updateUpAxis = false;
     }
+
+    /*private void Start()
+    {
+        
+    }*/
 
     private void Update()
     {
         // обязательно для NavMeshAgent
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 
-        after = transform.position;
+        /*after = transform.position;
 
         if (before != after)
         {
@@ -93,7 +95,7 @@ public class Enemy : MonoBehaviour
         else
             audioSource.Stop();
 
-        before = after;
+        before = after;*/
     }
 
     /// <summary>
@@ -242,7 +244,7 @@ public class Enemy : MonoBehaviour
     {
         // Enable/Disable colliders
         boxCollider2D.enabled = isEnabled;
-        polygonCollider2D.enabled = isEnabled;
+        capsuleCollider2D.enabled = isEnabled;
 
         // Enable/Disable enemy behaviour
         behaviourTree.enabled = isEnabled;

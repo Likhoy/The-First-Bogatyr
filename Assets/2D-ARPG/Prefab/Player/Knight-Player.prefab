@@ -712,7 +712,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &224914763220087804
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10879,13 +10879,13 @@ MonoBehaviour:
     skPointUse: 1
     learned: 0
     locked: 0
-  skillPointText: {fileID: 114888997030869540}
+  skillPointText: {fileID: 0}
   player: {fileID: 1322012539695564}
   tooltip: {fileID: 1801304654901876}
   tooltipIcon: {fileID: 114392869870767554}
-  tooltipName: {fileID: 114787102974345182}
-  tooltipText: {fileID: 114189472321756156}
-  mpCostTooltip: {fileID: 114557429639039548}
+  tooltipName: {fileID: 0}
+  tooltipText: {fileID: 0}
+  mpCostTooltip: {fileID: 0}
   database: {fileID: 114587703334864070, guid: 9a356f43d2fc759498b31dc14d15634b, type: 3}
 --- !u!1 &1347824907994250
 GameObject:
@@ -26443,8 +26443,9 @@ MonoBehaviour:
   tooltipText1: {fileID: 0}
   usableTab: {fileID: 0}
   equipmentTab: {fileID: 0}
-  pageText: {fileID: 0}
   database: {fileID: 0}
+  draggingItemIcon: {fileID: 0}
+  discardItemConfirmation: {fileID: 0}
 --- !u!1 &1779894469350388
 GameObject:
   m_ObjectHideFlags: 0

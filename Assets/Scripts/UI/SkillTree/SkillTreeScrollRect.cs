@@ -5,10 +5,10 @@ using UnityEngine.UI;
 public class SkillTreeScrollRect : ScrollRect
 {
     [SerializeField] float _minZoom = .1f;
-    [SerializeField] float _maxZoom = 10f;
+    [SerializeField] float _maxZoom = 1f;
     [SerializeField] float _zoomLerpSpeed = 5f;
     float _currentZoom = 1f;
-  
+
     Vector2 _startPinchCenterPosition;
     Vector2 _startPinchScreenPosition;
     float _mouseWheelSensitivity = 1f;
@@ -50,7 +50,5 @@ public class SkillTreeScrollRect : ScrollRect
         rectTransform.localPosition -= deltaPosition;
     }
 
-    
+
 }
-
-

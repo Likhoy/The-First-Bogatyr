@@ -66,7 +66,7 @@ namespace PixelCrushers.DialogueSystem
         {
             if (StandardUISelectorElements.instances.Count == 0)
             {
-                if (DialogueDebug.logWarnings) Debug.LogWarning("Dialogue System: SelectorUseStandardUIElements can't find a StandardUISelectorElements component in the scene.", this);
+                // if (DialogueDebug.logWarnings) Debug.LogWarning("Dialogue System: SelectorUseStandardUIElements can't find a StandardUISelectorElements component in the scene.", this);
                 enabled = false;
             }
             else
