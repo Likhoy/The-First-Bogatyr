@@ -58,7 +58,8 @@ public class ItemData : MonoBehaviour {
 		[Range(0 , 100)]
 		public int autoGuard = 0;
 		[Range(0 , 100)]
-		public int drainTouch = 0;
+        [Tooltip("Вампиризм")]
+        public int drainTouch = 0;
 		[Range(0 , 100)]
 		public int mpReduce = 0;
 		[Tooltip("Set to 0 if not require any item when attacking.")]

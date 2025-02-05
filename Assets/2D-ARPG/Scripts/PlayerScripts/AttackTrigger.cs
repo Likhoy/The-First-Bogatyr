@@ -13,6 +13,8 @@ using UnityEngine.UI;
 
 public class AttackTrigger : MonoBehaviour{
 	public Transform attackPoint;
+	public Transform attackAnchor;
+
 	public bool aimAtMouse = true;
 	//public Vector2 limitAimAngle = new Vector2(-75 , 75);
 
@@ -834,8 +836,9 @@ public class AttackTrigger : MonoBehaviour{
 
 		nextFire = Time.time + attackDelay;
         if (attackPrefab.Length > 0) {
-			Transform bulletShootout = Instantiate(attackPrefab[atkPref].transform, attackPoint.transform.position, attackPoint.transform.rotation) as Transform;
-			bulletShootout.gameObject.SetActive(true);
+			Transform bulletShootout = Instantiate(attackPrefab[atkPref].transform, attackAnchor.transform.position, attackPoint.transform.rotation * attackPrefab[atkPref].transform.rotation) as Transform;
+			bulletShootout.GetComponent<BulletMove>().originalRotation = attackPrefab[atkPref].transform.rotation;
+            bulletShootout.gameObject.SetActive(true);
 			bulletShootout.GetComponent<BulletStatus>().Setting(str, matk, "Player", this.gameObject);
 			if (GetComponent<Status>().hiddenStatus.drainTouch > 0) {
 				bulletShootout.GetComponent<BulletStatus>().drainHp += GetComponent<Status>().hiddenStatus.drainTouch;

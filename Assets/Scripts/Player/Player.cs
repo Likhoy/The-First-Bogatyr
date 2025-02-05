@@ -17,12 +17,15 @@ public class Player : MonoBehaviour
 
     public List<Weapon> weaponList = new List<Weapon>();
 
+    private Inventory inventory;
+
     private void Awake()
     {
         // Load components
         playerControl = GetComponent<PlayerController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        inventory = GetComponent<Inventory>();
     }
 
     /// <summary>
@@ -100,9 +103,20 @@ public class Player : MonoBehaviour
         // Add weapon to player
         // AddWeaponToPlayer(playerDetails.startingWeapon);
 
-        GetComponent<Inventory>().AddEquipment(1);
+        /*string weapon = "Bronze Sword";
 
-        GetComponent<Inventory>().EquipItemFromID(1);
+        inventory.AddEquipment(weapon);
+        inventory.EquipItemFromID(weapon);*/
+
+        /*string armor = "Bronze Armor";
+
+        inventory.AddEquipment(armor);
+        inventory.EquipItemFromID(armor);*/
+
+        string weapon2 = "Spear";
+
+        inventory.AddEquipment(weapon2);
+        inventory.EquipItemFromID(weapon2);
     }
 
     /// <summary>

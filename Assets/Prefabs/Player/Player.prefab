@@ -178,6 +178,37 @@ Transform:
   - {fileID: 5381388314674714617}
   m_Father: {fileID: 6461650756046700634}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2338193513899627460
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 718297159087735998}
+  m_Layer: 3
+  m_Name: AttackAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &718297159087735998
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2338193513899627460}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.7, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6461650756046700634}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2698464452715287020
 GameObject:
   m_ObjectHideFlags: 0
@@ -532,7 +563,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6695044592910338706}
   m_Layer: 12
-  m_Name: AttackPoint
+  m_Name: AttackPointer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -785,6 +816,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6695044592910338706}
+  - {fileID: 718297159087735998}
   - {fileID: 8866840214573429799}
   - {fileID: 7161984610524619145}
   - {fileID: 459970406886692571}
@@ -1588,6 +1620,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackPoint: {fileID: 6695044592910338706}
+  attackAnchor: {fileID: 718297159087735998}
   aimAtMouse: 1
   attackPrefab: []
   weaponType: 0
