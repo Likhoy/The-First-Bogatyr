@@ -20,86 +20,86 @@ public class SkillStatus : MonoBehaviour {
 
 	public void AssignSkillByID(int slot , int skillId){
 		//Use With Canvas UI
-		if(slot > GetComponent<AttackTrigger>().shortcuts.Length){
+		if(slot > GetComponent<AttackTrigger>().skillShortcuts.Length){
 			return;
 		}
-		if(GetComponent<AttackTrigger>().shortcuts[slot].onCoolDown > 0 || GetComponent<AttackTrigger>().onAttacking){
+		if(GetComponent<AttackTrigger>().skillShortcuts[slot].onCoolDown > 0 || GetComponent<AttackTrigger>().onAttacking){
 			print("This Skill is not Ready");
 			return;
 		}
 		//GetComponent<AttackTrigger>().SetShortcut(slot);
-		GetComponent<AttackTrigger>().shortcuts[slot].skill.manaCost = database.skill[skillId].manaCost;
-		GetComponent<AttackTrigger>().shortcuts[slot].skill.skillPrefab = database.skill[skillId].skillPrefab;
-		GetComponent<AttackTrigger>().shortcuts[slot].skill.skillAnimationTrigger = database.skill[skillId].skillAnimationTrigger;
+		GetComponent<AttackTrigger>().skillShortcuts[slot].skill.manaCost = database.skill[skillId].manaCost;
+		GetComponent<AttackTrigger>().skillShortcuts[slot].skill.skillPrefab = database.skill[skillId].skillPrefab;
+		GetComponent<AttackTrigger>().skillShortcuts[slot].skill.skillAnimationTrigger = database.skill[skillId].skillAnimationTrigger;
 
-		GetComponent<AttackTrigger>().shortcuts[slot].skill.icon = database.skill[skillId].icon;
+		GetComponent<AttackTrigger>().skillShortcuts[slot].skill.icon = database.skill[skillId].icon;
 		GetComponent<AttackTrigger>().shortcuts[slot].skill.sendMsg = database.skill[skillId].sendMsg;
-		GetComponent<AttackTrigger>().shortcuts[slot].skill.castEffect = database.skill[skillId].castEffect;
+		GetComponent<AttackTrigger>().skillShortcuts[slot].skill.castEffect = database.skill[skillId].castEffect;
 		
-		GetComponent<AttackTrigger>().shortcuts[slot].skill.castTime = database.skill[skillId].castTime;
-		GetComponent<AttackTrigger>().shortcuts[slot].skill.skillDelay = database.skill[skillId].skillDelay;
-		GetComponent<AttackTrigger>().shortcuts[slot].skill.whileAttack = database.skill[skillId].whileAttack;
-		GetComponent<AttackTrigger>().shortcuts[slot].skill.coolDown = database.skill[skillId].coolDown;
-		GetComponent<AttackTrigger>().shortcuts[slot].skill.skillSpawn = database.skill[skillId].skillSpawn;
+		GetComponent<AttackTrigger>().skillShortcuts[slot].skill.castTime = database.skill[skillId].castTime;
+		GetComponent<AttackTrigger>().skillShortcuts[slot].skill.skillDelay = database.skill[skillId].skillDelay;
+		GetComponent<AttackTrigger>().skillShortcuts[slot].skill.whileAttack = database.skill[skillId].whileAttack;
+		GetComponent<AttackTrigger>().skillShortcuts[slot].skill.coolDown = database.skill[skillId].coolDown;
+		GetComponent<AttackTrigger>().skillShortcuts[slot].skill.skillSpawn = database.skill[skillId].skillSpawn;
 		
-		GetComponent<AttackTrigger>().shortcuts[slot].skill.requireWeapon = database.skill[skillId].requireWeapon;
-		GetComponent<AttackTrigger>().shortcuts[slot].skill.requireWeaponType = database.skill[skillId].requireWeaponType;
+		GetComponent<AttackTrigger>().skillShortcuts[slot].skill.requireWeapon = database.skill[skillId].requireWeapon;
+		GetComponent<AttackTrigger>().skillShortcuts[slot].skill.requireWeaponType = database.skill[skillId].requireWeaponType;
 		
-		GetComponent<AttackTrigger>().shortcuts[slot].skill.soundEffect = database.skill[skillId].soundEffect;
+		GetComponent<AttackTrigger>().skillShortcuts[slot].skill.soundEffect = database.skill[skillId].soundEffect;
 		
 		int mh = database.skill[skillId].multipleHit.Length;
-		GetComponent<AttackTrigger>().shortcuts[slot].skill.multipleHit = new SkillAdditionHit[mh];
+		GetComponent<AttackTrigger>().skillShortcuts[slot].skill.multipleHit = new SkillAdditionHit[mh];
 		for(int m = 0; m < mh; m++){
-			GetComponent<AttackTrigger>().shortcuts[slot].skill.multipleHit[m] = new SkillAdditionHit();
+			GetComponent<AttackTrigger>().skillShortcuts[slot].skill.multipleHit[m] = new SkillAdditionHit();
 			
-			GetComponent<AttackTrigger>().shortcuts[slot].skill.multipleHit[m].skillPrefab = database.skill[skillId].multipleHit[m].skillPrefab;
-			GetComponent<AttackTrigger>().shortcuts[slot].skill.multipleHit[m].skillAnimationTrigger = database.skill[skillId].multipleHit[m].skillAnimationTrigger;
+			GetComponent<AttackTrigger>().skillShortcuts[slot].skill.multipleHit[m].skillPrefab = database.skill[skillId].multipleHit[m].skillPrefab;
+			GetComponent<AttackTrigger>().skillShortcuts[slot].skill.multipleHit[m].skillAnimationTrigger = database.skill[skillId].multipleHit[m].skillAnimationTrigger;
 
-			GetComponent<AttackTrigger>().shortcuts[slot].skill.multipleHit[m].castTime = database.skill[skillId].multipleHit[m].castTime;
-			GetComponent<AttackTrigger>().shortcuts[slot].skill.multipleHit[m].skillDelay = database.skill[skillId].multipleHit[m].skillDelay;
+			GetComponent<AttackTrigger>().skillShortcuts[slot].skill.multipleHit[m].castTime = database.skill[skillId].multipleHit[m].castTime;
+			GetComponent<AttackTrigger>().skillShortcuts[slot].skill.multipleHit[m].skillDelay = database.skill[skillId].multipleHit[m].skillDelay;
 			
-			GetComponent<AttackTrigger>().shortcuts[slot].skill.multipleHit[m].soundEffect = database.skill[skillId].multipleHit[m].soundEffect;
+			GetComponent<AttackTrigger>().skillShortcuts[slot].skill.multipleHit[m].soundEffect = database.skill[skillId].multipleHit[m].soundEffect;
 		}
 		
-		CheckSameSkill(GetComponent<AttackTrigger>().shortcuts[slot].id , slot);
+		CheckSameSkill(GetComponent<AttackTrigger>().skillShortcuts[slot].id , slot);
 	}
 	
 	public void AssignAllSkill(){
 		AttackTrigger atk = GetComponent<AttackTrigger>();
 		int n = 0;
-		while(n < GetComponent<AttackTrigger>().shortcuts.Length){
-			if(GetComponent<AttackTrigger>().shortcuts[n].type == AttackTrigger.ShortcutType.Skill){
-				GetComponent<AttackTrigger>().shortcuts[n].skill.manaCost = database.skill[atk.shortcuts[n].id].manaCost;
-				GetComponent<AttackTrigger>().shortcuts[n].skill.skillPrefab = database.skill[atk.shortcuts[n].id].skillPrefab;
-				GetComponent<AttackTrigger>().shortcuts[n].skill.skillAnimationTrigger = database.skill[atk.shortcuts[n].id].skillAnimationTrigger;
+		while(n < GetComponent<AttackTrigger>().skillShortcuts.Length){
+			if(GetComponent<AttackTrigger>().skillShortcuts[n].type == AttackTrigger.ShortcutType.Skill){
+				GetComponent<AttackTrigger>().skillShortcuts[n].skill.manaCost = database.skill[atk.skillShortcuts[n].id].manaCost;
+				GetComponent<AttackTrigger>().skillShortcuts[n].skill.skillPrefab = database.skill[atk.skillShortcuts[n].id].skillPrefab;
+				GetComponent<AttackTrigger>().skillShortcuts[n].skill.skillAnimationTrigger = database.skill[atk.skillShortcuts[n].id].skillAnimationTrigger;
 				
-				GetComponent<AttackTrigger>().shortcuts[n].skill.icon = database.skill[atk.shortcuts[n].id].icon;
-				GetComponent<AttackTrigger>().shortcuts[n].skill.sendMsg = database.skill[atk.shortcuts[n].id].sendMsg;
-				GetComponent<AttackTrigger>().shortcuts[n].skill.castEffect = database.skill[atk.shortcuts[n].id].castEffect;
+				GetComponent<AttackTrigger>().skillShortcuts[n].skill.icon = database.skill[atk.skillShortcuts[n].id].icon;
+				GetComponent<AttackTrigger>().skillShortcuts[n].skill.sendMsg = database.skill[atk.skillShortcuts[n].id].sendMsg;
+				GetComponent<AttackTrigger>().skillShortcuts[n].skill.castEffect = database.skill[atk.skillShortcuts[n].id].castEffect;
 				
-				GetComponent<AttackTrigger>().shortcuts[n].skill.castTime = database.skill[atk.shortcuts[n].id].castTime;
-				GetComponent<AttackTrigger>().shortcuts[n].skill.skillDelay = database.skill[atk.shortcuts[n].id].skillDelay;
-				GetComponent<AttackTrigger>().shortcuts[n].skill.whileAttack = database.skill[atk.shortcuts[n].id].whileAttack;
-				GetComponent<AttackTrigger>().shortcuts[n].skill.coolDown = database.skill[atk.shortcuts[n].id].coolDown;
-				GetComponent<AttackTrigger>().shortcuts[n].skill.skillSpawn = database.skill[atk.shortcuts[n].id].skillSpawn;
+				GetComponent<AttackTrigger>().skillShortcuts[n].skill.castTime = database.skill[atk.skillShortcuts[n].id].castTime;
+				GetComponent<AttackTrigger>().skillShortcuts[n].skill.skillDelay = database.skill[atk.skillShortcuts[n].id].skillDelay;
+				GetComponent<AttackTrigger>().skillShortcuts[n].skill.whileAttack = database.skill[atk.skillShortcuts[n].id].whileAttack;
+				GetComponent<AttackTrigger>().skillShortcuts[n].skill.coolDown = database.skill[atk.skillShortcuts[n].id].coolDown;
+				GetComponent<AttackTrigger>().skillShortcuts[n].skill.skillSpawn = database.skill[atk.skillShortcuts[n].id].skillSpawn;
 				
-				GetComponent<AttackTrigger>().shortcuts[n].skill.requireWeapon = database.skill[atk.shortcuts[n].id].requireWeapon;
-				GetComponent<AttackTrigger>().shortcuts[n].skill.requireWeaponType = database.skill[atk.shortcuts[n].id].requireWeaponType;
+				GetComponent<AttackTrigger>().skillShortcuts[n].skill.requireWeapon = database.skill[atk.skillShortcuts[n].id].requireWeapon;
+				GetComponent<AttackTrigger>().skillShortcuts[n].skill.requireWeaponType = database.skill[atk.skillShortcuts[n].id].requireWeaponType;
 				
-				GetComponent<AttackTrigger>().shortcuts[n].skill.soundEffect = database.skill[atk.shortcuts[n].id].soundEffect;
+				GetComponent<AttackTrigger>().skillShortcuts[n].skill.soundEffect = database.skill[atk.skillShortcuts[n].id].soundEffect;
 				
-				int mh = database.skill[atk.shortcuts[n].id].multipleHit.Length;
-				GetComponent<AttackTrigger>().shortcuts[n].skill.multipleHit = new SkillAdditionHit[mh];
+				int mh = database.skill[atk.skillShortcuts[n].id].multipleHit.Length;
+				GetComponent<AttackTrigger>().skillShortcuts[n].skill.multipleHit = new SkillAdditionHit[mh];
 				for(int m = 0; m < mh; m++){
-					GetComponent<AttackTrigger>().shortcuts[n].skill.multipleHit[m] = new SkillAdditionHit();
+					GetComponent<AttackTrigger>().skillShortcuts[n].skill.multipleHit[m] = new SkillAdditionHit();
 					
-					GetComponent<AttackTrigger>().shortcuts[n].skill.multipleHit[m].skillPrefab = database.skill[atk.shortcuts[n].id].multipleHit[m].skillPrefab;
-					GetComponent<AttackTrigger>().shortcuts[n].skill.multipleHit[m].skillAnimationTrigger = database.skill[atk.shortcuts[n].id].multipleHit[m].skillAnimationTrigger;
+					GetComponent<AttackTrigger>().skillShortcuts[n].skill.multipleHit[m].skillPrefab = database.skill[atk.skillShortcuts[n].id].multipleHit[m].skillPrefab;
+					GetComponent<AttackTrigger>().skillShortcuts[n].skill.multipleHit[m].skillAnimationTrigger = database.skill[atk.skillShortcuts[n].id].multipleHit[m].skillAnimationTrigger;
 					
-					GetComponent<AttackTrigger>().shortcuts[n].skill.multipleHit[m].castTime = database.skill[atk.shortcuts[n].id].multipleHit[m].castTime;
-					GetComponent<AttackTrigger>().shortcuts[n].skill.multipleHit[m].skillDelay = database.skill[atk.shortcuts[n].id].multipleHit[m].skillDelay;
+					GetComponent<AttackTrigger>().skillShortcuts[n].skill.multipleHit[m].castTime = database.skill[atk.skillShortcuts[n].id].multipleHit[m].castTime;
+					GetComponent<AttackTrigger>().skillShortcuts[n].skill.multipleHit[m].skillDelay = database.skill[atk.skillShortcuts[n].id].multipleHit[m].skillDelay;
 					
-					GetComponent<AttackTrigger>().shortcuts[n].skill.multipleHit[m].soundEffect = database.skill[atk.shortcuts[n].id].multipleHit[m].soundEffect;
+					GetComponent<AttackTrigger>().skillShortcuts[n].skill.multipleHit[m].soundEffect = database.skill[atk.skillShortcuts[n].id].multipleHit[m].soundEffect;
 				}
 				n++;
 			}
@@ -112,31 +112,31 @@ public class SkillStatus : MonoBehaviour {
 	void CheckSameSkill(int id , int slot){
 		//print (id + " + " + slot);
 		int n = 0;
-		while(n < GetComponent<AttackTrigger>().shortcuts.Length){
-			if(GetComponent<AttackTrigger>().shortcuts[n].id == id && n != slot){
-				GetComponent<AttackTrigger>().shortcuts[n].skill.manaCost = 0;
-				GetComponent<AttackTrigger>().shortcuts[n].skill.skillPrefab = null;
-				GetComponent<AttackTrigger>().shortcuts[n].skill.skillAnimationTrigger = database.skill[0].skillAnimationTrigger;
+		while(n < GetComponent<AttackTrigger>().skillShortcuts.Length){
+			if(GetComponent<AttackTrigger>().skillShortcuts[n].id == id && n != slot){
+				GetComponent<AttackTrigger>().skillShortcuts[n].skill.manaCost = 0;
+				GetComponent<AttackTrigger>().skillShortcuts[n].skill.skillPrefab = null;
+				GetComponent<AttackTrigger>().skillShortcuts[n].skill.skillAnimationTrigger = database.skill[0].skillAnimationTrigger;
 
-				GetComponent<AttackTrigger>().shortcuts[n].skill.icon = null;
-				GetComponent<AttackTrigger>().shortcuts[n].skill.sendMsg = "";
-				GetComponent<AttackTrigger>().shortcuts[n].skill.castEffect = null;
+				GetComponent<AttackTrigger>().skillShortcuts[n].skill.icon = null;
+				GetComponent<AttackTrigger>().skillShortcuts[n].skill.sendMsg = "";
+				GetComponent<AttackTrigger>().skillShortcuts[n].skill.castEffect = null;
 				
-				GetComponent<AttackTrigger>().shortcuts[n].skill.castTime = 0;
-				GetComponent<AttackTrigger>().shortcuts[n].skill.skillDelay = 0;
-				GetComponent<AttackTrigger>().shortcuts[n].skill.whileAttack = database.skill[0].whileAttack;
-				GetComponent<AttackTrigger>().shortcuts[n].skill.coolDown = 0;
-				GetComponent<AttackTrigger>().shortcuts[n].skill.skillSpawn = database.skill[0].skillSpawn;
+				GetComponent<AttackTrigger>().skillShortcuts[n].skill.castTime = 0;
+				GetComponent<AttackTrigger>().skillShortcuts[n].skill.skillDelay = 0;
+				GetComponent<AttackTrigger>().skillShortcuts[n].skill.whileAttack = database.skill[0].whileAttack;
+				GetComponent<AttackTrigger>().skillShortcuts[n].skill.coolDown = 0;
+				GetComponent<AttackTrigger>().skillShortcuts[n].skill.skillSpawn = database.skill[0].skillSpawn;
 				
-				GetComponent<AttackTrigger>().shortcuts[n].skill.requireWeapon = false;
-				GetComponent<AttackTrigger>().shortcuts[n].skill.requireWeaponType = 0;
+				GetComponent<AttackTrigger>().skillShortcuts[n].skill.requireWeapon = false;
+				GetComponent<AttackTrigger>().skillShortcuts[n].skill.requireWeaponType = 0;
 				
-				GetComponent<AttackTrigger>().shortcuts[n].skill.soundEffect = null;
+				GetComponent<AttackTrigger>().skillShortcuts[n].skill.soundEffect = null;
 				
-				if(GetComponent<AttackTrigger>().shortcuts[n].onCoolDown > 0){
-					GetComponent<AttackTrigger>().shortcuts[slot].onCoolDown = GetComponent<AttackTrigger>().shortcuts[n].onCoolDown;
+				if(GetComponent<AttackTrigger>().skillShortcuts[n].onCoolDown > 0){
+					GetComponent<AttackTrigger>().skillShortcuts[slot].onCoolDown = GetComponent<AttackTrigger>().skillShortcuts[n].onCoolDown;
 				}
-				GetComponent<AttackTrigger>().shortcuts[n].onCoolDown = 0;
+				GetComponent<AttackTrigger>().skillShortcuts[n].onCoolDown = 0;
 			}
 			n++;
 		}

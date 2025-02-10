@@ -5619,6 +5619,7 @@ MonoBehaviour:
   iconImageObj: {fileID: 114979060025439640}
   iconLocked: {fileID: 21300000, guid: e4ed3f7e750c97445854dfa004dc56f9, type: 3}
   skillTree: {fileID: 114840284625912740}
+  skillSlotsTrigger: {fileID: 0}
 --- !u!114 &114786598990184930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5907,6 +5908,7 @@ MonoBehaviour:
   iconImageObj: {fileID: 114602894951187636}
   iconLocked: {fileID: 21300000, guid: e4ed3f7e750c97445854dfa004dc56f9, type: 3}
   skillTree: {fileID: 114840284625912740}
+  skillSlotsTrigger: {fileID: 0}
 --- !u!114 &114481563907797728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8073,6 +8075,7 @@ MonoBehaviour:
   iconImageObj: {fileID: 114603270434206122}
   iconLocked: {fileID: 21300000, guid: e4ed3f7e750c97445854dfa004dc56f9, type: 3}
   skillTree: {fileID: 114840284625912740}
+  skillSlotsTrigger: {fileID: 0}
 --- !u!114 &114098761653568876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9108,6 +9111,7 @@ MonoBehaviour:
   iconImageObj: {fileID: 114407881389628282}
   iconLocked: {fileID: 21300000, guid: e4ed3f7e750c97445854dfa004dc56f9, type: 3}
   skillTree: {fileID: 114840284625912740}
+  skillSlotsTrigger: {fileID: 0}
 --- !u!114 &114193321144189048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9442,7 +9446,9 @@ MonoBehaviour:
   maxMana: 100
   mana: 100
   statusPoint: 0
+  divinityPoint: 0
   skillPoint: 0
+  darknessPoint: 0
   immortal: 0
   stability: 0
   levelUpEffect: {fileID: 4349936092665838, guid: f960235a48e7c7a4b88644205b0045aa, type: 3}
@@ -9783,6 +9789,7 @@ MonoBehaviour:
     onCoolDown: 0
     wait: 0
     icon: {fileID: 0}
+  skillShortcuts: []
   mobileMode: 0
   facingRight: 0
   shortcutUi:
@@ -9818,6 +9825,7 @@ MonoBehaviour:
     coolDownBackground: {fileID: 1277519727575544}
     coolDownText: {fileID: 114290861430581842}
     quantityText: {fileID: 114422781661640594}
+  skillShortcutUi: []
   textPrinter: {fileID: 114306330429795034}
   dropItemPrefab: {fileID: 0}
   minion: {fileID: 0}
@@ -10759,6 +10767,7 @@ MonoBehaviour:
     skPointUse: 1
     learned: 0
     locked: 0
+    skillType: 0
   - skillName: Homing Fire
     skillId: 2
     skillButton: {fileID: 114173490281248548}
@@ -10767,6 +10776,7 @@ MonoBehaviour:
     skPointUse: 1
     learned: 0
     locked: 1
+    skillType: 0
   - skillName: Icebolt
     skillId: 3
     skillButton: {fileID: 114410933571439912}
@@ -10775,6 +10785,7 @@ MonoBehaviour:
     skPointUse: 1
     learned: 0
     locked: 1
+    skillType: 0
   - skillName: Ice Barrage
     skillId: 4
     skillButton: {fileID: 114751004242432622}
@@ -10783,6 +10794,7 @@ MonoBehaviour:
     skPointUse: 1
     learned: 0
     locked: 1
+    skillType: 0
   - skillName: Thunderbolt
     skillId: 5
     skillButton: {fileID: 114002499196274018}
@@ -10791,6 +10803,7 @@ MonoBehaviour:
     skPointUse: 1
     learned: 0
     locked: 1
+    skillType: 0
   - skillName: Tri Thunder
     skillId: 6
     skillButton: {fileID: 114769670648017380}
@@ -10799,6 +10812,7 @@ MonoBehaviour:
     skPointUse: 1
     learned: 0
     locked: 1
+    skillType: 0
   - skillName: Heal
     skillId: 7
     skillButton: {fileID: 114051835194037810}
@@ -10807,6 +10821,7 @@ MonoBehaviour:
     skPointUse: 1
     learned: 0
     locked: 1
+    skillType: 0
   - skillName: Bash
     skillId: 8
     skillButton: {fileID: 114915482144138832}
@@ -10815,6 +10830,7 @@ MonoBehaviour:
     skPointUse: 1
     learned: 0
     locked: 1
+    skillType: 0
   - skillName: Ground Crash
     skillId: 9
     skillButton: {fileID: 114365355107573236}
@@ -10823,6 +10839,7 @@ MonoBehaviour:
     skPointUse: 1
     learned: 0
     locked: 1
+    skillType: 0
   - skillName: Thunder Claws
     skillId: 10
     skillButton: {fileID: 114945022295557060}
@@ -10831,6 +10848,7 @@ MonoBehaviour:
     skPointUse: 1
     learned: 0
     locked: 1
+    skillType: 0
   - skillName: Fire Wave
     skillId: 11
     skillButton: {fileID: 114593103659171378}
@@ -10839,6 +10857,7 @@ MonoBehaviour:
     skPointUse: 1
     learned: 0
     locked: 1
+    skillType: 0
   - skillName: Poison Arrow
     skillId: 12
     skillButton: {fileID: 114448958821600936}
@@ -10847,6 +10866,7 @@ MonoBehaviour:
     skPointUse: 1
     learned: 0
     locked: 1
+    skillType: 0
   - skillName: Explosive Arrow
     skillId: 13
     skillButton: {fileID: 114720806589325824}
@@ -10855,6 +10875,7 @@ MonoBehaviour:
     skPointUse: 1
     learned: 0
     locked: 1
+    skillType: 0
   - skillName: Thunder Shield
     skillId: 14
     skillButton: {fileID: 114843080857486848}
@@ -10863,6 +10884,7 @@ MonoBehaviour:
     skPointUse: 1
     learned: 0
     locked: 1
+    skillType: 0
   - skillName: Reinforcement
     skillId: 15
     skillButton: {fileID: 114626648020651292}
@@ -10871,6 +10893,7 @@ MonoBehaviour:
     skPointUse: 1
     learned: 0
     locked: 1
+    skillType: 0
   - skillName: 
     skillId: 0
     skillButton: {fileID: 0}
@@ -10879,7 +10902,10 @@ MonoBehaviour:
     skPointUse: 1
     learned: 0
     locked: 0
+    skillType: 0
+  divinityPointText: {fileID: 0}
   skillPointText: {fileID: 0}
+  darknessPointText: {fileID: 0}
   player: {fileID: 1322012539695564}
   tooltip: {fileID: 1801304654901876}
   tooltipIcon: {fileID: 114392869870767554}
@@ -10887,6 +10913,8 @@ MonoBehaviour:
   tooltipText: {fileID: 0}
   mpCostTooltip: {fileID: 0}
   database: {fileID: 114587703334864070, guid: 9a356f43d2fc759498b31dc14d15634b, type: 3}
+  skillSlotsTrigger: {fileID: 0}
+  attackTrigger: {fileID: 0}
 --- !u!1 &1347824907994250
 GameObject:
   m_ObjectHideFlags: 0
@@ -14263,6 +14291,7 @@ MonoBehaviour:
   iconImageObj: {fileID: 114962408372935238}
   iconLocked: {fileID: 21300000, guid: e4ed3f7e750c97445854dfa004dc56f9, type: 3}
   skillTree: {fileID: 114840284625912740}
+  skillSlotsTrigger: {fileID: 0}
 --- !u!114 &114257826065576714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14727,6 +14756,7 @@ MonoBehaviour:
   iconImageObj: {fileID: 114512906435287862}
   iconLocked: {fileID: 21300000, guid: e4ed3f7e750c97445854dfa004dc56f9, type: 3}
   skillTree: {fileID: 114840284625912740}
+  skillSlotsTrigger: {fileID: 0}
 --- !u!114 &114889470757899162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15228,6 +15258,7 @@ MonoBehaviour:
   iconImageObj: {fileID: 114009777781668558}
   iconLocked: {fileID: 21300000, guid: e4ed3f7e750c97445854dfa004dc56f9, type: 3}
   skillTree: {fileID: 114840284625912740}
+  skillSlotsTrigger: {fileID: 0}
 --- !u!114 &114903862411979496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19207,6 +19238,7 @@ MonoBehaviour:
   iconImageObj: {fileID: 114869404267554238}
   iconLocked: {fileID: 21300000, guid: e4ed3f7e750c97445854dfa004dc56f9, type: 3}
   skillTree: {fileID: 114840284625912740}
+  skillSlotsTrigger: {fileID: 0}
 --- !u!114 &114033072613938638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21649,6 +21681,7 @@ MonoBehaviour:
   iconImageObj: {fileID: 114815168224522800}
   iconLocked: {fileID: 21300000, guid: e4ed3f7e750c97445854dfa004dc56f9, type: 3}
   skillTree: {fileID: 114840284625912740}
+  skillSlotsTrigger: {fileID: 0}
 --- !u!114 &114235608961924824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25838,6 +25871,7 @@ MonoBehaviour:
   iconImageObj: {fileID: 114352200104772584}
   iconLocked: {fileID: 21300000, guid: e4ed3f7e750c97445854dfa004dc56f9, type: 3}
   skillTree: {fileID: 114840284625912740}
+  skillSlotsTrigger: {fileID: 0}
 --- !u!114 &114074587774840458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28373,6 +28407,7 @@ MonoBehaviour:
   iconImageObj: {fileID: 114027617467424640}
   iconLocked: {fileID: 21300000, guid: e4ed3f7e750c97445854dfa004dc56f9, type: 3}
   skillTree: {fileID: 114840284625912740}
+  skillSlotsTrigger: {fileID: 0}
 --- !u!114 &114639580300744924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28822,6 +28857,7 @@ MonoBehaviour:
   iconImageObj: {fileID: 114443449961406426}
   iconLocked: {fileID: 21300000, guid: e4ed3f7e750c97445854dfa004dc56f9, type: 3}
   skillTree: {fileID: 114840284625912740}
+  skillSlotsTrigger: {fileID: 0}
 --- !u!114 &114018384138070288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30510,6 +30546,7 @@ MonoBehaviour:
   iconImageObj: {fileID: 114243652684008156}
   iconLocked: {fileID: 21300000, guid: e4ed3f7e750c97445854dfa004dc56f9, type: 3}
   skillTree: {fileID: 114840284625912740}
+  skillSlotsTrigger: {fileID: 0}
 --- !u!114 &114438369783484304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31175,6 +31212,7 @@ MonoBehaviour:
   iconImageObj: {fileID: 114969675168988530}
   iconLocked: {fileID: 21300000, guid: e4ed3f7e750c97445854dfa004dc56f9, type: 3}
   skillTree: {fileID: 114840284625912740}
+  skillSlotsTrigger: {fileID: 0}
 --- !u!114 &114871627156995154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33401,6 +33439,7 @@ MonoBehaviour:
   iconImageObj: {fileID: 114870410252882996}
   iconLocked: {fileID: 21300000, guid: e4ed3f7e750c97445854dfa004dc56f9, type: 3}
   skillTree: {fileID: 114840284625912740}
+  skillSlotsTrigger: {fileID: 0}
 --- !u!114 &114603981708809560
 MonoBehaviour:
   m_ObjectHideFlags: 0

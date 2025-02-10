@@ -20,8 +20,10 @@ public class Status : MonoBehaviour {
 	public int maxMana = 100;
 	public int mana = 100;
 	public int statusPoint = 0;
-	public int skillPoint = 0;
-	private bool dead = false;
+    public int divinityPoint = 0;
+    public int skillPoint = 0;
+    public int darknessPoint = 0;
+    private bool dead = false;
 	public bool immortal = false;
 	public bool stability = false;
 	public Transform levelUpEffect;
