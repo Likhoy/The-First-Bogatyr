@@ -100,7 +100,8 @@ public class PlayerController : MonoBehaviour
             }
             if (player.animator)
             {
-                InitializeMovementAnimationParameters();
+                //InitializeMovementAnimationParameters();
+                SetMoveAnimationParameters(false);
             }
             return;
         }
@@ -222,14 +223,19 @@ public class PlayerController : MonoBehaviour
             direction *= 0.7f;
         }
 
-        InitializeMovementAnimationParameters();
+        //InitializeMovementAnimationParameters();
 
         if (moveHorizontal != 0 || moveVertical != 0)
         {
             float moveAngle = HelperUtilities.GetAngleFromVector(direction);
             LookDirection lookDirection = HelperUtilities.GetLookDirection(moveAngle);
-            SetMoveAnimationParameters(lookDirection);
+            SetMoveAnimationParameters(true);
         }
+        else
+        {
+            SetMoveAnimationParameters(false);
+        }
+
 
         rb.velocity = new Vector2(dirX, dirY);
 
@@ -254,29 +260,15 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// Set look animation parameters
     /// </summary>
-    private void SetMoveAnimationParameters(LookDirection lookDirection)
+    private void SetMoveAnimationParameters(bool moving)
     {
         // Set aim direction
-        switch (lookDirection)
-        {
-            case LookDirection.Up:
-                player.animator.SetBool("moveUp", true);
-                break;
+        player.animator.SetBool("move", moving);
 
-            case LookDirection.Right:
-                player.animator.SetBool("moveRight", true);
-                break;
+        Vector2 velocityNormalized = rb.velocity.normalized;
 
-            case LookDirection.Left:
-                player.animator.SetBool("moveLeft", true);
-                break;
-
-            case LookDirection.Down:
-                player.animator.SetBool("moveDown", true);
-                break;
-
-        }
-
+        player.animator.SetFloat("Horizontal", velocityNormalized.x);
+        player.animator.SetFloat("Vertical", velocityNormalized.y);
     }
 
     private void TakeItem()

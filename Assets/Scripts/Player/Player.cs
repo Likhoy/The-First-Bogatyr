@@ -4,8 +4,8 @@ using UnityEngine;
 
 #region REQUIRE COMPONENTS
 [RequireComponent(typeof(PlayerController))]
-[RequireComponent(typeof(SpriteRenderer))]
-[RequireComponent(typeof(Animator))]
+//[RequireComponent(typeof(SpriteRenderer))]
+//[RequireComponent(typeof(Animator))]
 #endregion REQUIRE COMPONENTS
 
 public class Player : MonoBehaviour
@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
         // Load components
         playerControl = GetComponent<PlayerController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
         inventory = GetComponent<Inventory>();
     }
 
