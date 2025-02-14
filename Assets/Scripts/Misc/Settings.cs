@@ -63,6 +63,7 @@ public static class Settings
     public static readonly Dictionary<Command, KeyCode> commandButtons = new()
     {
         [Command.Dash] = KeyCode.Mouse1,
+        [Command.Run] = KeyCode.LeftShift,
         [Command.Hit] = KeyCode.Mouse0,
         [Command.SwitchWeapon] = KeyCode.Q,
         [Command.TakeItem] = KeyCode.F,

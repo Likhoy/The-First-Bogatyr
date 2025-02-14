@@ -53,6 +53,8 @@ public class PlayerController : MonoBehaviour
 
     private bool moving = false;
 
+    private bool running = false;
+
     private void Awake()
     {
         // Load components
@@ -102,6 +104,7 @@ public class PlayerController : MonoBehaviour
             {
                 //InitializeMovementAnimationParameters();
                 SetMoveAnimationParameters(false);
+                SetRunningAnimationParameters(false);
             }
             return;
         }
@@ -148,19 +151,8 @@ public class PlayerController : MonoBehaviour
 
         after = transform.position;
 
-        // if player movement disabled then return
-        if (isPlayerMovementDisabled)
-            return;
-
-        // if player is dashing then return
-        /*if (isPlayerDashing)
-            return;*/
-
-        // Process the player movement input
-        // ProcessMovementInput();
-
-        // Process the player weapon input
-        // ProcessWeaponInput();
+        // ускорение
+        running = Input.GetKey(Settings.commandButtons[Command.Run]);
 
         // player dash cooldown timer
         // PlayerDashCooldownTimer();
@@ -168,19 +160,16 @@ public class PlayerController : MonoBehaviour
         // player weapon cooldown timer
         PlayerWeaponCooldownTimer();
 
-        // collecting items by the player controller
-        // TakeItem();
-
         before = after;
     }
 
-    private void InitializeMovementAnimationParameters()
+    /*private void InitializeMovementAnimationParameters()
     {
         player.animator.SetBool("moveDown", false);
         player.animator.SetBool("moveUp", false);
         player.animator.SetBool("moveRight", false);
         player.animator.SetBool("moveLeft", false);
-    }
+    }*/
 
     void FixedUpdate()
     {
@@ -211,6 +200,8 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        float moveSpeed = running ? movementDetails.runSpeed : this.moveSpeed;
+
         dirX = moveHorizontal * moveSpeed;
         dirY = moveVertical * moveSpeed;
 
@@ -236,25 +227,15 @@ public class PlayerController : MonoBehaviour
             SetMoveAnimationParameters(false);
         }
 
+        // бег
+        SetRunningAnimationParameters(running);
 
         rb.velocity = new Vector2(dirX, dirY);
+    }
 
-        /*if (moveHorizontal != 0 || moveVertical != 0)
-        {
-            moving = true;
-            if (player.animator)
-            {
-                player.animator.SetBool("run", moving);
-            }
-        }
-        else if (moving)
-        {
-            moving = false;
-            if (player.animator)
-            {
-                player.animator.SetBool("run", moving);
-            }
-        }*/
+    private void SetRunningAnimationParameters(bool running)
+    {
+        player.animator.SetBool("run", running);
     }
 
     /// <summary>
