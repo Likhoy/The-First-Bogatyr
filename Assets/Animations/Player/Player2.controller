@@ -120,7 +120,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: attack
+  - m_Name: sword1
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -172,7 +172,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: attack
+    m_ConditionEvent: sword1
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102133993819189576}
@@ -231,7 +231,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 0}
+  m_Motion: {fileID: 7400000, guid: 6e5f15cd14a847742b8a54d613e2561c, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
         // Load components
         playerControl = GetComponent<PlayerController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        animator = GetComponentInChildren<Animator>();
+        animator = GetComponent<Animator>();
         inventory = GetComponent<Inventory>();
     }
 
@@ -103,10 +103,10 @@ public class Player : MonoBehaviour
         // Add weapon to player
         // AddWeaponToPlayer(playerDetails.startingWeapon);
 
-        /*string weapon = "Bronze Sword";
+        string weapon = "Bronze Sword";
 
         inventory.AddEquipment(weapon);
-        inventory.EquipItemFromID(weapon);*/
+        inventory.EquipItemFromID(weapon);
 
         /*string armor = "Bronze Armor";
 

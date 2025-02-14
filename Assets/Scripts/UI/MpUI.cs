@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,14 +7,11 @@ public class MpUI : MonoBehaviour
     public Image mpBar;
     public TMP_Text mpText;
 
-    public GameObject player;
+    private GameObject player;
 
-    void Start()
+    void Awake()
     {
-        if (!player)
-        {
-            player = GameObject.FindWithTag("Player");
-        }
+        player = GameManager.Instance.GetPlayer().gameObject;
     }
 
     void Update()

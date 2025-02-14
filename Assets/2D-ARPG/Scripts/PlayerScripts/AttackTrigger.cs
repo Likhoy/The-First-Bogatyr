@@ -161,7 +161,7 @@ public class AttackTrigger : MonoBehaviour{
 			newCam.GetComponent<CameraFollowPlayer2D>().player = this.transform;
 			mainCam = newCam.gameObject;
 		}*/
-		SetupInitialShortcut(); 
+		
 		if (!GetComponent<AudioSource>()) {
 			gameObject.AddComponent<AudioSource>();
 		}
@@ -179,8 +179,13 @@ public class AttackTrigger : MonoBehaviour{
 		//gameObject.layer = 10;
 		//Physics.IgnoreLayerCollision(10 , 11 , true);
 	}
-	
-	void Update() {
+
+    private void Start()
+    {
+        SetupInitialShortcut();
+    }
+
+    void Update() {
 		if (draggingItemIcon && draggingItemIcon.gameObject.activeSelf) {
 			Vector2 dragIconPos = Input.mousePosition;
 			dragIconPos.y -= 0.55f;
