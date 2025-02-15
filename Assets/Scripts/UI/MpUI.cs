@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class MpUI : MonoBehaviour
 {
-    public Image mpBar;
-    public TMP_Text mpText;
+    [SerializeField] private Image mpBar;
+    [SerializeField] private TMP_Text mpText;
 
     public GameObject player;
 

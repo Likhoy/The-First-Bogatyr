@@ -13,7 +13,7 @@ namespace MapMinimap
     {
         public KeyCode accept_key = KeyCode.Return;
         public KeyCode cancel_key = KeyCode.Backspace;
-        public KeyCode map_key = KeyCode.M;
+        public KeyCode map_key = Settings.commandButtons[Command.OpenMap];
 
         public KeyCode zoom_in_key = KeyCode.E;
         public KeyCode zoom_out_key = KeyCode.Q;

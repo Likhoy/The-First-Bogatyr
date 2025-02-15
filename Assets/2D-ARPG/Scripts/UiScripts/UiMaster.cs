@@ -1,4 +1,5 @@
-﻿using PixelCrushers.DialogueSystem;
+﻿using MapMinimap;
+using PixelCrushers.DialogueSystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,8 +10,8 @@ public class UiMaster : MonoBehaviour {
 	public SkillTreeUi skillTree;
 	public InventoryUi inventoryWindow;
 	public QuestUi questWindow;
-    public BestiaryUI bestiary;
-    public GameObject map;
+	public BestiaryUI bestiary;
+    public MapManager map;
 
     public GameObject lvUpWarningStatus;
 	public GameObject lvUpWarningSkill;
@@ -43,6 +44,8 @@ public class UiMaster : MonoBehaviour {
 			questWindow.GetComponent<QuestUi>().player = this.gameObject;
 			questWindow.gameObject.SetActive(false);
 		}
+
+		map = MapManager.Get();
 		DeleteOtherEventSystem();
 	}
 
@@ -60,10 +63,11 @@ public class UiMaster : MonoBehaviour {
 	}
 	
 	void Update(){
-		if(GlobalStatus.freezeAll || Time.timeScale == 0){
-			return;
-		}
-		if(statusWindow && Input.GetKeyDown("c")){
+        if (GlobalStatus.freezeAll || Time.timeScale == 0){
+            return;
+        }
+        if (statusWindow && Input.GetKeyDown(Settings.commandButtons[Command.OpenStatusWindow]))
+        {
 			OnOffStatusMenu();
 		}
 		if(inventoryWindow && Input.GetKeyDown(Settings.commandButtons[Command.OpenInventory])){
@@ -76,35 +80,40 @@ public class UiMaster : MonoBehaviour {
 			OnOffBestiary();
 		}
 
-		if (map && Input.GetKeyDown(Settings.commandButtons[Command.OpenMap])){
+		if (map && Input.GetKeyDown(Settings.commandButtons[Command.OpenMap]))
+		{
 			OnOffMap();
 		}
 	}
 	
 	public void CloseAllMenu(){
-		GlobalStatus.menuOn = false;
-		if(statusWindow)
-			statusWindow.gameObject.SetActive(false);
+        GlobalStatus.menuOn = false;
+        GlobalStatus.freezePlayer = false;
+
+        if (statusWindow)
+			statusWindow.CloseMenu();
 		if(inventoryWindow)
 			inventoryWindow.gameObject.SetActive(false);
 		if(skillTree)
-			skillTree.gameObject.SetActive(false);
+			skillTree.CloseMenu();
 		if (bestiary)
-			bestiary.gameObject.SetActive(false);
+			bestiary.CloseMenu();
 		if (map)
-			map.SetActive(false);
+			map.CloseMap();
 
 		if (questLogWindow)
 			questLogWindow.Close(); // пока это бессмысленно, потому что quest log не дает открывать что-либо еще
 	}
 	
 	public void OnOffStatusMenu(){
-		if(statusWindow.gameObject.activeSelf == false){
-			//Time.timeScale = 0.0f;
+		if(statusWindow.gameObject.activeSelf == false)
+        {
+			Time.timeScale = 0.0f;
 			Cursor.lockState = CursorLockMode.None;
 			Cursor.visible = true;
 			CloseAllMenu();
-			statusWindow.gameObject.SetActive(true);
+            GlobalStatus.freezePlayer = true;
+            statusWindow.gameObject.SetActive(true);
 			GlobalStatus.menuOn = true;
 			if(lvUpWarningStatus){
 				lvUpWarningStatus.SetActive(false);
@@ -119,23 +128,24 @@ public class UiMaster : MonoBehaviour {
 
     public void OnOffMap()
     {
-        if (map.activeSelf == false)
-        {
-            //Time.timeScale = 0.0f;
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            CloseAllMenu();
-            map.SetActive(true);
-            GlobalStatus.menuOn = true;
-        }
-        else
-        {
+		if (MapUI.Get().IsVisible() == false)
+		{
+			Time.timeScale = 0.0f;
+			Cursor.lockState = CursorLockMode.None;
+			Cursor.visible = true;
+			CloseAllMenu();
+			map.OpenMap();
+			GlobalStatus.freezePlayer = true;
+			GlobalStatus.menuOn = true;
+		}
+		else
+		{
             Time.timeScale = 1.0f;
-            //Cursor.lockState = CursorLockMode.Locked;
-            //Cursor.visible = false;
-            CloseAllMenu();
-        }
-    }
+			//Cursor.lockState = CursorLockMode.Locked;
+			//Cursor.visible = false;
+			CloseAllMenu();
+		}
+	}
 
     public void OnOffInventoryMenu(){
 		if(inventoryWindow.gameObject.activeSelf == false){
@@ -143,7 +153,8 @@ public class UiMaster : MonoBehaviour {
 			Cursor.lockState = CursorLockMode.None;
 			Cursor.visible = true;
 			CloseAllMenu();
-			inventoryWindow.gameObject.SetActive(true);
+            GlobalStatus.freezePlayer = true;
+            inventoryWindow.gameObject.SetActive(true);
 			GlobalStatus.menuOn = true;
 		}else{
 			Time.timeScale = 1.0f;
@@ -154,13 +165,15 @@ public class UiMaster : MonoBehaviour {
 	}
 	
 	public void OnOffSkillMenu(){
-		if(skillTree.gameObject.activeSelf == false){
-			//Time.timeScale = 0.0f;
-			//Screen.lockCursor = false;
-			Cursor.lockState = CursorLockMode.None;
+		if(skillTree.gameObject.activeSelf == false)
+        {
+            //Time.timeScale = 0.0f;
+            //Screen.lockCursor = false;
+            Cursor.lockState = CursorLockMode.None;
 			Cursor.visible = true;
 			CloseAllMenu();
-			skillTree.gameObject.SetActive(true);
+            GlobalStatus.freezePlayer = true;
+            skillTree.gameObject.SetActive(true);
 			skillTree.gameObject.GetComponent<SkillTreeUi>().Start();
 			GlobalStatus.menuOn = true;
 			if(lvUpWarningSkill){
@@ -168,19 +181,20 @@ public class UiMaster : MonoBehaviour {
 			}
 		}else{
 			Time.timeScale = 1.0f;
-			//Cursor.lockState = CursorLockMode.Locked;
-			//Cursor.visible = false;
-			CloseAllMenu();
+            //Cursor.lockState = CursorLockMode.Locked;
+            //Cursor.visible = false;
+            CloseAllMenu();
 		}
 	}
 	
 	public void OnOffBestiary(){
 		if(bestiary.gameObject.activeSelf == false){
-			//Time.timeScale = 0.0f;
+			Time.timeScale = 0.0f;
 			Cursor.lockState = CursorLockMode.None;
 			Cursor.visible = true;
 			CloseAllMenu();
-			bestiary.gameObject.SetActive(true);
+            GlobalStatus.freezePlayer = true;
+            bestiary.gameObject.SetActive(true);
 			GlobalStatus.menuOn = true;
 
 		}else{

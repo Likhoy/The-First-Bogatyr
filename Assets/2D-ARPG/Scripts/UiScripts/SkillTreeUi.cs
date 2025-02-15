@@ -204,7 +204,11 @@ public class SkillTreeUi : MonoBehaviour {
 		Time.timeScale = 1.0f;
 		//Cursor.lockState = CursorLockMode.Locked;
 		//Cursor.visible = false;
+
 		GlobalStatus.menuOn = false;
-		gameObject.SetActive(false);
+        GlobalStatus.freezePlayer = false;
+
+		tooltip.gameObject.SetActive(false);
+        gameObject.SetActive(false);
 	}
 }

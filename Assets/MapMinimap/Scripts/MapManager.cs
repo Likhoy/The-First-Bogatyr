@@ -46,10 +46,11 @@ namespace MapMinimap
         }
 
         private void Start()
-        {
+        {         
             MapUI.Get().onShow += () => { if (onOpenMap != null) onOpenMap.Invoke(); };
             MapUI.Get().onHide += () => { if (onCloseMap != null) onCloseMap.Invoke(); };
-
+            
+            
             MapReveal player = MapReveal.GetPlayer();
             if (player == null && show_player_warning)
             {
@@ -63,11 +64,11 @@ namespace MapMinimap
 
         private void Update()
         {
-            MapControls controls = MapControls.Get();
-            if (controls && controls.IsPressMap())
-            {
-                MapUI.Get().Toggle();
-            }
+            //MapControls controls = MapControls.Get();
+            //if (controls && controls.IsPressMap())
+            //{
+            //    MapUI.Get().Toggle();
+            //}
 
             MapSettingsData settings = MapSettingsData.Get();
             update_timer += Time.deltaTime;
