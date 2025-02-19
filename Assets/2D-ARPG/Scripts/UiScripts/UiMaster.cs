@@ -2,6 +2,7 @@
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.XR;
 
 public class UiMaster : MonoBehaviour {
 	public EventSystem eventSystem;
@@ -21,7 +22,7 @@ public class UiMaster : MonoBehaviour {
 
     private void Awake()
     {
-		// questLogWindow = DialogueManager.Instance.GetComponentInChildren<QuestLogWindow>();
+		
     }
 
     void Start(){
@@ -40,13 +41,16 @@ public class UiMaster : MonoBehaviour {
 			skillTree.GetComponent<SkillTreeUi>().player = this.gameObject;
 			skillTree.gameObject.SetActive(false);
 		}
-		if(questWindow){
-			questWindow.GetComponent<QuestUi>().player = this.gameObject;
-			questWindow.gameObject.SetActive(false);
-		}
+        //if (questWindow)
+        //{
+        //	questWindow.GetComponent<QuestUi>().player = this.gameObject;
+        //	questWindow.gameObject.SetActive(false);
+        //}
+        map = MapManager.Get();
 
-		map = MapManager.Get();
-		DeleteOtherEventSystem();
+        questLogWindow = DialogueManager.Instance.GetComponentInChildren<QuestLogWindow>();
+
+        DeleteOtherEventSystem();
 	}
 
 	public void DeleteOtherEventSystem(){
@@ -66,6 +70,10 @@ public class UiMaster : MonoBehaviour {
         if (GlobalStatus.freezeAll || Time.timeScale == 0){
             return;
         }
+        if (DialogueManager.Instance.isConversationActive)
+		{
+            return;
+        }
         if (statusWindow && Input.GetKeyDown(Settings.commandButtons[Command.OpenStatusWindow]))
         {
 			OnOffStatusMenu();
@@ -79,7 +87,6 @@ public class UiMaster : MonoBehaviour {
 		if(bestiary && Input.GetKeyDown(Settings.commandButtons[Command.OpenBestiary])){
 			OnOffBestiary();
 		}
-
 		if (map && Input.GetKeyDown(Settings.commandButtons[Command.OpenMap]))
 		{
 			OnOffMap();
@@ -101,16 +108,16 @@ public class UiMaster : MonoBehaviour {
 		if (map)
 			map.CloseMap();
 
-		if (questLogWindow)
-			questLogWindow.Close(); // пока это бессмысленно, потому что quest log не дает открывать что-либо еще
+		if (questLogWindow.isOpen)
+			questLogWindow.Close(); 
 	}
 	
 	public void OnOffStatusMenu(){
 		if(statusWindow.gameObject.activeSelf == false)
         {
 			Time.timeScale = 0.0f;
-			Cursor.lockState = CursorLockMode.None;
-			Cursor.visible = true;
+			//Cursor.lockState = CursorLockMode.None;
+			//Cursor.visible = true;
 			CloseAllMenu();
             GlobalStatus.freezePlayer = true;
             statusWindow.gameObject.SetActive(true);
@@ -131,8 +138,8 @@ public class UiMaster : MonoBehaviour {
 		if (MapUI.Get().IsVisible() == false)
 		{
 			Time.timeScale = 0.0f;
-			Cursor.lockState = CursorLockMode.None;
-			Cursor.visible = true;
+			//Cursor.lockState = CursorLockMode.None;
+			//Cursor.visible = true;
 			CloseAllMenu();
 			map.OpenMap();
 			GlobalStatus.freezePlayer = true;
@@ -150,8 +157,8 @@ public class UiMaster : MonoBehaviour {
     public void OnOffInventoryMenu(){
 		if(inventoryWindow.gameObject.activeSelf == false){
 			//Time.timeScale = 0.0f;
-			Cursor.lockState = CursorLockMode.None;
-			Cursor.visible = true;
+			//Cursor.lockState = CursorLockMode.None;
+			//Cursor.visible = true;
 			CloseAllMenu();
             GlobalStatus.freezePlayer = true;
             inventoryWindow.gameObject.SetActive(true);
@@ -169,8 +176,8 @@ public class UiMaster : MonoBehaviour {
         {
             //Time.timeScale = 0.0f;
             //Screen.lockCursor = false;
-            Cursor.lockState = CursorLockMode.None;
-			Cursor.visible = true;
+   //         Cursor.lockState = CursorLockMode.None;
+			//Cursor.visible = true;
 			CloseAllMenu();
             GlobalStatus.freezePlayer = true;
             skillTree.gameObject.SetActive(true);
@@ -190,8 +197,8 @@ public class UiMaster : MonoBehaviour {
 	public void OnOffBestiary(){
 		if(bestiary.gameObject.activeSelf == false){
 			Time.timeScale = 0.0f;
-			Cursor.lockState = CursorLockMode.None;
-			Cursor.visible = true;
+			//Cursor.lockState = CursorLockMode.None;
+			//Cursor.visible = true;
 			CloseAllMenu();
             GlobalStatus.freezePlayer = true;
             bestiary.gameObject.SetActive(true);

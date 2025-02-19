@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PixelCrushers.DialogueSystem;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -127,6 +128,10 @@ namespace MapMinimap
 
         public void OpenMap()
         {
+            if (DialogueManager.Instance.isConversationActive)
+            {
+                return;
+            }
             MapUI.Get().Show();
         }
 
