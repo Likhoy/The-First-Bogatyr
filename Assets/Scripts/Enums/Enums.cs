@@ -19,7 +19,8 @@ public enum Command
     OpenMap,
     OpenPauseMenu,
     OpenInventory,
-    OpenSkillTree
+    OpenSkillTree,
+    OpenStatusWindow
 }
 
 public enum EnemyPrefabType

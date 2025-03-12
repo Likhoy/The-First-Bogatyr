@@ -73,7 +73,8 @@ public static class Settings
         [Command.OpenMap] = KeyCode.M,
         [Command.OpenPauseMenu] = KeyCode.Escape,
         [Command.OpenInventory] = KeyCode.I,
-        [Command.OpenSkillTree] = KeyCode.K
+        [Command.OpenSkillTree] = KeyCode.K,
+        [Command.OpenStatusWindow] = KeyCode.C
     };
     #endregion 
 

@@ -272,8 +272,8 @@ public class InventoryUi : MonoBehaviour {
 
     public void CloseMenu() {
         Time.timeScale = 1.0f;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
         GlobalStatus.menuOn = false;
         gameObject.SetActive(false);
         if (draggingItemIcon) {

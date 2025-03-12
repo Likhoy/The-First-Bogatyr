@@ -58,9 +58,9 @@ namespace MapMinimap
                 MapControls controls = MapControls.Get();
 
                 //Cancel
-                if (controls.IsPressCancel())
+                if (controls.IsPressCancel())                 
                     Hide();
-
+                
             }
         }
 
@@ -79,7 +79,7 @@ namespace MapMinimap
         public static MapUI Get()
         {
             return _instance;
-        }
+        }     
     }
 
 }

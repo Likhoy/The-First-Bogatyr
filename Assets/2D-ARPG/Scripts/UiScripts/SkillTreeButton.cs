@@ -13,17 +13,24 @@ public class SkillTreeButton : MonoBehaviour {
 	private string description = "";
 
 	public SkillTreeUi skillTree;
+	public SkillSlotsTrigger skillSlotsTrigger;
 
 	private SkillData db;
 	private int skillId = 0;
-	
-	void Start(){
+
+    private bool isDragging = false;
+
+    void Start(){
 		SettingUp();
 	}
 
 	public void SettingUp(){
 		if(!skillTree){
 			skillTree = transform.root.GetComponent<SkillTreeUi>();
+		}
+		if (!skillSlotsTrigger)
+		{
+			skillSlotsTrigger = skillTree.skillSlotsTrigger;
 		}
 		db = skillTree.database;
 		if(db){
@@ -36,14 +43,23 @@ public class SkillTreeButton : MonoBehaviour {
 	}
 	
 	void Update(){
-		if(skillTree.tooltip && skillTree.tooltip.activeSelf == true){
-			Vector2 tooltipPos = Input.mousePosition;
-			tooltipPos.x += 7;
-			skillTree.tooltip.transform.position = tooltipPos;
-		}
-	}
+        if (skillTree.tooltip && skillTree.tooltip.activeSelf == true)
+        {
+            Vector2 tooltipPos = Input.mousePosition;
+            tooltipPos.x += 7;
+            skillTree.tooltip.transform.position = tooltipPos;
+        }
+    }
 
-	public void ButtonClick(){
+    public void OnDrag()
+    {
+        if (!skillTree.skillSlots[buttonId].learned) return;
+        isDragging = true;
+        
+		skillTree.skillSlotsTrigger.PickupForShortcut(skillId);
+    }
+
+    public void ButtonClick(){
 		if(!skillTree){
 			skillTree = transform.root.GetComponent<SkillTreeUi>();
 		}
@@ -83,16 +99,4 @@ public class SkillTreeButton : MonoBehaviour {
 		}
 		skillTree.tooltip.SetActive(false);
 	}
-
-	public void OnDragSkill(){
-		if(!GlobalStatus.mainPlayer || !skillTree.skillSlots[buttonId].learned){
-			return;
-		}
-		AttackTrigger atk = GlobalStatus.mainPlayer.GetComponent<AttackTrigger>();
-		atk.draggingItemIcon.gameObject.SetActive(true);
-		atk.draggingItemIcon.sprite = db.skill[skillId].icon;
-
-		GlobalStatus.mainPlayer.GetComponent<AttackTrigger>().PickupForShortcut(skillId , 3);
-	}
-	
 }

@@ -184,8 +184,10 @@ public class BestiaryUI : MonoBehaviour
         }
     }
 
-    public void ClosePanel()
+    public void CloseMenu()
     {
+        Time.timeScale = 1.0f;
+
         foreach (var group in groupToCreatureButtonsMap)
         {
             SetCreatureButtonsVisibility(group.Value, false);
@@ -198,6 +200,9 @@ public class BestiaryUI : MonoBehaviour
 
         ClearVulnerabilitiesPanel();
 
-        this.gameObject.SetActive(false);
+        GlobalStatus.menuOn = false;
+        GlobalStatus.freezePlayer = false;
+
+        gameObject.SetActive(false);
     }
 }

@@ -1,24 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class StatusWindow : MonoBehaviour {
 	public GameObject player;
-	public Text charName;
-	public Text lv;
-	public Text atk;
-	public Text def;
-	public Text matk;
-	public Text mdef;
-	public Text exp;
-	public Text nextLv;
-	public Text stPoint;
+	public TMP_Text charName;
+	public TMP_Text lv;
+	public TMP_Text atk;
+	public TMP_Text def;
+	public TMP_Text matk;
+	public TMP_Text mdef;
+	//public TMP_Text exp;
+	//public TMP_Text nextLv;
+	public TMP_Text stPoint;
 	
-	public Text totalAtk;
-	public Text totalDef;
-	public Text totalMatk;
-	public Text totalMdef;
+	//public TMP_Text totalAtk;
+	//public TMP_Text totalDef;
+	//public TMP_Text totalMatk;
+	//public TMP_Text totalMdef;
 	
 	public Button atkUpButton;
 	public Button defUpButton;
@@ -44,40 +45,40 @@ public class StatusWindow : MonoBehaviour {
 			lv.text = stat.level.ToString();
 		}
 		if(atk){
-			atk.text = stat.atk.ToString();
+			atk.text = stat.atk.ToString() + "(" + stat.totalStat.atk.ToString() + ")";
 		}
 		if(def){
-			def.text = stat.def.ToString();
+			def.text = stat.def.ToString() + "(" + stat.totalStat.def.ToString() + ")";
 		}
 		if(matk){
-			matk.text = stat.matk.ToString();
+			matk.text = stat.matk.ToString() + "(" + stat.totalStat.matk.ToString() + ")";
 		}
 		if(mdef){
-			mdef.text = stat.mdef.ToString();
+			mdef.text = stat.mdef.ToString() + "(" + stat.totalStat.mdef.ToString() + ")";
 		}
 		
-		if(exp){
-			exp.text = stat.exp.ToString();
-		}
-		if(nextLv){
-			nextLv.text = stat.maxExp.ToString();
-		}
+		//if(exp){
+		//	exp.text = stat.exp.ToString() + "/" + stat.maxExp.ToString();
+		//}
+		//if(nextLv){
+		//	nextLv.text = stat.maxExp.ToString();
+		//}
 		if(stPoint){
 			stPoint.text = stat.statusPoint.ToString();
 		}
 		
-		if(totalAtk){
-			totalAtk.text = "(" + stat.totalStat.atk.ToString() + ")";
-		}
-		if(totalDef){
-			totalDef.text = "(" + stat.totalStat.def.ToString() + ")";
-		}
-		if(totalMatk){
-			totalMatk.text = "(" + stat.totalStat.matk.ToString() + ")";
-		}
-		if(totalMdef){
-			totalMdef.text = "(" + stat.totalStat.mdef.ToString() + ")";
-		}
+		//if(totalAtk){
+		//	totalAtk.text = "(" + stat.totalStat.atk.ToString() + ")";
+		//}
+		//if(totalDef){
+		//	totalDef.text = "(" + stat.totalStat.def.ToString() + ")";
+		//}
+		//if(totalMatk){
+		//	totalMatk.text = "(" + stat.totalStat.matk.ToString() + ")";
+		//}
+		//if(totalMdef){
+		//	totalMdef.text = "(" + stat.totalStat.mdef.ToString() + ")";
+		//}
 		
 		if(stat.statusPoint > 0){
 			if(atkUpButton)
@@ -133,9 +134,10 @@ public class StatusWindow : MonoBehaviour {
 	
 	public void CloseMenu(){
 		Time.timeScale = 1.0f;
-		//Cursor.lockState = CursorLockMode.Locked;
-		//Cursor.visible = false;
-		GlobalStatus.menuOn = false;
-		gameObject.SetActive(false);
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
+        GlobalStatus.menuOn = false;
+        GlobalStatus.freezePlayer = false;
+        gameObject.SetActive(false);
 	}
 }

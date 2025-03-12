@@ -3,9 +3,17 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static AttackTrigger;
 
 public class SkillTreeUi : MonoBehaviour {
-	[System.Serializable]
+    public enum SkillType
+    {
+        Basic,      
+        Divinity,   
+        Darkness    
+    }
+
+    [System.Serializable]
 	public class SkillSlot{
 		public string skillName = "";
 		public int skillId = 0;
@@ -17,11 +25,15 @@ public class SkillTreeUi : MonoBehaviour {
 		[HideInInspector]
 		public bool learned = false;
 		public bool locked = false;
-	}
+        public SkillType skillType = SkillType.Basic;
+    }
 
 	public SkillSlot[] skillSlots = new SkillSlot[5];
-	public TMP_Text skillPointText;
-	public GameObject player;
+    public TMP_Text divinityPointText;
+    public TMP_Text skillPointText;
+    public TMP_Text darknessPointText;
+
+    public GameObject player;
 	private int buttonSelect = 0;
 
 	public GameObject tooltip;
@@ -31,8 +43,13 @@ public class SkillTreeUi : MonoBehaviour {
 	public TMP_Text mpCostTooltip;
 	public SkillData database;
 
-	public void Start(){
-		SetButtonID();
+	public SkillSlotsTrigger skillSlotsTrigger;
+    public AttackTrigger attackTrigger;
+
+    public void Start(){
+		attackTrigger = GlobalStatus.mainPlayer.GetComponent<AttackTrigger>();
+
+        SetButtonID();
 		CheckUnlockSkill();
 		UpdateSkillButton();
 	}
@@ -51,9 +68,18 @@ public class SkillTreeUi : MonoBehaviour {
 		if(!player){
 			return;
 		}
-		if(skillPointText){
+        if (divinityPointText)
+        {
+            divinityPointText.text = player.GetComponent<Status>().divinityPoint.ToString();
+        }
+        if (skillPointText)
+		{
 			skillPointText.text = player.GetComponent<Status>().skillPoint.ToString();
 		}
+		if (darknessPointText)
+		{
+			darknessPointText.text = player.GetComponent<Status>().darknessPoint.ToString();
+		}	
 	}
 	
 	public void CheckLearnedSkill(){
@@ -117,18 +143,44 @@ public class SkillTreeUi : MonoBehaviour {
 	}
 	
 	public void LearnSkill(int buttonId){
-		if(player.GetComponent<Status>().skillPoint < skillSlots[buttonId].skPointUse){
-			player.GetComponent<AttackTrigger>().PrintingText("Not enough Skill Point");
-			print("Not enough Skill Point");
-			return;
-		}
-		player.GetComponent<Status>().skillPoint -= skillSlots[buttonId].skPointUse;
-		SkillStatus sk = player.GetComponent<SkillStatus>();
-		
-		sk.AddSkill(skillSlots[buttonId].skillId);
-		CheckUnlockSkill();
-		UpdateSkillButton();
-	}
+        SkillSlot slot = skillSlots[buttonId];
+        Status status = player.GetComponent<Status>();
+
+        switch (slot.skillType)
+        {
+            case SkillType.Basic:
+                if (status.skillPoint < slot.skPointUse)
+                {
+                    player.GetComponent<AttackTrigger>().PrintingText("Not enough Skill Points");
+                    return;
+                }
+                status.skillPoint -= slot.skPointUse;
+                break;
+
+            case SkillType.Divinity:
+                if (status.divinityPoint < slot.skPointUse)
+                {
+                    player.GetComponent<AttackTrigger>().PrintingText("Not enough Divinity Points");
+                    return;
+                }
+                status.divinityPoint -= slot.skPointUse;
+                break;
+
+            case SkillType.Darkness:
+                if (status.darknessPoint < slot.skPointUse)
+                {
+                    player.GetComponent<AttackTrigger>().PrintingText("Not enough Darkness Points");
+                    return;
+                }
+                status.darknessPoint -= slot.skPointUse;
+                break;
+        }
+
+        SkillStatus sk = player.GetComponent<SkillStatus>();
+        sk.AddSkill(slot.skillId);
+        CheckUnlockSkill();
+        UpdateSkillButton();
+    }
 	
 	public void UpdateSkillButton(){
 		SkillTreeButton[] skillButton;
@@ -139,12 +191,24 @@ public class SkillTreeUi : MonoBehaviour {
 			}
 		}
 	}
-	
-	public void CloseMenu(){
+
+    public void AssignSkillToShortcut(int slotId, int skillId)
+    {
+        if (slotId < 0 || slotId >= 4) return;
+
+        attackTrigger.SetSkillShortcut(slotId, skillId);
+        attackTrigger.UpdateShortcut();
+    }
+
+    public void CloseMenu(){
 		Time.timeScale = 1.0f;
 		//Cursor.lockState = CursorLockMode.Locked;
 		//Cursor.visible = false;
+
 		GlobalStatus.menuOn = false;
-		gameObject.SetActive(false);
+        GlobalStatus.freezePlayer = false;
+
+		tooltip.gameObject.SetActive(false);
+        gameObject.SetActive(false);
 	}
 }
