@@ -9,7 +9,6 @@ public enum LookDirection
 public enum Command
 {
     Dash,
-    Run,
     Hit,
     SwitchWeapon,
     TakeItem,

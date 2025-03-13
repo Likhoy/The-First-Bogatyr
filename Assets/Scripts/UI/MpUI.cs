@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,11 +9,14 @@ public class MpUI : MonoBehaviour
     [SerializeField] private Image mpBar;
     [SerializeField] private TMP_Text mpText;
 
-    private GameObject player;
+    public GameObject player;
 
-    void Awake()
+    void Start()
     {
-        player = GameManager.Instance.GetPlayer().gameObject;
+        if (!player)
+        {
+            player = GameObject.FindWithTag("Player");
+        }
     }
 
     void Update()

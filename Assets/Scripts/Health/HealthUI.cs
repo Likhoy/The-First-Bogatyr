@@ -8,12 +8,19 @@ public class HealthUI : MonoBehaviour
     [SerializeField] private Image hpBar;
     [SerializeField] private TMP_Text hpText;
 
-    private GameObject player;
+    public GameObject player;
     private void Awake()
     {
-        player = GameManager.Instance.GetPlayer().gameObject;
+        
     }
 
+    void Start()
+    {
+        if (!player)
+        {
+            player = GameObject.FindWithTag("Player");
+        }
+    }
 
     void Update()
     {

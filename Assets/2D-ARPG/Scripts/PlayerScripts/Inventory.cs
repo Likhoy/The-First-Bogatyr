@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour {
@@ -73,8 +72,6 @@ public class Inventory : MonoBehaviour {
             UseItem(slot);
         }
     }
-
-    public void EquipItemFromID(string name) => EquipItemFromID(GetEquipmentIdByName(name));
 
     public void EquipItemFromID(int id) {
         var slot = FindEquipmentSlot(id);
@@ -354,24 +351,9 @@ public class Inventory : MonoBehaviour {
         return full;
     }
 
-    public int GetEquipmentIdByName(string name)
-    {
-        for (int i = 0; i < database.equipment.Length; i++)
-        {
-            if (database.equipment[i].itemName == name)
-            {
-                return i;
-            }
-        }
-
-        return 0;
+    public void AddEquipmentSilent(int id) {
+        AddEquipment(id);
     }
-
-    public void AddEquipmentSilent(string name) => AddEquipment(name);
-
-    public void AddEquipmentSilent(int id) => AddEquipment(id);
-
-    public bool AddEquipment(string name) => AddEquipment(GetEquipmentIdByName(name));
 
     public bool AddEquipment(int id) {
         var full = false;

@@ -14,9 +14,7 @@ public class BulletMove : MonoBehaviour {
 	public GameObject hitEffect;
 	public bool passthroughWall = false;
 	//public float fwdPlusAfterSpawn = 0;
-
-	public Quaternion originalRotation;
-
+	
 	void Start(){
 		hitEffect = GetComponent<BulletStatus>().hitEffect;
 		GetComponent<Rigidbody2D>().gravityScale = 0;
@@ -34,9 +32,8 @@ public class BulletMove : MonoBehaviour {
 		//Vector3 absoluteDirection = transform.rotation * relativeDirection;
 		//transform.position += absoluteDirection * speed* Time.deltaTime;
 
-		Vector3 dir = originalRotation * Quaternion.Euler(new Vector3(0, 0, 180)) * transform.TransformDirection(Vector3.right);
-
-        GetComponent<Rigidbody2D>().velocity = dir * speed;
+		Vector3 dir = transform.TransformDirection(Vector3.right);
+		GetComponent<Rigidbody2D>().velocity = dir * speed;
 	}
 	
 	void OnTriggerEnter2D(Collider2D other){
