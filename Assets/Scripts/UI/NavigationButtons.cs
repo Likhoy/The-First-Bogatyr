@@ -43,7 +43,7 @@ public class NavigationButtons : MonoBehaviour
         else if (button == skillTreeButton) uiMaster.OnOffSkillMenu();
         else if (button == mapButton) uiMaster.OnOffMap();
         else if (button == bestiaryButton) uiMaster.OnOffBestiary();
-        else if (button == questLogWindowButton) uiMaster.OnOffQuestLogWindow();
+        //else if (button == questLogWindowButton) uiMaster.OnOffQuestLogWindow();
 
         UpdateFrame(button);
     }
