@@ -103,6 +103,8 @@ public class MonsterAi : MonoBehaviour {
 		Down = 4
 	}
 
+	private Enemy enemy;
+
 	private NavMeshAgent agent;
 
     private int updateFrameNumber = 1;
@@ -156,6 +158,8 @@ public class MonsterAi : MonoBehaviour {
 		Vector3 pos = transform.position;
 		pos.z = 0;
 		transform.position = pos;
+
+		enemy = GetComponent<Enemy>();
 
         agent = GetComponent<NavMeshAgent>();
 
@@ -520,31 +524,59 @@ public class MonsterAi : MonoBehaviour {
 			}
 			yield return new WaitForSeconds(attackCast);
 			
-			if(!cancelAttack){
-				if(attackVoice && !stat.flinch){
-					GetComponent<AudioSource>().PlayOneShot(attackVoice);
-				}
-				Transform bulletShootout = Instantiate(attackPrefab.transform, attackPoint.position , attackPoint.rotation) as Transform;
-				bulletShootout.gameObject.SetActive(true);
-				bulletShootout.GetComponent<BulletStatus>().Setting(stat.atk , stat.matk , "Enemy" , this.gameObject);
-				c++;
-				if(c >= attackAnimationTrigger.Length){
-					c = 0;
-				}
-				yield return new WaitForSeconds(attackDelay);
-				attacking = false;
-				CheckDistance();
-				/*if(distance > approachDistance + 0.55f){
+			if(!cancelAttack)
+            {
+                if (attackVoice && !stat.flinch)
+                {
+                    GetComponent<AudioSource>().PlayOneShot(attackVoice);
+                }
+                Transform bulletShootout = Instantiate(attackPrefab.transform, attackPoint.position, attackPoint.rotation) as Transform;
+
+                SetOrderInSortingLayer(bulletShootout);
+
+                bulletShootout.gameObject.SetActive(true);
+                bulletShootout.GetComponent<BulletStatus>().Setting(stat.atk, stat.matk, "Enemy", this.gameObject);
+                c++;
+                if (c >= attackAnimationTrigger.Length)
+                {
+                    c = 0;
+                }
+                yield return new WaitForSeconds(attackDelay);
+                attacking = false;
+                CheckDistance();
+                /*if(distance > approachDistance + 0.55f){
 					c = 0;
 				}*/
-			}else{
+            }
+            else
+            {
 				c = 0;
 				attacking = false;
 			}
 		}
 	}
 
-	void CheckDistance(){
+    private void SetOrderInSortingLayer(Transform bulletShootout)
+    {
+        Vector2 direction = attackPoint.up;
+
+        if (direction.x > 0)
+        {
+            foreach (var renderer in bulletShootout.GetComponentsInChildren<SpriteRenderer>())
+            {
+                renderer.sortingOrder = enemy.spriteRendererArray[0].sortingOrder + 1;
+            }
+        }
+        else
+        {
+            foreach (var renderer in bulletShootout.GetComponentsInChildren<SpriteRenderer>())
+            {
+                renderer.sortingOrder = enemy.spriteRendererArray[0].sortingOrder - 1;
+            }
+        }
+    }
+
+    void CheckDistance(){
 		if(!followTarget || GlobalStatus.freezeAll){
 			followState = AIState.Idle;
 			if(anim){

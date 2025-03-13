@@ -53,6 +53,8 @@ public class PlayerController : MonoBehaviour
 
     private bool moving = false;
 
+    private bool running = false;
+
     private void Awake()
     {
         // Load components
@@ -100,7 +102,9 @@ public class PlayerController : MonoBehaviour
             }
             if (player.animator)
             {
-                InitializeMovementAnimationParameters();
+                //InitializeMovementAnimationParameters();
+                SetMoveAnimationParameters(false);
+                SetRunningAnimationParameters(false);
             }
             return;
         }
@@ -147,19 +151,8 @@ public class PlayerController : MonoBehaviour
 
         after = transform.position;
 
-        // if player movement disabled then return
-        if (isPlayerMovementDisabled)
-            return;
-
-        // if player is dashing then return
-        /*if (isPlayerDashing)
-            return;*/
-
-        // Process the player movement input
-        // ProcessMovementInput();
-
-        // Process the player weapon input
-        // ProcessWeaponInput();
+        // ускорение
+        running = Input.GetKey(Settings.commandButtons[Command.Run]);
 
         // player dash cooldown timer
         // PlayerDashCooldownTimer();
@@ -167,19 +160,16 @@ public class PlayerController : MonoBehaviour
         // player weapon cooldown timer
         PlayerWeaponCooldownTimer();
 
-        // collecting items by the player controller
-        // TakeItem();
-
         before = after;
     }
 
-    private void InitializeMovementAnimationParameters()
+    /*private void InitializeMovementAnimationParameters()
     {
         player.animator.SetBool("moveDown", false);
         player.animator.SetBool("moveUp", false);
         player.animator.SetBool("moveRight", false);
         player.animator.SetBool("moveLeft", false);
-    }
+    }*/
 
     void FixedUpdate()
     {
@@ -210,6 +200,8 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        float moveSpeed = running ? movementDetails.runSpeed : this.moveSpeed;
+
         dirX = moveHorizontal * moveSpeed;
         dirY = moveVertical * moveSpeed;
 
@@ -222,61 +214,42 @@ public class PlayerController : MonoBehaviour
             direction *= 0.7f;
         }
 
-        InitializeMovementAnimationParameters();
+        //InitializeMovementAnimationParameters();
 
         if (moveHorizontal != 0 || moveVertical != 0)
         {
             float moveAngle = HelperUtilities.GetAngleFromVector(direction);
             LookDirection lookDirection = HelperUtilities.GetLookDirection(moveAngle);
-            SetMoveAnimationParameters(lookDirection);
+            SetMoveAnimationParameters(true);
         }
+        else
+        {
+            SetMoveAnimationParameters(false);
+        }
+
+        // бег
+        SetRunningAnimationParameters(running);
 
         rb.velocity = new Vector2(dirX, dirY);
+    }
 
-        /*if (moveHorizontal != 0 || moveVertical != 0)
-        {
-            moving = true;
-            if (player.animator)
-            {
-                player.animator.SetBool("run", moving);
-            }
-        }
-        else if (moving)
-        {
-            moving = false;
-            if (player.animator)
-            {
-                player.animator.SetBool("run", moving);
-            }
-        }*/
+    private void SetRunningAnimationParameters(bool running)
+    {
+        player.animator.SetBool("run", running);
     }
 
     /// <summary>
     /// Set look animation parameters
     /// </summary>
-    private void SetMoveAnimationParameters(LookDirection lookDirection)
+    private void SetMoveAnimationParameters(bool moving)
     {
         // Set aim direction
-        switch (lookDirection)
-        {
-            case LookDirection.Up:
-                player.animator.SetBool("moveUp", true);
-                break;
+        player.animator.SetBool("move", moving);
 
-            case LookDirection.Right:
-                player.animator.SetBool("moveRight", true);
-                break;
+        Vector2 velocityNormalized = rb.velocity.normalized;
 
-            case LookDirection.Left:
-                player.animator.SetBool("moveLeft", true);
-                break;
-
-            case LookDirection.Down:
-                player.animator.SetBool("moveDown", true);
-                break;
-
-        }
-
+        player.animator.SetFloat("Horizontal", velocityNormalized.x);
+        player.animator.SetFloat("Vertical", velocityNormalized.y);
     }
 
     private void TakeItem()

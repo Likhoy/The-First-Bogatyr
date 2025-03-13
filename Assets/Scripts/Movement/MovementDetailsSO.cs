@@ -16,6 +16,10 @@ public class MovementDetailsSO : ScriptableObject
     #endregion Tooltip
     public float maxMoveSpeed = 8f;
     #region Tooltip
+    [Tooltip("Скорость бега")]
+    #endregion
+    public float runSpeed = 11f;
+    #region Tooltip
     [Tooltip("if these is a dash movement - this is a dash speed")]
     #endregion
     public float dashSpeed;
